@@ -58,6 +58,12 @@ const Reporting = ({ isFullAdmin }: ReportingProps): ReactElement => {
     useEffect(() => {
         getUsers()
             .then((data) => {
+
+                const supportEmailDomains = (process.env.REACT_APP_SUPPORT_USER_EMAIL_DOMAINS || '')
+                    .split(',')
+                    .map((domain) => domain.trim().toLowerCase())
+                    .filter(Boolean);
+
                 const filteredData = data.filter((user) => {
                     const email = user.Attributes?.find((attribute) => attribute.Name === 'email')?.Value as string;
                     const hasTestNoc =
@@ -65,9 +71,11 @@ const Reporting = ({ isFullAdmin }: ReportingProps): ReactElement => {
                         'IWBusCo';
                     const emailToLower = email.toLowerCase();
                     const accountConfirmed = user?.UserStatus === 'CONFIRMED';
+                    
+                    const isSupportUser = supportEmailDomains.some((domain) => emailToLower.includes(domain));
 
                     if (
-                        !emailToLower.includes('kpmg') &&
+                        !isSupportUser &&
                         !emailToLower.includes('dft.gov.uk') &&
                         !hasTestNoc &&
                         accountConfirmed
