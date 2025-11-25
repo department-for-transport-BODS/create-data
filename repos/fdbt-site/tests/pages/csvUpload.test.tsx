@@ -17,7 +17,7 @@ describe('pages', () => {
                     showPriceOption
                     csrfToken=""
                     backHref=""
-                    supportEmail="mock-support-address@email.co.uk"
+                    supportEmail="bodshelpdesk@kainos.com"
                 />,
             );
             expect(tree).toMatchSnapshot();

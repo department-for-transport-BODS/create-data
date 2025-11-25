@@ -117,7 +117,7 @@ exports[`pages inputMethod should render correctly 1`] = `
         size="1.2MB"
       />
       <AccessibilityDetails
-        supportEmail="mock-support-address@email.co.uk"
+        supportEmail="bodshelpdesk@kainos.com"
       />
       <FileAttachment
         attachmentUrl="[object Object]"

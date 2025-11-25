@@ -4,7 +4,7 @@ import Contact from '../../src/pages/contact';
 
 describe('contact', () => {
     it('should render correctly', () => {
-        const tree = shallow(<Contact supportEmail="mock-support-address@email.co.uk" supportPhone="0800 123 1234" />);
+        const tree = shallow(<Contact supportEmail="bodshelpdesk@kainos.com" supportPhone="0800 000 000" />);
         expect(tree).toMatchSnapshot();
     });
 });
