@@ -122,7 +122,7 @@ export const getServerSideProps = (ctx: NextPageContextWithSession): { props: Cs
             poundsOrPence,
             csrfToken: getCsrfToken(ctx),
             backHref,
-            supportEmail: SUPPORT_EMAIL_ADDRESS,
+            supportEmail: SUPPORT_EMAIL_ADDRESS || 'test@example.com',
         },
     };
 };
