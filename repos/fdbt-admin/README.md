@@ -2,6 +2,17 @@
 
 The codebase for the Create Fares Data Admin Site. The site is built using React with Amplify to interact with AWS services.
 
+
+## Environment Variable: REACT_APP_SUPPORT_USER_EMAIL_DOMAINS
+
+Add to your `.env` file for local development:
+
+```
+REACT_APP_SUPPORT_USER_EMAIL_DOMAINS=yourdomain.com,anotherdomain.com
+```
+
+For Amplify deployments, set this in the Amplify Console environment variables.
+
 ## Pre-requisites
 
 -   Node 18
