@@ -65,12 +65,12 @@ See [Setup VSCode for Dev](../how-to/setup-vscode-for-dev.md) for details on con
 [https://www.jetbrains.com/idea/download](https://www.jetbrains.com/idea/download)
 
 
-## Setting REACT_APP_SUPPORT_USER_EMAIL_DOMAINS
+## Setting VITE_SUPPORT_USER_EMAIL_DOMAINS
 
 For `fdbt-admin`, add the following to your `.env` file for local development:
 
 ```
-REACT_APP_SUPPORT_USER_EMAIL_DOMAINS=yourdomain.com,anotherdomain.com
+VITE_SUPPORT_USER_EMAIL_DOMAINS=yourdomain.com,anotherdomain.com
 ```
 
 For AWS Amplify deployments, set this variable in the Amplify Console under App settings > Environment variables.

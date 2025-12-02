@@ -59,7 +59,7 @@ const Reporting = ({ isFullAdmin }: ReportingProps): ReactElement => {
         getUsers()
             .then((data) => {
 
-                const supportEmailDomains = (process.env.REACT_APP_SUPPORT_USER_EMAIL_DOMAINS || '')
+                const supportEmailDomains = (import.meta.env.VITE_SUPPORT_USER_EMAIL_DOMAINS || '')
                     .split(',')
                     .map((domain) => domain.trim().toLowerCase())
                     .filter(Boolean);
