@@ -138,7 +138,7 @@ const Reporting = ({ isFullAdmin }: ReportingProps): ReactElement => {
                 <H1>Reporting</H1>
                 <Table>
                     <Table.Row key="users">
-                        <Table.Cell>Registered users, discounting any DFT or KPMG accounts</Table.Cell>
+                        <Table.Cell>Registered users, discounting any privileged accounts</Table.Cell>
                         <Table.Cell>{users.length}</Table.Cell>
                     </Table.Row>
                     <Table.Row key="nocs">

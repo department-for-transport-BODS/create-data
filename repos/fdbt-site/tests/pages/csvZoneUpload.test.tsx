@@ -56,7 +56,7 @@ describe('pages', () => {
                     serviceList={mockServiceList}
                     clickedYes={false}
                     dataSourceAttribute={{ source: 'bods', hasBods: true, hasTnds: false }}
-                    supportEmail="mock-support-address@email.co.uk"
+                    supportEmail="bodshelpdesk@kainos.com"
                 />,
             );
             expect(tree).toMatchSnapshot();

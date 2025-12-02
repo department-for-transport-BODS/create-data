@@ -12,6 +12,4 @@ The Create Fares Data service is currently run as a service, with support provid
 
 If any issues are found or you want to inform us of anything, please contact the Helpdesk and your request will be passed on to the appropriate team
 
-- Team: BODS Helpdesk
-- Email: [bodshelpdesk@kpmg.co.uk](mailto:bodshelpdesk@kpmg.co.uk)
-- Telephone: [0800 028 0930](tel:08000280930)
+https://data.bus-data.dft.gov.uk/guidance/requirements/?section=help

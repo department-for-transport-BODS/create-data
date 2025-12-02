@@ -356,7 +356,7 @@ export const getServerSideProps = async (ctx: NextPageContextWithSession): Promi
         csrfToken: getCsrfToken(ctx),
         backHref,
         dataSourceAttribute,
-        supportEmail: SUPPORT_EMAIL_ADDRESS || 'test@example.com',
+        supportEmail: SUPPORT_EMAIL_ADDRESS,
     };
 
     const hasClickedYes = (serviceList: ServicesInfo[]) => {
