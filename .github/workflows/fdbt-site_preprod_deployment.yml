@@ -25,6 +25,8 @@ jobs:
       ECS_CLUSTER: ${{ secrets.ECS_CLUSTER }}                 # set this to your Amazon ECS cluster name
       ECS_TASK_DEFINITION: ${{ secrets.ECS_TASK_DEFINITION }} # set this to the path to your Amazon ECS task definition
       CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
+      ERROR_PAGE_BUCKET: fdbt-error-page-preprod
+      CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
     
     steps:
     - name: Checkout
@@ -112,3 +114,11 @@ jobs:
         service: ${{ env.ECS_SERVICE }}
         cluster: ${{ env.ECS_CLUSTER }}
         wait-for-service-stability: true
+
+    - name: Sync error page assets to S3
+      run: |
+        aws s3 sync error/error/ s3://${{ env.ERROR_PAGE_BUCKET }}/ --delete
+
+    - name: Invalidate CloudFront error path
+      run: |
+        aws cloudfront create-invalidation --distribution-id "${{ env.CLOUDFRONT_DISTRIBUTION_ID }}" --paths "/error/*"
