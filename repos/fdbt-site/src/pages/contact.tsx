@@ -81,8 +81,8 @@ const Contact = ({ supportEmail, supportPhone }: ContactProps): ReactElement => 
 export const getServerSideProps = (): {} => {
     return {
         props: {
-            supportEmail: SUPPORT_EMAIL_ADDRESS || 'test@example.com',
-            supportPhone: SUPPORT_PHONE_NUMBER || '0800 123 1234',
+            supportEmail: SUPPORT_EMAIL_ADDRESS,
+            supportPhone: SUPPORT_PHONE_NUMBER,
         },
     };
 };

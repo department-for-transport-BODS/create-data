@@ -140,7 +140,7 @@ export const getServerSideProps = (ctx: NextPageContextWithSession): { props: In
             csvTemplateSize: '255B',
             errors: inputMethodInfo && inputMethodErrorsExist(inputMethodInfo) ? [inputMethodInfo] : [],
             csrfToken,
-            supportEmail: SUPPORT_EMAIL_ADDRESS || 'test@example.com',
+            supportEmail: SUPPORT_EMAIL_ADDRESS,
         },
     };
 };

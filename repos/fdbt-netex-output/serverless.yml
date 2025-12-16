@@ -119,7 +119,7 @@ functions:
           event: s3:ObjectCreated:*
     environment:
       MATCHING_DATA_BUCKET: fdbt-matching-data-${self:provider.stage}
-      SERVICE_EMAIL_ADDRESS: bodshelpdesk@kpmg.co.uk
+      SERVICE_EMAIL_ADDRESS: ${env:SUPPORT_EMAIL_ADDRESS}
       EMAIL_SENDING_ENABLED: "false"
 
 resources:

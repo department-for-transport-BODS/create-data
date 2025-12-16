@@ -70,7 +70,7 @@ exports[`pages csvUpload should render correctly 1`] = `
         size=""
       />
       <AccessibilityDetails
-        supportEmail="mock-support-address@email.co.uk"
+        supportEmail="bodshelpdesk@kainos.com"
       />
       <FileAttachment
         attachmentUrl="[object Object]"

@@ -13,7 +13,7 @@ describe('pages', () => {
                     guidanceDocSize="1.2MB"
                     csvTemplateDisplayName="Download fares triangle CSV template - File Type CSV - File Size 255B"
                     csvTemplateSize="255B"
-                    supportEmail="mock-support-address@email.co.uk"
+                    supportEmail="bodshelpdesk@kainos.com"
                 />,
             );
             expect(tree).toMatchSnapshot();

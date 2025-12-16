@@ -45,7 +45,9 @@ export const ALLOWED_CSV_FILE_TYPES = [
 
 export const STAGE = process.env.STAGE || 'dev';
 
-export const { SERVICE_EMAIL_ADDRESS, SUPPORT_EMAIL_ADDRESS, SUPPORT_PHONE_NUMBER } = process.env;
+export const SERVICE_EMAIL_ADDRESS = process.env.SERVICE_EMAIL_ADDRESS;
+export const SUPPORT_EMAIL_ADDRESS = process.env.SUPPORT_EMAIL_ADDRESS || 'support@example.com';
+export const SUPPORT_PHONE_NUMBER = process.env.SUPPORT_PHONE_NUMBER;
 
 export const RAW_USER_DATA_BUCKET_NAME = `fdbt-raw-user-data-${STAGE}`;
 export const USER_DATA_BUCKET_NAME = `fdbt-user-data-${STAGE}`;
