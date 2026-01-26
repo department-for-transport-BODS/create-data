@@ -150,7 +150,7 @@ export const putStringInS3 = async (
     const request: AWS.S3.Types.PutObjectRequest = {
         Bucket: bucketName,
         Key: key,
-        Body: Buffer.from(text, 'binary'),
+        Body: Buffer.from(text, 'utf8'),
         ContentType: contentType,
     };
 
