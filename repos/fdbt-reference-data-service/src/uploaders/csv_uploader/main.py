@@ -40,13 +40,33 @@ def lambda_handler(event, context):
         )
         logger.error(e)
         raise e
+    
+def naptan_handler(event, context):
+    try:
+        bucket = os.getenv("NAPTAN_BUCKET_NAME")
+        if bucket is None:
+            raise Exception("No NAPTAN_BUCKET_NAME environment variable set")
+        
+        logger.info(f"Running scheduled naptan upload from bucket: {bucket}")
+        insert_in_database("raw/naptan/naptan_latest_csv.csv", bucket)
+
+    except Exception as e:
+        ssm.put_parameter(
+            Name="/scheduled/disable-table-renamer",
+            Value="true",
+            Type="String",
+            Overwrite=True
+        )
+        logger.error(e)
+        raise e
 
 
 def insert_in_database(key, bucket):
     query_array = None
 
-    if key == "Stops.csv":
-        query_array = stops_query(bucket)
+    if key == "raw/naptan/naptan_latest_csv.csv":
+        naptan_bucket = os.getenv("NAPTAN_BUCKET_NAME", bucket)
+        query_array = stops_query(naptan_bucket)
     elif key == "NOCLines.csv":
         query_array = noc_lines_query(bucket)
     elif key == "NOCTable.csv":
