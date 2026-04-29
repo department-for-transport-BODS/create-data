@@ -65,8 +65,7 @@ def insert_in_database(key, bucket):
     query_array = None
 
     if key == "raw/naptan/naptan_latest_csv.csv":
-        naptan_bucket = os.getenv("NAPTAN_BUCKET_NAME", bucket)
-        query_array = stops_query(naptan_bucket)
+        query_array = stops_query(bucket)
     elif key == "NOCLines.csv":
         query_array = noc_lines_query(bucket)
     elif key == "NOCTable.csv":
