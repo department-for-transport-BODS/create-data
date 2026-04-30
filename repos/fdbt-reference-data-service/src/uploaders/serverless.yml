@@ -15,7 +15,6 @@ provider:
     environment:
         RDS_HOST:
             Fn::ImportValue: ${self:provider.stage}:RdsClusterInternalEndpoint
-        NAPTAN_BUCKET_NAME: 'bods-1297-data-landing-zone'
     iam:
         role:
             statements:
@@ -31,7 +30,6 @@ provider:
                   Resource:
                       - 'arn:aws:s3:::fdbt-csv-ref-data-${self:provider.stage}/*'
                       - 'arn:aws:s3:::fdbt-txc-ref-data-${self:provider.stage}/*'
-                      - 'arn:aws:s3:::bods-1297-data-landing-zone/*'
                 - Effect: 'Allow'
                   Action:
                       - 'cloudwatch:PutMetricData'
@@ -109,26 +107,6 @@ functions:
         events:
             - s3: csvRefData
               event: s3:ObjectCreated:*
-        alarms:
-            - name: functionDuration
-              threshold: 50000
-              treatMissingData: notBreaching
-            - name: functionThrottles
-              treatMissingData: notBreaching
-            - name: functionErrors
-              treatMissingData: notBreaching
-            - name: functionInvocations
-              treatMissingData: notBreaching
-
-    NaptanUploader:
-        handler: csv_uploader/main.naptan_handler
-        module: csv_uploader
-        timeout: 300
-        memorySize: 256
-        events:
-            - schedule:
-                  rate: cron(0 2 * * ? *)
-                  enabled: ${self:custom.enableSchedule.${self:provider.stage}, false}
         alarms:
             - name: functionDuration
               threshold: 50000
