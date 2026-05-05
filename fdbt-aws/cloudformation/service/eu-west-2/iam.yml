@@ -358,11 +358,13 @@ Resources:
                   - "s3:GetObjectVersion"
                 Resource:
                   - !Sub arn:aws:s3:::fdbt-csv-ref-data-${Stage}/*
+                  - "arn:aws:s3:::bods-1297-data-landing-zone/*"
               - Effect: Allow
                 Action:
                   - "s3:ListBucket"
                 Resource:
                   - !Sub arn:aws:s3:::fdbt-csv-ref-data-${Stage}
+                  - "arn:aws:s3:::bods-1297-data-landing-zone/*"
           PolicyName: allow-aurora-s3-access
 
   SlackLambdaRole:
