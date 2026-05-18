@@ -15,7 +15,12 @@ provider:
     environment:
         RDS_HOST:
             Fn::ImportValue: ${self:provider.stage}:RdsClusterInternalEndpoint
-        NAPTAN_BUCKET_NAME: 'bods-1297-data-landing-zone'
+        NAPTAN_BUCKET_NAME: ${env:NAPTAN_BUCKET_NAME, ''}
+        NAPTAN_S3_KEY: ${env:NAPTAN_S3_KEY, ''}
+        NAPTAN_TMP_PATH: ${env:NAPTAN_TMP_PATH, ''}
+        NAPTAN_ROLE_ARN: ${env:NAPTAN_ROLE_ARN, ''}
+        NAPTAN_BUCKET_REGION: ${env:NAPTAN_BUCKET_REGION, ''}
+        CSV_BUCKET_NAME: ${env:CSV_BUCKET_NAME, ''}
     iam:
         role:
             statements:
@@ -32,6 +37,15 @@ provider:
                       - 'arn:aws:s3:::fdbt-csv-ref-data-${self:provider.stage}/*'
                       - 'arn:aws:s3:::fdbt-txc-ref-data-${self:provider.stage}/*'
                       - 'arn:aws:s3:::bods-1297-data-landing-zone/*'
+                - Effect: 'Allow'
+                  Action:
+                      - 's3:PutObject'
+                  Resource:
+                      - 'arn:aws:s3:::fdbt-csv-ref-data-${self:provider.stage}/*'
+                - Effect: 'Allow'
+                  Action:
+                      - 'sts:AssumeRole'
+                  Resource: '*'
                 - Effect: 'Allow'
                   Action:
                       - 'cloudwatch:PutMetricData'
