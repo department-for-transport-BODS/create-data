@@ -33,9 +33,9 @@ jobs:
       
     - name: audit-netex-validator
       run: |
-        pip install safety
+        pip install safety==3.7.0
         cd src/netex-validator
-        safety check -r requirements.txt
+        safety check -r requirements.txt --policy-file ${{ github.workspace }}/.safety-policy.yml
 
     - name: Use Node.js 
       uses: actions/setup-node@v3
