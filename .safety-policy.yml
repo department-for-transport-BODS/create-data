@@ -1,54 +1,5 @@
-version: '3.0'
-
-scanning-settings:
-  max-depth: 6
-  exclude: []
-  include-files: []
-  system:
-    targets: []
-
-
-report:
-  dependency-vulnerabilities:
-    enabled: true
-    auto-ignore-in-report:
-      python:
-        environment-results: true
-        unpinned-requirements: true
-      cvss-severity: []
-
-
-fail-scan-with-exit-code:
-  dependency-vulnerabilities:
-    enabled: true
-    fail-on-any-of:
-      cvss-severity:
-        - medium
-        - critical
-        - high
-      exploitability:
-        - medium
-        - critical
-        - high
-
-security-updates:
-  dependency-vulnerabilities:
-    auto-security-updates-limit:
-      - patch
-
-installation:
-  default-action: allow
-  audit-logging:
-    enabled: true
-  allow:
-    packages: []
-    vulnerabilities: {}
-  deny:
-    packages: {}
-    vulnerabilities:
-      warning-on-any-of:
-        cvss-severity: []
-      block-on-any-of:
-        cvss-severity: []
-
-
+security:
+  ignore-cvss-severity-below: 0
+  ignore-cvss-unknown-severity: false
+  continue-on-vulnerability-error: false
+  ignore-vulnerabilities: {}
