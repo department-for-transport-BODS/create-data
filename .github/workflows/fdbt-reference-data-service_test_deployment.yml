@@ -32,7 +32,7 @@ jobs:
 
       - name: audit-reference-data-retrievers
         run: |
-          pip install "safety<3"
+          pip install safety
           cd src/retrievers
           safety check -r requirements.txt
 
@@ -50,7 +50,7 @@ jobs:
 
       - name: audit-reference-data-uploaders
         run: |
-          pip install "safety<3"
+          pip install safety
           cd src/uploaders
           safety check -r requirements.txt
           safety check -r requirements.test.txt
