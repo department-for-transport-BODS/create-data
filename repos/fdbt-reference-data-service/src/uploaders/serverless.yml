@@ -24,7 +24,6 @@ provider:
         NPTG_S3_KEY: ${env:NPTG_S3_KEY, ''}
         NPTG_BUCKET_NAME: ${env:NPTG_BUCKET_NAME, ''}
         NPTG_ROLE_ARN: ${env:NPTG_ROLE_ARN, ''}
-
     iam:
         role:
             statements:
