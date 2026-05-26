@@ -22,6 +22,8 @@ provider:
         NAPTAN_BUCKET_REGION: ${env:NAPTAN_BUCKET_REGION, ''}
         CSV_BUCKET_NAME: ${env:CSV_BUCKET_NAME, ''}
         NPTG_S3_KEY: ${env:NPTG_S3_KEY, ''}
+        NPTG_BUCKET_NAME: ${env:NPTG_BUCKET_NAME, ''}
+        NPTG_ROLE_ARN: ${env:NPTG_ROLE_ARN, ''}
 
     iam:
         role:
