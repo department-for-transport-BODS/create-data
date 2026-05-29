@@ -33,9 +33,9 @@ jobs:
       
     - name: audit-reference-data-retrievers
       run: |
-        pip install safety==3.7.0
+        pip install safety
         cd src/retrievers
-        safety check -r requirements.txt --policy-file ${{ github.workspace }}/.safety-policy.yml
+        safety check -r requirements.txt
 
     - name: Use Node.js 
       uses: actions/setup-node@v3
@@ -44,10 +44,10 @@ jobs:
 
     - name: audit-reference-data-uploaders
       run: |
-        pip install safety==3.7.0
+        pip install safety
         cd src/uploaders
-        safety check -r requirements.txt --policy-file ${{ github.workspace }}/.safety-policy.yml
-        safety check -r requirements.test.txt --policy-file ${{ github.workspace }}/.safety-policy.yml
+        safety check -r requirements.txt
+        safety check -r requirements.test.txt
     
     - name: test-reference-data-uploaders
       run: |
