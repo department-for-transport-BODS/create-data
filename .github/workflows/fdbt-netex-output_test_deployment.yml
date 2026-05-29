@@ -32,9 +32,9 @@ jobs:
 
       - name: audit-netex-validator
         run: |
-          pip install safety
+          pip install safety==3.7.0
           cd src/netex-validator
-          safety check -r requirements.txt
+          safety check -r requirements.txt --policy-file ${{ github.workspace }}/.safety-policy.yml
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
