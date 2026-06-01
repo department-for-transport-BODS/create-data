@@ -119,6 +119,43 @@ def naptan_handler(event, context):
         logger.error(e)
         raise e
 
+def noc_handler(event, context):
+    try:
+        noc_bucket = os.getenv("NOC_BUCKET_NAME")
+        if noc_bucket is None:
+            raise Exception("No NOC_BUCKET_NAME environment variable set")
+
+        noc_s3_key = os.getenv("NOC_S3_KEY")
+        if noc_s3_key is None:
+            raise Exception("No NOC_S3_KEY environment variable set")
+
+        noc_role_arn = os.getenv("NOC_ROLE_ARN")
+        noc_bucket_region = os.getenv("NOC_BUCKET_REGION")
+
+        if noc_bucket_region is None:
+            raise Exception("No NOC_BUCKET_REGION environment variable set")
+
+        if noc_role_arn:
+            local_bucket = os.getenv("NOC_CSV_BUCKET_NAME")
+            if local_bucket is None:
+                raise Exception("NOC_CSV_BUCKET_NAME environment variable must be set when NOC_ROLE_ARN is configured")
+
+            bucket = stage_naptan_file_locally(noc_bucket, noc_role_arn, noc_bucket_region, local_bucket)
+        else:
+            bucket = noc_bucket
+
+        logger.info(f"Running scheduled NOC upload from bucket: {bucket}")
+        insert_in_database(noc_s3_key, bucket, noc_s3_key, noc_bucket_region)
+
+    except Exception as e:
+        ssm.put_parameter(
+            Name="/scheduled/disable-table-renamer",
+            Value="true",
+            Type="String",
+            Overwrite=True
+        )
+        logger.error(e)
+        raise e
 
 def insert_in_database(key, bucket, naptan_s3_key=None, naptan_bucket_region=None):
     query_array = None
