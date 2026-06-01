@@ -24,6 +24,9 @@ provider:
         NPTG_S3_KEY: ${env:NPTG_S3_KEY, ''}
         NPTG_BUCKET_NAME: ${env:NPTG_BUCKET_NAME, ''}
         NPTG_ROLE_ARN: ${env:NPTG_ROLE_ARN, ''}
+        NOC_S3_KEY: ${env:NOC_S3_KEY, ''}
+        NOC_BUCKET_NAME: ${env:NOC_BUCKET_NAME, ''}
+        NOC_ROLE_ARN: ${env:NOC_ROLE_ARN, ''}
     iam:
         role:
             statements:
