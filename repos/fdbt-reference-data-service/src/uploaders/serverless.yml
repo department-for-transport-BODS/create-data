@@ -27,6 +27,7 @@ provider:
         NOC_S3_KEY: ${env:NOC_S3_KEY, ''}
         NOC_BUCKET_NAME: ${env:NOC_BUCKET_NAME, ''}
         NOC_ROLE_ARN: ${env:NOC_ROLE_ARN, ''}
+        NOC_BUCKET_REGION: ${env:NOC_BUCKET_REGION, ''}
 
     iam:
         role:
