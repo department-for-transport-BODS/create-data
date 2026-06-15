@@ -174,7 +174,7 @@ def noc_handler(event, context):
         noc_s3_keys = [key.strip() for key in noc_s3_keys_str.split(",")]
         for noc_s3_key in noc_s3_keys:
             logger.info(f"Running scheduled NOC upload from bucket: {bucket} for file: {noc_s3_key}")
-            insert_in_database(noc_s3_key, bucket, noc_s3_key, noc_bucket_region)
+            insert_in_database(noc_s3_key, bucket, noc_bucket_region=noc_bucket_region)
 
     except Exception as e:
         ssm.put_parameter(
@@ -189,17 +189,18 @@ def noc_handler(event, context):
 def insert_in_database(key, bucket, naptan_s3_key=None, naptan_bucket_region=None, noc_bucket_region=None):
     query_array = None
     key_lower = key.lower()
+    noc_s3_key = key
 
     if naptan_s3_key and key == naptan_s3_key:
         if naptan_bucket_region is None:
             raise Exception("NAPTAN_BUCKET_REGION environment variable must be set for NaPTAN loads")
         query_array = stops_query(bucket, naptan_s3_key, naptan_bucket_region)
     elif "noclines" in key_lower:
-        query_array = noc_lines_query(bucket, noc_bucket_region)
+        query_array = noc_lines_query(bucket, noc_s3_key, noc_bucket_region)
     elif "noctable" in key_lower:
-        query_array = noc_table_query(bucket, noc_bucket_region)
+        query_array = noc_table_query(bucket, noc_s3_key, noc_bucket_region)
     elif "publicname" in key_lower:
-        query_array = public_name_query(bucket, noc_bucket_region)
+        query_array = public_name_query(bucket, noc_s3_key, noc_bucket_region)
     else:
         raise Exception(f"No matching query found for file: {key}")
 
