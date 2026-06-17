@@ -46,30 +46,47 @@ def stage_naptan_file_locally(naptan_bucket: str, role_arn: str, region: str, lo
 
     return local_bucket
 
-def stage_noc_file_locally(noc_bucket: str, role_arn: str, region: str, local_bucket: str) -> str:
-    """Download NOC CSVs from cross-account bucket and re-upload to local bucket.
-    Supports multiple files via comma-separated NOC_S3_KEY environment variable.
-    Returns the local bucket name to use for LOAD DATA FROM S3."""
-    logger.info(f"Assuming role {role_arn} to read NOC CSV from {noc_bucket}")
+def stage_noc_file_locally(noc_bucket: str, role_arn: str, region: str, local_bucket: str) -> list:
+    """List all files in the NOC folder prefix, select the 3 required CSVs (noclines, noctable,
+    publicname), download from the cross-account bucket and re-upload to the local bucket.
+    Returns the list of S3 keys that were staged."""
+    logger.info(f"Assuming role {role_arn} to read NOC CSVs from {noc_bucket}")
     cross_account_client = get_cross_account_s3_client(role_arn, region)
 
-    noc_s3_keys_str = os.getenv("NOC_S3_KEY")
+    noc_folder = os.getenv("NOC_S3_KEY")
     noc_tmp_path = os.getenv("NOC_TMP_PATH")
 
-    if noc_s3_keys_str is None or noc_tmp_path is None:
+    if noc_folder is None or noc_tmp_path is None:
         raise Exception("NOC_S3_KEY and NOC_TMP_PATH environment variables must be set")
 
-    # Split comma-separated file names
-    noc_s3_keys = [key.strip() for key in noc_s3_keys_str.split(",")]
+    # List all objects under the NOC folder prefix
+    logger.info(f"Listing objects in s3://{noc_bucket}/{noc_folder}")
+    response = cross_account_client.list_objects_v2(Bucket=noc_bucket, Prefix=noc_folder)
+    all_keys = [obj['Key'] for obj in response.get('Contents', [])]
 
-    for noc_s3_key in noc_s3_keys:
-        logger.info(f"Downloading s3://{noc_bucket}/{noc_s3_key} to {noc_tmp_path}")
-        cross_account_client.download_file(noc_bucket, noc_s3_key, noc_tmp_path)
+    # Select the 3 required CSVs by matching the table_{tablename}_latest_csv.csv naming convention
+    target_filenames = ["table_noclines_latest_csv.csv", "table_noc_table_latest_csv.csv", "table_noc_public_name_latest_csv.csv"]
+    selected_keys = [
+        key for key in all_keys
+        if os.path.basename(key).lower() in target_filenames
+    ]
 
-        logger.info(f"Uploading NOC CSV to local bucket s3://{local_bucket}/{noc_s3_key}")
-        s3.Bucket(local_bucket).upload_file(noc_tmp_path, noc_s3_key)
+    if len(selected_keys) != 3:
+        raise Exception(
+            f"Expected 3 NOC CSVs (noclines, noctable, publicname) but found "
+            f"{len(selected_keys)}: {selected_keys}"
+        )
 
-    return local_bucket
+    for key in selected_keys:
+        filename = os.path.basename(key)
+        tmp_file = os.path.join(noc_tmp_path, filename)
+        logger.info(f"Downloading s3://{noc_bucket}/{key} to {tmp_file}")
+        cross_account_client.download_file(noc_bucket, key, tmp_file)
+
+        logger.info(f"Uploading NOC CSV to local bucket s3://{local_bucket}/{key}")
+        s3.Bucket(local_bucket).upload_file(tmp_file, key)
+
+    return selected_keys
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -96,7 +113,13 @@ def lambda_handler(event, context):
         naptan_bucket_region = os.getenv("NAPTAN_BUCKET_REGION")
         noc_bucket_region = os.getenv("NOC_BUCKET_REGION")
 
-        insert_in_database(key, bucket, naptan_s3_key, naptan_bucket_region, noc_bucket_region)
+        insert_in_database(
+            key,
+            bucket,
+            naptan_s3_key=naptan_s3_key,
+            naptan_bucket_region=naptan_bucket_region,
+            noc_bucket_region=noc_bucket_region,
+        )
     except Exception as e:
         ssm.put_parameter(
             Name="/scheduled/disable-table-renamer",
@@ -151,8 +174,8 @@ def noc_handler(event, context):
         if noc_bucket is None:
             raise Exception("No NOC_BUCKET_NAME environment variable set")
 
-        noc_s3_keys_str = os.getenv("NOC_S3_KEY")
-        if noc_s3_keys_str is None:
+        noc_folder = os.getenv("NOC_S3_KEY")
+        if noc_folder is None:
             raise Exception("No NOC_S3_KEY environment variable set")
 
         noc_role_arn = os.getenv("NOC_ROLE_ARN")
@@ -166,12 +189,26 @@ def noc_handler(event, context):
             if local_bucket is None:
                 raise Exception("NOC_CSV_BUCKET_NAME environment variable must be set when NOC_ROLE_ARN is configured")
 
-            bucket = stage_noc_file_locally(noc_bucket, noc_role_arn, noc_bucket_region, local_bucket)
+            noc_s3_keys = stage_noc_file_locally(noc_bucket, noc_role_arn, noc_bucket_region, local_bucket)
+            bucket = local_bucket
         else:
+            # List objects in the folder and select the 3 required CSVs directly
+            s3_client = boto3.client('s3', region_name=noc_bucket_region)
+            response = s3_client.list_objects_v2(Bucket=noc_bucket, Prefix=noc_folder)
+            all_keys = [obj['Key'] for obj in response.get('Contents', [])]
+            target_filenames = ["table_noclines_latest_csv.csv", "table_noc_table_latest_csv.csv", "table_noc_public_name_latest_csv.csv"]
+            noc_s3_keys = [
+                key for key in all_keys
+                if os.path.basename(key).lower() in target_filenames
+            ]
+            if len(noc_s3_keys) != 3:
+                raise Exception(
+                    f"Expected 3 NOC CSVs (noclines, noctable, publicname) but found "
+                    f"{len(noc_s3_keys)}: {noc_s3_keys}"
+                )
             bucket = noc_bucket
 
-        # Process each file
-        noc_s3_keys = [key.strip() for key in noc_s3_keys_str.split(",")]
+        # Process each selected CSV
         for noc_s3_key in noc_s3_keys:
             logger.info(f"Running scheduled NOC upload from bucket: {bucket} for file: {noc_s3_key}")
             insert_in_database(noc_s3_key, bucket, noc_bucket_region=noc_bucket_region)
@@ -197,9 +234,9 @@ def insert_in_database(key, bucket, naptan_s3_key=None, naptan_bucket_region=Non
         query_array = stops_query(bucket, naptan_s3_key, naptan_bucket_region)
     elif "noclines" in key_lower:
         query_array = noc_lines_query(bucket, noc_s3_key, noc_bucket_region)
-    elif "noctable" in key_lower:
+    elif "noc_table" in key_lower:
         query_array = noc_table_query(bucket, noc_s3_key, noc_bucket_region)
-    elif "publicname" in key_lower:
+    elif "noc_public_name" in key_lower:
         query_array = public_name_query(bucket, noc_s3_key, noc_bucket_region)
     else:
         raise Exception(f"No matching query found for file: {key}")
