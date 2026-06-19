@@ -40,6 +40,23 @@ export FDBT_USER_POOL_ID={COGNITO_USER_POOL_ID}
 export FDBT_USER_POOL_CLIENT_ID={COGNITO_USER_POOL_CLIENT_ID}
 ```
 
+LocalStack now requires an auth token for local development. Each developer should create a LocalStack account and add their token to a `.env` file in the `fdbt-dev` directory.
+
+Create the file:
+
+```bash
+cd ${FDBT_ROOT}/fdbt-dev
+touch .env
+```
+
+Add the following value to `.env`:
+
+```bash
+LOCALSTACK_AUTH_TOKEN={LOCALSTACK_AUTH_TOKEN}
+```
+
+The `.env` file is ignored by git and must not be committed.
+
 Install node dependencies:
 
 ```bash
