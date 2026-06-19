@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { NextPageContextWithSession } from '../interfaces';
 import { BaseLayout } from '../layout/Layout';
 import { checkIfMultipleOperators, getCsrfToken } from '../utils';
@@ -8,6 +8,7 @@ import { redirectTo } from '../utils/apiUtils';
 import { getAllServicesByNocCode, getIncompleteMultiOperatorExternalProductsByNoc } from '../data/auroradb';
 import { ProductAdditionaNocs } from '../interfaces/dbTypes';
 import InformationSummary from '../components/InformationSummary';
+import Link from 'next/link';
 
 const title = 'Create Fares Data';
 const description = 'Create Fares Data is a service that allows you to generate data in NeTEx format';
@@ -22,7 +23,7 @@ const Home = ({
     csrfToken,
     showDeleteProductsLink,
     multiOperatorFaresRequiringAttentionCount,
-}: HomeProps): ReactElement => (
+}: HomeProps): React.ReactElement => (
     <BaseLayout title={title} description={description}>
         {multiOperatorFaresRequiringAttentionCount > 0 && (
             <InformationSummary
@@ -42,9 +43,9 @@ const Home = ({
                         For bus operators running commercial bus services in England, and local authorities that need to
                         create NeTEx data for the services they operate.
                     </p>
-                    <a href="/fareType" className="govuk-link govuk-!-font-size-19" id="faretype-link">
+                    <Link href="/fareType" className="govuk-link govuk-!-font-size-19" id="faretype-link">
                         Create NeTEx data for your fares
-                    </a>
+                    </Link>
                 </div>
 
                 <div className="govuk-!-margin-top-7">
@@ -101,18 +102,18 @@ const Home = ({
                         <br />
                         <br />
                         The Bus Open Data Service deals with queries relating to the use of Bus Open Data.
-                        {showDeleteProductsLink ? (
-                            <p>
-                                <a
-                                    className="govuk-button govuk-button--warning"
-                                    href={`/api/deleteAllProducts?_csrf=${csrfToken}`}
-                                    aria-label="go to the bus open data service"
-                                >
-                                    Clear products
-                                </a>
-                            </p>
-                        ) : null}
                     </p>
+                    {showDeleteProductsLink ? (
+                        <p className="govuk-body">
+                            <a
+                                className="govuk-button govuk-button--warning"
+                                href={`/api/deleteAllProducts?_csrf=${csrfToken}`}
+                                aria-label="clear products"
+                            >
+                                Clear products
+                            </a>
+                        </p>
+                    ) : null}
                 </div>
             </div>
 

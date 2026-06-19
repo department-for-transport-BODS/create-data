@@ -6,6 +6,11 @@ import MyDocument from '../../src/pages/_document';
 
 describe('_document', () => {
     const props: DocumentProps = {
+        assetQueryString: '',
+        cssAssetQueryString: '',
+        deploymentId: undefined,
+        dynamicCssManifest: new Set<string>(),
+        mutableAssetQueryString: '',
         html: '',
         __NEXT_DATA__: {
             props: {},
@@ -16,16 +21,11 @@ describe('_document', () => {
             buildId: '',
         },
         dangerousAsPath: '',
-        ampPath: '',
-        inAmpMode: false,
-        hybridAmp: false,
         isDevelopment: false,
         dynamicImports: [],
-        canonicalBase: '',
         headTags: [{}],
         buildManifest: {
-            ampDevFiles: [''],
-            ampFirstPages: [''],
+            rootMainFilesTree: {},
             devFiles: [''],
             lowPriorityFiles: [''],
             rootMainFiles: [''],
@@ -34,43 +34,40 @@ describe('_document', () => {
             },
             polyfillFiles: [''],
         },
-        devOnlyCacheBusterQueryString: '',
         docComponentsRendered: {},
         scriptLoader: {},
     };
 
     it('should render correctly', () => {
-        const tree = shallow(
-            <MyDocument
-                {...props}
-                nonce=""
-                isAuthed
-                csrfToken=""
-                url=""
-                showCookieBanner
-                allowTracking
-                multiOperator={false}
-                noc={'HELLO'}
-            />,
-        );
+        const document = React.createElement(MyDocument, {
+            ...props,
+            nonce: '',
+            isAuthed: true,
+            csrfToken: '',
+            url: '',
+            showCookieBanner: true,
+            allowTracking: true,
+            multiOperator: false,
+            noc: 'HELLO',
+        });
+        const tree = shallow(document);
 
         expect(tree).toMatchSnapshot();
     });
 
     it('should not show the cookie banner when the showCookieBanner attribute is false', () => {
-        const tree = shallow(
-            <MyDocument
-                {...props}
-                nonce=""
-                isAuthed
-                csrfToken=""
-                url=""
-                showCookieBanner={false}
-                allowTracking
-                multiOperator
-                noc={undefined}
-            />,
-        );
+        const document = React.createElement(MyDocument, {
+            ...props,
+            nonce: '',
+            isAuthed: true,
+            csrfToken: '',
+            url: '',
+            showCookieBanner: false,
+            allowTracking: true,
+            multiOperator: true,
+            noc: undefined,
+        });
+        const tree = shallow(document);
 
         expect(tree).toMatchSnapshot();
     });

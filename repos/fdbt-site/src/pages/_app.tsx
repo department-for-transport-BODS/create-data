@@ -1,6 +1,6 @@
 import '../design/main.scss';
 import { AppProps } from 'next/app';
-import React, { ReactElement, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 declare global {
     interface Window {
@@ -10,7 +10,7 @@ declare global {
     }
 }
 
-const MyApp = ({ Component, pageProps }: AppProps): ReactElement => {
+const MyApp = ({ Component, pageProps }: AppProps): React.ReactElement => {
     const initialized = useRef(false);
 
     useEffect(() => {

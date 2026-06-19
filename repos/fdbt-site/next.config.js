@@ -1,11 +1,6 @@
-const withImages = require('next-images');
-
 /** @type {import('next').NextConfig} */
-const nextConfig = withImages({
+const nextConfig = {
     poweredByHeader: false,
-    images: {
-        disableStaticImages: true
-    },
     webpack: (config, { isServer }) => {
         config.module.rules.push({
             test: /\.(pdf|csv)$/,
@@ -23,7 +18,7 @@ const nextConfig = withImages({
 
         return config;
     },
-});
+};
   
 module.exports = nextConfig
 

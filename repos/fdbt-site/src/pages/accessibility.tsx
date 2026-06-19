@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import Image from 'next/image';
 import { TwoThirdsLayout } from '../layout/Layout';
 import DACimage from '../assets/images/DAC_certification.png';
 
@@ -90,7 +91,7 @@ const Accessibility = (): ReactElement => {
                 Centre.
             </p>
             <div>
-                <img width="150" src={DACimage} alt="DAC AA certification" />
+                <Image width="150" src={DACimage} alt="DAC AA certification" />
             </div>
         </TwoThirdsLayout>
     );
