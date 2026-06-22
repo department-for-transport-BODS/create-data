@@ -1,3 +1,4 @@
+import os
 from csv_uploader.db_queries import *
 
 
@@ -19,5 +20,7 @@ class TestClass:
 
     def test_stops_bucket_insertion(self):
         bucket = "unit-test-bucket"
-        result = stops_query(bucket)
+        naptan_s3_key = os.getenv("NAPTAN_S3_KEY", "testing")
+        naptan_bucket_region = os.getenv("NAPTAN_BUCKET_REGION", "eu-west-2")
+        result = stops_query(bucket, naptan_s3_key, naptan_bucket_region)
         assert result[3].__contains__(bucket)
