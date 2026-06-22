@@ -41,8 +41,8 @@ def stage_naptan_file_locally(naptan_bucket: str, role_arn: str, region: str, lo
     logger.info(f"Downloading s3://{naptan_bucket}/{naptan_s3_key} to {naptan_tmp_path}")
     cross_account_client.download_file(naptan_bucket, naptan_s3_key, naptan_tmp_path)
 
-    logger.info(f"Uploading NaPTAN CSV to local bucket s3://{local_bucket}/{naptan_s3_key}")
-    s3.Bucket(local_bucket).upload_file(naptan_tmp_path, naptan_s3_key)
+    logger.info(f"Uploading NaPTAN CSV to local bucket s3://{local_bucket}/Stops.csv")
+    s3.Bucket(local_bucket).upload_file(naptan_tmp_path, "Stops.csv")
 
     return local_bucket
 
