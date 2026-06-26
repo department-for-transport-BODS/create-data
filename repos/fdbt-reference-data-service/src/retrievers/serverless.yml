@@ -129,7 +129,7 @@ functions:
     events:
       - schedule:
           rate: cron(0 2 * * ? *)
-          enabled: false
+          enabled: ${self:custom.enableSchedule.${self:provider.stage}, false}
     alarms:
       - name: functionDuration
         threshold: 25000
