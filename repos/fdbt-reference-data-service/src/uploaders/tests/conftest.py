@@ -12,6 +12,8 @@ def aws_credentials():
     os.environ['AWS_SESSION_TOKEN'] = 'testing'
     os.environ['NAPTAN_S3_KEY'] = 'testing'
     os.environ['NAPTAN_BUCKET_REGION'] = 'eu-west-2'
+    os.environ['NOC_S3_KEY'] = 'testing'
+    os.environ['NOC_BUCKET_REGION'] = 'eu-west-2'
 
 @pytest.fixture(scope='function')
 def s3(aws_credentials):
