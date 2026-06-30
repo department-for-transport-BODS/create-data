@@ -145,7 +145,7 @@ def noc_handler(event, context):
             noc_s3_keys = stage_noc_file_locally(noc_bucket, noc_role_arn, noc_bucket_region, local_bucket)
             bucket = local_bucket
         else:
-            # List objects in the folder and select the 3 required CSVs directly
+            # List objects in the folder and select the 3 required CSVs directly.
             s3_client = boto3.client('s3', region_name=noc_bucket_region)
             response = s3_client.list_objects_v2(Bucket=noc_bucket, Prefix=noc_folder)
             all_keys = [obj['Key'] for obj in response.get('Contents', [])]
@@ -173,22 +173,11 @@ def noc_handler(event, context):
                     Key=target_filename,
                 )
                 noc_s3_keys.append(target_filename)
+
             bucket = noc_bucket
 
-        # Process each selected CSV
-        for noc_s3_key in noc_s3_keys:
-            logger.info(f"Running scheduled NOC upload from bucket: {bucket} for file: {noc_s3_key}")
-            insert_in_database(noc_s3_key, bucket, noc_bucket_region=noc_bucket_region)
-
-    except Exception as e:
-        ssm.put_parameter(
-            Name="/scheduled/disable-table-renamer",
-            Value="true",
-            Type="String",
-            Overwrite=True
-        )
-        logger.error(e)
-        raise e
+        logger.info(f"NOC CSVs uploaded to bucket: {bucket}")
+        logger.info(f"NOC files processed: {noc_s3_keys}")
 
 def lambda_handler(event, context):
     try:
