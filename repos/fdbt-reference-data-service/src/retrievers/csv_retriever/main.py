@@ -122,62 +122,26 @@ def stage_noc_file_locally(noc_bucket: str, role_arn: str, region: str, local_bu
     return staged_keys
 
 def noc_handler(event, context):
-    try:
-        noc_bucket = os.getenv("NOC_BUCKET_NAME")
-        if noc_bucket is None:
-            raise Exception("No NOC_BUCKET_NAME environment variable set")
+    noc_bucket = os.getenv("NOC_BUCKET_NAME")
+    if noc_bucket is None:
+        raise Exception("No NOC_BUCKET_NAME environment variable set")
 
-        noc_folder = os.getenv("NOC_S3_KEY")
-        if noc_folder is None:
-            raise Exception("No NOC_S3_KEY environment variable set")
+    role_arn = os.getenv("NOC_ROLE_ARN")
+    region = os.getenv("NOC_BUCKET_REGION")
 
-        noc_role_arn = os.getenv("NOC_ROLE_ARN")
-        noc_bucket_region = os.getenv("NOC_BUCKET_REGION")
+    if region is None:
+        raise Exception("No NOC_BUCKET_REGION environment variable set")
 
-        if noc_bucket_region is None:
-            raise Exception("No NOC_BUCKET_REGION environment variable set")
+    if role_arn:
+        local_bucket = os.getenv("NOC_CSV_BUCKET_NAME")
+        if local_bucket is None:
+            raise Exception("NOC_CSV_BUCKET_NAME environment variable must be set when NOC_ROLE_ARN is configured")
 
-        if noc_role_arn:
-            local_bucket = os.getenv("NOC_CSV_BUCKET_NAME")
-            if local_bucket is None:
-                raise Exception("NOC_CSV_BUCKET_NAME environment variable must be set when NOC_ROLE_ARN is configured")
+        bucket = stage_noc_file_locally(noc_bucket, role_arn, region, local_bucket)
+    else:
+        bucket = noc_bucket
 
-            noc_s3_keys = stage_noc_file_locally(noc_bucket, noc_role_arn, noc_bucket_region, local_bucket)
-            bucket = local_bucket
-        else:
-            # List objects in the folder and select the 3 required CSVs directly.
-            s3_client = boto3.client('s3', region_name=noc_bucket_region)
-            response = s3_client.list_objects_v2(Bucket=noc_bucket, Prefix=noc_folder)
-            all_keys = [obj['Key'] for obj in response.get('Contents', [])]
-            target_filenames = list(NOC_FILE_NAME_MAPPING.keys())
-            matched_noc_s3_keys = [
-                key for key in all_keys
-                if os.path.basename(key).lower() in target_filenames
-            ]
-            if len(matched_noc_s3_keys) != 3:
-                raise Exception(
-                    f"Expected 3 NOC CSVs (noclines, noctable, publicname) but found "
-                    f"{len(matched_noc_s3_keys)}: {matched_noc_s3_keys}"
-                )
-            noc_s3_keys = []
-            for source_key in matched_noc_s3_keys:
-                source_filename = os.path.basename(source_key).lower()
-                target_filename = NOC_FILE_NAME_MAPPING[source_filename]
-
-                logger.info(
-                    f"Copying s3://{noc_bucket}/{source_key} to s3://{noc_bucket}/{target_filename}"
-                )
-                s3_client.copy_object(
-                    Bucket=noc_bucket,
-                    CopySource={"Bucket": noc_bucket, "Key": source_key},
-                    Key=target_filename,
-                )
-                noc_s3_keys.append(target_filename)
-
-            bucket = noc_bucket
-
-        logger.info(f"NOC CSVs uploaded to bucket: {bucket}")
-        logger.info(f"NOC files processed: {noc_s3_keys}")
+    logger.info(f"NOC CSVs uploaded to bucket: {bucket}")
 
 def lambda_handler(event, context):
     try:
