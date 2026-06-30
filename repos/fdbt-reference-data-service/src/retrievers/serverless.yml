@@ -17,6 +17,11 @@ provider:
     NPTG_S3_KEY: ${env:NPTG_S3_KEY, ''}
     NPTG_BUCKET_NAME: ${env:NPTG_BUCKET_NAME, ''}
     NPTG_ROLE_ARN: ${env:NPTG_ROLE_ARN, ''}
+    NOC_BUCKET_NAME: ${env:NOC_BUCKET_NAME, ''}
+    NOC_S3_KEY: ${env:NOC_S3_KEY, ''}
+    NOC_TMP_PATH: ${env:NOC_TMP_PATH, ''}
+    NOC_ROLE_ARN: ${env:NOC_ROLE_ARN, ''}
+    NOC_BUCKET_REGION: ${env:NOC_BUCKET_REGION, ''}
   iam:
     role:
       statements:
@@ -33,6 +38,7 @@ provider:
             - !Sub arn:aws:s3:::fdbt-csv-ref-data-${self:provider.stage}/*
             - !Sub arn:aws:s3:::fdbt-txc-ref-data-${self:provider.stage}/*
             - !Sub arn:aws:s3:::fdbt-txc-ref-data-zipped-${self:provider.stage}/*
+            - !Sub arn:aws:s3:::fdbt-noc-ref-data-${self:provider.stage}/*
         - Effect: "Allow"
           Action:
             - "cloudwatch:PutMetricData"
@@ -109,13 +115,9 @@ custom:
 
 functions:
   NocRetriever:
-    handler: csv_retriever/main.lambda_handler
+    handler: csv_retriever/main.noc_handler
     timeout: 60
     memorySize: 256
-    environment:
-      DATA_URL: https://www.travelinedata.org.uk/wp-content/themes/desktop/nocadvanced_download.php?reportFormat=csvFlatFile&allTable%5B%5D=table_noclines&allTable%5B%5D=table_noc_table&allTable%5B%5D=table_public_name&submit=Submit
-      BUCKET_NAME: fdbt-csv-ref-data-${self:provider.stage}
-      CONTENT_TYPE: text/csv
     events:
       - schedule:
           rate: cron(0 2 * * ? *)
