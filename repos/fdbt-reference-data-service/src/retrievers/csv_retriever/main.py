@@ -69,16 +69,79 @@ def naptan_handler(event, context):
             bucket = naptan_bucket
 
         logger.info(f"NaPTAN uploaded to bucket: {bucket}")
+        
+NOC_FILE_NAME_MAPPING = {
+    "table_noclines_latest_csv.csv": "NOCLines.csv",
+    "table_noc_table_latest_csv.csv": "NOCTable.csv",
+    "table_noc_public_name_latest_csv.csv": "PublicName.csv",
+}
 
-    except Exception as e:
-        ssm.put_parameter(
-            Name="/scheduled/disable-table-renamer",
-            Value="true",
-            Type="String",
-            Overwrite=True
+def stage_noc_file_locally(noc_bucket: str, role_arn: str, region: str, local_bucket: str) -> list:
+    """List all files in the NOC folder prefix, select the 3 required CSVs (noclines, noctable,
+    publicname), download from the cross-account bucket and re-upload to the local bucket.
+    Returns the list of S3 keys that were staged."""
+    logger.info(f"Assuming role {role_arn} to read NOC CSVs from {noc_bucket}")
+    cross_account_client = get_cross_account_s3_client(role_arn, region)
+
+    noc_folder = os.getenv("NOC_S3_KEY")
+    noc_tmp_path = os.getenv("NOC_TMP_PATH")
+
+    if noc_folder is None or noc_tmp_path is None:
+        raise Exception("NOC_S3_KEY and NOC_TMP_PATH environment variables must be set")
+
+    # List all objects under the NOC folder prefix
+    logger.info(f"Listing objects in s3://{noc_bucket}/{noc_folder}")
+    response = cross_account_client.list_objects_v2(Bucket=noc_bucket, Prefix=noc_folder)
+    all_keys = [obj['Key'] for obj in response.get('Contents', [])]
+
+    # Select the 3 required CSVs by matching the expected source filenames.
+    target_filenames = list(NOC_FILE_NAME_MAPPING.keys())
+    selected_keys = [
+        key for key in all_keys
+        if os.path.basename(key).lower() in target_filenames
+    ]
+
+    if len(selected_keys) != 3:
+        raise Exception(
+            f"Expected 3 NOC CSVs (noclines, noctable, publicname) but found "
+            f"{len(selected_keys)}: {selected_keys}"
         )
-        logger.error(e)
-        raise e
+
+    staged_keys = []
+    for key in selected_keys:
+        filename = os.path.basename(key).lower()
+        mapped_filename = NOC_FILE_NAME_MAPPING[filename]
+        tmp_file = os.path.join(noc_tmp_path, filename)
+        logger.info(f"Downloading s3://{noc_bucket}/{key} to {tmp_file}")
+        cross_account_client.download_file(noc_bucket, key, tmp_file)
+
+        logger.info(f"Uploading NOC CSV to local bucket s3://{local_bucket}/{mapped_filename}")
+        s3.Bucket(local_bucket).upload_file(tmp_file, mapped_filename)
+        staged_keys.append(mapped_filename)
+
+    return staged_keys
+
+def noc_handler(event, context):
+    noc_bucket = os.getenv("NOC_BUCKET_NAME")
+    if noc_bucket is None:
+        raise Exception("No NOC_BUCKET_NAME environment variable set")
+
+    role_arn = os.getenv("NOC_ROLE_ARN")
+    region = os.getenv("NOC_BUCKET_REGION")
+
+    if region is None:
+        raise Exception("No NOC_BUCKET_REGION environment variable set")
+
+    if role_arn:
+        local_bucket = os.getenv("NOC_CSV_BUCKET_NAME")
+        if local_bucket is None:
+            raise Exception("NOC_CSV_BUCKET_NAME environment variable must be set when NOC_ROLE_ARN is configured")
+
+        bucket = stage_noc_file_locally(noc_bucket, role_arn, region, local_bucket)
+    else:
+        bucket = noc_bucket
+
+    logger.info(f"NOC CSVs uploaded to bucket: {bucket}")
 
 def lambda_handler(event, context):
     try:
