@@ -9,6 +9,8 @@ import {
 } from '../../testData/mockData';
 import * as getExportProgress from '../../../src/pages/api/getExportProgress';
 
+jest.mock('../../../src/pages/api/getExportProgress');
+
 describe('selectExports', () => {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     const event = Object.assign(jest.fn(), { preventDefault: () => {} });

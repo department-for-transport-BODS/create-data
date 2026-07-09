@@ -4,6 +4,8 @@ import { getMockRequestAndResponse } from '../../testData/mockData';
 import { COOKIES_POLICY_COOKIE, COOKIE_PREFERENCES_COOKIE, oneYearInSeconds } from '../../../src/constants';
 import { CookiePolicy } from '../../../src/interfaces';
 
+jest.mock('../../../src/utils/apiUtils');
+
 describe('cookies', () => {
     const writeHeadMock = jest.fn();
     const setCookieSpy = jest.spyOn(apiUtils, 'setCookieOnResponseObject');
@@ -15,7 +17,7 @@ describe('cookies', () => {
     it('should redirect back to itself (i.e. /cookies) when no tracking selection is sent to the API', () => {
         const { req, res } = getMockRequestAndResponse({ body: {}, mockWriteHeadFn: writeHeadMock });
         cookies(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/cookies' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/cookies' });
     });
 
     it("should update all cookies, with the cookie policy 'usage' as false when the user disables tracking", () => {
@@ -45,7 +47,7 @@ describe('cookies', () => {
             oneYearInSeconds,
             false,
         );
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/cookies?settingsSaved=true' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/cookies?settingsSaved=true' });
     });
 
     it("should update all cookies, with the cookie policy 'usage' as true when the user enables tracking", () => {
@@ -75,6 +77,6 @@ describe('cookies', () => {
             oneYearInSeconds,
             false,
         );
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/cookies?settingsSaved=true' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/cookies?settingsSaved=true' });
     });
 });

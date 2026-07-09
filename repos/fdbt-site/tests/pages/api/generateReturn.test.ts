@@ -16,6 +16,9 @@ import {
 import { getProductsMatchingJson } from '../../../src/data/s3';
 import { TicketWithIds } from '../../../src/interfaces/matchingJsonTypes';
 
+jest.mock('../../../src/utils/apiUtils/index');
+jest.mock('../../../src/utils/apiUtils/userData');
+
 const expectedGeneratedReturn = {
     type: 'return',
     passengerType: { id: 9 },
@@ -297,7 +300,7 @@ describe('generateReturn', () => {
 
         await generateReturn(req, res);
 
-        expect(redirectToErrorSpy).toBeCalledWith(
+        expect(redirectToErrorSpy).toHaveBeenCalledWith(
             res,
             'There was a problem generating a return.',
             'api.generateReturn',
@@ -319,7 +322,7 @@ describe('generateReturn', () => {
 
         await generateReturn(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/products/productDetails?productId=1&serviceId=3&generateReturn=false',
         });
     });
@@ -334,7 +337,7 @@ describe('generateReturn', () => {
 
         await generateReturn(req, res);
 
-        expect(insertDataToProductsBucketAndProductsTableSpy).toBeCalledWith(
+        expect(insertDataToProductsBucketAndProductsTableSpy).toHaveBeenCalledWith(
             expectedGeneratedReturn,
             noc,
             expect.any(String),
@@ -344,7 +347,7 @@ describe('generateReturn', () => {
             },
         );
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/products/productDetails?productId=2&serviceId=3',
         });
     });

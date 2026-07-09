@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { PurchaseMethodCardBody } from '../pages/viewPurchaseMethods';
 import { SalesOfferPackage } from '../interfaces/matchingJsonTypes';
 

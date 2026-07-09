@@ -4,6 +4,8 @@ import * as sessions from '../../../src/utils/sessions';
 import { MatchingInfo, MatchingWithErrors } from '../../../src/interfaces/matchingInterface';
 import { MATCHING_ATTRIBUTE, FARE_TYPE_ATTRIBUTE, UNASSIGNED_STOPS_ATTRIBUTE } from '../../../src/constants/attributes';
 
+jest.mock('../../../src/utils/sessions');
+
 export const selections = {
     option0: [
         'Acomb Green Lane',
@@ -77,7 +79,7 @@ describe('Matching API', () => {
         matching(req, res);
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, MATCHING_ATTRIBUTE, expectedMatchingInfo);
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/ticketConfirmation' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/ticketConfirmation' });
     });
 
     it('generates matching info, updates the MATCHING_ATTRIBUTE and redirects to /returnValidity if all is valid, when fare type is return', () => {
@@ -102,7 +104,7 @@ describe('Matching API', () => {
         matching(req, res);
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, MATCHING_ATTRIBUTE, expectedMatchingInfo);
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/returnValidity' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/returnValidity' });
     });
 
     it('adds the unassigned stops to the unassigned stops session attribute', () => {
@@ -132,7 +134,7 @@ describe('Matching API', () => {
                 atcoCode: '2590B0207',
             },
         ]);
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/returnValidity' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/returnValidity' });
     });
 
     it('correctly generates matching error info, updates the MATCHING_ATTRIBUTE and then redirects to matching page when there are unassigned fare stages', () => {
@@ -154,7 +156,7 @@ describe('Matching API', () => {
         matching(req, res);
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, MATCHING_ATTRIBUTE, expectedMatchingError);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/matching',
         });
     });
@@ -167,7 +169,7 @@ describe('Matching API', () => {
         });
 
         matching(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/error',
         });
     });
@@ -184,7 +186,7 @@ describe('Matching API', () => {
         });
 
         matching(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/error',
         });
     });

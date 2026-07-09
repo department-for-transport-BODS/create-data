@@ -25,6 +25,10 @@ import {
 } from '../../../src/interfaces/matchingJsonTypes';
 import { PRODUCTS_DATA_BUCKET_NAME } from '../../../src/constants';
 
+jest.mock('../../../src/utils/sessions');
+jest.mock('../../../src/data/auroradb');
+jest.mock('../../../src/data/s3');
+
 describe('searchOperators', () => {
     const updateSessionAttributeSpy = jest.spyOn(session, 'updateSessionAttribute');
 
@@ -302,7 +306,7 @@ describe('searchOperators', () => {
             selectedOperators: [],
         });
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/searchOperators?searchOperator=manchester',
         });
     });
@@ -333,7 +337,7 @@ describe('searchOperators', () => {
             expectedSessionAttributeCall,
         );
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/searchOperators',
         });
     });
@@ -383,7 +387,7 @@ describe('searchOperators', () => {
             expectedSessionAttributeCall,
         );
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/searchOperators',
         });
     });
@@ -428,7 +432,7 @@ describe('searchOperators', () => {
             MULTIPLE_OPERATOR_ATTRIBUTE,
             expectedSessionAttributeCall,
         );
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/searchOperators',
         });
     });
@@ -462,7 +466,7 @@ describe('searchOperators', () => {
         await searchOperators(req, res);
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, MULTIPLE_OPERATOR_ATTRIBUTE, undefined);
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/viewOperatorGroups',
         });
     });
@@ -496,7 +500,7 @@ describe('searchOperators', () => {
         await searchOperators(req, res);
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, MULTIPLE_OPERATOR_ATTRIBUTE, undefined);
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/viewOperatorGroups',
         });
     });
@@ -531,7 +535,7 @@ describe('searchOperators', () => {
         await searchOperators(req, res);
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, MULTIPLE_OPERATOR_ATTRIBUTE, undefined);
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/viewOperatorGroups',
         });
     });

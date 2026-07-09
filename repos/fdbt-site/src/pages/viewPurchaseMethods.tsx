@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement, useState } from 'react';
+import { FunctionComponent, ReactElement, useState } from 'react';
 import { getSalesOfferPackagesByNocCode } from '../data/auroradb';
 import { ErrorInfo, NextPageContextWithSession } from '../interfaces';
 import { formatSOPArray, getAndValidateNoc, getCsrfToken } from '../utils';

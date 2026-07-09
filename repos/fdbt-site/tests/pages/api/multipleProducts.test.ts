@@ -26,6 +26,9 @@ import {
 } from '../../../src/constants/attributes';
 import * as sessions from '../../../src/utils/sessions';
 
+jest.mock('../../../src/utils/apiUtils');
+jest.mock('../../../src/utils/sessions');
+
 describe('multipleProducts', () => {
     let writeHeadMock: jest.Mock;
 
@@ -141,7 +144,7 @@ describe('multipleProducts', () => {
 
         jest.spyOn(apiUtils, 'setCookieOnResponseObject');
         multipleProduct(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, expectedLocation);
+        expect(writeHeadMock).toHaveBeenCalledWith(302, expectedLocation);
     });
 
     const carnetCases = [
@@ -220,7 +223,7 @@ describe('multipleProducts', () => {
 
         jest.spyOn(apiUtils, 'setCookieOnResponseObject');
         multipleProduct(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, expectedLocation);
+        expect(writeHeadMock).toHaveBeenCalledWith(302, expectedLocation);
     });
 
     it('does not store the expiry time units if no expiry is chosen from the dropdown', () => {
@@ -252,8 +255,8 @@ describe('multipleProducts', () => {
 
         jest.spyOn(apiUtils, 'setCookieOnResponseObject');
         multipleProduct(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/selectPeriodValidity' });
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, MULTIPLE_PRODUCT_ATTRIBUTE, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/selectPeriodValidity' });
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, MULTIPLE_PRODUCT_ATTRIBUTE, {
             products: [
                 {
                     carnetDetails: { expiryTime: '', expiryUnit: 'no expiry', quantity: '10' },
@@ -307,7 +310,7 @@ describe('multipleProducts', () => {
 
         jest.spyOn(apiUtils, 'setCookieOnResponseObject');
         multipleProduct(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/ticketConfirmation' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/ticketConfirmation' });
     });
 
     it('redirects to ticket confirmation for a multi operator flat fare ticket', () => {
@@ -331,7 +334,7 @@ describe('multipleProducts', () => {
 
         jest.spyOn(apiUtils, 'setCookieOnResponseObject');
         multipleProduct(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/ticketConfirmation' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/ticketConfirmation' });
     });
 
     it('redirects to page for a multi operator ticket with no flat fare ', () => {
@@ -355,7 +358,7 @@ describe('multipleProducts', () => {
 
         jest.spyOn(apiUtils, 'setCookieOnResponseObject');
         multipleProduct(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/multipleProducts' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/multipleProducts' });
     });
 
     describe('getErrorsForSession', () => {

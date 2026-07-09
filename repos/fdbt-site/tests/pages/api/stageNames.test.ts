@@ -3,6 +3,8 @@ import { STAGE_NAMES_ATTRIBUTE } from '../../../src/constants/attributes';
 import stageNames, { isStageNameValid } from '../../../src/pages/api/stageNames';
 import { getMockRequestAndResponse } from '../../testData/mockData';
 
+jest.mock('../../../src/utils/sessions');
+
 describe('stageNames', () => {
     afterEach(() => {
         jest.resetAllMocks();
@@ -81,7 +83,7 @@ describe('stageNames', () => {
         const mockWriteHeadFn = jest.fn();
         const { req, res } = getMockRequestAndResponse({ cookieValues: {}, body: mockBody, uuid: {}, mockWriteHeadFn });
         stageNames(req, res);
-        expect(mockWriteHeadFn).toBeCalledWith(302, {
+        expect(mockWriteHeadFn).toHaveBeenCalledWith(302, {
             Location: '/stageNames',
         });
     });
@@ -93,7 +95,7 @@ describe('stageNames', () => {
         const mockWriteHeadFn = jest.fn();
         const { req, res } = getMockRequestAndResponse({ cookieValues: {}, body: mockBody, uuid: {}, mockWriteHeadFn });
         stageNames(req, res);
-        expect(mockWriteHeadFn).toBeCalledWith(302, {
+        expect(mockWriteHeadFn).toHaveBeenCalledWith(302, {
             Location: '/stageNamesConfirmation',
         });
     });
@@ -129,6 +131,6 @@ describe('stageNames', () => {
             { input: 'b', error: '', id: 'fare-stage-name-4' },
         ];
         stageNames(req, res);
-        expect(setUpdateSessionspy).toBeCalledWith(req, STAGE_NAMES_ATTRIBUTE, mockInputCheck);
+        expect(setUpdateSessionspy).toHaveBeenCalledWith(req, STAGE_NAMES_ATTRIBUTE, mockInputCheck);
     });
 });

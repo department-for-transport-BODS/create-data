@@ -6,6 +6,8 @@ import additionalPricingStructures, {
 import { ErrorInfo, AdditionalPricing } from '../../../src/interfaces';
 import { ADDITIONAL_PRICING_ATTRIBUTE } from '../../../src/constants/attributes';
 
+jest.mock('../../../src/utils/sessions');
+
 describe('additionalPricingStructures', () => {
     const updateSessionAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');
     const writeHeadMock = jest.fn();
@@ -31,13 +33,13 @@ describe('additionalPricingStructures', () => {
 
         additionalPricingStructures(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(
             req,
             ADDITIONAL_PRICING_ATTRIBUTE,
             mockAdditionalStructuresInfo,
         );
 
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/capConfirmation' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/capConfirmation' });
     });
 
     it('produces an error when additionalDiscounts is empty', () => {
@@ -53,7 +55,7 @@ describe('additionalPricingStructures', () => {
 
         additionalPricingStructures(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, ADDITIONAL_PRICING_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, ADDITIONAL_PRICING_ATTRIBUTE, {
             additionalPricingStructures: {
                 pricingStructureStart: '2',
                 structureDiscount: '2',
@@ -75,9 +77,9 @@ describe('additionalPricingStructures', () => {
 
         additionalPricingStructures(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, ADDITIONAL_PRICING_ATTRIBUTE, undefined);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, ADDITIONAL_PRICING_ATTRIBUTE, undefined);
 
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/capConfirmation' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/capConfirmation' });
     });
 
     it('produces an error when pricingStructureStart is empty', () => {
@@ -98,7 +100,7 @@ describe('additionalPricingStructures', () => {
 
         additionalPricingStructures(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, ADDITIONAL_PRICING_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, ADDITIONAL_PRICING_ATTRIBUTE, {
             additionalPricingStructures: {
                 pricingStructureStart: '',
                 structureDiscount: '2',
@@ -126,7 +128,7 @@ describe('additionalPricingStructures', () => {
 
         additionalPricingStructures(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, ADDITIONAL_PRICING_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, ADDITIONAL_PRICING_ATTRIBUTE, {
             additionalPricingStructures: {
                 pricingStructureStart: '2',
                 structureDiscount: '',

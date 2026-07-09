@@ -4,6 +4,9 @@ import { USER_ATTRIBUTE } from '../../../src/constants/attributes';
 import * as auth from '../../../src/data/cognito';
 import * as sessions from '../../../src/utils/sessions';
 
+jest.mock('../../../src/data/cognito');
+jest.mock('../../../src/utils/sessions');
+
 describe('resetPassword', () => {
     const forgotPasswordSubmitSpy = jest.spyOn(auth, 'confirmForgotPassword');
     const updateSessionAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');
@@ -164,7 +167,7 @@ describe('resetPassword', () => {
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, USER_ATTRIBUTE, { redirectFrom: '/resetPassword' });
         expect(forgotPasswordSubmitSpy).toHaveBeenCalled();
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/passwordUpdated',
         });
     });
@@ -189,7 +192,7 @@ describe('resetPassword', () => {
 
         await resetPassword(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/resetLinkExpired',
         });
     });

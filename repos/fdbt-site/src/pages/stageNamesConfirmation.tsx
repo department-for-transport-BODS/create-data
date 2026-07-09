@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import ConfirmationTable from '../components/ConfirmationTable';
 import { STAGE_NAMES_ATTRIBUTE } from '../constants/attributes';
 import TwoThirdsLayout from '../layout/Layout';

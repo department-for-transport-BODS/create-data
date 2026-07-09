@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, useRef } from 'react';
+import { ReactElement, useState, useRef } from 'react';
 import CsrfForm from '../components/CsrfForm';
 import ErrorSummary from '../components/ErrorSummary';
 import FormElementWrapper from '../components/FormElementWrapper';
@@ -118,7 +118,7 @@ const ManageTimeRestriction = ({
     const getTimeRestrictionRows = (
         day: string,
         inputs?: PremadeTimeRestriction,
-    ): [JSX.Element[], (val: boolean) => void] => {
+    ): [ReactElement[], (val: boolean) => void] => {
         const rows = [];
         const startTimeInputs: TimeInput[] = [];
         const endTimeInputs: DbTimeInput[] = [];

@@ -1,11 +1,12 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { SUPPORT_EMAIL_ADDRESS, SUPPORT_PHONE_NUMBER } from '../constants';
 import { BaseLayout } from '../layout/Layout';
 import FileAttachment from '../components/FileAttachment';
-import ServiceGuide from '../assets/files/Create-Fares-Data-Service-Guide.pdf';
-import ServiceGuideFrontPage from '../assets/images/service-guide-front-page.png';
 import AccessibilityDetails from '../components/AccessibilityDetails';
 
+const ServiceGuideFrontPage = '/images/service-guide-front-page.png';
+
+const ServiceGuide = '/files/Create-Fares-Data-Service-Guide.pdf';
 const title = 'Contact - Create Fares Data Service';
 const description = 'Contact page for the Create Fares Data Service';
 

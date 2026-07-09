@@ -5,6 +5,10 @@ import { USER_ATTRIBUTE } from '../../../src/constants/attributes';
 import * as auth from '../../../src/data/cognito';
 import * as sessions from '../../../src/utils/sessions';
 
+jest.mock('../../../src/data/cognito');
+jest.mock('../../../src/utils/apiUtils');
+jest.mock('../../../src/utils/sessions');
+
 describe('changePassword', () => {
     const updateUserPasswordSpy = jest.spyOn(auth, 'updateUserPassword');
     const initiateAuthSpy = jest.spyOn(auth, 'initiateAuth');
@@ -39,7 +43,7 @@ describe('changePassword', () => {
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, USER_ATTRIBUTE, {
             redirectFrom: '/changePassword',
         });
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/passwordUpdated',
         });
     });
@@ -53,7 +57,7 @@ describe('changePassword', () => {
             mockWriteHeadFn: writeHeadMock,
         });
         await changePassword(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/error',
         });
     });
@@ -145,7 +149,7 @@ describe('changePassword', () => {
         await changePassword(req, res);
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, USER_ATTRIBUTE, { errors: inputChecks });
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/changePassword',
         });
     });

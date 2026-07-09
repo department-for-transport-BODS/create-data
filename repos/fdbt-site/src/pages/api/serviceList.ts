@@ -112,11 +112,19 @@ export const processServices = (
     if (!fields) {
         throw new Error('Unable to fetch the form data');
     }
-    const clickedYes = 'exempt' in fields && fields['exempt'] === 'yes';
-    const wantsToEditExemptStops = 'edit-exempt' in fields && fields['edit-exempt'] === 'yes';
-    const secondaryOperatorNoc = fields['secondary-operator-noc'] as string;
+    const exemptValue = fields['exempt'];
+    const clickedYes = 'exempt' in fields && (Array.isArray(exemptValue) ? exemptValue[0] : exemptValue) === 'yes';
+    const editExemptValue = fields['edit-exempt'];
+    const wantsToEditExemptStops =
+        'edit-exempt' in fields && (Array.isArray(editExemptValue) ? editExemptValue[0] : editExemptValue) === 'yes';
+    const secondaryOperatorNocRaw = fields['secondary-operator-noc'];
+    const secondaryOperatorNoc = Array.isArray(secondaryOperatorNocRaw)
+        ? secondaryOperatorNocRaw[0]
+        : secondaryOperatorNocRaw;
 
-    const dataFields: { [key: string]: string | string[] } = fields;
+    const dataFields: { [key: string]: string[] } = Object.fromEntries(
+        Object.entries(fields).filter((entry): entry is [string, string[]] => entry[1] !== undefined),
+    );
     delete dataFields['exempt'];
     delete dataFields['edit-exempt'];
     delete dataFields['secondary-operator-noc'];

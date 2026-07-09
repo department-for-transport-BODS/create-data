@@ -1,5 +1,5 @@
 import upperFirst from 'lodash/upperFirst';
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import InformationSummary from '../components/InformationSummary';
 import CsrfForm from '../components/CsrfForm';
 import ErrorSummary from '../components/ErrorSummary';

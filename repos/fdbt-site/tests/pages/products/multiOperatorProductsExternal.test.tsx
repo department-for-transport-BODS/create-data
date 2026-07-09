@@ -9,6 +9,8 @@ import MultiOperatorProducts, {
 } from '../../../src/pages/products/multiOperatorProductsExternal';
 import * as utils from '../../../src/utils';
 
+jest.mock('../../../src/utils');
+
 jest.mock('../../../src/data/auroradb');
 jest.mock('../../../src/data/s3');
 

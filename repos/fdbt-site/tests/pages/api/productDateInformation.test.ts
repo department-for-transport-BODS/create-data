@@ -9,6 +9,10 @@ import { expectedSingleTicket, getMockRequestAndResponse } from '../../testData/
 import * as userData from '../../../src/utils/apiUtils/userData';
 import * as aurora from '../../../src/data/auroradb';
 
+jest.mock('../../../src/utils/sessions');
+jest.mock('../../../src/utils/apiUtils/userData');
+jest.mock('../../../src/data/auroradb');
+
 describe('productDataInformation', () => {
     const writeHeadMock = jest.fn();
     const updateSessionAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');
@@ -29,12 +33,12 @@ describe('productDataInformation', () => {
 
         await productDateInformation(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, PRODUCT_DATE_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, PRODUCT_DATE_ATTRIBUTE, {
             errors: [{ errorMessage: 'Enter a full start date', id: 'start-day-input' }],
             dates: {},
         });
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/productDateInformation',
         });
     });
@@ -55,7 +59,7 @@ describe('productDataInformation', () => {
 
         await productDateInformation(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, PRODUCT_DATE_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, PRODUCT_DATE_ATTRIBUTE, {
             errors: [{ errorMessage: 'Enter a full start date', id: 'start-day-input' }],
             dates: {
                 startDateDay: '12',
@@ -67,7 +71,7 @@ describe('productDataInformation', () => {
             },
         });
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/productDateInformation',
         });
     });
@@ -89,7 +93,7 @@ describe('productDataInformation', () => {
 
         await productDateInformation(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, PRODUCT_DATE_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, PRODUCT_DATE_ATTRIBUTE, {
             errors: [
                 {
                     errorMessage: 'The end date must be after the start date',
@@ -106,7 +110,7 @@ describe('productDataInformation', () => {
             },
         });
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/productDateInformation',
         });
     });
@@ -128,7 +132,7 @@ describe('productDataInformation', () => {
 
         await productDateInformation(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, PRODUCT_DATE_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, PRODUCT_DATE_ATTRIBUTE, {
             errors: [
                 {
                     errorMessage: 'Enter a date with a year before 2099',
@@ -145,7 +149,7 @@ describe('productDataInformation', () => {
             },
         });
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/productDateInformation',
         });
     });
@@ -166,7 +170,7 @@ describe('productDataInformation', () => {
 
         await productDateInformation(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, PRODUCT_DATE_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, PRODUCT_DATE_ATTRIBUTE, {
             startDate: '2020-12-12T00:00:00.000Z',
             endDate: '2020-12-15T23:59:59.000Z',
             dateInput: {
@@ -179,7 +183,7 @@ describe('productDataInformation', () => {
             },
         });
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/salesConfirmation',
         });
     });
@@ -200,7 +204,7 @@ describe('productDataInformation', () => {
 
         await productDateInformation(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, PRODUCT_DATE_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, PRODUCT_DATE_ATTRIBUTE, {
             startDate: '2021-08-06T00:00:00.000Z',
             dateInput: {
                 startDateDay: '06',
@@ -212,7 +216,7 @@ describe('productDataInformation', () => {
             },
         });
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/salesConfirmation',
         });
     });
@@ -242,7 +246,7 @@ describe('productDataInformation', () => {
         });
         await productDateInformation(req, res);
 
-        expect(userData.putUserDataInProductsBucketWithFilePath).toBeCalledWith(
+        expect(userData.putUserDataInProductsBucketWithFilePath).toHaveBeenCalledWith(
             {
                 ...expectedSingleTicket,
                 ticketPeriod: {
@@ -253,7 +257,7 @@ describe('productDataInformation', () => {
             'test/path',
         );
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/products/productDetails?productId=2&serviceId=22D',
         });
     });

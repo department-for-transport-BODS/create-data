@@ -4,6 +4,8 @@ import * as session from '../../../src/utils/sessions';
 import { ErrorInfo, SalesOfferPackageInfoWithErrors, SalesOfferPackageInfo } from '../../../src/interfaces';
 import { SOP_INFO_ATTRIBUTE } from '../../../src/constants/attributes';
 
+jest.mock('../../../src/utils/sessions');
+
 describe('salesOfferPackages', () => {
     const mockErrorObject: ErrorInfo = { errorMessage: expect.any(String), id: expect.any(String) };
     const updateSessionAttributeSpy = jest.spyOn(session, 'updateSessionAttribute');
@@ -19,7 +21,7 @@ describe('salesOfferPackages', () => {
 
         salesOfferPackages(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/salesOfferPackages',
         });
     });
@@ -40,7 +42,7 @@ describe('salesOfferPackages', () => {
         salesOfferPackages(req, res);
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, SOP_INFO_ATTRIBUTE, expectedSessionAttributeCall);
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/salesOfferPackages',
         });
     });
@@ -61,7 +63,7 @@ describe('salesOfferPackages', () => {
         salesOfferPackages(req, res);
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, SOP_INFO_ATTRIBUTE, expectedSessionAttributeCall);
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/salesOfferPackages',
         });
     });
@@ -82,7 +84,7 @@ describe('salesOfferPackages', () => {
         salesOfferPackages(req, res);
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, SOP_INFO_ATTRIBUTE, expectedSessionAttributeCall);
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/salesOfferPackages',
         });
     });
@@ -104,7 +106,7 @@ describe('salesOfferPackages', () => {
         salesOfferPackages(req, res);
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, SOP_INFO_ATTRIBUTE, expectedSessionAttributeCall);
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/salesOfferPackages',
         });
     });
@@ -126,7 +128,7 @@ describe('salesOfferPackages', () => {
         salesOfferPackages(req, res);
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, SOP_INFO_ATTRIBUTE, expectedSessionAttributeCall);
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/describeSalesOfferPackage',
         });
     });

@@ -11,6 +11,10 @@ import { expectedSingleTicket, getMockRequestAndResponse, mockIdTokenMultiple } 
 import * as userData from '../../../src/utils/apiUtils/userData';
 import { CapExpiryUnit } from '../../../src/interfaces/matchingJsonTypes';
 
+jest.mock('../../../src/utils/apiUtils/userData');
+jest.mock('../../../src/utils/sessions');
+jest.mock('../../../src/data/auroradb');
+
 describe('selectCaps', () => {
     const writeHeadMock = jest.fn();
     const s3Spy = jest.spyOn(userData, 'putUserDataInProductsBucketWithFilePath');
@@ -52,11 +56,11 @@ describe('selectCaps', () => {
                 id: 2,
             },
         ]);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/selectPurchaseMethods',
         });
 
-        expect(getCapByNocAndIdSpy).toBeCalledWith('HELLO', 2);
+        expect(getCapByNocAndIdSpy).toHaveBeenCalledWith('HELLO', 2);
     });
 
     it('should update the product details redirect to select purchase methods ', async () => {
@@ -98,11 +102,11 @@ describe('selectCaps', () => {
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, CAPS_DEFINITION_ATTRIBUTE, undefined);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/products/productDetails?productId=1&serviceId=2',
         });
 
-        expect(getCapByNocAndIdSpy).toBeCalledWith('HELLO', 2);
+        expect(getCapByNocAndIdSpy).toHaveBeenCalledWith('HELLO', 2);
     });
 
     it('redirect back to selectCaps with errors if user does not select a premade cap but chose yes radio button', async () => {
@@ -118,7 +122,7 @@ describe('selectCaps', () => {
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, CAPS_DEFINITION_ATTRIBUTE, {
             errors: [{ errorMessage: 'Choose one of the premade caps', id: 'caps' }],
         });
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/selectCaps',
         });
     });
@@ -133,7 +137,7 @@ describe('selectCaps', () => {
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, CAPS_DEFINITION_ATTRIBUTE, {
             errors: [{ errorMessage: 'Choose one of the options below', id: 'no-caps' }],
         });
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/selectCaps',
         });
     });
@@ -146,7 +150,7 @@ describe('selectCaps', () => {
             mockWriteHeadFn: writeHeadMock,
         });
         await selectCaps(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/selectPurchaseMethods',
         });
     });

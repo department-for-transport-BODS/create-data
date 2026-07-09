@@ -5,6 +5,10 @@ import { MANAGE_PASSENGER_TYPE_ERRORS_ATTRIBUTE } from '../../../src/constants/a
 import managePassengerTypes from '../../../src/pages/api/managePassengerTypes';
 import { getMockRequestAndResponse } from '../../testData/mockData';
 
+jest.mock('../../../src/utils/apiUtils/index');
+jest.mock('../../../src/utils/sessions');
+jest.mock('../../../src/data/auroradb');
+
 const getAndValidateNocSpy = jest.spyOn(utils, 'getAndValidateNoc');
 const updateSessionAttributeSpy = jest.spyOn(session, 'updateSessionAttribute');
 const getSinglePassengerTypeByNameAndNationalOperatorCodeSpy = jest.spyOn(
@@ -29,7 +33,7 @@ describe('managePassengerTypes', () => {
 
         await managePassengerTypes(req, res);
 
-        expect(getAndValidateNocSpy).toBeCalledWith(req, res);
+        expect(getAndValidateNocSpy).toHaveBeenCalledWith(req, res);
     });
 
     it('should error when name is an empty string', async () => {
@@ -69,9 +73,13 @@ describe('managePassengerTypes', () => {
 
         await managePassengerTypes(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, MANAGE_PASSENGER_TYPE_ERRORS_ATTRIBUTE, attributeValue);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(
+            req,
+            MANAGE_PASSENGER_TYPE_ERRORS_ATTRIBUTE,
+            attributeValue,
+        );
 
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/managePassengerTypes?id=1' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/managePassengerTypes?id=1' });
     });
 
     it('should error when name is a bunch of spaces and no real characters', async () => {
@@ -111,9 +119,13 @@ describe('managePassengerTypes', () => {
 
         await managePassengerTypes(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, MANAGE_PASSENGER_TYPE_ERRORS_ATTRIBUTE, attributeValue);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(
+            req,
+            MANAGE_PASSENGER_TYPE_ERRORS_ATTRIBUTE,
+            attributeValue,
+        );
 
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/managePassengerTypes?id=1' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/managePassengerTypes?id=1' });
     });
 
     it('should error when name is greater than 50 characters', async () => {
@@ -153,9 +165,13 @@ describe('managePassengerTypes', () => {
 
         await managePassengerTypes(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, MANAGE_PASSENGER_TYPE_ERRORS_ATTRIBUTE, attributeValue);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(
+            req,
+            MANAGE_PASSENGER_TYPE_ERRORS_ATTRIBUTE,
+            attributeValue,
+        );
 
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/managePassengerTypes?id=1' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/managePassengerTypes?id=1' });
     });
 
     it('should error when age greater than 150', async () => {
@@ -199,9 +215,13 @@ describe('managePassengerTypes', () => {
 
         await managePassengerTypes(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, MANAGE_PASSENGER_TYPE_ERRORS_ATTRIBUTE, attributeValue);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(
+            req,
+            MANAGE_PASSENGER_TYPE_ERRORS_ATTRIBUTE,
+            attributeValue,
+        );
 
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/managePassengerTypes?id=1' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/managePassengerTypes?id=1' });
     });
 
     it('should error when minimum age is greater than maximum age', async () => {
@@ -241,9 +261,13 @@ describe('managePassengerTypes', () => {
 
         await managePassengerTypes(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, MANAGE_PASSENGER_TYPE_ERRORS_ATTRIBUTE, attributeValue);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(
+            req,
+            MANAGE_PASSENGER_TYPE_ERRORS_ATTRIBUTE,
+            attributeValue,
+        );
 
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/managePassengerTypes?id=1' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/managePassengerTypes?id=1' });
     });
 
     it('should error when adding a passenger type with the same name as an existing one', async () => {
@@ -295,9 +319,13 @@ describe('managePassengerTypes', () => {
 
         await managePassengerTypes(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, MANAGE_PASSENGER_TYPE_ERRORS_ATTRIBUTE, attributeValue);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(
+            req,
+            MANAGE_PASSENGER_TYPE_ERRORS_ATTRIBUTE,
+            attributeValue,
+        );
 
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/managePassengerTypes?id=2' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/managePassengerTypes?id=2' });
     });
 
     it('should call updateSessionAttribute with undefined when no errors present & updateSinglePassengerType', async () => {
@@ -331,11 +359,15 @@ describe('managePassengerTypes', () => {
 
         await managePassengerTypes(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, MANAGE_PASSENGER_TYPE_ERRORS_ATTRIBUTE, attributeValue);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(
+            req,
+            MANAGE_PASSENGER_TYPE_ERRORS_ATTRIBUTE,
+            attributeValue,
+        );
 
-        expect(updateSinglePassengerTypeSpy).toBeCalledWith(undefined, singlePassengerType);
+        expect(updateSinglePassengerTypeSpy).toHaveBeenCalledWith(undefined, singlePassengerType);
 
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/viewPassengerTypes' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/viewPassengerTypes' });
     });
 
     it('should call updateSessionAttribute with undefined & updateSinglePassengerType when not in Edit mode', async () => {
@@ -365,10 +397,14 @@ describe('managePassengerTypes', () => {
 
         await managePassengerTypes(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, MANAGE_PASSENGER_TYPE_ERRORS_ATTRIBUTE, attributeValue);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(
+            req,
+            MANAGE_PASSENGER_TYPE_ERRORS_ATTRIBUTE,
+            attributeValue,
+        );
 
-        expect(insertSinglePassengerTypeSpy).toBeCalledWith(undefined, passengerType, 'Adults');
+        expect(insertSinglePassengerTypeSpy).toHaveBeenCalledWith(undefined, passengerType, 'Adults');
 
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/viewPassengerTypes' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/viewPassengerTypes' });
     });
 });

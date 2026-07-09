@@ -389,7 +389,7 @@ describe('netexConvertorHandler', () => {
                 Subject: 'NeTEx Convertor',
             };
 
-            expect(mockSnsInstance.publish).toBeCalledWith(expectedObject);
+            expect(mockSnsInstance.publish).toHaveBeenCalledWith(expectedObject);
         }
     });
 });

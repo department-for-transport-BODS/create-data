@@ -1,4 +1,4 @@
-import { startCase } from 'lodash';
+import startCase from 'lodash/startCase';
 import { NextApiResponse } from 'next';
 import {
     MATCHING_JSON_ATTRIBUTE,

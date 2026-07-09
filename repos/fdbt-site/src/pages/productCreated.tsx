@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import TwoThirdsLayout from '../layout/Layout';
 import { FEEDBACK_LINK, INTERNAL_NOC } from '../constants';
 import { getUuidFromSession, deleteAllCookiesOnServerSide, getAndValidateNoc, getCsrfToken } from '../utils';

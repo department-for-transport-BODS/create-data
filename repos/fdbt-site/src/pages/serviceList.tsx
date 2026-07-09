@@ -2,8 +2,8 @@ import React, { ReactElement, useState } from 'react';
 import ErrorSummary from '../components/ErrorSummary';
 import FormElementWrapper, { FormGroupWrapper } from '../components/FormElementWrapper';
 import { FullColumnLayout } from '../layout/Layout';
-import FareZoneExampleCsv from '../assets/files/Fare-Zone-Example.csv';
-import csvImage from '../assets/images/csv.png';
+const FareZoneExampleCsv = '/files/Fare-Zone-Example.csv';
+const csvImage = '/images/csv.png';
 import {
     SERVICE_LIST_ATTRIBUTE,
     FARE_TYPE_ATTRIBUTE,

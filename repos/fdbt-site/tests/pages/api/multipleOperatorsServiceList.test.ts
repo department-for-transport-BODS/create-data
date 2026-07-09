@@ -5,6 +5,8 @@ import getMultiOperatorServiceList, {
 } from '../../../src/pages/api/multipleOperatorsServiceList';
 import * as sessions from '../../../src/utils/sessions';
 
+jest.mock('../../../src/utils/sessions');
+
 describe('getMultiOperatorsDataFromRequests tests', () => {
     it('should return operator data for one operator', () => {
         const response = getMultiOperatorsDataFromRequest({ 'BLAC#237#123#abc#12/06/2020': 'Some description' });
@@ -119,7 +121,7 @@ describe('multiOperatorServiceList tests', () => {
             session: {},
         });
         await getMultiOperatorServiceList(req, res);
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, MULTIPLE_OPERATORS_SERVICES_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, MULTIPLE_OPERATORS_SERVICES_ATTRIBUTE, {
             multiOperatorInfo: [
                 {
                     nocCode: 'BLAC',
@@ -153,7 +155,7 @@ describe('multiOperatorServiceList tests', () => {
                 },
             ],
         });
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/multiOperatorServiceList',
         });
     });
@@ -172,7 +174,7 @@ describe('multiOperatorServiceList tests', () => {
             session: {},
         });
         await getMultiOperatorServiceList(req, res);
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, MULTIPLE_OPERATORS_SERVICES_ATTRIBUTE, [
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, MULTIPLE_OPERATORS_SERVICES_ATTRIBUTE, [
             {
                 nocCode: 'BLAC',
                 selectedServices: [
@@ -198,7 +200,7 @@ describe('multiOperatorServiceList tests', () => {
                 ],
             },
         ]);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/multipleProducts',
         });
     });

@@ -3,6 +3,8 @@ import { getMockRequestAndResponse, mockRawService } from '../../testData/mockDa
 import * as auroradb from '../../../src/data/auroradb';
 import { TXC_SOURCE_ATTRIBUTE } from '../../../src/constants/attributes';
 
+jest.mock('../../../src/data/auroradb');
+
 beforeEach(() => {
     jest.resetAllMocks();
     jest.spyOn(auroradb, 'getServiceByIdAndDataSource').mockResolvedValue(mockRawService);
@@ -18,7 +20,7 @@ describe('service', () => {
             mockWriteHeadFn: writeHeadMock,
         });
         await service(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/service',
         });
     });
@@ -34,7 +36,7 @@ describe('service', () => {
             },
         });
         await service(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/direction',
         });
     });

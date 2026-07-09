@@ -16,6 +16,11 @@ import reuseOperatorGroup from '../../../src/pages/api/reuseOperatorGroup';
 import * as auroradb from '../../../src/data/auroradb';
 import * as index from '../../../src/utils/apiUtils/index';
 
+jest.mock('../../../src/utils/sessions');
+jest.mock('../../../src/utils/apiUtils/userData');
+jest.mock('../../../src/data/auroradb');
+jest.mock('../../../src/utils/apiUtils/index');
+
 describe('reuseOperatorGroup', () => {
     const updateSessionAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');
     const writeHeadMock = jest.fn();
@@ -33,10 +38,10 @@ describe('reuseOperatorGroup', () => {
         });
         await reuseOperatorGroup(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, REUSE_OPERATOR_GROUP_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, REUSE_OPERATOR_GROUP_ATTRIBUTE, {
             errors: [{ errorMessage: 'Choose an operator group from the options below', id: 'operatorGroup' }],
         });
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/reuseOperatorGroup' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/reuseOperatorGroup' });
     });
 
     it('should redirect back to reuseOperatorGroup with errors if the user post the invalid operator group id', async () => {
@@ -49,10 +54,10 @@ describe('reuseOperatorGroup', () => {
         });
         await reuseOperatorGroup(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, REUSE_OPERATOR_GROUP_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, REUSE_OPERATOR_GROUP_ATTRIBUTE, {
             errors: [{ errorMessage: 'Select a valid operator group', id: 'operatorGroup' }],
         });
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/reuseOperatorGroup' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/reuseOperatorGroup' });
     });
 
     it('should update the MULTIPLE_OPERATOR_ATTRIBUTE with the selected operator group operators if selected', async () => {
@@ -84,13 +89,15 @@ describe('reuseOperatorGroup', () => {
         });
         await reuseOperatorGroup(req, res);
 
-        expect(getOperatorGroupByNocAndId).toBeCalledWith(1, 'TEST');
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, REUSE_OPERATOR_GROUP_ATTRIBUTE, { operatorGroupId });
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, MULTIPLE_OPERATOR_ATTRIBUTE, {
+        expect(getOperatorGroupByNocAndId).toHaveBeenCalledWith(1, 'TEST');
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, REUSE_OPERATOR_GROUP_ATTRIBUTE, {
+            operatorGroupId,
+        });
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, MULTIPLE_OPERATOR_ATTRIBUTE, {
             selectedOperators: testOperators,
             id: 1,
         });
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/multipleProducts' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/multipleProducts' });
     });
 
     it('should redirect to /multipleOperatorsServiceList if operator group reused, is scheme operator, and fareType is flat fare', async () => {
@@ -132,8 +139,10 @@ describe('reuseOperatorGroup', () => {
         });
         await reuseOperatorGroup(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, REUSE_OPERATOR_GROUP_ATTRIBUTE, { operatorGroupId });
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/multiOperatorServiceList' });
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, REUSE_OPERATOR_GROUP_ATTRIBUTE, {
+            operatorGroupId,
+        });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/multiOperatorServiceList' });
     });
 
     it('should redirect to /multipleOperatorsServiceList for multi operator flat fare ticket', async () => {
@@ -175,8 +184,10 @@ describe('reuseOperatorGroup', () => {
         });
         await reuseOperatorGroup(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, REUSE_OPERATOR_GROUP_ATTRIBUTE, { operatorGroupId });
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/multiOperatorServiceList' });
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, REUSE_OPERATOR_GROUP_ATTRIBUTE, {
+            operatorGroupId,
+        });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/multiOperatorServiceList' });
     });
 
     it('should update the multi operators for geozone ticket when in edit mode and redirect back to products/productDetails', async () => {
@@ -218,12 +229,12 @@ describe('reuseOperatorGroup', () => {
         });
         await reuseOperatorGroup(req, res);
 
-        expect(userData.putUserDataInProductsBucketWithFilePath).toBeCalledWith(
+        expect(userData.putUserDataInProductsBucketWithFilePath).toHaveBeenCalledWith(
             { ...expectedMultiOperatorGeoZoneTicketWithMultipleProducts, additionalNocs: ['BO1', 'BO3', 'BOS'] },
             'test/path',
         );
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/products/productDetails?productId=2',
         });
     });

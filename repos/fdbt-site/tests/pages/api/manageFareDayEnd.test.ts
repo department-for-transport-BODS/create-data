@@ -5,6 +5,10 @@ import { GS_FARE_DAY_END_ATTRIBUTE } from '../../../src/constants/attributes';
 import { getMockRequestAndResponse } from '../../testData/mockData';
 import manageFareDayEnd from '../../../src/pages/api/manageFareDayEnd';
 
+jest.mock('../../../src/utils/sessions');
+jest.mock('../../../src/data/auroradb');
+jest.mock('../../../src/utils/apiUtils/index');
+
 const updateSessionAttributeSpy = jest.spyOn(session, 'updateSessionAttribute');
 const upsertFareDayEndSpy = jest.spyOn(aurora, 'upsertFareDayEnd');
 
@@ -35,9 +39,9 @@ describe('manageFareDayEnd', () => {
 
         await manageFareDayEnd(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GS_FARE_DAY_END_ATTRIBUTE, attributeValue);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_FARE_DAY_END_ATTRIBUTE, attributeValue);
 
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/manageFareDayEnd' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/manageFareDayEnd' });
     });
 
     it('should upsert fare day end and set saved if valid', async () => {
@@ -56,10 +60,10 @@ describe('manageFareDayEnd', () => {
 
         await manageFareDayEnd(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GS_FARE_DAY_END_ATTRIBUTE, attributeValue);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_FARE_DAY_END_ATTRIBUTE, attributeValue);
 
-        expect(upsertFareDayEndSpy).toBeCalledWith('mynoc', '1234');
+        expect(upsertFareDayEndSpy).toHaveBeenCalledWith('mynoc', '1234');
 
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/manageFareDayEnd' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/manageFareDayEnd' });
     });
 });

@@ -1,3 +1,5 @@
+@use 'govuk-frontend/dist/govuk' as *;
+
 .index-page-list {
     list-style-type: disc;
     line-height: 35px;
@@ -93,7 +95,9 @@
         background: #e6e6e6;
         color: black;
         text-align: center;
-        font: 12px Arial, sans-serif;
+        font:
+            12px Arial,
+            sans-serif;
         font-weight: bold;
     }
 

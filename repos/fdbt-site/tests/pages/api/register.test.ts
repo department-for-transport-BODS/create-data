@@ -7,6 +7,10 @@ import { USER_ATTRIBUTE } from '../../../src/constants/attributes';
 import { getAllServicesByNocCode } from '../../../src/data/auroradb';
 import * as sessions from '../../../src/utils/sessions';
 
+jest.mock('../../../src/data/auroradb');
+jest.mock('../../../src/data/cognito');
+jest.mock('../../../src/utils/sessions');
+
 jest.mock('../../../src/data/auroradb.ts');
 
 describe('register', () => {
@@ -280,7 +284,7 @@ describe('register', () => {
             'session',
         );
         expect(authSignOutSpy).toHaveBeenCalled();
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/confirmRegistration',
         });
     });
@@ -302,7 +306,7 @@ describe('register', () => {
 
         await register(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/noServices',
         });
     });
@@ -370,7 +374,7 @@ describe('register', () => {
             'session',
         );
         expect(authSignOutSpy).toHaveBeenCalled();
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/confirmRegistration',
         });
     });
@@ -401,7 +405,7 @@ describe('register', () => {
             'session',
         );
         expect(authSignOutSpy).toHaveBeenCalled();
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/confirmRegistration',
         });
     });

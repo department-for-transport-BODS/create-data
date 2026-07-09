@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { MISSING_STOPS_ATTRIBUTE } from '../constants/attributes';
 import { NextPageContextWithSession } from '../interfaces';
 import TwoThirdsLayout from '../layout/Layout';

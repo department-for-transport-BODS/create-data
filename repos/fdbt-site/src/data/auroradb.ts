@@ -1,4 +1,6 @@
 import awsParamStore from 'aws-param-store';
+import dayjs from '../utils/dayjs';
+import difference from 'lodash/difference';
 import { ResultSetHeader } from 'mysql2';
 import { createPool, Pool } from 'mysql2/promise';
 import { INTERNAL_NOC } from '../constants';
@@ -14,7 +16,6 @@ import {
 } from '../interfaces';
 import logger from '../utils/logger';
 import { convertDateFormat } from '../utils';
-import { difference } from 'lodash';
 import {
     RawService,
     RawJourneyPattern,
@@ -33,7 +34,6 @@ import {
     ProductAdditionaNocs,
 } from '../interfaces/dbTypes';
 import { Stop, FromDb, SalesOfferPackage, CompanionInfo, OperatorDetails } from '../interfaces/matchingJsonTypes';
-import moment from 'moment';
 
 interface ServiceQueryData {
     operatorShortName: string;
@@ -1531,7 +1531,7 @@ export const getPassengerTypesByNocCode = async <T extends keyof SavedPassengerT
         if (type === 'single') {
             return queryResults.map(
                 (row) =>
-                    ({ id: row.id, name: row.name, passengerType: JSON.parse(row.contents) } as SavedPassengerType[T]),
+                    ({ id: row.id, name: row.name, passengerType: JSON.parse(row.contents) }) as SavedPassengerType[T],
             );
         } else {
             // filter out the ones with IDs that are created in global settings
@@ -1881,8 +1881,8 @@ export const insertProducts = async (
             dateModified,
             fareType,
             lineId || '',
-            startDate,
-            endDate || '',
+            dayjs(startDate).format('YYYY-MM-DD HH:mm:ss'),
+            endDate ? dayjs(endDate).format('YYYY-MM-DD HH:mm:ss') : '',
             incomplete,
             operatorGroupId || null,
         ]);
@@ -2000,7 +2000,7 @@ export const updateProductIncompleteStatus = async (productId: number | string, 
     });
 
     try {
-        const dateTime = moment().toDate();
+        const dateTime = dayjs().toDate();
         const updateProductsQuery = 'UPDATE products SET incomplete = ?, dateModified = ? WHERE id = ?';
         await executeQuery<ResultSetHeader>(updateProductsQuery, [incomplete, dateTime, productId]);
     } catch (error) {
@@ -2020,12 +2020,17 @@ export const updateProductDates = async (
     });
 
     try {
-        const dateTime = moment().toDate();
+        const dateTime = dayjs().toDate();
         const updateQuery = `UPDATE products
                              SET startDate = ?, endDate = ?, dateModified = ?
                              WHERE id = ?`;
 
-        const meta = await executeQuery<ResultSetHeader>(updateQuery, [startDate, endDate, dateTime, productId]);
+        const meta = await executeQuery<ResultSetHeader>(updateQuery, [
+            dayjs(startDate).format('YYYY-MM-DD HH:mm:ss'),
+            endDate ? dayjs(endDate).format('YYYY-MM-DD HH:mm:ss') : '',
+            dateTime,
+            productId,
+        ]);
 
         if (meta.affectedRows > 1) {
             throw new Error(`Updated too many rows when updating product dates ${meta}`);
@@ -2076,7 +2081,7 @@ export const updateProductFareTriangleModifiedByNocCodeAndId = async (
     });
 
     try {
-        const dateTime = moment().toDate();
+        const dateTime = dayjs().toDate();
         const updateQuery = `
                 UPDATE products
                 SET fareTriangleModified = ?, dateModified = ?

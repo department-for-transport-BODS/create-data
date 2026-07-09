@@ -5,6 +5,8 @@ import editCarnetProperties, { validateDuration } from '../../../src/pages/api/e
 import { CarnetExpiryUnit } from '../../../src/interfaces/matchingJsonTypes';
 import { ErrorInfo } from 'src/interfaces';
 
+jest.mock('../../../src/utils/apiUtils/userData');
+
 describe('editCarnetProperties tests', () => {
     let writeHeadMock: jest.Mock;
 
@@ -37,7 +39,7 @@ describe('editCarnetProperties tests', () => {
         });
         await editCarnetProperties(req, res);
 
-        expect(userData.putUserDataInProductsBucketWithFilePath).toBeCalledWith(
+        expect(userData.putUserDataInProductsBucketWithFilePath).toHaveBeenCalledWith(
             {
                 ...expectedCarnetReturnTicket,
                 products: [
@@ -50,7 +52,7 @@ describe('editCarnetProperties tests', () => {
             'test/path',
         );
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/products/productDetails?productId=2',
         });
     });

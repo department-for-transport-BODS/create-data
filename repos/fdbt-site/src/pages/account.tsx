@@ -1,8 +1,8 @@
-import React, { ReactElement, useState } from 'react';
-import { parseCookies } from 'nookies';
+import { ReactElement, useState } from 'react';
 import TwoThirdsLayout from '../layout/Layout';
 import { ID_TOKEN_COOKIE } from '../constants';
 import { getNocFromIdToken, getAttributeFromIdToken, getCsrfToken } from '../utils';
+import { parseCookiesFromRequest } from '../utils/apiUtils';
 import { ErrorInfo, NextPageContextWithSession } from '../interfaces';
 import ErrorSummary from '../components/ErrorSummary';
 import BackButton from '../components/BackButton';
@@ -136,7 +136,7 @@ const AccountDetails = ({
 };
 
 export const getServerSideProps = async (ctx: NextPageContextWithSession): Promise<{ props: AccountDetailsProps }> => {
-    const cookies = parseCookies(ctx);
+    const cookies = parseCookiesFromRequest(ctx.req);
     if (!cookies[ID_TOKEN_COOKIE]) {
         throw new Error('Necessary attributes not found to show account details');
     }
@@ -159,7 +159,7 @@ export const getServerSideProps = async (ctx: NextPageContextWithSession): Promi
             emailAddress: email,
             nocCode: noc,
             csrfToken: getCsrfToken(ctx),
-            multiOperatorEmailPreference: multiOperatorEmailPreference === 'true' ?? false,
+            multiOperatorEmailPreference: multiOperatorEmailPreference === 'true',
             errors: errors ?? [],
         },
     };

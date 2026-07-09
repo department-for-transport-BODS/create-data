@@ -4,6 +4,8 @@ import * as sessions from '../../../src/utils/sessions';
 import { getMockRequestAndResponse } from '../../testData/mockData';
 import { CarnetExpiryUnit, CarnetProductInfo } from '../../../src/interfaces/matchingJsonTypes';
 
+jest.mock('../../../src/utils/sessions');
+
 describe('carnetProductDetails', () => {
     const updateAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');
 
@@ -55,7 +57,7 @@ describe('carnetProductDetails', () => {
         carnetProductDetails(req, res);
 
         expect(updateAttributeSpy).toHaveBeenCalledWith(req, CARNET_PRODUCT_DETAILS_ATTRIBUTE, expectedProductDetails);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/carnetProductDetails',
         });
     });
@@ -89,7 +91,7 @@ describe('carnetProductDetails', () => {
             CARNET_PRODUCT_DETAILS_ATTRIBUTE,
             expectedProductDetails,
         );
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/ticketConfirmation',
         });
     });
@@ -123,7 +125,7 @@ describe('carnetProductDetails', () => {
             CARNET_PRODUCT_DETAILS_ATTRIBUTE,
             expectedProductDetails,
         );
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/returnValidity',
         });
     });
@@ -169,7 +171,7 @@ describe('carnetProductDetails', () => {
 
         carnetProductDetails(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/carnetProductDetails',
         });
     });

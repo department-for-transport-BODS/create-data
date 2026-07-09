@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import DeleteConfirmationPopup from '../components/DeleteConfirmationPopup';
 import { getOperatorGroupsByNoc } from '../data/auroradb';
 import { NextPageContextWithSession, OperatorGroup, ErrorInfo } from '../interfaces';

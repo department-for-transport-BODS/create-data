@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import camelCase from 'lodash/camelCase';
 import startCase from 'lodash/startCase';
 import {

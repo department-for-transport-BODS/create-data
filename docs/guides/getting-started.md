@@ -28,7 +28,7 @@ It is recommended to use `pyenv` to manage versions of python easily, see [https
 
 ## Install Node.js
 
-`asdf` should be used to manage versions of node, see [https://asdf-vm.com/](https://asdf-vm.com/) for installation instructions.
+`mise` should be used to manage versions of node, see [https://mise.jdx.dev/](https://mise.jdx.dev/) for installation instructions.
 
 Unless otherwise stated node 18 has been used for development of the service.
 

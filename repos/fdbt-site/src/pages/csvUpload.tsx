@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { BaseLayout } from '../layout/Layout';
 import UserDataUploadComponent from '../components/UserDataUploads';
 import {
@@ -6,19 +6,20 @@ import {
     MATCHING_JSON_ATTRIBUTE,
     MATCHING_JSON_META_DATA_ATTRIBUTE,
 } from '../constants/attributes';
-import FaresTriangleExampleCsv from '../assets/files/Fares-Triangle-Example.csv';
-import HowToUploadFaresTriangle from '../assets/files/How-to-Upload-a-Fares-Triangle.pdf';
 import { NextPageContextWithSession, ErrorInfo, UserDataUploadsProps } from '../interfaces';
 import { getSessionAttribute } from '../utils/sessions';
 import { getCsrfToken } from '../utils';
 import BackButton from '../components/BackButton';
 import ErrorSummary from '../components/ErrorSummary';
 import FileAttachment from '../components/FileAttachment';
-import guidanceDocImage from '../assets/images/Guidance-doc-front-page.png';
-import csvImage from '../assets/images/csv.png';
 import CsrfForm from '../components/CsrfForm';
 import { SUPPORT_EMAIL_ADDRESS } from '../constants';
 import AccessibilityDetails from '../components/AccessibilityDetails';
+
+const guidanceDocImage = '/images/Guidance-doc-front-page.png';
+const csvImage = '/images/csv.png';
+const FaresTriangleExampleCsv = '/files/Fares-Triangle-Example.csv';
+const HowToUploadFaresTriangle = '/files/How-to-Upload-a-Fares-Triangle.pdf';
 
 const title = 'CSV Upload - Create Fares Data Service';
 const description = 'CSV Upload page of the Create Fares Data Service';

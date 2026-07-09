@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, Fragment } from 'react';
+import { ReactElement, useState, Fragment } from 'react';
 import FormElementWrapper, { FormGroupWrapper } from './FormElementWrapper';
 import { ErrorInfo, TimeInput } from '../interfaces';
 import { sentenceCaseString } from '../utils';
@@ -54,8 +54,8 @@ const TimeRestrictionsTable = ({
         return inputsForDay;
     };
 
-    const getTimeRestrictionRows = (chosenDay: string): JSX.Element[] => {
-        const rows = [];
+    const getTimeRestrictionRows = (chosenDay: string): ReactElement[] => {
+        const rows: ReactElement[] = [];
 
         const startInputsForDay = getInputsForDay(startTimeInputs, chosenDay);
         const endInputsForDay = getInputsForDay(endTimeInputs, chosenDay);

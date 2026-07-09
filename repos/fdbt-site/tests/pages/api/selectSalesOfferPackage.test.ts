@@ -20,6 +20,9 @@ import {
 import * as userData from '../../../src/utils/apiUtils/userData';
 import { ExpiryUnit, TicketWithIds } from '../../../src/interfaces/matchingJsonTypes';
 
+jest.mock('../../../src/utils/apiUtils/userData');
+jest.mock('../../../src/utils/sessions');
+
 describe('selectSalesOfferPackage', () => {
     const writeHeadMock = jest.fn();
     const s3Spy = jest.spyOn(userData, 'putUserDataInProductsBucketWithFilePath');
@@ -35,7 +38,7 @@ describe('selectSalesOfferPackage', () => {
 
         await selectSalesOfferPackages(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/selectPurchaseMethods',
         });
     });
@@ -50,7 +53,7 @@ describe('selectSalesOfferPackage', () => {
 
         await selectSalesOfferPackages(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/selectPurchaseMethods',
         });
     });
@@ -77,7 +80,7 @@ describe('selectSalesOfferPackage', () => {
 
         await selectSalesOfferPackages(req, res);
 
-        expect(userData.putUserDataInProductsBucketWithFilePath).toBeCalledWith(
+        expect(userData.putUserDataInProductsBucketWithFilePath).toHaveBeenCalledWith(
             {
                 ...expectedSingleTicket,
                 products: [
@@ -90,7 +93,7 @@ describe('selectSalesOfferPackage', () => {
             'test/path',
         );
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/products/productDetails?productId=2&serviceId=22D',
         });
     });
@@ -140,7 +143,7 @@ describe('selectSalesOfferPackage', () => {
 
         await selectSalesOfferPackages(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, SALES_OFFER_PACKAGES_ATTRIBUTE, [
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, SALES_OFFER_PACKAGES_ATTRIBUTE, [
             {
                 productName: 'Weekly Ticket',
                 salesOfferPackages: [
@@ -182,7 +185,7 @@ describe('selectSalesOfferPackage', () => {
             },
         ]);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/productDateInformation',
         });
         updateSessionAttributeSpy.mockRestore();

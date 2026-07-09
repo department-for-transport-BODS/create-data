@@ -357,7 +357,7 @@ const MultiOperatorsServiceList = ({
                             <div>
                                 {operators.map((operator, index) => {
                                     const { nocCode, selectedServices } = operator;
-                                    const elements: JSX.Element[] = selectedServices.map((service, index2) => {
+                                    const elements: ReactElement[] = selectedServices.map((service, index2) => {
                                         const { lineName, lineId, serviceCode, serviceDescription, startDate } =
                                             service;
 

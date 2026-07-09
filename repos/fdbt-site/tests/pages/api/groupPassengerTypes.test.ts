@@ -3,6 +3,8 @@ import { getMockRequestAndResponse } from '../../testData/mockData';
 import * as sessionUtils from '../../../src/utils/sessions';
 import { GROUP_PASSENGER_TYPES_ATTRIBUTE } from '../../../src/constants/attributes';
 
+jest.mock('../../../src/utils/sessions');
+
 describe('groupPassengerTypes', () => {
     const writeHeadMock = jest.fn();
     const updateSessionAttributeSpy = jest.spyOn(sessionUtils, 'updateSessionAttribute');
@@ -19,10 +21,10 @@ describe('groupPassengerTypes', () => {
         });
         groupPassengerTypes(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/groupPassengerTypes',
         });
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GROUP_PASSENGER_TYPES_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GROUP_PASSENGER_TYPES_ATTRIBUTE, {
             errors: [{ errorMessage: 'Choose one or two passenger types from the options', id: 'passenger-type-0' }],
         });
     });
@@ -37,10 +39,10 @@ describe('groupPassengerTypes', () => {
         });
         groupPassengerTypes(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/groupPassengerTypes',
         });
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GROUP_PASSENGER_TYPES_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GROUP_PASSENGER_TYPES_ATTRIBUTE, {
             errors: [
                 {
                     errorMessage: 'Choose one or two passenger types - you cannot exceed this limit',
@@ -59,10 +61,10 @@ describe('groupPassengerTypes', () => {
         });
         groupPassengerTypes(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/definePassengerType?groupPassengerType=adult',
         });
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GROUP_PASSENGER_TYPES_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GROUP_PASSENGER_TYPES_ATTRIBUTE, {
             passengerTypes: input,
         });
     });

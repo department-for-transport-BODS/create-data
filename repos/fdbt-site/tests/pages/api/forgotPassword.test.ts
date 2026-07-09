@@ -4,6 +4,9 @@ import forgotPassword from '../../../src/pages/api/forgotPassword';
 import { getMockRequestAndResponse } from '../../testData/mockData';
 import { FORGOT_PASSWORD_ATTRIBUTE } from '../../../src/constants/attributes';
 
+jest.mock('../../../src/data/cognito');
+jest.mock('../../../src/utils/sessions');
+
 const writeHeadMock = jest.fn();
 const authSignInSpy = jest.spyOn(auth, 'forgotPassword');
 authSignInSpy.mockImplementation(() => Promise.resolve());
@@ -20,7 +23,7 @@ describe('forgotPassword', () => {
         });
         await forgotPassword(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/resetConfirmation',
         });
     });
@@ -36,7 +39,7 @@ describe('forgotPassword', () => {
         });
         await forgotPassword(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/forgotPassword',
         });
     });
@@ -46,6 +49,6 @@ describe('forgotPassword', () => {
         const mockBody = { email: 'test@email.com' };
         const { req, res } = getMockRequestAndResponse({ cookieValues: {}, body: mockBody });
         await forgotPassword(req, res);
-        expect(updateSessionSpy).toBeCalledWith(req, FORGOT_PASSWORD_ATTRIBUTE, mockBody);
+        expect(updateSessionSpy).toHaveBeenCalledWith(req, FORGOT_PASSWORD_ATTRIBUTE, mockBody);
     });
 });

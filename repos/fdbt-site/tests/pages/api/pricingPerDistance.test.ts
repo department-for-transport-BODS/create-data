@@ -10,6 +10,9 @@ import {
 import * as userData from '../../../src/utils/apiUtils/userData';
 import { TicketWithIds } from '../../../src/interfaces/matchingJsonTypes';
 
+jest.mock('../../../src/utils/sessions');
+jest.mock('../../../src/utils/apiUtils/userData');
+
 describe('pricingPerDistance', () => {
     const updateSessionAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');
     const writeHeadMock = jest.fn();
@@ -54,9 +57,13 @@ describe('pricingPerDistance', () => {
 
         await pricingPerDistance(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, PRICING_PER_DISTANCE_ATTRIBUTE, mockPricingDataInfo);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(
+            req,
+            PRICING_PER_DISTANCE_ATTRIBUTE,
+            mockPricingDataInfo,
+        );
 
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/additionalPricingStructures' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/additionalPricingStructures' });
     });
 
     it('correctly generates pricing by distance info, updates the ticket and then redirects to /product details if all is valid', async () => {
@@ -82,8 +89,8 @@ describe('pricingPerDistance', () => {
 
         await pricingPerDistance(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, PRICING_PER_DISTANCE_ATTRIBUTE, undefined);
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/products/productDetails?productId=2' });
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, PRICING_PER_DISTANCE_ATTRIBUTE, undefined);
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/products/productDetails?productId=2' });
     });
 
     it('produces an error when distanceTo is empty', async () => {
@@ -112,7 +119,7 @@ describe('pricingPerDistance', () => {
 
         await pricingPerDistance(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, PRICING_PER_DISTANCE_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, PRICING_PER_DISTANCE_ATTRIBUTE, {
             maximumPrice: '4',
             minimumPrice: '3',
             distanceBands: [
@@ -158,7 +165,7 @@ describe('pricingPerDistance', () => {
 
         await pricingPerDistance(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, PRICING_PER_DISTANCE_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, PRICING_PER_DISTANCE_ATTRIBUTE, {
             errors,
             maximumPrice: '4',
             minimumPrice: '3',
@@ -196,7 +203,7 @@ describe('pricingPerDistance', () => {
 
         await pricingPerDistance(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, PRICING_PER_DISTANCE_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, PRICING_PER_DISTANCE_ATTRIBUTE, {
             maximumPrice: '',
             minimumPrice: '3',
             distanceBands: [
@@ -238,7 +245,7 @@ describe('pricingPerDistance', () => {
 
         await pricingPerDistance(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, PRICING_PER_DISTANCE_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, PRICING_PER_DISTANCE_ATTRIBUTE, {
             maximumPrice: '3',
             minimumPrice: '',
             distanceBands: [
@@ -280,7 +287,7 @@ describe('pricingPerDistance', () => {
 
         await pricingPerDistance(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, PRICING_PER_DISTANCE_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, PRICING_PER_DISTANCE_ATTRIBUTE, {
             maximumPrice: '3',
             minimumPrice: '2',
             distanceBands: [

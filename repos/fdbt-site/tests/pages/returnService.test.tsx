@@ -286,7 +286,7 @@ describe('pages', () => {
 
             await getServerSideProps(ctx);
 
-            expect(ctx.res?.writeHead).toBeCalledWith(302, { Location: '/noServices' });
+            expect(ctx.res?.writeHead).toHaveBeenCalledWith(302, { Location: '/noServices' });
         });
 
         it('throws error if ticket was not in edit mode', async () => {

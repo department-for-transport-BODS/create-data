@@ -1,10 +1,11 @@
-import Cookies from 'cookies';
+import * as cookie from 'cookie';
+import Cookies from 'js-cookie';
 import { NextPageContext } from 'next';
 import { IncomingMessage } from 'http';
-import { parseCookies, destroyCookie } from 'nookies';
 import { decode } from 'jsonwebtoken';
 import startCase from 'lodash/startCase';
 import toLower from 'lodash/toLower';
+import dayjs from './dayjs';
 import {
     ID_TOKEN_COOKIE,
     REFRESH_TOKEN_COOKIE,
@@ -24,8 +25,55 @@ import {
     DocumentContextWithSession,
     ResponseWithLocals,
 } from '../interfaces';
-import dateFormat from 'dateformat';
 import { Stop, Ticket, TicketWithIds, ReturnTicket } from '../interfaces/matchingJsonTypes';
+
+const parseCookiesFromContext = (ctx: NextPageContext): Record<string, string | undefined> => {
+    const cookieHeader = ctx.req?.headers?.cookie;
+
+    if (cookieHeader) {
+        return cookie.parse(cookieHeader);
+    }
+
+    if (typeof document !== 'undefined') {
+        return Cookies.get() as Record<string, string | undefined>;
+    }
+
+    return {};
+};
+
+const appendSetCookieHeader = (ctx: NextPageContext, serialisedCookie: string): void => {
+    if (!ctx.res) {
+        return;
+    }
+
+    const existingSetCookieHeader = ctx.res.getHeader('Set-Cookie');
+    const existingCookies = Array.isArray(existingSetCookieHeader)
+        ? existingSetCookieHeader.map((value) => String(value))
+        : existingSetCookieHeader
+          ? [String(existingSetCookieHeader)]
+          : [];
+
+    ctx.res.setHeader('Set-Cookie', [...existingCookies, serialisedCookie]);
+};
+
+const destroyCookieInContext = (ctx: NextPageContext, cookieName: string): void => {
+    const serialisedCookie = cookie.serialize(cookieName, '', {
+        expires: new Date(0),
+        maxAge: 0,
+        path: '/',
+        sameSite: 'strict',
+        secure: process.env.NODE_ENV !== 'development',
+    });
+
+    if (ctx.res) {
+        appendSetCookieHeader(ctx, serialisedCookie);
+        return;
+    }
+
+    if (typeof document !== 'undefined') {
+        Cookies.remove(cookieName, { path: '/' });
+    }
+};
 
 export const formatFailedFileNames = (failedExportFileNames: string[]): string => {
     // example filename
@@ -44,7 +92,7 @@ export const getProofDocumentsString = (documents: string[]): string =>
     documents.map((document) => sentenceCaseString(document)).join(', ');
 
 export const getCookieValue = (ctx: NextPageContext, cookie: string, jsonAttribute = ''): string | null => {
-    const cookies = parseCookies(ctx);
+    const cookies = parseCookiesFromContext(ctx);
 
     if (cookies[cookie]) {
         if (jsonAttribute) {
@@ -61,26 +109,34 @@ export const getCookieValue = (ctx: NextPageContext, cookie: string, jsonAttribu
 
 export const setCookieOnServerSide = (ctx: NextPageContext, cookieName: string, cookieValue: string): void => {
     if (ctx.req && ctx.res) {
-        const cookies = new Cookies(ctx.req, ctx.res);
-
-        cookies.set(cookieName, cookieValue, {
-            path: '/',
-            sameSite: 'strict',
-            secure: process.env.NODE_ENV !== 'development',
-        });
+        appendSetCookieHeader(
+            ctx,
+            cookie.serialize(cookieName, cookieValue, {
+                path: '/',
+                sameSite: 'strict',
+                secure: process.env.NODE_ENV !== 'development',
+            }),
+        );
     }
 };
 
 export const deleteCookieOnServerSide = (ctx: NextPageContext, cookieName: string): void => {
     if (ctx.req && ctx.res) {
-        const cookies = new Cookies(ctx.req, ctx.res);
-
-        cookies.set(cookieName, '', { overwrite: true, maxAge: 0, path: '/' });
+        appendSetCookieHeader(
+            ctx,
+            cookie.serialize(cookieName, '', {
+                expires: new Date(0),
+                maxAge: 0,
+                path: '/',
+                sameSite: 'strict',
+                secure: process.env.NODE_ENV !== 'development',
+            }),
+        );
     }
 };
 
 export const deleteAllCookiesOnServerSide = (ctx: NextPageContext): void => {
-    const cookies = parseCookies(ctx);
+    const cookies = parseCookiesFromContext(ctx);
     const cookieWhitelist = [
         ID_TOKEN_COOKIE,
         REFRESH_TOKEN_COOKIE,
@@ -93,7 +149,7 @@ export const deleteAllCookiesOnServerSide = (ctx: NextPageContext): void => {
 
     Object.keys(cookies).forEach((cookie) => {
         if (!cookieWhitelist.includes(cookie)) {
-            destroyCookie(ctx, cookie);
+            destroyCookieInContext(ctx, cookie);
         }
     });
 };
@@ -156,7 +212,7 @@ export const getAttributeFromIdToken = <T extends keyof CognitoIdToken>(
     ctx: NextPageContext,
     attribute: T,
 ): CognitoIdToken[T] | null => {
-    const cookies = parseCookies(ctx);
+    const cookies = parseCookiesFromContext(ctx);
     const idToken = cookies[ID_TOKEN_COOKIE];
 
     if (!idToken) {
@@ -172,9 +228,11 @@ export const getNocFromIdToken = (ctx: NextPageContext): string | null => getAtt
 
 export const getAndValidateNoc = (ctx: NextPageContextWithSession): string => {
     const idTokenNoc = getNocFromIdToken(ctx);
+    console.log(idTokenNoc);
     const operatorAttribute = getSessionAttribute(ctx.req, OPERATOR_ATTRIBUTE);
     const sessionNoc = operatorAttribute?.nocCode;
     const splitNoc = idTokenNoc?.split('|');
+
     if (sessionNoc && idTokenNoc && splitNoc?.includes(sessionNoc)) {
         return sessionNoc;
     }
@@ -247,7 +305,7 @@ export const chunk = <T>(array: T[], size: number): T[][] => {
 };
 
 export const convertDateFormat = (date: string): string => {
-    return dateFormat(date, 'dd/mm/yyyy');
+    return dayjs(date).format('DD/MM/YYYY');
 };
 
 export const isReturnTicket = (ticket: Ticket | TicketWithIds): ticket is ReturnTicket => ticket.type === 'return';

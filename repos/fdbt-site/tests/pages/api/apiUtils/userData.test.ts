@@ -73,6 +73,10 @@ import {
 import { CarnetExpiryUnit, ExpiryUnit, PeriodExpiry, TicketType } from '../../../../src/interfaces/matchingJsonTypes';
 import * as util from '../../../../src/utils/apiUtils';
 
+jest.mock('../../../../src/utils/apiUtils');
+jest.mock('../../../../src/data/s3');
+jest.mock('../../../../src/data/auroradb');
+
 beforeEach(() => {
     jest.spyOn(util, 'getNocFromIdToken').mockImplementationOnce(() => 'BLAC');
 });

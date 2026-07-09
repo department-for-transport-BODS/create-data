@@ -3,6 +3,8 @@ import { getMockRequestAndResponse } from '../../testData/mockData';
 import * as sessions from '../../../src/utils/sessions';
 import { FLAT_FARE_RETURN_ATTRIBUTE, TICKET_REPRESENTATION_ATTRIBUTE } from '../../../src/constants/attributes';
 
+jest.mock('../../../src/utils/sessions');
+
 describe('ticketRepresentation', () => {
     const writeHeadMock = jest.fn();
     const updateSessionAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');
@@ -15,11 +17,11 @@ describe('ticketRepresentation', () => {
         const { req, res } = getMockRequestAndResponse({ body: null, mockWriteHeadFn: writeHeadMock });
         ticketRepresentation(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/ticketRepresentation',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, TICKET_REPRESENTATION_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, TICKET_REPRESENTATION_ATTRIBUTE, {
             errors: [{ errorMessage: 'Choose a type of ticket representation', id: 'geo-zone' }],
         });
     });
@@ -31,11 +33,11 @@ describe('ticketRepresentation', () => {
         });
         ticketRepresentation(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/ticketRepresentation',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, TICKET_REPRESENTATION_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, TICKET_REPRESENTATION_ATTRIBUTE, {
             errors: [{ errorMessage: 'Choose a type of ticket representation', id: 'geo-zone' }],
         });
     });
@@ -50,7 +52,7 @@ describe('ticketRepresentation', () => {
 
         ticketRepresentation(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/csvZoneUpload',
         });
     });
@@ -65,15 +67,15 @@ describe('ticketRepresentation', () => {
 
         ticketRepresentation(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/serviceList',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, TICKET_REPRESENTATION_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, TICKET_REPRESENTATION_ATTRIBUTE, {
             name: 'multipleServices',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, FLAT_FARE_RETURN_ATTRIBUTE, true);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, FLAT_FARE_RETURN_ATTRIBUTE, true);
     });
 
     it('should return 302 redirect to /csvZoneUpload when the user selects hybrid', () => {
@@ -86,7 +88,7 @@ describe('ticketRepresentation', () => {
 
         ticketRepresentation(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/csvZoneUpload',
         });
     });
@@ -101,7 +103,7 @@ describe('ticketRepresentation', () => {
 
         ticketRepresentation(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/serviceList',
         });
     });
@@ -116,7 +118,7 @@ describe('ticketRepresentation', () => {
 
         ticketRepresentation(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/serviceList',
         });
     });
@@ -131,7 +133,7 @@ describe('ticketRepresentation', () => {
 
         ticketRepresentation(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/service',
         });
     });
@@ -146,7 +148,7 @@ describe('ticketRepresentation', () => {
 
         ticketRepresentation(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/csvZoneUpload',
         });
     });
@@ -161,7 +163,7 @@ describe('ticketRepresentation', () => {
 
         ticketRepresentation(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/serviceList',
         });
     });

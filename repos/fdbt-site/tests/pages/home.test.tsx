@@ -6,6 +6,8 @@ import * as aurora from '../../src/data/auroradb';
 import { OperatorAttribute } from '../../src/interfaces';
 import { getMockContext } from '../testData/mockData';
 
+jest.mock('../../src/data/auroradb');
+
 const multiModalServices = [
     {
         id: 11,

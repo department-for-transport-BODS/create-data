@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { MyFaresPointToPointProduct, MyFaresService, NextPageContextWithSession } from '../../interfaces/index';
 import { BaseLayout } from '../../layout/Layout';
 import {
@@ -9,8 +9,8 @@ import {
 } from '../../data/auroradb';
 import { getProductsMatchingJson } from '../../data/s3';
 import { convertDateFormat, getAndValidateNoc, getCsrfToken } from '../../utils';
-import moment from 'moment';
-import { isArray } from 'lodash';
+import dayjs from '../../utils/dayjs';
+import isArray from 'lodash/isArray';
 import { getProductStatusTag } from './services';
 import BackButton from '../../components/BackButton';
 import DeleteConfirmationPopup from '../../components/DeleteConfirmationPopup';
@@ -188,11 +188,11 @@ const PointToPointProductsTable = (
 };
 
 export const filterProductsNotToDisplay = (service: MyFaresService, products: MyFaresProduct[]): MyFaresProduct[] => {
-    const serviceStartDate = moment.utc(service.startDate, 'DD/MM/YYYY').valueOf();
-    const serviceEndDate = service.endDate ? moment.utc(service.endDate, 'DD/MM/YYYY').valueOf() : undefined;
+    const serviceStartDate = dayjs.utc(service.startDate, 'DD/MM/YYYY').valueOf();
+    const serviceEndDate = service.endDate ? dayjs.utc(service.endDate, 'DD/MM/YYYY').valueOf() : undefined;
     return products.filter((product) => {
-        const productStartDate = moment.utc(product.startDate, 'DD/MM/YYYY').valueOf();
-        const productEndDate = product.endDate && moment.utc(product.endDate, 'DD/MM/YYYY').valueOf();
+        const productStartDate = dayjs.utc(product.startDate, 'DD/MM/YYYY').valueOf();
+        const productEndDate = product.endDate && dayjs.utc(product.endDate, 'DD/MM/YYYY').valueOf();
         return (
             (!productEndDate || productEndDate >= serviceStartDate) &&
             (!serviceEndDate || productStartDate <= serviceEndDate)

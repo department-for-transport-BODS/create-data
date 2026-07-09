@@ -17,6 +17,10 @@ import { EditFareStageMatchingWithErrors } from 'src/interfaces';
 import * as userData from '../../../src/utils/apiUtils/userData';
 import { TicketWithIds } from '../../../src/interfaces/matchingJsonTypes';
 
+jest.mock('../../../src/utils/sessions');
+jest.mock('../../../src/utils/apiUtils/index');
+jest.mock('../../../src/utils/apiUtils/userData');
+
 export const selections = {
     option0: [
         'Acomb Green Lane',
@@ -85,7 +89,7 @@ describe('Edit fare stage matching API', () => {
         });
         await editFareStageMatching(req, res);
 
-        expect(redirectToErrorSpy).toBeCalledWith(
+        expect(redirectToErrorSpy).toHaveBeenCalledWith(
             res,
             'There was a problem mapping the fare stage for edit ticket',
             'api.editFareStageMatching',
@@ -106,7 +110,7 @@ describe('Edit fare stage matching API', () => {
         });
         await editFareStageMatching(req, res);
 
-        expect(redirectToErrorSpy).toBeCalledWith(
+        expect(redirectToErrorSpy).toHaveBeenCalledWith(
             res,
             'There was a problem mapping the fare stage for edit ticket',
             'api.editFareStageMatching',
@@ -145,7 +149,7 @@ describe('Edit fare stage matching API', () => {
             EDIT_FARE_STAGE_MATCHING_ATTRIBUTE,
             expectedMatchingError,
         );
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/editFareStageMatching',
         });
     });
@@ -176,7 +180,7 @@ describe('Edit fare stage matching API', () => {
             EDIT_FARE_STAGE_MATCHING_ATTRIBUTE,
             expectedMatchingError,
         );
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/editFareStageMatching',
         });
     });
@@ -199,7 +203,7 @@ describe('Edit fare stage matching API', () => {
 
         await editFareStageMatching(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/products/productDetails?productId=1&serviceId=2',
         });
     });
@@ -222,7 +226,7 @@ describe('Edit fare stage matching API', () => {
 
         await editFareStageMatching(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/editFareStageMatching',
         });
     });
@@ -247,7 +251,7 @@ describe('Edit fare stage matching API', () => {
         });
 
         await editFareStageMatching(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/products/productDetails?productId=1&serviceId=2',
         });
     });

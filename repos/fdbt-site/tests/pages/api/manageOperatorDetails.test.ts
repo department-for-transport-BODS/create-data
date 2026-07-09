@@ -5,6 +5,10 @@ import { GS_OPERATOR_DETAILS_ATTRIBUTE } from '../../../src/constants/attributes
 import { getMockRequestAndResponse } from '../../testData/mockData';
 import manageOperatorDetails from '../../../src/pages/api/manageOperatorDetails';
 
+jest.mock('../../../src/utils/sessions');
+jest.mock('../../../src/data/auroradb');
+jest.mock('../../../src/utils/apiUtils/index');
+
 const updateSessionAttributeSpy = jest.spyOn(session, 'updateSessionAttribute');
 const upsertOperatorDetailsSpy = jest.spyOn(aurora, 'upsertOperatorDetails');
 
@@ -54,9 +58,9 @@ describe('manageOperatorDetails', () => {
 
         await manageOperatorDetails(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GS_OPERATOR_DETAILS_ATTRIBUTE, attributeValue);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_OPERATOR_DETAILS_ATTRIBUTE, attributeValue);
 
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/manageOperatorDetails' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/manageOperatorDetails' });
     });
 
     it('should error when no contact details are provided', async () => {
@@ -78,9 +82,9 @@ describe('manageOperatorDetails', () => {
 
         await manageOperatorDetails(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GS_OPERATOR_DETAILS_ATTRIBUTE, attributeValue);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_OPERATOR_DETAILS_ATTRIBUTE, attributeValue);
 
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/manageOperatorDetails' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/manageOperatorDetails' });
     });
 
     it('should error when contactNumber is invalid', async () => {
@@ -99,9 +103,9 @@ describe('manageOperatorDetails', () => {
 
         await manageOperatorDetails(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GS_OPERATOR_DETAILS_ATTRIBUTE, attributeValue);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_OPERATOR_DETAILS_ATTRIBUTE, attributeValue);
 
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/manageOperatorDetails' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/manageOperatorDetails' });
     });
 
     it('should error when email is invalid', async () => {
@@ -120,9 +124,9 @@ describe('manageOperatorDetails', () => {
 
         await manageOperatorDetails(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GS_OPERATOR_DETAILS_ATTRIBUTE, attributeValue);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_OPERATOR_DETAILS_ATTRIBUTE, attributeValue);
 
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/manageOperatorDetails' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/manageOperatorDetails' });
     });
 
     it('should error when url is invalid', async () => {
@@ -141,9 +145,9 @@ describe('manageOperatorDetails', () => {
 
         await manageOperatorDetails(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GS_OPERATOR_DETAILS_ATTRIBUTE, attributeValue);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_OPERATOR_DETAILS_ATTRIBUTE, attributeValue);
 
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/manageOperatorDetails' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/manageOperatorDetails' });
     });
 
     it('should error when postcode is invalid', async () => {
@@ -162,9 +166,9 @@ describe('manageOperatorDetails', () => {
 
         await manageOperatorDetails(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GS_OPERATOR_DETAILS_ATTRIBUTE, attributeValue);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_OPERATOR_DETAILS_ATTRIBUTE, attributeValue);
 
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/manageOperatorDetails' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/manageOperatorDetails' });
     });
 
     it('should upsert operator details and set saved if valid', async () => {
@@ -183,10 +187,10 @@ describe('manageOperatorDetails', () => {
 
         await manageOperatorDetails(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GS_OPERATOR_DETAILS_ATTRIBUTE, attributeValue);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_OPERATOR_DETAILS_ATTRIBUTE, attributeValue);
 
-        expect(upsertOperatorDetailsSpy).toBeCalledWith('mynoc', input);
+        expect(upsertOperatorDetailsSpy).toHaveBeenCalledWith('mynoc', input);
 
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/manageOperatorDetails' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/manageOperatorDetails' });
     });
 });

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { NextPageContext } from 'next';
 import TwoThirdsLayout from '../layout/Layout';
 import { FEEDBACK_LINK } from '../constants';

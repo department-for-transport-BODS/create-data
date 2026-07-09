@@ -1,5 +1,4 @@
 import startCase from 'lodash/startCase';
-import moment from 'moment';
 import React, { ReactElement, useState } from 'react';
 import { MULTI_MODAL_ATTRIBUTE } from '../../constants/attributes';
 import { getSessionAttribute } from '../../utils/sessions';
@@ -13,6 +12,7 @@ import { getAndValidateNoc, getCsrfToken } from '../../utils';
 import { getActiveOrPendingProducts } from '../../utils/apiUtils/export';
 import { getAllExports } from '../api/getExportProgress';
 import { GetServerSidePropsResult } from 'next';
+import dayjs from '../../utils/dayjs';
 
 const title = 'Select Exports';
 const description = 'Export selected products into NeTEx.';
@@ -556,10 +556,10 @@ export const getServerSideProps = async (
         );
 
         const matchingProducts = productsWithSameLineId.filter((product) => {
-            const momentProductStartDate = moment(product.startDate, 'DD/MM/YYYY').valueOf();
-            const momentProductEndDate = product.endDate && moment(product.endDate, 'DD/MM/YYYY').valueOf();
-            const momentServiceStartDate = moment(service.startDate, 'DD/MM/YYYY').valueOf();
-            const momentServiceEndDate = service.endDate ? moment(service.endDate, 'DD/MM/YYYY').valueOf() : undefined;
+            const momentProductStartDate = dayjs(product.startDate, 'DD/MM/YYYY').valueOf();
+            const momentProductEndDate = product.endDate && dayjs(product.endDate, 'DD/MM/YYYY').valueOf();
+            const momentServiceStartDate = dayjs(service.startDate, 'DD/MM/YYYY').valueOf();
+            const momentServiceEndDate = service.endDate ? dayjs(service.endDate, 'DD/MM/YYYY').valueOf() : undefined;
 
             const productMatchesService =
                 (!momentProductEndDate || momentProductEndDate >= momentServiceStartDate) &&

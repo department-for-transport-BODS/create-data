@@ -10,6 +10,8 @@ import { InboundMatchingInfo, MatchingWithErrors } from '../../../src/interfaces
 import { INBOUND_MATCHING_ATTRIBUTE, UNASSIGNED_INBOUND_STOPS_ATTRIBUTE } from '../../../src/constants/attributes';
 import { selections, selectedOptionsWithAnUnassignedStop } from './matching.test';
 
+jest.mock('../../../src/utils/sessions');
+
 describe('Inbound Matching API', () => {
     const updateSessionAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');
 
@@ -65,7 +67,7 @@ describe('Inbound Matching API', () => {
         inboundMatching(req, res);
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, INBOUND_MATCHING_ATTRIBUTE, expectedMatchingInfo);
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/returnValidity' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/returnValidity' });
     });
 
     it('correctly generates matching info, updates the INBOUND_MATCHING_ATTRIBUTE and then redirects to pointToPointPeriodProduct page for period ticket if all is valid', () => {
@@ -116,7 +118,7 @@ describe('Inbound Matching API', () => {
         inboundMatching(req, res);
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, INBOUND_MATCHING_ATTRIBUTE, expectedMatchingInfo);
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/pointToPointPeriodProduct' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/pointToPointPeriodProduct' });
     });
 
     it('correctly generates matching info, updates the INBOUND_MATCHING_ATTRIBUTE and then redirects to pointToPointPeriodProduct page for school service ticket if all is valid', () => {
@@ -168,7 +170,7 @@ describe('Inbound Matching API', () => {
         inboundMatching(req, res);
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, INBOUND_MATCHING_ATTRIBUTE, expectedMatchingInfo);
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/pointToPointPeriodProduct' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/pointToPointPeriodProduct' });
     });
 
     it('adds the unassigned stops to the inbound session attribute', () => {
@@ -223,7 +225,7 @@ describe('Inbound Matching API', () => {
                 atcoCode: '2590B0207',
             },
         ]);
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/returnValidity' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/returnValidity' });
     });
 
     it('correctly generates matching error info, updates the INBOUND_MATCHING_ATTRIBUTE and then redirects to inboundMatching page when there no assigned fare stages', () => {
@@ -245,7 +247,7 @@ describe('Inbound Matching API', () => {
         inboundMatching(req, res);
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, INBOUND_MATCHING_ATTRIBUTE, expectedMatchingError);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/inboundMatching',
         });
     });
@@ -271,7 +273,7 @@ describe('Inbound Matching API', () => {
         inboundMatching(req, res);
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, INBOUND_MATCHING_ATTRIBUTE, expectedMatchingError);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/inboundMatching',
         });
     });
@@ -283,7 +285,7 @@ describe('Inbound Matching API', () => {
         });
 
         inboundMatching(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/error',
         });
     });
@@ -299,7 +301,7 @@ describe('Inbound Matching API', () => {
         });
 
         inboundMatching(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/error',
         });
     });

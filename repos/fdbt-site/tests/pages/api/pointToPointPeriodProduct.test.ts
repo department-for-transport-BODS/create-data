@@ -3,6 +3,8 @@ import * as sessions from '../../../src/utils/sessions';
 import { getMockRequestAndResponse } from '../../testData/mockData';
 import pointToPointPeriodProduct from '../../../src/pages/api/pointToPointPeriodProduct';
 
+jest.mock('../../../src/utils/sessions');
+
 describe('pointToPointPeriodProduct', () => {
     const updateAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');
 
@@ -39,7 +41,7 @@ describe('pointToPointPeriodProduct', () => {
         pointToPointPeriodProduct(req, res);
 
         expect(updateAttributeSpy).toHaveBeenCalledWith(req, POINT_TO_POINT_PRODUCT_ATTRIBUTE, productInputWithErrors);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/pointToPointPeriodProduct',
         });
     });
@@ -74,7 +76,7 @@ describe('pointToPointPeriodProduct', () => {
         pointToPointPeriodProduct(req, res);
 
         expect(updateAttributeSpy).toHaveBeenCalledWith(req, POINT_TO_POINT_PRODUCT_ATTRIBUTE, productInputWithErrors);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/pointToPointPeriodProduct',
         });
     });
@@ -98,7 +100,7 @@ describe('pointToPointPeriodProduct', () => {
         pointToPointPeriodProduct(req, res);
 
         expect(updateAttributeSpy).toHaveBeenCalledWith(req, POINT_TO_POINT_PRODUCT_ATTRIBUTE, productInput);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/selectPeriodValidity',
         });
     });
@@ -122,7 +124,7 @@ describe('pointToPointPeriodProduct', () => {
         pointToPointPeriodProduct(req, res);
 
         expect(updateAttributeSpy).toHaveBeenCalledWith(req, POINT_TO_POINT_PRODUCT_ATTRIBUTE, productInput);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/selectPeriodValidity',
         });
     });

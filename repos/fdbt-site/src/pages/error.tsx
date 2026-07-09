@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { NextPageContext } from 'next';
 import Error from './_error';
 

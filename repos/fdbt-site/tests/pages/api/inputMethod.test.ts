@@ -3,6 +3,8 @@ import { getMockRequestAndResponse } from '../../testData/mockData';
 import * as sessions from '../../../src/utils/sessions';
 import { INPUT_METHOD_ATTRIBUTE } from '../../../src/constants/attributes';
 
+jest.mock('../../../src/utils/sessions');
+
 describe('inputMethod', () => {
     const writeHeadMock = jest.fn();
     const updateSessionAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');
@@ -21,7 +23,7 @@ describe('inputMethod', () => {
             body: { inputMethod: selectedInputMethod },
         });
         inputMethod(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: redirect,
         });
     });
@@ -33,9 +35,9 @@ describe('inputMethod', () => {
         });
         inputMethod(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/inputMethod',
         });
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, INPUT_METHOD_ATTRIBUTE, mockError);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, INPUT_METHOD_ATTRIBUTE, mockError);
     });
 });

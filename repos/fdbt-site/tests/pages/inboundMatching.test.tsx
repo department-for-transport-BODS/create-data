@@ -6,6 +6,9 @@ import * as s3 from '../../src/data/s3';
 import { mockRawService, userFareStages, zoneStops, service, selectedFareStages } from '../testData/mockData';
 import InboundMatching from '../../src/pages/inboundMatching';
 
+jest.mock('../../src/data/auroradb');
+jest.mock('../../src/data/s3');
+
 jest.mock('../../src/data/auroradb.ts');
 jest.mock('../../src/data/s3.ts');
 

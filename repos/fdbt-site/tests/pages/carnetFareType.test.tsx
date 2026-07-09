@@ -60,7 +60,7 @@ describe('pages', () => {
                     },
                 });
                 getServerSideProps(mockContext);
-                expect(writeHeadMock).toBeCalledWith(302, { Location: '/fareType' });
+                expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/fareType' });
             });
         });
     });

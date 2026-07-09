@@ -1,5 +1,5 @@
-import moment from 'moment';
 import { NextApiResponse } from 'next';
+import dayjs from '../../utils/dayjs';
 import { getProductIdByMatchingJsonLink, getServiceByIdAndDataSource } from '../../data/auroradb';
 import { NextApiRequestWithSession } from '../../interfaces';
 import { TicketWithIds, WithIds, SingleTicket, ReturnTicket } from '../../interfaces/matchingJsonTypes';
@@ -24,8 +24,8 @@ export const findTicketsToMakeReturn = (
             let expired = false;
 
             if (ticket.ticketPeriod.endDate) {
-                const today = moment.utc().startOf('day').valueOf();
-                const endDateAsUnixTime = moment.utc(ticket.ticketPeriod.endDate, 'DD/MM/YYYY').valueOf();
+                const today = dayjs.utc().startOf('day').valueOf();
+                const endDateAsUnixTime = dayjs.utc(ticket.ticketPeriod.endDate, 'DD/MM/YYYY').valueOf();
                 if (endDateAsUnixTime < today) {
                     expired = true;
                 }

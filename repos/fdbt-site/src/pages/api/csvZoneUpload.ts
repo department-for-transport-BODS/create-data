@@ -1,5 +1,7 @@
 import { NextApiResponse } from 'next';
-import csvParse from 'csv-parse/lib/sync';
+import { parse } from 'csv-parse/sync';
+import uniq from 'lodash/uniq';
+import isArray from 'lodash/isArray';
 import {
     CSV_ZONE_FILE_NAME,
     FARE_TYPE_ATTRIBUTE,
@@ -22,8 +24,6 @@ import { getAtcoCodesByNaptanCodes, batchGetStopsByAtcoCode, updateProductAdditi
 import { FileData, getFormData, processFileUpload } from '../../utils/apiUtils/fileUpload';
 import logger from '../../utils/logger';
 import { ErrorInfo, NextApiRequestWithSession, UserFareZone, FareType } from '../../interfaces';
-import uniq from 'lodash/uniq';
-import { isArray } from 'lodash';
 import { SecondaryOperatorFareInfo, SelectedService, Stop } from '../../interfaces/matchingJsonTypes';
 import { putUserDataInProductsBucketWithFilePath } from '../../utils/apiUtils/userData';
 import { getAdditionalNocMatchingJsonLink } from '../../utils';
@@ -49,7 +49,7 @@ export const setFareZoneAttributeAndRedirect = (
 };
 
 export const csvParser = (stringifiedCsvData: string): UserFareZone[] => {
-    const parsedFileContent: UserFareZone[] = csvParse(stringifiedCsvData, {
+    const parsedFileContent: UserFareZone[] = parse(stringifiedCsvData, {
         columns: true,
         skip_empty_lines: false,
         delimiter: ',',
@@ -158,9 +158,12 @@ export const processServices = (
     if (!fields) {
         throw new Error('Unable to fetch the form data');
     }
-    const clickedYes = 'exempt' in fields && fields['exempt'] === 'yes';
+    const exemptValue = fields['exempt'];
+    const clickedYes = 'exempt' in fields && (Array.isArray(exemptValue) ? exemptValue[0] : exemptValue) === 'yes';
 
-    const dataFields: { [key: string]: string | string[] } = fields;
+    const dataFields: { [key: string]: string[] } = Object.fromEntries(
+        Object.entries(fields).filter((entry): entry is [string, string[]] => entry[1] !== undefined),
+    );
     delete dataFields['exempt'];
 
     const selectedServices: SelectedService[] = [];

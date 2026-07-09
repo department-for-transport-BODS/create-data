@@ -6,6 +6,11 @@ import * as exporter from '../../../src/utils/apiUtils/export';
 import selectExports from '../../../src/pages/api/selectExports';
 import { MyFaresProduct } from '../../../src/interfaces/dbTypes';
 
+jest.mock('../../../src/data/s3');
+jest.mock('../../../src/data/auroradb');
+jest.mock('../../../src/utils/apiUtils/export');
+jest.mock('../../../src/utils/apiUtils/index');
+
 const mockProducts: MyFaresProduct[] = [
     {
         id: 1,
@@ -52,7 +57,7 @@ describe('fareType', () => {
 
         await selectExports(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/products/selectExports',
         });
     });
@@ -70,7 +75,7 @@ describe('fareType', () => {
 
         await selectExports(req, res);
 
-        expect(triggerExportSpy).toBeCalledWith({
+        expect(triggerExportSpy).toHaveBeenCalledWith({
             noc,
             paths: [
                 mockProducts[0].matchingJsonLink,
@@ -80,7 +85,7 @@ describe('fareType', () => {
             exportPrefix: expect.any(String),
         });
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/products/exports?exportStarted=true',
         });
     });
@@ -94,13 +99,13 @@ describe('fareType', () => {
 
         await selectExports(req, res);
 
-        expect(triggerExportSpy).toBeCalledWith({
+        expect(triggerExportSpy).toHaveBeenCalledWith({
             noc,
             paths: [mockProducts[0].matchingJsonLink],
             exportPrefix: expect.any(String),
         });
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/products/exports?exportStarted=true',
         });
     });

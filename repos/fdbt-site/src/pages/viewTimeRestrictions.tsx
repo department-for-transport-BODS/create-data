@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement } from 'react';
+import { FunctionComponent, ReactElement } from 'react';
 import { GlobalSettingsViewPage } from '../components/GlobalSettingsViewPage';
 import { getTimeRestrictionByNocCode } from '../data/auroradb';
 import { ErrorInfo, NextPageContextWithSession, PremadeTimeRestriction } from '../interfaces';
@@ -38,7 +38,7 @@ const formatTimeBand = (timeBand: DbTimeBand): string =>
 const formatTimeBands = (timeBands: DbTimeBand[]): string =>
     timeBands.length > 0 ? timeBands.map((timeBand) => formatTimeBand(timeBand)).join(', ') : 'Valid all day';
 
-const formatDayRestriction = (timeRestriction: PremadeTimeRestriction, day: string): JSX.Element => {
+const formatDayRestriction = (timeRestriction: PremadeTimeRestriction, day: string): ReactElement => {
     const matchedDayRestriction = timeRestriction.contents.find((dayRestriction) => dayRestriction.day === day);
     return matchedDayRestriction ? (
         <span className="day-restriction">{formatTimeBands(matchedDayRestriction.timeBands)}</span>

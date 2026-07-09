@@ -7,6 +7,9 @@ import { mockRawService, userFareStages, fareStageNames, zoneStops, selectedFare
 
 import EditFareStageMatching from '../../src/pages/editFareStageMatching';
 
+jest.mock('../../src/data/auroradb');
+jest.mock('../../src/data/s3');
+
 jest.mock('../../src/data/auroradb.ts');
 jest.mock('../../src/data/s3.ts');
 

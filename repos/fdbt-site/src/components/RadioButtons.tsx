@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { RadioButtonsProps } from '../interfaces';
 
 const RadioButtons = ({ options, inputName }: RadioButtonsProps): ReactElement => {

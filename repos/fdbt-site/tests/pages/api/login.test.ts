@@ -6,6 +6,10 @@ import { getMockRequestAndResponse } from '../../testData/mockData';
 import * as sessions from '../../../src/utils/sessions';
 import { OPERATOR_ATTRIBUTE } from '../../../src/constants/attributes';
 
+jest.mock('../../../src/utils/sessions');
+jest.mock('../../../src/data/auroradb');
+jest.mock('../../../src/data/cognito');
+
 const mockBaseOpAuthResponse: CognitoIdentityServiceProvider.AdminInitiateAuthResponse = {
     AuthenticationResult: {
         IdToken:
@@ -102,7 +106,7 @@ describe('login', () => {
 
         expect(authSignInSpy).toHaveBeenCalledWith('test@test.com', 'abcdefghi');
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, OPERATOR_ATTRIBUTE, mockOperatorAttribute);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/home',
         });
     });
@@ -128,7 +132,7 @@ describe('login', () => {
 
         expect(authSignInSpy).toHaveBeenCalledWith('test@test.com', 'abcdefghi');
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, OPERATOR_ATTRIBUTE, mockOperatorAttribute);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/home',
         });
     });

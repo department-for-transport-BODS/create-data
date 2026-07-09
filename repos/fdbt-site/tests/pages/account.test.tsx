@@ -4,6 +4,8 @@ import AccountDetails, { getServerSideProps } from '../../src/pages/account';
 import { getMockContext } from '../testData/mockData';
 import * as cognito from '../../src/data/cognito';
 
+jest.mock('../../src/data/cognito');
+
 describe('pages', () => {
     describe('account', () => {
         it('should render correctly', () => {
@@ -81,7 +83,7 @@ describe('pages', () => {
                     nocCode: 'TEST',
                 },
             });
-            expect(getUserAttributeSpy).toBeCalledWith('test@example.com', 'custom:multiOpEmailEnabled');
+            expect(getUserAttributeSpy).toHaveBeenCalledWith('test@example.com', 'custom:multiOpEmailEnabled');
         });
 
         it('returns email preference as false if attribute does not exist', async () => {
@@ -97,7 +99,7 @@ describe('pages', () => {
                     nocCode: 'TEST',
                 },
             });
-            expect(getUserAttributeSpy).toBeCalledWith('test@example.com', 'custom:multiOpEmailEnabled');
+            expect(getUserAttributeSpy).toHaveBeenCalledWith('test@example.com', 'custom:multiOpEmailEnabled');
         });
     });
 });

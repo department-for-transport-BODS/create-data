@@ -11,6 +11,10 @@ import { getMockRequestAndResponse, mockIdTokenMultiple, expectedSingleTicket } 
 import { MATCHING_JSON_ATTRIBUTE, MATCHING_JSON_META_DATA_ATTRIBUTE } from '../../../src/constants/attributes';
 import * as userData from '../../../src/utils/apiUtils/userData';
 
+jest.mock('../../../src/utils/apiUtils/userData');
+jest.mock('../../../src/data/auroradb');
+jest.mock('../../../src/utils/sessions');
+
 describe('defineTimeRestrictions', () => {
     const writeHeadMock = jest.fn();
     const s3Spy = jest.spyOn(userData, 'putUserDataInProductsBucketWithFilePath');
@@ -41,7 +45,7 @@ describe('defineTimeRestrictions', () => {
             TIME_RESTRICTIONS_DEFINITION_ATTRIBUTE,
             mockAttributeValue,
         );
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/fareConfirmation',
         });
     });
@@ -96,11 +100,11 @@ describe('defineTimeRestrictions', () => {
             errors: [],
             id: 1,
         });
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/fareConfirmation',
         });
 
-        expect(getTimeRestrictionByNameAndNocSpy).toBeCalledWith('My time restriction', 'HELLO');
+        expect(getTimeRestrictionByNameAndNocSpy).toHaveBeenCalledWith('My time restriction', 'HELLO');
     });
 
     it('should populate endTimes with fareDayEnd selected', async () => {
@@ -153,11 +157,11 @@ describe('defineTimeRestrictions', () => {
             errors: [],
             id: 1,
         });
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/fareConfirmation',
         });
 
-        expect(getTimeRestrictionByNameAndNocSpy).toBeCalledWith('My time restriction', 'HELLO');
+        expect(getTimeRestrictionByNameAndNocSpy).toHaveBeenCalledWith('My time restriction', 'HELLO');
     });
 
     it('redirect back to defineTimeRestrictions with errors if user does not select a premade time restriction but chose premade radio button', async () => {
@@ -175,7 +179,7 @@ describe('defineTimeRestrictions', () => {
             timeRestrictionChoice: 'Premade',
             errors: [{ errorMessage: 'Choose one of the premade time restrictions', id: 'time-restriction' }],
         });
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/selectTimeRestrictions',
         });
     });
@@ -221,7 +225,7 @@ describe('defineTimeRestrictions', () => {
         });
         await defineTimeRestrictions(req, res);
 
-        expect(userData.putUserDataInProductsBucketWithFilePath).toBeCalledWith(
+        expect(userData.putUserDataInProductsBucketWithFilePath).toHaveBeenCalledWith(
             {
                 ...expectedSingleTicket,
                 timeRestriction: { id: 1 },
@@ -229,7 +233,7 @@ describe('defineTimeRestrictions', () => {
             'matchingJsonLink',
         );
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/products/productDetails?productId=1&serviceId=2',
         });
     });
@@ -274,7 +278,7 @@ describe('defineTimeRestrictions', () => {
         });
         await defineTimeRestrictions(req, res);
 
-        expect(userData.putUserDataInProductsBucketWithFilePath).toBeCalledWith(
+        expect(userData.putUserDataInProductsBucketWithFilePath).toHaveBeenCalledWith(
             {
                 ...expectedSingleTicket,
                 timeRestriction: undefined,
@@ -282,7 +286,7 @@ describe('defineTimeRestrictions', () => {
             'matchingJsonLink',
         );
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/products/productDetails?productId=1&serviceId=2',
         });
     });

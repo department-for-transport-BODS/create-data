@@ -1,0 +1,6 @@
+[tools]
+awscli = { version = "2", symlink_bins = "true" }
+awscli-local = { version = "0.22.2", extras = "ver1" }
+localstack = "4"
+node = "18"
+python = "3.10"

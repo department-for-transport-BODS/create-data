@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { FullColumnLayout } from '../layout/Layout';
 import {
     MULTIPLE_PRODUCT_ATTRIBUTE,

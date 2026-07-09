@@ -1,26 +1,26 @@
-@import '../../node_modules/govuk-frontend/dist/govuk/index';
-@import './modules/_layout.scss';
-@import './modules/_components.scss';
-@import './modules/_pages.scss';
-@import './modules/spinner.scss';
+@use 'govuk-frontend/dist/govuk' as *;
+@use './modules/layout' as *;
+@use './modules/components' as *;
+@use './modules/pages' as *;
+@use './modules/spinner' as *;
 
 // import header styles
-@import './modules/_header.scss';
+@use './modules/header' as *;
 
 // import navigation styles
-@import './modules/_navigation.scss';
+@use './modules/navigation' as *;
 
 // import sub-navigation styles
-@import './modules/_sub-navigation.scss';
+@use './modules/sub-navigation' as *;
 
 // import phase banner styles
-@import './modules/_phase-banner.scss';
+@use './modules/phase-banner' as *;
 
 // import card styles
-@import './modules/_cards.scss';
+@use './modules/cards' as *;
 
 // import pop up styles
-@import './modules/_popups.scss';
+@use './modules/popups' as *;
 
 // import help styles
-@import './modules/_helpers.scss';
+@use './modules/helpers' as *;

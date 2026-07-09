@@ -1,6 +1,6 @@
 import isArray from 'lodash/isArray';
 import upperFirst from 'lodash/upperFirst';
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import logger from '../utils/logger';
 import ConfirmationTable from '../components/ConfirmationTable';
 import CsrfForm from '../components/CsrfForm';

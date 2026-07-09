@@ -3,6 +3,8 @@ import multipleOperators from '../../../src/pages/api/multipleOperators';
 import * as sessions from '../../../src/utils/sessions';
 import { OPERATOR_ATTRIBUTE } from '../../../src/constants/attributes';
 
+jest.mock('../../../src/utils/sessions');
+
 describe('multipleOperators', () => {
     const updateSessionAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');
 
@@ -23,7 +25,7 @@ describe('multipleOperators', () => {
             name: 'Infinity Line',
             nocCode: 'TEST',
         });
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/home',
         });
     });
@@ -44,7 +46,7 @@ describe('multipleOperators', () => {
                 },
             ],
         });
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/multipleOperators',
         });
     });

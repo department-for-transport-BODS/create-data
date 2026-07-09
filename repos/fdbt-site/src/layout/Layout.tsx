@@ -1,7 +1,6 @@
 import Head from 'next/head';
-import React, { PropsWithChildren, ReactElement, useEffect, useState } from 'react';
+import { PropsWithChildren, ReactElement, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import favicon from '../assets/images/favicon.ico';
 import Help from '../components/Help';
 import { ErrorInfo } from '../interfaces';
 import { buildTitle } from '../utils';
@@ -20,6 +19,8 @@ interface LayoutProps {
     hideHelp?: boolean;
     referer?: string | null;
 }
+
+const favicon = '/images/favicon.ico';
 
 export const BaseLayout = ({
     title,

@@ -7,6 +7,8 @@ import { getServiceByIdAndDataSource } from '../../src/data/auroradb';
 import { mockRawService, getMockContext } from '../testData/mockData';
 import { TXC_SOURCE_ATTRIBUTE } from '../../src/constants/attributes';
 
+jest.mock('../../src/data/auroradb');
+
 jest.mock('../../src/data/auroradb.ts');
 
 describe('pages', () => {

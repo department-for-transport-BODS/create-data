@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { SettingsOverview } from '../interfaces';
 
 const SettingOverview = ({ href, name, description, count }: SettingsOverview): ReactElement => {

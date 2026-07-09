@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import TwoThirdsLayout from '../layout/Layout';
 
 const title = 'No Services - Create Fares Data Service';

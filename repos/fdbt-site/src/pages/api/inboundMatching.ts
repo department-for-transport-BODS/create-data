@@ -41,11 +41,7 @@ export default (req: NextApiRequestWithSession, res: NextApiResponse): void => {
 
             redirectTo(res, '/inboundMatching');
             return;
-        } else if (
-            isFareStageUnassigned(uploadedUserFareStages, matchingFareZones) &&
-            matchingFareZones !== {} &&
-            !overrideWarning
-        ) {
+        } else if (isFareStageUnassigned(uploadedUserFareStages, matchingFareZones) && !overrideWarning) {
             const selectedStagesList: string[][] = getSelectedStages(req);
             const matchingAttributeError: MatchingWithErrors = {
                 warning: true,

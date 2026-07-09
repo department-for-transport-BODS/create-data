@@ -6,6 +6,8 @@ import { getMockContext, mockSchemOpIdToken } from '../testData/mockData';
 import { getAllServicesByNocCode, getOperatorDetails } from '../../src/data/auroradb';
 import { GS_REFERER, OPERATOR_ATTRIBUTE } from '../../src/constants/attributes';
 
+jest.mock('../../src/utils/sessions');
+
 jest.mock('../../src/data/auroradb');
 
 describe('pages', () => {
@@ -65,7 +67,7 @@ describe('pages', () => {
                 const updateSessionAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');
                 const mockContext = getMockContext();
                 await getServerSideProps(mockContext);
-                expect(updateSessionAttributeSpy).toBeCalledWith(mockContext.req, GS_REFERER, undefined);
+                expect(updateSessionAttributeSpy).toHaveBeenCalledWith(mockContext.req, GS_REFERER, undefined);
             });
 
             it('should return expected props when a the user logged in is not a scheme operator', async () => {
@@ -98,7 +100,7 @@ describe('pages', () => {
                     },
                 });
                 await getServerSideProps(mockContext);
-                expect(writeHeadMock).toBeCalledWith(302, { Location: '/manageOperatorDetails' });
+                expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/manageOperatorDetails' });
             });
         });
     });

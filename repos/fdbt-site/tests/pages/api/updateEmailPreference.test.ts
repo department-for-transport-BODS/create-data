@@ -5,6 +5,10 @@ import * as apiUtils from '../../../src/utils/apiUtils';
 import * as sessions from '../../../src/utils/sessions';
 import { ACCOUNT_PAGE_ERROR } from '../../../src/constants/attributes';
 
+jest.mock('../../../src/data/cognito');
+jest.mock('../../../src/utils/apiUtils');
+jest.mock('../../../src/utils/sessions');
+
 describe('updateEmailPreference', () => {
     const updateUserAttributesSpy = jest.spyOn(cognito, 'updateUserAttributes');
     const redirectToSpy = jest.spyOn(apiUtils, 'redirectTo');
@@ -21,7 +25,7 @@ describe('updateEmailPreference', () => {
 
         await updateUserAttribute(req, res);
         expect(updateUserAttributesSpy).not.toHaveBeenCalled();
-        expect(redirectToSpy).toBeCalledWith(res, '/home');
+        expect(redirectToSpy).toHaveBeenCalledWith(res, '/home');
         expect(updateSessionAttributeSpy).not.toHaveBeenCalled();
     });
 
@@ -35,7 +39,7 @@ describe('updateEmailPreference', () => {
 
             await updateUserAttribute(req, res);
             expect(updateUserAttributesSpy).not.toHaveBeenCalled();
-            expect(redirectToSpy).toBeCalledWith(res, '/account');
+            expect(redirectToSpy).toHaveBeenCalledWith(res, '/account');
             expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, ACCOUNT_PAGE_ERROR, [
                 {
                     id: 'radio-multi-op-email-pref',
@@ -58,10 +62,10 @@ describe('updateEmailPreference', () => {
 
             await updateUserAttribute(req, res);
             expect(updateUserAttributesSpy).toHaveBeenCalled();
-            expect(updateUserAttributesSpy).toBeCalledWith('test@example.com', [
+            expect(updateUserAttributesSpy).toHaveBeenCalledWith('test@example.com', [
                 { Name: 'custom:multiOpEmailEnabled', Value: body },
             ]);
-            expect(redirectToSpy).toBeCalledWith(res, '/home');
+            expect(redirectToSpy).toHaveBeenCalledWith(res, '/home');
             expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, ACCOUNT_PAGE_ERROR, undefined);
         },
     );

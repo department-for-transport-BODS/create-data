@@ -1,6 +1,6 @@
 import '../design/main.scss';
 import { AppProps } from 'next/app';
-import React, { ReactElement, useEffect, useRef } from 'react';
+import { ReactElement, useEffect, useRef } from 'react';
 
 declare global {
     interface Window {

@@ -1,6 +1,6 @@
-import { Express, ErrorRequestHandler } from 'express';
 import cookieParser from 'cookie-parser';
 import csurf from 'csurf';
+import type { ErrorRequestHandler, Express } from 'express';
 import logger from '../../src/utils/logger';
 
 export default (server: Express): void => {
@@ -22,7 +22,10 @@ export default (server: Express): void => {
             return;
         }
 
-        logger.warn(error, { context: 'server.middleware.csrf', message: 'invalid csrf' });
+        logger.warn(error, {
+            context: 'server.middleware.csrf',
+            message: 'invalid csrf',
+        });
         res.redirect('/error');
     };
 

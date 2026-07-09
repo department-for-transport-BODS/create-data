@@ -36,7 +36,7 @@ describe('ticketConfirmation', () => {
         getCapsSpy.mockResolvedValueOnce([cap]);
         await ticketConfirmation(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/selectCaps',
         });
     });
@@ -45,7 +45,7 @@ describe('ticketConfirmation', () => {
         getFareTypeSpy.mockReturnValue('single');
         getCapsSpy.mockResolvedValueOnce([]);
         await ticketConfirmation(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/selectPurchaseMethods',
         });
     });
@@ -55,7 +55,7 @@ describe('ticketConfirmation', () => {
         getIsCarnetSpy.mockReturnValue(true);
         getCapsSpy.mockResolvedValueOnce([cap]);
         await ticketConfirmation(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/selectPurchaseMethods',
         });
     });
@@ -64,7 +64,7 @@ describe('ticketConfirmation', () => {
         getFareTypeSpy.mockReturnValue('period');
         getCapsSpy.mockResolvedValueOnce([]);
         await ticketConfirmation(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/selectPurchaseMethods',
         });
     });
@@ -73,7 +73,7 @@ describe('ticketConfirmation', () => {
         getFareTypeSpy.mockReturnValue('period');
         getCapsSpy.mockResolvedValueOnce([cap]);
         await ticketConfirmation(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/selectPurchaseMethods',
         });
     });

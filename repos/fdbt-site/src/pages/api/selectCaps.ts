@@ -6,7 +6,7 @@ import {
 } from '../../constants/attributes';
 import { getCapByNocAndId } from '../../data/auroradb';
 import { getAndValidateNoc, redirectTo, redirectToError } from '../../utils/apiUtils/index';
-import { Cap, NextApiRequestWithSession } from 'src/interfaces';
+import { Cap, NextApiRequestWithSession } from '../../interfaces';
 import { getSessionAttribute, updateSessionAttribute } from '../../utils/sessions';
 import { putUserDataInProductsBucketWithFilePath } from '../../utils/apiUtils/userData';
 

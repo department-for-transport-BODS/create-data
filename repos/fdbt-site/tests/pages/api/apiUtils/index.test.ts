@@ -1,4 +1,3 @@
-import Cookies from 'cookies';
 import {
     setCookieOnResponseObject,
     getUuidFromSession,
@@ -20,13 +19,13 @@ import {
 } from '../../../../src/constants/attributes';
 import { TicketType } from '../../../../src/interfaces/matchingJsonTypes';
 
+jest.mock('../../../../src/data/s3');
+
 describe('apiUtils', () => {
     const writeHeadMock = jest.fn();
 
     beforeEach(() => {
         jest.spyOn(s3, 'putStringInS3');
-
-        Cookies.prototype.set = jest.fn();
     });
 
     afterEach(() => {
@@ -54,18 +53,18 @@ describe('apiUtils', () => {
     });
 
     describe('setCookieOnResponseObject', () => {
-        it('to call set cookie library', () => {
+        it('sets the Set-Cookie header', () => {
             const cookieName = 'test';
             const cookieValue = 'cookieValue';
             const { req, res } = getMockRequestAndResponse();
+
+            const setHeaderSpy = jest.spyOn(res, 'setHeader');
+
             setCookieOnResponseObject(cookieName, cookieValue, req, res);
-            expect(Cookies.prototype.set).toBeCalledWith(cookieName, cookieValue, {
-                path: '/',
-                sameSite: 'strict',
-                secure: true,
-                httpOnly: true,
-                maxAge: undefined,
-            });
+
+            expect(setHeaderSpy).toHaveBeenCalledWith('Set-Cookie', [
+                expect.stringContaining(`${cookieName}=${cookieValue}`),
+            ]);
         });
     });
 
@@ -141,7 +140,7 @@ describe('apiUtils', () => {
                 session: { [FARE_TYPE_ATTRIBUTE]: { fareType: fareType as TicketType } },
             });
             redirectOnFareType(req, res);
-            expect(writeHeadMock).toBeCalledWith(302, {
+            expect(writeHeadMock).toHaveBeenCalledWith(302, {
                 Location: redirect,
             });
         });
@@ -155,7 +154,7 @@ describe('apiUtils', () => {
                 },
             });
             redirectOnFareType(req, res);
-            expect(writeHeadMock).toBeCalledWith(302, { Location: '/ticketRepresentation' });
+            expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/ticketRepresentation' });
         });
 
         it('should call redirectOnSchoolFareType when the schoolService ticket option is selected and school type is period', () => {
@@ -167,7 +166,7 @@ describe('apiUtils', () => {
                 },
             });
             redirectOnFareType(req, res);
-            expect(writeHeadMock).toBeCalledWith(302, { Location: '/ticketRepresentation' });
+            expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/ticketRepresentation' });
         });
 
         it('should throw error if unexpected fare type is selected', () => {

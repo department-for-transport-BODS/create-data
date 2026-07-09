@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import {
     MyFaresService,
     MyFaresServiceWithProductCount,
@@ -8,10 +8,10 @@ import {
 import { BaseLayout } from '../../layout/Layout';
 import { getPointToPointProducts, getBodsOrTndsServicesByNoc } from '../../data/auroradb';
 import { getAndValidateNoc, removeDuplicateServices } from '../../utils';
-import moment from 'moment';
 import { MyFaresProduct } from '../../interfaces/dbTypes';
 import { getSessionAttribute } from '../../utils/sessions';
 import { MULTI_MODAL_ATTRIBUTE } from '../../constants/attributes';
+import dayjs from '../../utils/dayjs';
 
 const title = 'Services - Create Fares Data Service';
 const description = 'View and access your services in one place.';
@@ -102,9 +102,9 @@ export const getProductStatus = (
         return 'incomplete';
     }
 
-    const today = moment.utc().startOf('day').valueOf();
-    const startDateAsUnixTime = moment.utc(startDate, 'DD/MM/YYYY').valueOf();
-    const endDateAsUnixTime = endDate ? moment.utc(endDate, 'DD/MM/YYYY').valueOf() : undefined;
+    const today = dayjs.utc().startOf('day').valueOf();
+    const startDateAsUnixTime = dayjs.utc(startDate, 'DD/MM/YYYY').valueOf();
+    const endDateAsUnixTime = endDate ? dayjs.utc(endDate, 'DD/MM/YYYY').valueOf() : undefined;
 
     if (startDateAsUnixTime <= today && (!endDateAsUnixTime || endDateAsUnixTime >= today)) {
         return 'active';
@@ -120,7 +120,7 @@ export const getProductStatusTag = (
     startDate: string,
     endDate: string | undefined,
     isWithinATable: boolean,
-): JSX.Element => {
+): ReactElement => {
     const status = getProductStatus(incomplete, startDate, endDate);
     const isWithinATableClass = isWithinATable ? ' dft-table-tag' : '';
 
@@ -147,10 +147,10 @@ export const showProductAgainstService = (
     // 05/04/2020 format
     serviceEndDate: string | undefined,
 ): boolean => {
-    const momentProductStartDate = moment(productStartDate).valueOf();
-    const momentProductEndDate = productEndDate && moment(productEndDate).valueOf();
-    const momentServiceStartDate = moment(serviceStartDate, 'DD/MM/YYYY').valueOf();
-    const momentServiceEndDate = serviceEndDate ? moment(serviceEndDate, 'DD/MM/YYYY').valueOf() : undefined;
+    const momentProductStartDate = dayjs(productStartDate).valueOf();
+    const momentProductEndDate = productEndDate && dayjs(productEndDate).valueOf();
+    const momentServiceStartDate = dayjs(serviceStartDate, 'DD/MM/YYYY').valueOf();
+    const momentServiceEndDate = serviceEndDate ? dayjs(serviceEndDate, 'DD/MM/YYYY').valueOf() : undefined;
 
     // returns TRUE if:
     // there is no product end date OR there is a product end date and it is after the service start date

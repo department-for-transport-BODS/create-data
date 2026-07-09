@@ -12,6 +12,8 @@ import SearchOperators, {
 import { MULTIPLE_OPERATOR_ATTRIBUTE, OPERATOR_ATTRIBUTE } from '../../src/constants/attributes';
 import { ErrorInfo, Operator, OperatorAttribute, OperatorGroup } from '../../src/interfaces';
 
+jest.mock('../../src/data/auroradb');
+
 const mockOperators: Operator[] = [
     {
         name: "Warrington's Own Buses",
@@ -332,7 +334,9 @@ describe('pages', () => {
                     ),
                 );
                 wrapper.find('#remove-0').simulate('click');
-                expect(setSelectedOperators).toBeCalledWith([{ nocCode: 'LNUD', name: 'The Blackburn Bus Company' }]);
+                expect(setSelectedOperators).toHaveBeenCalledWith([
+                    { nocCode: 'LNUD', name: 'The Blackburn Bus Company' },
+                ]);
             });
             it('should remove all operators from selectedOperator list', () => {
                 const setSelectedOperators = jest.fn();
@@ -359,7 +363,7 @@ describe('pages', () => {
                     ),
                 );
                 wrapper.find('#removeAll').simulate('click');
-                expect(setSelectedOperators).toBeCalledWith([]);
+                expect(setSelectedOperators).toHaveBeenCalledWith([]);
             });
             it('should add operators to selectedOperator list', () => {
                 const mocksearchText = 'blac';
@@ -386,8 +390,8 @@ describe('pages', () => {
                 );
 
                 wrapper.find('#operator-to-add-0').simulate('click');
-                expect(setSelectedOperators).toBeCalledWith([{ nocCode: 'BLAC', name: 'Blackpool Transport' }]);
-                expect(setSearchResults).toBeCalledWith([{ nocCode: 'LNUD', name: 'The Blackburn Bus Company' }]);
+                expect(setSelectedOperators).toHaveBeenCalledWith([{ nocCode: 'BLAC', name: 'Blackpool Transport' }]);
+                expect(setSearchResults).toHaveBeenCalledWith([{ nocCode: 'LNUD', name: 'The Blackburn Bus Company' }]);
             });
         });
 

@@ -1,5 +1,5 @@
 import startCase from 'lodash/startCase';
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { ErrorInfo } from '../interfaces';
 import FormElementWrapper from './FormElementWrapper';
 

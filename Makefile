@@ -10,11 +10,13 @@ up: ## Run just the docker containers so the site can be run separately to debug
 down: ## Bring down docker containers
 	cd fdbt-dev && $(MAKE) docker-down
 
+mise-install:
+	mise install
+
 install: ## Install all node modules
 	cd ${FDBT_ROOT}/repos/fdbt-netex-output && npm i
 	cd ${FDBT_ROOT}/repos/fdbt-netex-output/src/netex-validator && npm i
 	cd ${FDBT_ROOT}/repos/fdbt-site && npm i
-	cd ${FDBT_ROOT}/repos/fdbt-site/cypress_tests && npm i
 	cd ${FDBT_ROOT}/repos/fdbt-reference-data-service/src/retrievers && npm i
 	cd ${FDBT_ROOT}/repos/fdbt-reference-data-service/src/uploaders && npm i
 	cd ${FDBT_ROOT}/repos/exporter && npm i
@@ -28,7 +30,6 @@ audit-fix: ## Fix all npm audit issues
 	cd ${FDBT_ROOT}/repos/fdbt-netex-output && npm audit fix
 	cd ${FDBT_ROOT}/repos/fdbt-netex-output/src/netex-validator && npm audit fix
 	cd ${FDBT_ROOT}/repos/fdbt-site && npm audit fix
-	cd ${FDBT_ROOT}/repos/fdbt-site/cypress_tests && npm audit fix
 	cd ${FDBT_ROOT}/repos/fdbt-reference-data-service/src/retrievers && npm audit fix
 	cd ${FDBT_ROOT}/repos/fdbt-reference-data-service/src/uploaders && npm audit fix
 	cd ${FDBT_ROOT}/repos/exporter && npm audit fix

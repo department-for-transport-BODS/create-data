@@ -3,6 +3,8 @@ import priceEntry, { inputsValidityCheck } from '../../../src/pages/api/priceEnt
 import { getMockRequestAndResponse } from '../../testData/mockData';
 import { DIRECTION_ATTRIBUTE } from '../../../src/constants/attributes';
 
+jest.mock('../../../src/data/s3');
+
 describe('priceEntry', () => {
     describe('API validation of number of price inputs', () => {
         it('should return fares information with no errors if inputs are valid', () => {
@@ -88,7 +90,7 @@ describe('priceEntry', () => {
                 },
             });
             await priceEntry(req, res);
-            expect(writeHeadMock).toBeCalledWith(302, expectedLocation);
+            expect(writeHeadMock).toHaveBeenCalledWith(302, expectedLocation);
         });
     });
 });

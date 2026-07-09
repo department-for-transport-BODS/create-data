@@ -10,8 +10,6 @@ import {
     SERVICE_LIST_EXEMPTION_ATTRIBUTE,
     TXC_SOURCE_ATTRIBUTE,
 } from '../constants/attributes';
-import FareZoneExampleCsv from '../assets/files/Fare-Zone-Example.csv';
-import HowToUploadFareZone from '../assets/files/How-to-Upload-a-Fare-Zone.pdf';
 import {
     NextPageContextWithSession,
     ErrorInfo,
@@ -28,8 +26,6 @@ import FormElementWrapper from '../components/FormElementWrapper';
 import BackButton from '../components/BackButton';
 import ErrorSummary from '../components/ErrorSummary';
 import FileAttachment from '../components/FileAttachment';
-import guidanceDocImage from '../assets/images/Guidance-doc-front-page.png';
-import csvImage from '../assets/images/csv.png';
 import CsrfForm from '../components/CsrfForm';
 import { isServiceListAttributeWithErrors } from '../interfaces/typeGuards';
 import AccessibilityDetails from '../components/AccessibilityDetails';
@@ -37,6 +33,11 @@ import { SUPPORT_EMAIL_ADDRESS } from '../constants';
 import { SelectedService } from '../interfaces/matchingJsonTypes';
 import logger from '../utils/logger';
 import { getProductsSecondaryOperatorInfo } from '../data/s3';
+
+const guidanceDocImage = '/images/Guidance-doc-front-page.png';
+const csvImage = '/images/csv.png';
+const FareZoneExampleCsv = '/files/Fare-Zone-Example.csv';
+const HowToUploadFareZone = '/files/How-to-Upload-a-Fare-Zone.pdf';
 
 const title = 'CSV Zone Upload - Create Fares Data Service';
 const description = 'CSV Zone Upload page of the Create Fares Data Service';

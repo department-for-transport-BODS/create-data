@@ -1,7 +1,15 @@
 import { Express } from 'express';
-import * as session from 'express-session';
+import session from 'express-session';
 import MySQLStore from 'express-mysql-session';
 import awsParamStore from 'aws-param-store';
+import { OPERATOR_ATTRIBUTE } from '../../src/constants/attributes';
+import { OperatorAttribute } from '../../src/interfaces';
+
+declare module 'express-session' {
+    interface SessionData {
+        [OPERATOR_ATTRIBUTE]: OperatorAttribute;
+    }
+}
 
 const getOptions = () => {
     let options;
@@ -66,5 +74,5 @@ export default (server: Express): void => {
         store: sessionStore,
     };
 
-    server.use(session.default(sessionOptions));
+    server.use(session(sessionOptions));
 };

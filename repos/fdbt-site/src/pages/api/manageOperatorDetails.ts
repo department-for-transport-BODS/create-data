@@ -1,3 +1,5 @@
+import lowerCase from 'lodash/lowerCase';
+import upperFirst from 'lodash/upperFirst';
 import { NextApiResponse } from 'next';
 import { redirectTo, redirectToError, getAndValidateNoc, checkEmailValid } from '../../utils/apiUtils';
 import { updateSessionAttribute } from '../../utils/sessions';
@@ -5,11 +7,10 @@ import { ErrorInfo, NextApiRequestWithSession } from '../../interfaces';
 import { GS_OPERATOR_DETAILS_ATTRIBUTE } from '../../constants/attributes';
 import { invalidCharactersArePresent, invalidUrlInput, removeExcessWhiteSpace } from '../../utils/apiUtils/validator';
 import { upsertOperatorDetails } from '../../data/auroradb';
-import { lowerCase, upperFirst } from 'lodash';
 import { OperatorDetails } from '../../interfaces/matchingJsonTypes';
 
 export const collectErrors = (operatorDetails: OperatorDetails): ErrorInfo[] => {
-    const errors = Object.entries(operatorDetails)
+    const errors: ErrorInfo[] = Object.entries(operatorDetails)
         .filter((entry) => entry[1].length > 200)
         .map((entry) => ({
             id: entry[0],

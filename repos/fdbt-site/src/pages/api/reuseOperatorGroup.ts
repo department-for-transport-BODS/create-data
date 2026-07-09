@@ -13,7 +13,7 @@ import {
 import { NextApiRequestWithSession, TicketRepresentationAttribute, FareType } from '../../interfaces';
 import { updateSessionAttribute, getSessionAttribute } from '../../utils/sessions';
 import { putUserDataInProductsBucketWithFilePath } from '../../utils/apiUtils/userData';
-import { AdditionalOperator } from 'src/interfaces/matchingJsonTypes';
+import { AdditionalOperator } from '../../interfaces/matchingJsonTypes';
 
 export default async (req: NextApiRequestWithSession, res: NextApiResponse): Promise<void> => {
     try {

@@ -5,6 +5,8 @@ import * as index from '../../../src/utils/apiUtils/index';
 import { getProductById, getProductIdByMatchingJsonLink } from '../../../src/data/auroradb';
 import { getProductsMatchingJson } from '../../../src/data/s3';
 
+jest.mock('../../../src/utils/apiUtils/index');
+
 jest.mock('../../../src/data/auroradb');
 jest.mock('../../../src/data/s3');
 
@@ -35,7 +37,7 @@ describe('copyProduct', () => {
 
         await copyProduct(req, res);
 
-        expect(insertDataToProductsBucketAndProductsTableSpy).toBeCalledWith(
+        expect(insertDataToProductsBucketAndProductsTableSpy).toHaveBeenCalledWith(
             expectedCarnetReturnTicket,
             noc,
             expect.any(String),
@@ -45,7 +47,7 @@ describe('copyProduct', () => {
             },
         );
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/products/productDetails?productId=2&copied=true&serviceId=serviceIdzz',
         });
     });
@@ -74,7 +76,7 @@ describe('copyProduct', () => {
 
         await copyProduct(req, res);
 
-        expect(redirectToErrorSpy).toBeCalledWith(
+        expect(redirectToErrorSpy).toHaveBeenCalledWith(
             res,
             'There was a problem copying the selected product',
             'api.copyProduct',

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { NextPage } from 'next';
 import TwoThirdsLayout from '../layout/Layout';
 import { USER_ATTRIBUTE } from '../constants/attributes';

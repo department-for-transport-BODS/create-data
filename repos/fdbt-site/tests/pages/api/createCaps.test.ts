@@ -7,6 +7,9 @@ import { CapExpiryUnit, FromDb } from 'src/interfaces/matchingJsonTypes';
 import { Cap } from 'src/interfaces';
 import { getMockRequestAndResponse } from '../../testData/mockData';
 
+jest.mock('../../../src/utils/sessions');
+jest.mock('../../../src/utils/apiUtils');
+
 describe('createCaps', () => {
     const writeHeadMock = jest.fn();
     jest.mock('../../../src/data/auroradb');
@@ -34,11 +37,11 @@ describe('createCaps', () => {
 
         await createCaps(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/createCaps',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, CREATE_CAPS_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, CREATE_CAPS_ATTRIBUTE, {
             capDetails: {
                 durationAmount: '',
                 durationUnits: '',
@@ -67,11 +70,11 @@ describe('createCaps', () => {
 
         await createCaps(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/createCaps',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, CREATE_CAPS_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, CREATE_CAPS_ATTRIBUTE, {
             capDetails: {
                 durationAmount: '2',
                 durationUnits: '',
@@ -98,11 +101,11 @@ describe('createCaps', () => {
 
         await createCaps(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/createCaps',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, CREATE_CAPS_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, CREATE_CAPS_ATTRIBUTE, {
             capDetails: {
                 durationAmount: '2',
                 durationUnits: 'week',
@@ -138,11 +141,11 @@ describe('createCaps', () => {
 
         await createCaps(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/createCaps',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, CREATE_CAPS_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, CREATE_CAPS_ATTRIBUTE, {
             capDetails: {
                 durationAmount: '2',
                 durationUnits: 'week',
@@ -176,13 +179,13 @@ describe('createCaps', () => {
 
         await createCaps(req, res);
         expect(updateSpy).not.toBeCalled();
-        expect(insertSpy).toBeCalledWith(undefined, expected);
+        expect(insertSpy).toHaveBeenCalledWith(undefined, expected);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/viewCaps',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, CREATE_CAPS_ATTRIBUTE, undefined);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, CREATE_CAPS_ATTRIBUTE, undefined);
     });
 
     it('redirects back to /viewCaps on edit mode', async () => {
@@ -209,12 +212,12 @@ describe('createCaps', () => {
 
         await createCaps(req, res);
         expect(insertSpy).not.toBeCalled();
-        expect(updateSpy).toBeCalledWith(undefined, 1, expected);
+        expect(updateSpy).toHaveBeenCalledWith(undefined, 1, expected);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/viewCaps',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, CREATE_CAPS_ATTRIBUTE, undefined);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, CREATE_CAPS_ATTRIBUTE, undefined);
     });
 });
