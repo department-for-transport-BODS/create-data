@@ -65,6 +65,10 @@ export const selectFareType = (fareType: FareType, isScheme: boolean): void => {
 
 export const selectCarnetFareType = (fareType: FareType): void => {
     selectFareType('carnet', false);
+    // Wait for the carnet fare type page to load before selecting, otherwise we
+    // can click the radio on the still-present fareType page mid-navigation and
+    // submit an empty selection (which redirects back to /carnetFareType).
+    cy.url().should('include', 'carnetFareType');
     clickElementById(fareTypeToFareTypeIdMapper(fareType));
     continueButtonClick();
 };

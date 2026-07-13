@@ -1,4 +1,5 @@
 import { decodeJwt, SignJWT, jwtVerify, createRemoteJWKSet, JWTVerifyOptions } from 'jose';
+import { JWTExpired } from 'jose/errors';
 import { Request, Response, NextFunction, Express } from 'express';
 import {
     ID_TOKEN_COOKIE,
@@ -151,7 +152,7 @@ export default (req: Request, res: Response, next: NextFunction): void => {
             const decodedToken = decodeJwt(idToken) as CognitoIdToken;
             const username = decodedToken?.['cognito:username'] ?? null;
 
-            if (err.name === 'TokenExpiredError') {
+            if (err instanceof JWTExpired) {
                 const refreshToken = parsedCookies[REFRESH_TOKEN_COOKIE] ?? null;
 
                 if (refreshToken) {

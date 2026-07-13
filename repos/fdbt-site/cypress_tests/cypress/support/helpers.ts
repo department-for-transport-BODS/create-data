@@ -24,7 +24,16 @@ export const getElementByName = (id: string): Cypress.Chainable<JQuery> => cy.ge
 export const getElementByClass = (id: string): Cypress.Chainable<JQuery> => cy.get(`[class=${id}]`);
 export const getElementByDataTestId = (id: string): Cypress.Chainable<JQuery> => cy.get(`[data-test-id=${id}]`);
 
-export const clickElementById = (id: string): Cypress.Chainable<JQuery> => getElementById(id).click();
+export const clickElementById = (id: string): Cypress.Chainable<JQuery> => {
+    // Wait for the page to hydrate before interacting. The app adds `js-enabled`
+    // to <body> once React has mounted (_app.tsx). Clicking before hydration -
+    // common on the slower deployed environment - can silently drop the
+    // interaction (e.g. a radio selection is lost, so the form submits empty and
+    // bounces back on validation). This resolves after hydration, so it avoids
+    // acting too early.
+    cy.get('body.js-enabled', { timeout: 30000 });
+    return getElementById(id).click();
+};
 export const clickElementByText = (text: string): Cypress.Chainable<JQuery> => getElementByText(text).click();
 
 export const clearAndTypeById = (id: string, text: string): void => {
@@ -50,7 +59,16 @@ export const fareTypeToFareTypeIdMapper = (fareType: FareType): string => `radio
 
 export const startPageLinkClick = (): Cypress.Chainable<JQuery> => clickElementById('faretype-link');
 
-export const continueButtonClick = (): Cypress.Chainable<JQuery> => clickElementById('continue-button');
+// Clicks the continue submit button and waits for the resulting navigation to
+// commit (the URL changes) before returning. Consecutive continues (e.g. the two
+// in defineUserTypeAndTimeRestrictions) would otherwise race: the second fires
+// while the first's redirect is still in flight and re-submits the previous page.
+export const continueButtonClick = (): void => {
+    cy.url().then((before) => {
+        clickElementById('continue-button');
+        cy.url({ timeout: 30000 }).should('not.equal', before);
+    });
+};
 
 export const submitButtonClick = (): Cypress.Chainable<JQuery> => clickElementById('submit-button');
 
@@ -346,12 +364,16 @@ export const completeGroupPassengerDetailsPages = (): void => {
 
 export const randomlyDetermineUserType = (): void => {
     let passengerType;
-    getElementByClass('govuk-radios__input')
+    // Scope to the passenger type radios (name="passengerTypeId") rather than any
+    // `.govuk-radios__input`, so Cypress waits for the select passenger type page
+    // to render instead of grabbing radios from the previous page mid-navigation
+    // (e.g. the fareType page's `radio-option-*` radios).
+    cy.get('[name="passengerTypeId"]')
         .its('length')
         .then((length) => {
             const randomNumber = getRandomNumber(0, length - 1);
-            getElementByClass('govuk-radios__input').eq(randomNumber).click();
-            getElementByClass('govuk-radios__input')
+            cy.get('[name="passengerTypeId"]').eq(randomNumber).click();
+            cy.get('[name="passengerTypeId"]')
                 .eq(randomNumber)
                 .then(($radio) => {
                     // The radio id is `${name}-radio`; derive the passenger type name from it
@@ -432,10 +454,17 @@ export const randomlyDecideTimeRestrictions = (isEditing?: boolean): void => {
         });
     }
     cy.get('@noSelected').then((noSelected) => {
-        if (randomNumber === 1 && noSelected) {
-            // otherwise select a time restriction
-            clickElementById('valid-days-required');
-            selectTimeRestriction();
+        if (noSelected) {
+            if (randomNumber === 1) {
+                // choose "Yes" and pick a time restriction
+                clickElementById('valid-days-required');
+                selectTimeRestriction();
+            } else {
+                // Explicitly choose "No" rather than relying on the radio's default
+                // checked state, so the form always submits a valid selection and
+                // doesn't bounce back on validation.
+                clickElementById('valid-days-not-required');
+            }
         }
     });
     continueButtonClick();
@@ -680,7 +709,10 @@ export const addOtherProductsIfNotPresent = (): void => {
     let flatFareWithExemptions = false;
     cy.wrap(flatFareWithExemptions).as('flatFareWithExemptions');
 
-    cy.get(`[data-card-count]`).then((element) => {
+    // The other products page renders server-side and fetches matching JSON from
+    // S3 (plus DB lookups) for every existing product, so it can take well over
+    // Cypress's 4s default to load on the deployed environment. Allow more time.
+    cy.get(`[data-card-count]`, { timeout: 30000 }).then((element) => {
         const totNumberOfProducts = Number(element.attr('data-card-count'));
         if (totNumberOfProducts > 0) {
             getElementByClass('govuk-table__body')

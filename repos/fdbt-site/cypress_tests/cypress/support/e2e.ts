@@ -4,7 +4,6 @@ import {
     clearAndTypeById,
     clickElementById,
     clickElementByText,
-    getElementByClass,
     getHomePage,
 } from './helpers';
 import { addSingleMultiOperatorGroup } from './multiOperatorGroups';
@@ -127,73 +126,66 @@ const addTestPassengerTypes = (): void => {
 };
 
 const addTestPurchaseMethods = (): void => {
-    cy.get(`[data-card-count]`).then((element) => {
-        const numberOfPurchaseMethods = Number(element.attr('data-card-count'));
-        cy.log(`There are ${numberOfPurchaseMethods} purchase methods`);
-        if (numberOfPurchaseMethods > 0) {
-            cy.log('There is at least one purchase method');
-            getElementByClass('card')
-                .last()
-                .invoke('attr', 'id')
-                .then((id) => {
-                    if (!id?.startsWith('purchase-method-cap-')) {
-                        const cappedPurchaseMethod1 = {
-                            purchaseLocations: ['checkbox-0-on-board'],
-                            paymentMethods: ['checkbox-0-debit-card', 'checkbox-1-credit-card'],
-                            ticketFormats: ['checkbox-0-mobile-app'],
-                            name: 'Test capped onboard',
-                        };
-                        const cappedPurchaseMethod2 = {
-                            purchaseLocations: ['checkbox-0-on-board', 'checkbox-1-mobile-device'],
-                            paymentMethods: ['checkbox-2-mobile-phone'],
-                            ticketFormats: ['checkbox-0-mobile-app'],
-                            name: 'Test capped mobile',
-                        };
+    const purchaseMethods = [
+        {
+            purchaseLocations: ['checkbox-0-on-board'],
+            paymentMethods: ['checkbox-0-cash', 'checkbox-1-debit-card'],
+            ticketFormats: ['checkbox-3-electronic-document'],
+            name: 'Test Onboard',
+        },
+        {
+            purchaseLocations: ['checkbox-2-mobile-device'],
+            paymentMethods: ['checkbox-0-cash', 'checkbox-1-debit-card'],
+            ticketFormats: ['checkbox-3-electronic-document'],
+            name: 'Test Mobile',
+        },
+        {
+            purchaseLocations: ['checkbox-1-online'],
+            paymentMethods: ['checkbox-1-debit-card'],
+            ticketFormats: ['checkbox-3-electronic-document'],
+            name: 'Test Online',
+        },
+    ];
+    const cappedPurchaseMethods = [
+        {
+            purchaseLocations: ['checkbox-0-on-board'],
+            paymentMethods: ['checkbox-0-debit-card', 'checkbox-1-credit-card'],
+            ticketFormats: ['checkbox-0-mobile-app'],
+            name: 'Test capped onboard',
+        },
+        {
+            purchaseLocations: ['checkbox-0-on-board', 'checkbox-1-mobile-device'],
+            paymentMethods: ['checkbox-2-mobile-phone'],
+            ticketFormats: ['checkbox-0-mobile-app'],
+            name: 'Test capped mobile',
+        },
+    ];
 
-                        addPurchaseMethod(cappedPurchaseMethod1, true);
-                        addPurchaseMethod(cappedPurchaseMethod2, true);
-                    }
-                });
-        } else {
-            const purchaseMethod1 = {
-                purchaseLocations: ['checkbox-0-on-board'],
-                paymentMethods: ['checkbox-0-cash', 'checkbox-1-debit-card'],
-                ticketFormats: ['checkbox-3-electronic-document'],
-                name: 'Test Onboard',
-            };
-            const purchaseMethod2 = {
-                purchaseLocations: ['checkbox-2-mobile-device'],
-                paymentMethods: ['checkbox-0-cash', 'checkbox-1-debit-card'],
-                ticketFormats: ['checkbox-3-electronic-document'],
-                name: 'Test Mobile',
-            };
-            const purchaseMethod3 = {
-                purchaseLocations: ['checkbox-1-online'],
-                paymentMethods: ['checkbox-1-debit-card'],
-                ticketFormats: ['checkbox-3-electronic-document'],
-                name: 'Test Online',
-            };
-            cy.log('Add three purchase methods');
-            addPurchaseMethod(purchaseMethod1);
-            addPurchaseMethod(purchaseMethod2);
-            addPurchaseMethod(purchaseMethod3);
+    // These are client-side (Next Link) navigations and the previous settings
+    // page also has [data-card-count]/.card, so explicitly wait until the
+    // purchase methods page itself has rendered (URL + its unique "Add a purchase
+    // method" button) before reading existing names. Then only add the methods
+    // that aren't already present (matched by name) so the setup is idempotent
+    // and can be re-run without failing on duplicates.
+    cy.url().should('include', 'viewPurchaseMethods');
+    cy.contains('a', 'Add a purchase method').should('be.visible');
 
-            const cappedPurchaseMethod1 = {
-                purchaseLocations: ['checkbox-0-on-board'],
-                paymentMethods: ['checkbox-0-debit-card', 'checkbox-1-credit-card'],
-                ticketFormats: ['checkbox-0-mobile-app'],
-                name: 'Test capped onboard',
-            };
-            const cappedPurchaseMethod2 = {
-                purchaseLocations: ['checkbox-0-on-board', 'checkbox-1-mobile-device'],
-                paymentMethods: ['checkbox-2-mobile-phone'],
-                ticketFormats: ['checkbox-0-mobile-app'],
-                name: 'Test capped mobile',
-            };
+    cy.then(() => {
+        const existingNames = Cypress.$('.card h4')
+            .map((_, element) => element.textContent?.trim())
+            .get();
 
-            addPurchaseMethod(cappedPurchaseMethod1, true);
-            addPurchaseMethod(cappedPurchaseMethod2, true);
-        }
+        purchaseMethods.forEach((purchaseMethod) => {
+            if (!existingNames.includes(purchaseMethod.name)) {
+                addPurchaseMethod(purchaseMethod);
+            }
+        });
+
+        cappedPurchaseMethods.forEach((cappedPurchaseMethod) => {
+            if (!existingNames.includes(cappedPurchaseMethod.name)) {
+                addPurchaseMethod(cappedPurchaseMethod, true);
+            }
+        });
     });
 };
 
