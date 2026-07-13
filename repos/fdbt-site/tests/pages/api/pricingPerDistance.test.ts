@@ -10,9 +10,6 @@ import {
 import * as userData from '../../../src/utils/apiUtils/userData';
 import { TicketWithIds } from '../../../src/interfaces/matchingJsonTypes';
 
-jest.mock('../../../src/utils/sessions');
-jest.mock('../../../src/utils/apiUtils/userData');
-
 describe('pricingPerDistance', () => {
     const updateSessionAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');
     const writeHeadMock = jest.fn();

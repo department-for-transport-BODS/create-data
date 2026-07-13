@@ -1,28 +1,30 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`AccessibilityDetails should render the AccessibilityDetails component 1`] = `
-<details
-  className="govuk-details margin-top"
->
-  <summary
-    className="govuk-details__summary"
+<DocumentFragment>
+  <details
+    class="govuk-details margin-top"
   >
-    <span
-      className="govuk-details__summary-text"
+    <summary
+      class="govuk-details__summary"
     >
-      Request an accessible format.
-    </span>
-  </summary>
-  <div
-    className="govuk-details__text"
-  >
-    If you use assistive technology (such as a screen reader) and need a version of this document in a more accessible format, please email 
-    <a
-      href="mailto:test@gmail.com"
+      <span
+        class="govuk-details__summary-text"
+      >
+        Request an accessible format.
+      </span>
+    </summary>
+    <div
+      class="govuk-details__text"
     >
-      test@gmail.com
-    </a>
-    . Please tell us what format you need. It will help us if you say what assistive technology you use.
-  </div>
-</details>
+      If you use assistive technology (such as a screen reader) and need a version of this document in a more accessible format, please email 
+      <a
+        href="mailto:test@gmail.com"
+      >
+        test@gmail.com
+      </a>
+      . Please tell us what format you need. It will help us if you say what assistive technology you use.
+    </div>
+  </details>
+</DocumentFragment>
 `;

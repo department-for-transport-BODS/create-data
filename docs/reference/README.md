@@ -5,7 +5,6 @@ Specifications and details
 - [building-and-patching-of-container-based-applications](./building-and-patching-of-container-based-applications.md)
 - [catching-and-logging-errors](./catching-and-logging-errors.md)
 - [developer-conventions](./developer-conventions.md)
-- [environment-listing](./environment-listing.md)
 - [fares-triangle-csv-template](./fares-triangle-csv-template.md)
 - [high-level-design-for-the-alpha](./high-level-design-for-the-alpha.md)
 - [high-level-design](./high-level-design.md)

@@ -1,6 +1,55 @@
 [tools]
 awscli = { version = "2", symlink_bins = "true" }
-awscli-local = { version = "0.22.2", extras = "ver1" }
-localstack = "4"
 node = "18"
 python = "3.10"
+npm = "12"
+
+[tasks.run]
+description = "Run everything locally"
+run = "mise -C fdbt-dev run dev"
+
+[tasks.up]
+description = "Run just the docker containers so the site can be run separately to debug"
+run = "mise -C fdbt-dev run docker-up"
+
+[tasks.down]
+description = "Bring down docker containers"
+run = "mise -C fdbt-dev run docker-down"
+
+[tasks.start-site]
+description = "Run the site locally"
+run = '''
+    mise -C fdbt-dev run start-site
+'''
+
+[tasks.install]
+description = "Install all node modules"
+run = [
+    "cd ${FDBT_ROOT}/repos/fdbt-netex-output && npm i",
+    "cd ${FDBT_ROOT}/repos/fdbt-netex-output/src/netex-validator && npm i",
+    "cd ${FDBT_ROOT}/repos/fdbt-site && npm i",
+    "cd ${FDBT_ROOT}/repos/fdbt-reference-data-service/src/retrievers && npm i",
+    "cd ${FDBT_ROOT}/repos/fdbt-reference-data-service/src/uploaders && npm i",
+    "cd ${FDBT_ROOT}/repos/exporter && npm i",
+    "cd ${FDBT_ROOT}/repos/fdbt-emailer && npm i",
+    "pip3 install -r ${FDBT_ROOT}/repos/fdbt-reference-data-service/src/retrievers/requirements.txt -r ${FDBT_ROOT}/repos/fdbt-reference-data-service/src/uploaders/requirements.txt -r ${FDBT_ROOT}/repos/fdbt-netex-output/src/netex-validator/requirements.txt",
+]
+
+[tasks.audit-fix]
+description = "Fix all npm audit issues"
+run = [
+    "cd ${FDBT_ROOT}/repos/fdbt-netex-output && npm audit fix",
+    "cd ${FDBT_ROOT}/repos/fdbt-netex-output/src/netex-validator && npm audit fix",
+    "cd ${FDBT_ROOT}/repos/fdbt-site && npm audit fix",
+    "cd ${FDBT_ROOT}/repos/fdbt-reference-data-service/src/retrievers && npm audit fix",
+    "cd ${FDBT_ROOT}/repos/fdbt-reference-data-service/src/uploaders && npm audit fix",
+    "cd ${FDBT_ROOT}/repos/exporter && npm audit fix",
+    "cd ${FDBT_ROOT}/repos/fdbt-emailer && npm audit fix",
+]
+
+[tasks.cypress]
+description = "Open cypress console to run UI tests"
+run = '''
+    cd ${FDBT_ROOT}/repos/fdbt-site/cypress_tests
+    npm run openCypress
+'''

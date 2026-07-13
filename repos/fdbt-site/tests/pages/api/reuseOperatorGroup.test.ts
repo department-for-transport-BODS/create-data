@@ -16,11 +16,6 @@ import reuseOperatorGroup from '../../../src/pages/api/reuseOperatorGroup';
 import * as auroradb from '../../../src/data/auroradb';
 import * as index from '../../../src/utils/apiUtils/index';
 
-jest.mock('../../../src/utils/sessions');
-jest.mock('../../../src/utils/apiUtils/userData');
-jest.mock('../../../src/data/auroradb');
-jest.mock('../../../src/utils/apiUtils/index');
-
 describe('reuseOperatorGroup', () => {
     const updateSessionAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');
     const writeHeadMock = jest.fn();

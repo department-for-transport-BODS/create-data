@@ -1,5 +1,5 @@
-import { shallow } from 'enzyme';
-import * as React from 'react';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import {
     getServiceDirectionDescriptionsByNocAndServiceIdAndDataSource,
     getServiceByNocAndId,
@@ -34,10 +34,12 @@ import { OPERATOR_ATTRIBUTE } from '../../../src/constants/attributes';
 jest.mock('../../../src/data/auroradb');
 jest.mock('../../../src/data/s3');
 
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
+
 describe('myfares pages', () => {
     describe('productDetails', () => {
         it('should render correctly', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ProductDetails
                     requiresAttention={true}
                     backHref={'/products/pointToPointProducts?serviceId=1'}
@@ -104,7 +106,7 @@ describe('myfares pages', () => {
         });
 
         it('should render correctly for a copied product', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ProductDetails
                     requiresAttention={true}
                     backHref={'/products/pointToPointProducts?serviceId=1'}
@@ -170,7 +172,7 @@ describe('myfares pages', () => {
         });
 
         it('should render correctly while the cannot generate return popup is open', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ProductDetails
                     requiresAttention={true}
                     backHref={'/products/pointToPointProducts?serviceId=1'}
@@ -231,7 +233,7 @@ describe('myfares pages', () => {
         });
 
         it('should render correctly for a fare triangle modified product', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ProductDetails
                     requiresAttention={false}
                     backHref={'/products/multiOperatorProductsExternal'}
@@ -331,7 +333,7 @@ describe('myfares pages', () => {
         });
 
         it('should render correctly for a multi-operator product shared with you', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ProductDetails
                     requiresAttention={true}
                     backHref={'/products/pointToPointProducts?serviceId=1'}

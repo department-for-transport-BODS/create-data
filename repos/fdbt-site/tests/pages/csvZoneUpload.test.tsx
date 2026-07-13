@@ -1,7 +1,9 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import CsvZoneUpload from '../../src/pages/csvZoneUpload';
 import { ServicesInfo } from '../../src/interfaces';
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('csvzoneupload', () => {
@@ -42,7 +44,7 @@ describe('pages', () => {
             },
         ];
         it('should render correctly', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <CsvZoneUpload
                     csvUploadTitle="Upload fare zone as CSV"
                     csvUploadHintText=""

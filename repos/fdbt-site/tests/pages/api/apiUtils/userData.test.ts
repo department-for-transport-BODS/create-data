@@ -73,10 +73,6 @@ import {
 import { CarnetExpiryUnit, ExpiryUnit, PeriodExpiry, TicketType } from '../../../../src/interfaces/matchingJsonTypes';
 import * as util from '../../../../src/utils/apiUtils';
 
-jest.mock('../../../../src/utils/apiUtils');
-jest.mock('../../../../src/data/s3');
-jest.mock('../../../../src/data/auroradb');
-
 beforeEach(() => {
     jest.spyOn(util, 'getNocFromIdToken').mockImplementationOnce(() => 'BLAC');
 });
@@ -1370,7 +1366,7 @@ describe('userData', () => {
         });
 
         it('should return a SchemeOperatorTicket object', () => {
-            const { req, res } = getMockRequestAndResponse({
+            const { req } = getMockRequestAndResponse({
                 cookieValues: {
                     idToken: mockSchemOpIdToken,
                 },
@@ -1538,7 +1534,7 @@ describe('userData', () => {
                 },
             });
             batchGetStopsByAtcoCodeSpy.mockImplementation(() => Promise.resolve(zoneStops));
-            const result = getSchemeOperatorTicketJson(req, res);
+            const result = getSchemeOperatorTicketJson(req);
             expect(result).toEqual(expectedSchemeOperatorTicket('multiOperator'));
         });
     });

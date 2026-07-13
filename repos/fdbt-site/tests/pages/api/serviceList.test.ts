@@ -19,14 +19,7 @@ import * as virusCheck from '../../../src/utils/apiUtils/virusScan';
 import * as auroradb from '../../../src/data/auroradb';
 import { secondTestCsv } from '../../testData/csvZoneData';
 import * as s3 from '../../../src/data/s3';
-import { AWSError } from 'aws-sdk';
-
-jest.mock('../../../src/utils/apiUtils/userData');
-jest.mock('../../../src/utils/apiUtils/fileUpload');
-jest.mock('../../../src/utils/sessions');
-jest.mock('../../../src/data/auroradb');
-jest.mock('../../../src/data/s3');
-jest.mock('../../../src/utils/apiUtils/virusScan');
+import { S3ServiceException } from '@aws-sdk/client-s3';
 
 describe('serviceList', () => {
     const writeHeadMock = jest.fn();
@@ -38,17 +31,20 @@ describe('serviceList', () => {
     const getProductsSecondaryOperatorInfoSpy = jest.spyOn(s3, 'getProductsSecondaryOperatorInfo');
     const updateProductAdditionalNocSpy = jest.spyOn(auroradb, 'updateProductAdditionalNoc');
 
-    const file = {
-        'csv-upload': {
-            size: 999,
-            path: 'string',
-            name: 'string',
-            type: 'text/csv',
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            toJSON(): any {
-                return '';
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const file: any = {
+        'csv-upload': [
+            {
+                size: 999,
+                filepath: 'string',
+                originalFilename: 'string',
+                mimetype: 'text/csv',
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                toJSON(): any {
+                    return '';
+                },
             },
-        },
+        ],
     };
 
     afterEach(() => {
@@ -513,10 +509,9 @@ describe('serviceList', () => {
         });
 
         getProductsSecondaryOperatorInfoSpy.mockImplementation().mockRejectedValue({
-            name: 'AWSError',
+            name: 'NoSuchKey',
             message: 'No data found',
-            code: 'NoSuchKey',
-        } as AWSError);
+        } as S3ServiceException);
 
         updateProductAdditionalNocSpy.mockResolvedValue(undefined);
 

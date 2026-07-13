@@ -5,10 +5,6 @@ import * as apiUtils from '../../../src/utils/apiUtils';
 import * as sessions from '../../../src/utils/sessions';
 import { ACCOUNT_PAGE_ERROR } from '../../../src/constants/attributes';
 
-jest.mock('../../../src/data/cognito');
-jest.mock('../../../src/utils/apiUtils');
-jest.mock('../../../src/utils/sessions');
-
 describe('updateEmailPreference', () => {
     const updateUserAttributesSpy = jest.spyOn(cognito, 'updateUserAttributes');
     const redirectToSpy = jest.spyOn(apiUtils, 'redirectTo');

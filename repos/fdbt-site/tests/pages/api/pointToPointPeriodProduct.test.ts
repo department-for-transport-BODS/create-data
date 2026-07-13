@@ -3,8 +3,6 @@ import * as sessions from '../../../src/utils/sessions';
 import { getMockRequestAndResponse } from '../../testData/mockData';
 import pointToPointPeriodProduct from '../../../src/pages/api/pointToPointPeriodProduct';
 
-jest.mock('../../../src/utils/sessions');
-
 describe('pointToPointPeriodProduct', () => {
     const updateAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');
 

@@ -1,6 +1,7 @@
 import {
     startPageLinkClick,
     clickElementById,
+    clearAndTypeById,
     continueButtonClick,
     randomlyDetermineUserType,
     randomlyDecideTimeRestrictions,
@@ -29,7 +30,7 @@ import {
     completePricingPerDistancePage,
 } from './helpers';
 
-const stringify = (item: any) => JSON.stringify(item).replace(/\"/g, '');
+const stringify = (item: unknown) => JSON.stringify(item).replace(/"/g, '');
 
 export const defineUserTypeAndTimeRestrictions = (isEditing?: boolean): void => {
     randomlyDetermineUserType();
@@ -77,6 +78,12 @@ export const completeFlatFarePages = (
 ): void => {
     if (isScheme) {
         completeOperatorSearch();
+        // Scheme operators are routed to the multi-operator service list to select
+        // services for each operator in the group before entering product details
+        clickElementById('select-all-button');
+        getElementById('operator-1').click();
+        clickElementById('select-all-button');
+        continueButtonClick();
     } else if (isGeoZone) {
         uploadFile('csv-upload', 'fareZone.csv');
         submitButtonClick();
@@ -176,16 +183,25 @@ const completeFareTrianglePages = (csvUpload: boolean, isIndividualTest: boolean
 };
 
 const completeMatchingPage = (): void => {
-    for (let i = 0; i < 4; i += 1) {
-        cy.get(`[id=option-${i}]`)
-            .find('option')
-            .then(($elm) => {
-                $elm.get(i + 1).setAttribute('selected', 'selected');
-            })
-            .parent()
-            .trigger('change');
-    }
-    submitButtonClick();
+    // A circular (single-direction) return only has one matching page, whereas a
+    // two-direction return has separate outbound and inbound matching pages. Only
+    // fill the matching form if we are actually on a matching page (/matching or
+    // /inboundMatching); otherwise we've already advanced past matching.
+    cy.url().then((url) => {
+        if (!url.toLowerCase().includes('matching')) {
+            return;
+        }
+        for (let i = 0; i < 4; i += 1) {
+            cy.get(`[id=option-${i}]`)
+                .find('option')
+                .then(($elm) => {
+                    $elm.get(i + 1).setAttribute('selected', 'selected');
+                })
+                .parent()
+                .trigger('change');
+        }
+        submitButtonClick();
+    });
 };
 
 const completePointToPointProductDetail = (): void => {
@@ -224,7 +240,13 @@ export const completeReturnPages = (csvUpload: boolean, isCarnet: boolean, isPer
     completeMatchingPage();
 
     if (isCarnet) {
-        completePointToPointProductDetail();
+        // A single-direction (circular) return skips the carnet product details page and
+        // goes straight to returnValidity, so only fill it in if we actually reached it.
+        cy.url().then((url) => {
+            if (url.includes('carnetProductDetails')) {
+                completePointToPointProductDetail();
+            }
+        });
     }
 
     if (isPeriod) {
@@ -395,7 +417,7 @@ export const editServicesOtherProductsPage = (): void => {
                     JSON.stringify(input)
                         .split(',')
                         .join(', ')
-                        .replace(/\"|\[|\]/g, ''),
+                        .replace(/"|\[|\]/g, ''),
                 );
             });
         });
@@ -406,7 +428,7 @@ export const editServicesOtherProductsPage = (): void => {
 export const editProductName = (): void => {
     clickElementById('edit-product-name');
     const newProductName = `Product ${getRandomNumber(1, 200)}${getRandomNumber(1, 200)}${getRandomNumber(1, 200)}`;
-    getElementById('product-name').clear().type(newProductName);
+    clearAndTypeById('product-name', newProductName);
     clickElementByText('Save');
     getElementById('product-name-header').should('have.text', newProductName);
     clickElementByText('Back');
@@ -422,7 +444,7 @@ export const editProductExpiry = (): void => {
 export const editProductDuration = (): void => {
     clickElementById('period-duration-link');
     const productDuration = getRandomNumber(1, 10);
-    clickElementById('edit-period-duration-quantity').clear().type(productDuration.toString());
+    clearAndTypeById('edit-period-duration-quantity', productDuration.toString());
     selectRandomOptionFromDropDown('edit-period-duration-unit');
     continueButtonClick();
     cy.get('@dropdownValue').then((input) => {
@@ -436,7 +458,7 @@ export const editProductDuration = (): void => {
 export const editQuantityInBundle = (): void => {
     clickElementById('quantity-in-bundle-link');
     const productDuration = getRandomNumber(2, 10);
-    clickElementById('edit-carnet-quantity').clear().type(productDuration.toString());
+    clearAndTypeById('edit-carnet-quantity', productDuration.toString());
     continueButtonClick();
     getElementById('quantity-in-bundle').should('have.text', productDuration.toString());
     clickElementByText('Back');
@@ -445,7 +467,7 @@ export const editQuantityInBundle = (): void => {
 export const editCarnetExpiry = (): void => {
     clickElementById('carnet-expiry-link');
     const productDuration = getRandomNumber(2, 10);
-    clickElementById('edit-carnet-expiry-duration').clear().type(productDuration.toString());
+    clearAndTypeById('edit-carnet-expiry-duration', productDuration.toString());
     selectRandomOptionFromDropDown('edit-carnet-expiry-unit');
     continueButtonClick();
     cy.get('@dropdownValue').then((input) => {
@@ -559,7 +581,7 @@ export const editTimeRestriction = (): void => {
             clickElementById('time-restriction-link');
             randomlyDecideTimeRestrictions(true);
             cy.get('@timeRestriction').then((timeRestriction) => {
-                getElementById('time-restriction').should('have.text', stringify(timeRestriction).replace(/\"/g, ''));
+                getElementById('time-restriction').should('have.text', stringify(timeRestriction).replace(/"/g, ''));
             });
         }
     });
@@ -608,9 +630,11 @@ export const editPurchaseMethodOtherProductsPage = (): void => {
     editPurchaseMethod(true);
 };
 export const getServiceLinkToClick = (): void => {
-    cy.get(`[id^="active-products-"]`).each(($element, index) => {
+    cy.get(`[id^="active-products-"]`).each(($element) => {
         if (parseInt($element.text()) > 0) {
-            cy.wrap(`service-link-${index}`).as('serviceToClick');
+            // The element ids use the service's database id, not the array index
+            const serviceId = $element.attr('id')?.replace('active-products-', '');
+            cy.wrap(`service-link-${serviceId}`).as('serviceToClick');
             return false;
         }
     });
@@ -687,7 +711,7 @@ export const editExemptedServices = (): void => {
     submitButtonClick();
     cy.get('@input').then((input) => {
         const inputText = stringify(input);
-        const result = inputText === 'N/A' ? inputText : inputText.split(',').join(', ');
+        const result = inputText === 'N/A' ? 'None' : inputText.replace(/[[\]]/g, '').split(',').join(', ');
         getElementById('exempted-services').should('have.text', result);
     });
     clickElementByText('Back');
@@ -711,11 +735,11 @@ export const deleteMultiOperatorProduct = (): void => {
 
 const editOperatorGroup = (): void => {
     clickElementById('multi-operator-group-link');
-    getElementByClass('govuk-radios__input').each((element) => {
-        if (element.attr('aria-label') === 'test2') {
-            cy.wrap(element).click();
-        }
-    });
+    // Select the operator group named exactly 'test2' on the reuseOperatorGroup page
+    cy.contains('h4', /^test2$/)
+        .parents('.card')
+        .find('.govuk-radios__input')
+        .click();
     continueButtonClick();
     getElementById('multi-operator-group').should('have.text', 'NWBT');
 };

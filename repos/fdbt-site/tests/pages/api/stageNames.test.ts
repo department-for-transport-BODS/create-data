@@ -3,8 +3,6 @@ import { STAGE_NAMES_ATTRIBUTE } from '../../../src/constants/attributes';
 import stageNames, { isStageNameValid } from '../../../src/pages/api/stageNames';
 import { getMockRequestAndResponse } from '../../testData/mockData';
 
-jest.mock('../../../src/utils/sessions');
-
 describe('stageNames', () => {
     afterEach(() => {
         jest.resetAllMocks();
@@ -100,7 +98,7 @@ describe('stageNames', () => {
         });
     });
 
-    it('should set the STAGE_NAMES_ATTRIBUTE with values matching the valid data entered by the user ', () => {
+    it('should set the STAGE_NAMES_ATTRIBUTE with values matching the valid data entered by the user', () => {
         const setUpdateSessionspy = jest.spyOn(sessions, 'updateSessionAttribute');
         const mockBody = { stageNameInput: ['a', 'b', 'c', 'd'] };
         const { req, res } = getMockRequestAndResponse({ cookieValues: {}, body: mockBody });

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { mockRequest } from 'mock-req-res';
-import MockRes from 'mock-res';
 import React from 'react';
+import { mockRequest, MockRes } from './mockHttp';
 import { RawService } from '../../src/interfaces/dbTypes';
 import {
     WithIds,
@@ -202,7 +201,6 @@ export const getMockRequestAndResponse = ({
                 ticketFormats: ['paperTicket'],
             },
         ],
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
         destroy: (): void => {},
         ...session,
     };
@@ -267,7 +265,7 @@ export const getMockContext = ({
         req,
         pathname: '',
         query,
-        // eslint-disable-next-line react/display-name
+
         AppTree: () => React.createElement('div'),
     };
 
@@ -979,6 +977,13 @@ export const selectedFareStages: string[][] = [
         '{"stopName":"New Tempest Road - York House","naptanCode":"duratgjt","atcoCode":"13003611B","localityCode":"E0045957","localityName":"Seaham","parentLocalityName":"IW Test","indicator":"NE-bound","street":"Tempest Road"}',
     ],
 ];
+
+// Maps a stop's atcoCode to the assigned fare zone name, as expected by EditFareStageMatching
+export const editSelectedFareStages: Record<string, string> = {
+    '13003305E': 'Acomb Green Lane',
+    '13003622B': 'Mattison Way',
+    '13003611B': 'Nursery Drive',
+};
 
 export const service: BasicService = {
     lineName: '215',
@@ -6647,4 +6652,52 @@ export const mockMultiOperatorExternalPeriodServicesProduct: WithIds<MultiOperat
     },
     type: 'multiOperatorExt',
     uuid: 'BLACc90fe5a8',
+};
+
+export const selections = {
+    option0: [
+        'Acomb Green Lane',
+        '{"stop":{"stopName":"Yoden Way - Chapel Hill Road","naptanCode":"duratdmj","atcoCode":"13003521G","localityCode":"E0045956","localityName":"Peterlee","indicator":"W-bound","street":"Yodan Way","qualifierName":"","parentLocalityName":"IW Test"},"stage":"Acomb Green Lane"}',
+    ],
+    option1: [
+        'Mattison Way',
+        '{"stop":{"stopName":"Yoden Way","naptanCode":"duratdmt","atcoCode":"13003522F","localityCode":"E0010183","localityName":"Horden","indicator":"SW-bound","street":"Yoden Way","qualifierName":"","parentLocalityName":"IW Test"},"stage":"Mattison Way"}',
+    ],
+    option2: [
+        'Holl Bank/Beech Ave',
+        '{"stop":{"stopName":"Surtees Rd-Edenhill Rd","naptanCode":"durapgdw","atcoCode":"13003219H","localityCode":"E0045956","localityName":"Peterlee","indicator":"NW-bound","street":"Surtees Road","qualifierName":"","parentLocalityName":"IW Test"},"stage":"Holl Bank/Beech Ave"}',
+    ],
+    option3: [
+        'Blossom Street',
+        '{"stop":{"stopName":"Bus Station","naptanCode":"duratdma","atcoCode":"13003519H","localityCode":"E0045956","localityName":"Peterlee","indicator":"H","street":"Bede Way","qualifierName":"","parentLocalityName":"IW Test"},"stage":"Blossom Street"}',
+    ],
+    option4: [
+        'Piccadilly (York)',
+        '{"stop":{"stopName":"Kell Road","naptanCode":"duraptwp","atcoCode":"13003345D","localityCode":"E0010183","localityName":"Horden","indicator":"SE-bound","street":"Kell Road","qualifierName":"","parentLocalityName":"IW Test"},"stage":"Piccadilly (York)"}',
+    ],
+};
+
+export const selectedOptionsWithAnUnassignedStop = {
+    option0: [
+        'Acomb Green Lane',
+        '{"stop":{"stopName":"Yoden Way - Chapel Hill Road","naptanCode":"duratdmj","atcoCode":"13003521G","localityCode":"E0045956","localityName":"Peterlee","indicator":"W-bound","street":"Yodan Way","qualifierName":"","parentLocalityName":"IW Test"},"stage":"Acomb Green Lane"}',
+    ],
+    option1: [
+        'Mattison Way',
+        '{"stop":{"stopName":"Yoden Way","naptanCode":"duratdmt","atcoCode":"13003522F","localityCode":"E0010183","localityName":"Horden","indicator":"SW-bound","street":"Yoden Way","qualifierName":"","parentLocalityName":"IW Test"},"stage":"Mattison Way"}',
+    ],
+    option2: [
+        'Holl Bank/Beech Ave',
+        '{"stop":{"stopName":"Surtees Rd-Edenhill Rd","naptanCode":"durapgdw","atcoCode":"13003219H","localityCode":"E0045956","localityName":"Peterlee","indicator":"NW-bound","street":"Surtees Road","qualifierName":"","parentLocalityName":"IW Test"},"stage":"Holl Bank/Beech Ave"}',
+    ],
+    option3: [
+        'Blossom Street',
+        '{"stop":{"stopName":"Bus Station","naptanCode":"duratdma","atcoCode":"13003519H","localityCode":"E0045956","localityName":"Peterlee","indicator":"H","street":"Bede Way","qualifierName":"","parentLocalityName":"IW Test"},"stage":"Blossom Street"}',
+    ],
+    option4: [
+        'Piccadilly (York)',
+        '{"stop":{"stopName":"Kell Road","naptanCode":"duraptwp","atcoCode":"13003345D","localityCode":"E0010183","localityName":"Horden","indicator":"SE-bound","street":"Kell Road","qualifierName":"","parentLocalityName":"IW Test"},"stage":"Piccadilly (York)"}',
+    ],
+    option5:
+        '{"stopName":"Cresswood Avenue","naptanCode":"blpadpdg","atcoCode":"2590B0207","localityCode":"E0035271","localityName":"Anchorsholme","parentLocalityName":"Cleveleys","indicator":"opp","street":"Anchorsholme Lane East"}',
 };

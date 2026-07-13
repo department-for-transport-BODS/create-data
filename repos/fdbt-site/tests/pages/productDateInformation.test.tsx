@@ -1,14 +1,16 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import { getMockContext } from '../testData/mockData';
 import ProductDateInfo, { getServerSideProps } from '../../src/pages/productDateInformation';
 import { ErrorInfo } from '../../src/interfaces';
 import { PRODUCT_DATE_ATTRIBUTE } from '../../src/constants/attributes';
 
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
+
 describe('pages', () => {
     describe('productDateInformation', () => {
-        it('it should render the product date information page upon first landing', () => {
-            const wrapper = shallow(
+        it('should render the product date information page upon first landing', () => {
+            const wrapper = renderToFragment(
                 <ProductDateInfo
                     startDateErrors={[]}
                     endDateErrors={[]}
@@ -26,8 +28,8 @@ describe('pages', () => {
             );
             expect(wrapper).toMatchSnapshot();
         });
-        it('it should render start date errors correctly when start date errors are passed to the page', () => {
-            const wrapper = shallow(
+        it('should render start date errors correctly when start date errors are passed to the page', () => {
+            const wrapper = renderToFragment(
                 <ProductDateInfo
                     startDateErrors={[{ errorMessage: 'Start date must be a real date', id: 'start-day-input' }]}
                     endDateErrors={[]}
@@ -46,8 +48,8 @@ describe('pages', () => {
             expect(wrapper).toMatchSnapshot();
         });
 
-        it('it should render end date errors correctly when end date errors are passed to the page', () => {
-            const wrapper = shallow(
+        it('should render end date errors correctly when end date errors are passed to the page', () => {
+            const wrapper = renderToFragment(
                 <ProductDateInfo
                     startDateErrors={[]}
                     endDateErrors={[
@@ -71,8 +73,8 @@ describe('pages', () => {
             expect(wrapper).toMatchSnapshot();
         });
 
-        it('it should render end date errors and start date errors when both errors are passed to the page', () => {
-            const wrapper = shallow(
+        it('should render end date errors and start date errors when both errors are passed to the page', () => {
+            const wrapper = renderToFragment(
                 <ProductDateInfo
                     startDateErrors={[{ errorMessage: 'Start date must be a real date', id: 'start-day-input' }]}
                     endDateErrors={[
@@ -98,7 +100,7 @@ describe('pages', () => {
     });
 
     describe('getServerSideProps', () => {
-        it('it should return props containing no errors and valid fieldsets when no product session is present', () => {
+        it('should return props containing no errors and valid fieldsets when no product session is present', () => {
             const ctx = getMockContext();
             const result = getServerSideProps(ctx);
 
@@ -114,7 +116,7 @@ describe('pages', () => {
             });
         });
 
-        it('it should return props containing no errors and valid fieldsets when no are present', () => {
+        it('should return props containing no errors and valid fieldsets when no are present', () => {
             const ctx = getMockContext({
                 session: {
                     [PRODUCT_DATE_ATTRIBUTE]: {
@@ -144,7 +146,7 @@ describe('pages', () => {
             });
         });
 
-        it('it should return props containing errors and valid fieldsets when radio and all input errors are present', () => {
+        it('should return props containing errors and valid fieldsets when radio and all input errors are present', () => {
             const errors: ErrorInfo[] = [
                 {
                     id: 'start-day-input',

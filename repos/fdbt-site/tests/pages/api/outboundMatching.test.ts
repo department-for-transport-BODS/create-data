@@ -1,12 +1,15 @@
 import { UNASSIGNED_STOPS_ATTRIBUTE } from '../../../src/constants/attributes';
 import outboundMatching from '../../../src/pages/api/outboundMatching';
-import { getMockRequestAndResponse, service, mockMatchingUserFareStages } from '../../testData/mockData';
+import {
+    getMockRequestAndResponse,
+    service,
+    mockMatchingUserFareStages,
+    selections,
+    selectedOptionsWithAnUnassignedStop,
+} from '../../testData/mockData';
 import * as sessions from '../../../src/utils/sessions';
 import { MatchingInfo, MatchingWithErrors } from '../../../src/interfaces/matchingInterface';
 import { MATCHING_ATTRIBUTE } from '../../../src/constants/attributes';
-import { selections, selectedOptionsWithAnUnassignedStop } from './matching.test';
-
-jest.mock('../../../src/utils/sessions');
 
 describe('Outbound Matching API', () => {
     const updateSessionAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');

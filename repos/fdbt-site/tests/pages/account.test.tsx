@@ -1,15 +1,15 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import AccountDetails, { getServerSideProps } from '../../src/pages/account';
 import { getMockContext } from '../testData/mockData';
 import * as cognito from '../../src/data/cognito';
 
-jest.mock('../../src/data/cognito');
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('account', () => {
         it('should render correctly', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <AccountDetails
                     emailAddress="joseppo.bloggo@somefakebuscompany.com"
                     nocCode="FaBusCo|foo|bar"
@@ -22,7 +22,7 @@ describe('pages', () => {
         });
 
         it('should render correctly with errors', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <AccountDetails
                     emailAddress="joseppo.bloggo@somefakebuscompany.com"
                     nocCode="FaBusCo|foo|bar"

@@ -1,12 +1,18 @@
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import Services, { showProductAgainstService } from '../../../src/pages/products/services';
-import * as React from 'react';
 import { MyFaresServiceWithProductCount } from '../../../src/interfaces';
+
+jest.mock('next/router', () => ({
+    useRouter: () => ({ pathname: '/products/services' }),
+}));
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('myfares pages', () => {
     describe('services', () => {
         it('should render correctly when no services present', () => {
-            const tree = shallow(<Services servicesAndProducts={[]} />);
+            const tree = renderToFragment(<Services servicesAndProducts={[]} />);
 
             expect(tree).toMatchSnapshot();
         });
@@ -26,7 +32,7 @@ describe('myfares pages', () => {
                 },
             ];
 
-            const tree = shallow(<Services servicesAndProducts={services} />);
+            const tree = renderToFragment(<Services servicesAndProducts={services} />);
 
             expect(tree).toMatchSnapshot();
         });
@@ -46,7 +52,7 @@ describe('myfares pages', () => {
                 },
             ];
 
-            const tree = shallow(<Services servicesAndProducts={services} />);
+            const tree = renderToFragment(<Services servicesAndProducts={services} />);
 
             expect(tree).toMatchSnapshot();
         });
@@ -66,7 +72,7 @@ describe('myfares pages', () => {
                 },
             ];
 
-            const tree = shallow(<Services servicesAndProducts={services} />);
+            const tree = renderToFragment(<Services servicesAndProducts={services} />);
 
             expect(tree).toMatchSnapshot();
         });

@@ -1,11 +1,13 @@
-import { shallow } from 'enzyme';
-import React from 'react';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import EditPeriodDuration from '../../src/pages/editPeriodDuration';
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('editPeriodDuration', () => {
         it('should render editPeriodDuration page correctly', () => {
-            const wrapper = shallow(
+            const wrapper = renderToFragment(
                 <EditPeriodDuration
                     errors={[]}
                     csrfToken=""
@@ -17,7 +19,7 @@ describe('pages', () => {
             expect(wrapper).toMatchSnapshot();
         });
         it('should render editPeriodDuration page correctly with an error', () => {
-            const wrapper = shallow(
+            const wrapper = renderToFragment(
                 <EditPeriodDuration
                     errors={[{ id: 'edit-period-duration-quantity', errorMessage: 'Product duration cannot be empty' }]}
                     csrfToken=""

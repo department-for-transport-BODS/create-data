@@ -1,11 +1,13 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import ManagePurchaseMethod from '../../src/pages/managePurchaseMethod';
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('manage purchase method', () => {
         it('should render correctly', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ManagePurchaseMethod
                     csrfToken={''}
                     errors={[]}
@@ -18,7 +20,7 @@ describe('pages', () => {
             expect(tree).toMatchSnapshot();
         });
         it('should render correctly for capped ticket', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ManagePurchaseMethod csrfToken={''} errors={[]} inputs={undefined} editMode={false} isCapped={true} />,
             );
 
@@ -35,7 +37,7 @@ describe('pages', () => {
                 isCapped: false,
             };
 
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ManagePurchaseMethod csrfToken={''} errors={[]} inputs={inputs} isCapped={false} editMode />,
             );
 
@@ -52,7 +54,7 @@ describe('pages', () => {
                 isCapped: true,
             };
 
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ManagePurchaseMethod csrfToken={''} errors={[]} inputs={inputs} isCapped={false} editMode />,
             );
 
@@ -71,7 +73,7 @@ describe('pages', () => {
                 isCapped: false,
             };
 
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ManagePurchaseMethod csrfToken={''} errors={errors} inputs={inputs} isCapped={false} editMode />,
             );
 

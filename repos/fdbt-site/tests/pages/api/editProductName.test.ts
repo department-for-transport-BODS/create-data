@@ -4,9 +4,6 @@ import { MATCHING_JSON_ATTRIBUTE, MATCHING_JSON_META_DATA_ATTRIBUTE } from '../.
 import * as userData from '../../../src/utils/apiUtils/userData';
 import * as index from '../../../src/utils/apiUtils/index';
 
-jest.mock('../../../src/utils/apiUtils/userData');
-jest.mock('../../../src/utils/apiUtils/index');
-
 describe('editProductName', () => {
     const writeHeadMock = jest.fn();
     const s3Spy = jest.spyOn(userData, 'putUserDataInProductsBucketWithFilePath');

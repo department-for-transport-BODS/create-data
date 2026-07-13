@@ -72,8 +72,8 @@ const formatRequestBody = async (
     const proofDocuments = isArray(req.body.proofDocuments)
         ? req.body.proofDocuments
         : req.body.proofDocuments
-        ? [req.body.proofDocuments]
-        : undefined;
+          ? [req.body.proofDocuments]
+          : undefined;
 
     if (typeof name !== 'string' || typeof ageRangeMin !== 'string' || typeof ageRangeMax !== 'string') {
         throw Error('one of the parameters is not a string!');

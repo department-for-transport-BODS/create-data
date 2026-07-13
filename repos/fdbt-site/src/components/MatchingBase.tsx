@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-onchange */
 import React, { ReactElement, useState } from 'react';
 import WarningSummary from './WarningSummary';
 import FormElementWrapper from './FormElementWrapper';

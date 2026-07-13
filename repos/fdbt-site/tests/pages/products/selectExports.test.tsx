@@ -1,5 +1,5 @@
-import { shallow } from 'enzyme';
-import React from 'react';
+import { fireEvent, render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import SelectExports, { getServerSideProps } from '../../../src/pages/products/selectExports';
 import {
     getMockContext,
@@ -9,24 +9,23 @@ import {
 } from '../../testData/mockData';
 import * as getExportProgress from '../../../src/pages/api/getExportProgress';
 
-jest.mock('../../../src/pages/api/getExportProgress');
-
 describe('selectExports', () => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    const event = Object.assign(jest.fn(), { preventDefault: () => {} });
+    const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
     it('renders appropriately when the user has no products', () => {
-        const tree = shallow(<SelectExports csrf={''} productsToDisplay={[]} servicesToDisplay={[]} />);
+        const tree = renderToFragment(<SelectExports csrf={''} productsToDisplay={[]} servicesToDisplay={[]} />);
         expect(tree).toMatchSnapshot();
     });
 
     it('renders fully when the user has products they can export, but no point to point products', () => {
-        const tree = shallow(<SelectExports csrf={''} productsToDisplay={mockOtherProducts} servicesToDisplay={[]} />);
+        const tree = renderToFragment(
+            <SelectExports csrf={''} productsToDisplay={mockOtherProducts} servicesToDisplay={[]} />,
+        );
         expect(tree).toMatchSnapshot();
     });
 
     it('renders fully when the user has products they can export and both types of products (point to point and non point to point)', () => {
-        const tree = shallow(
+        const tree = renderToFragment(
             <SelectExports
                 csrf={''}
                 productsToDisplay={[...mockOtherProducts, ...mockPointToPointProducts]}
@@ -37,66 +36,63 @@ describe('selectExports', () => {
     });
 
     it('selects all the checkboxes when the select all button is clicked, and unselects them properly also', () => {
-        const tree = shallow(
+        const { container } = render(
             <SelectExports
                 csrf={''}
                 productsToDisplay={[...mockOtherProducts, ...mockPointToPointProducts]}
                 servicesToDisplay={mockServicesToDisplay}
             />,
         );
-        const checkboxes = tree.find('checkbox');
+        const getCheckboxes = () => container.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
+        const selectAll = () => fireEvent.click(container.querySelector('#select-all') as HTMLButtonElement);
 
-        checkboxes.forEach((checkbox) => {
-            expect(checkbox.props().checked).toBeFalsy();
+        getCheckboxes().forEach((checkbox) => {
+            expect(checkbox.checked).toBeFalsy();
         });
 
-        tree.find('#select-all').simulate('click', event);
+        selectAll();
 
-        checkboxes.forEach((checkbox) => {
-            expect(checkbox.props().checked).toBeTruthy();
+        getCheckboxes().forEach((checkbox) => {
+            expect(checkbox.checked).toBeTruthy();
         });
 
-        tree.find('#select-all').simulate('click', event);
+        selectAll();
 
-        checkboxes.forEach((checkbox) => {
-            expect(checkbox.props().checked).toBeFalsy();
+        getCheckboxes().forEach((checkbox) => {
+            expect(checkbox.checked).toBeFalsy();
         });
     });
 
     it('opens all the details tabs when the open all button is clicked, and closes them properly also', () => {
-        const tree = shallow(
+        const { container } = render(
             <SelectExports
                 csrf={''}
                 productsToDisplay={[...mockOtherProducts, ...mockPointToPointProducts]}
                 servicesToDisplay={mockServicesToDisplay}
             />,
         );
+        const getDetails = () => container.querySelectorAll<HTMLDetailsElement>('details');
+        const openAll = () => fireEvent.click(container.querySelector('#open-all-services') as HTMLButtonElement);
 
-        const details = tree.find('details');
-
-        details.forEach((detail) => {
-            expect(detail.props().open).toBeFalsy();
+        getDetails().forEach((detail) => {
+            expect(detail.open).toBeFalsy();
         });
 
-        tree.find('#open-all-services').simulate('click', event);
+        openAll();
 
-        const detailsAfterClick = tree.find('details');
-
-        detailsAfterClick.forEach((detail) => {
-            expect(detail.props().open).toBeTruthy();
+        getDetails().forEach((detail) => {
+            expect(detail.open).toBeTruthy();
         });
 
-        tree.find('#open-all-services').simulate('click', event);
+        openAll();
 
-        const detailsAfterSecondClick = tree.find('details');
-
-        detailsAfterSecondClick.forEach((detail) => {
-            expect(detail.props().open).toBeFalsy();
+        getDetails().forEach((detail) => {
+            expect(detail.open).toBeFalsy();
         });
     });
 
     it('correctly updates the "selected" tag to show how many products are selected', () => {
-        const tree = shallow(
+        const { container } = render(
             <SelectExports
                 csrf={''}
                 productsToDisplay={[...mockOtherProducts, ...mockPointToPointProducts]}
@@ -104,11 +100,11 @@ describe('selectExports', () => {
             />,
         );
 
-        expect(tree.find('#products-selected').text()).toEqual('0 / 6 selected');
+        expect(container.querySelector('#products-selected')?.textContent).toEqual('0 / 6 selected');
 
-        tree.find('#select-all').simulate('click', event);
+        fireEvent.click(container.querySelector('#select-all') as HTMLButtonElement);
 
-        expect(tree.find('#products-selected').text()).toEqual('6 / 6 selected');
+        expect(container.querySelector('#products-selected')?.textContent).toEqual('6 / 6 selected');
     });
 
     it('should redirect if an export is in progress', async () => {

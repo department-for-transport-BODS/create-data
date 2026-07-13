@@ -369,7 +369,7 @@ export const buildPeriodOrMultiOpTicketConfirmationElements = (
         confirmationElements.push(
             {
                 name: 'Zone',
-                content: `You uploaded a fare zone CSV file${!!fileName ? ` named: ${fileName}` : '.'}`,
+                content: `You uploaded a fare zone CSV file${fileName ? ` named: ${fileName}` : '.'}`,
                 href: 'csvZoneUpload',
             },
             {

@@ -5,10 +5,6 @@ import { USER_ATTRIBUTE } from '../../../src/constants/attributes';
 import * as auth from '../../../src/data/cognito';
 import * as sessions from '../../../src/utils/sessions';
 
-jest.mock('../../../src/data/cognito');
-jest.mock('../../../src/utils/apiUtils');
-jest.mock('../../../src/utils/sessions');
-
 describe('changePassword', () => {
     const updateUserPasswordSpy = jest.spyOn(auth, 'updateUserPassword');
     const initiateAuthSpy = jest.spyOn(auth, 'initiateAuth');
@@ -28,7 +24,7 @@ describe('changePassword', () => {
 
     it('should set the USER_ATTRIBUTE and redirect to /passwordUpdated when password update is successful', async () => {
         getAttributeSpy.mockImplementation(() => 'fake.address@email.com');
-        initiateAuthSpy.mockImplementation(() => Promise.resolve({ AuthenticationResult: {} }));
+        initiateAuthSpy.mockImplementation(() => Promise.resolve({ $metadata: {}, AuthenticationResult: {} }));
         const { req, res } = getMockRequestAndResponse({
             cookieValues: {},
             body: {
@@ -50,7 +46,7 @@ describe('changePassword', () => {
 
     it('should redirect to the error page when the ID_TOKEN_COOKIE is missing the username attribute', async () => {
         getAttributeSpy.mockImplementation(() => null);
-        initiateAuthSpy.mockImplementation(() => Promise.resolve({ AuthenticationResult: {} }));
+        initiateAuthSpy.mockImplementation(() => Promise.resolve({ $metadata: {}, AuthenticationResult: {} }));
         const { req, res } = getMockRequestAndResponse({
             cookieValues: {},
             body: {},
@@ -138,7 +134,7 @@ describe('changePassword', () => {
             if (authResponse === 0) {
                 throw new Error();
             }
-            return Promise.resolve({ AuthenticationResult: {} });
+            return Promise.resolve({ $metadata: {}, AuthenticationResult: {} });
         });
 
         const { req, res } = getMockRequestAndResponse({

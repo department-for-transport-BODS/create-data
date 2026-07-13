@@ -52,7 +52,6 @@ const CsvUpload = ({
                 <ErrorSummary errors={errors} />
                 <CsrfForm action="/api/csvUpload" method="post" encType="multipart/form-data" csrfToken={csrfToken}>
                     <UserDataUploadComponent
-                        // eslint-disable-next-line react/jsx-props-no-spreading
                         {...props}
                         errors={errors}
                         detailBody={

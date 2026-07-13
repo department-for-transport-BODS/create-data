@@ -4,13 +4,16 @@ import {
     SCHOOL_FARE_TYPE_ATTRIBUTE,
 } from './../../../src/constants/attributes';
 import inboundMatching from '../../../src/pages/api/inboundMatching';
-import { getMockRequestAndResponse, service, mockMatchingUserFareStages } from '../../testData/mockData';
+import {
+    getMockRequestAndResponse,
+    service,
+    mockMatchingUserFareStages,
+    selections,
+    selectedOptionsWithAnUnassignedStop,
+} from '../../testData/mockData';
 import * as sessions from '../../../src/utils/sessions';
 import { InboundMatchingInfo, MatchingWithErrors } from '../../../src/interfaces/matchingInterface';
 import { INBOUND_MATCHING_ATTRIBUTE, UNASSIGNED_INBOUND_STOPS_ATTRIBUTE } from '../../../src/constants/attributes';
-import { selections, selectedOptionsWithAnUnassignedStop } from './matching.test';
-
-jest.mock('../../../src/utils/sessions');
 
 describe('Inbound Matching API', () => {
     const updateSessionAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');

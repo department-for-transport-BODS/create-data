@@ -4,8 +4,6 @@ import { getMockRequestAndResponse } from '../../testData/mockData';
 import { COOKIES_POLICY_COOKIE, COOKIE_PREFERENCES_COOKIE, oneYearInSeconds } from '../../../src/constants';
 import { CookiePolicy } from '../../../src/interfaces';
 
-jest.mock('../../../src/utils/apiUtils');
-
 describe('cookies', () => {
     const writeHeadMock = jest.fn();
     const setCookieSpy = jest.spyOn(apiUtils, 'setCookieOnResponseObject');

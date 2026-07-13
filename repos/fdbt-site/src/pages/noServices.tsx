@@ -34,7 +34,7 @@ const NoServices = (): ReactElement => (
     </TwoThirdsLayout>
 );
 
-export const getServerSideProps = (): {} => {
+export const getServerSideProps = (): object => {
     return { props: {} };
 };
 

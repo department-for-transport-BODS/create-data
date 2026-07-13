@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import formidable, { IncomingForm } from 'formidable';
 import fs from 'fs';
 import { NextApiRequest } from 'next';
@@ -11,12 +10,12 @@ export interface FileData {
     name: string;
     files: formidable.Files<string>;
     fileContents: string;
-    fields?: formidable.Fields;
+    fields?: Record<string, string | string[] | undefined>;
 }
 
 interface FilesAndFields {
     files: formidable.Files<string>;
-    fields?: formidable.Fields;
+    fields?: Record<string, string | string[] | undefined>;
 }
 
 interface FileUploadResponse {
@@ -28,7 +27,7 @@ const MAX_FILE_SIZE = 5242880;
 
 export const formParse = async (req: NextApiRequest): Promise<FilesAndFields> => {
     return new Promise<FilesAndFields>((resolve, reject) => {
-        const form = new IncomingForm();
+        const form = new IncomingForm({ allowEmptyFiles: true, minFileSize: 0 });
         form.parse(req, (err, fields, files) => {
             if (err) {
                 return reject(err);

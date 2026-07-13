@@ -9,10 +9,6 @@ import { expectedSingleTicket, getMockRequestAndResponse } from '../../testData/
 import * as userData from '../../../src/utils/apiUtils/userData';
 import * as aurora from '../../../src/data/auroradb';
 
-jest.mock('../../../src/utils/sessions');
-jest.mock('../../../src/utils/apiUtils/userData');
-jest.mock('../../../src/data/auroradb');
-
 describe('productDataInformation', () => {
     const writeHeadMock = jest.fn();
     const updateSessionAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');
@@ -24,7 +20,7 @@ describe('productDataInformation', () => {
         jest.resetAllMocks();
     });
 
-    it('it should add error to session if there is no start date entered', async () => {
+    it('should add error to session if there is no start date entered', async () => {
         const { req, res } = getMockRequestAndResponse({
             cookieValues: {},
             body: {},
@@ -43,7 +39,7 @@ describe('productDataInformation', () => {
         });
     });
 
-    it('it should throw an error and update the PRODUCT_DATE_ATTRIBUTE if the start or end date are not filled in correctly', async () => {
+    it('should throw an error and update the PRODUCT_DATE_ATTRIBUTE if the start or end date are not filled in correctly', async () => {
         const { req, res } = getMockRequestAndResponse({
             cookieValues: {},
             body: {
@@ -76,7 +72,7 @@ describe('productDataInformation', () => {
         });
     });
 
-    it('it should validate the start and end date and error if the end date is less than the start date', async () => {
+    it('should validate the start and end date and error if the end date is less than the start date', async () => {
         const { req, res } = getMockRequestAndResponse({
             cookieValues: {},
             body: {
@@ -115,7 +111,7 @@ describe('productDataInformation', () => {
         });
     });
 
-    it('it should not let the user enter a start year or end date year beyond 2099', async () => {
+    it('should not let the user enter a start year or end date year beyond 2099', async () => {
         const { req, res } = getMockRequestAndResponse({
             cookieValues: {},
             body: {
@@ -154,7 +150,7 @@ describe('productDataInformation', () => {
         });
     });
 
-    it('it should set the start and end date when entered correctly and redirect to confirmation page', async () => {
+    it('should set the start and end date when entered correctly and redirect to confirmation page', async () => {
         const { req, res } = getMockRequestAndResponse({
             cookieValues: {},
             body: {
@@ -188,7 +184,7 @@ describe('productDataInformation', () => {
         });
     });
 
-    it('it should only set the start date when start date only entered and redirect to confirmation page', async () => {
+    it('should only set the start date when start date only entered and redirect to confirmation page', async () => {
         const { req, res } = getMockRequestAndResponse({
             cookieValues: {},
             body: {

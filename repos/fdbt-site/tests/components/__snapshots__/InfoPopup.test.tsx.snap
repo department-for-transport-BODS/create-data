@@ -1,33 +1,35 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`InfoPopup should render the InfoPopup 1`] = `
-<Trap
-  active={true}
->
+<DocumentFragment>
   <div
-    className="popup"
+    class="trap"
   >
     <div
-      className="popup__content"
+      class="popup"
     >
-      <h1
-        className="govuk-heading-m"
+      <div
+        class="popup__content"
       >
-        my title
-      </h1>
-      <span
-        className="govuk-hint"
-        id="info-hint"
-      >
-        this is my text
-      </span>
-      <button
-        className="govuk-button"
-        onClick={[MockFunction]}
-      >
-        Ok
-      </button>
+        <h1
+          class="govuk-heading-m"
+        >
+          my title
+        </h1>
+        <span
+          class="govuk-hint"
+          id="info-hint"
+        >
+          this is my text
+        </span>
+        <button
+          class="govuk-button"
+          type="button"
+        >
+          Ok
+        </button>
+      </div>
     </div>
   </div>
-</Trap>
+</DocumentFragment>
 `;

@@ -25,7 +25,7 @@ import logger from '../../utils/logger';
 import { STAGE } from '../../constants';
 import { getAdditionalNocMatchingJsonLink } from '../../utils';
 import { getProductsSecondaryOperatorInfo } from '../../data/s3';
-import { AWSError } from 'aws-sdk';
+import { S3ServiceException } from '@aws-sdk/client-s3';
 
 // The below 'config' needs to be exported for the formidable library to work.
 export const config = {
@@ -216,7 +216,7 @@ export default async (req: NextApiRequestWithSession, res: NextApiResponse): Pro
                 let stops: Stop[] = [];
                 try {
                     stops = await batchGetStopsByAtcoCode(deduplicatedAtcoCodes);
-                } catch (error) {
+                } catch {
                     errors.push({
                         id: 'csv-upload',
                         errorMessage: 'Incorrect ATCO/NaPTAN codes detected in file. All codes must be correct.',
@@ -248,11 +248,10 @@ export default async (req: NextApiRequestWithSession, res: NextApiResponse): Pro
                 let existingSecondaryOperatorFareInfo: SecondaryOperatorFareInfo | undefined = undefined;
 
                 try {
-                    existingSecondaryOperatorFareInfo = await getProductsSecondaryOperatorInfo(
-                        additionalNocMatchingJsonLink,
-                    );
+                    existingSecondaryOperatorFareInfo =
+                        await getProductsSecondaryOperatorInfo(additionalNocMatchingJsonLink);
                 } catch (error) {
-                    if ((error as AWSError).code === 'NoSuchKey') {
+                    if ((error as S3ServiceException).name === 'NoSuchKey') {
                         existingSecondaryOperatorFareInfo = undefined;
                     } else {
                         logger.warn(error, {

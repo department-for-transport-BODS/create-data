@@ -1,10 +1,12 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import MultipleOperatorsServiceList, { getServerSideProps } from '../../src/pages/multiOperatorServiceList';
 import { getMockContext } from '../testData/mockData';
 import * as aurora from '../../src/data/auroradb';
 import { ErrorInfo, MultiOperatorInfo, ServiceWithOriginAndDestination } from '../../src/interfaces';
 import { MULTIPLE_OPERATOR_ATTRIBUTE } from '../../src/constants/attributes';
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('multipleOperatorsServiceList', () => {
@@ -106,7 +108,7 @@ describe('pages', () => {
         });
 
         it('should render the multiOperatorData page upon first load', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <MultipleOperatorsServiceList
                     multiOperatorData={mockMultiOperatorData}
                     errors={[]}
@@ -118,7 +120,7 @@ describe('pages', () => {
         });
 
         it('should render correctly with errors', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <MultipleOperatorsServiceList
                     multiOperatorData={mockMultiOperatorData}
                     errors={mockErrors}

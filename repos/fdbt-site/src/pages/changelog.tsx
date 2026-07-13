@@ -51,7 +51,7 @@ const Changelog = (): ReactElement => (
     </TwoThirdsLayout>
 );
 
-export const getServerSideProps = (): { props: {} } => ({
+export const getServerSideProps = (): { props: object } => ({
     props: {},
 });
 

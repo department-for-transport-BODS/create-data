@@ -1,19 +1,23 @@
-import { shallow } from 'enzyme';
-import * as React from 'react';
-import { Cap } from 'src/interfaces';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
+import { Cap } from '../../src/interfaces';
 import { CapExpiryUnit, FromDb } from '../../src/interfaces/matchingJsonTypes';
 import ViewCaps, { CapCardBody } from '../../src/pages/viewCaps';
+
+jest.mock('next/router', () => ({ useRouter: () => ({ pathname: '/viewCaps' }) }));
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('view caps', () => {
         it('should render correctly on no cap expiry', () => {
-            const tree = shallow(<ViewCaps caps={[]} viewCapErrors={[]} csrfToken="" referer={null} />);
+            const tree = renderToFragment(<ViewCaps caps={[]} viewCapErrors={[]} csrfToken="" referer={null} />);
 
             expect(tree).toMatchSnapshot();
         });
 
         it('should render correctly when cap validity is fare day end', () => {
-            const tree = shallow(<ViewCaps caps={[]} viewCapErrors={[]} csrfToken="" referer={null} />);
+            const tree = renderToFragment(<ViewCaps caps={[]} viewCapErrors={[]} csrfToken="" referer={null} />);
 
             expect(tree).toMatchSnapshot();
         });
@@ -28,7 +32,7 @@ describe('pages', () => {
                 },
                 id: 1,
             };
-            const tree = shallow(<ViewCaps caps={[cap]} viewCapErrors={[]} csrfToken="" referer={null} />);
+            const tree = renderToFragment(<ViewCaps caps={[cap]} viewCapErrors={[]} csrfToken="" referer={null} />);
 
             expect(tree).toMatchSnapshot();
         });
@@ -43,7 +47,7 @@ describe('pages', () => {
                 },
                 id: 1,
             };
-            const tree = shallow(<ViewCaps caps={[cap]} viewCapErrors={[]} csrfToken="" referer={null} />);
+            const tree = renderToFragment(<ViewCaps caps={[cap]} viewCapErrors={[]} csrfToken="" referer={null} />);
 
             expect(tree).toMatchSnapshot();
         });
@@ -58,7 +62,7 @@ describe('pages', () => {
                 },
                 id: 1,
             };
-            const tree = shallow(<ViewCaps caps={[cap]} viewCapErrors={[]} csrfToken="" referer={null} />);
+            const tree = renderToFragment(<ViewCaps caps={[cap]} viewCapErrors={[]} csrfToken="" referer={null} />);
 
             expect(tree).toMatchSnapshot();
         });
@@ -66,7 +70,7 @@ describe('pages', () => {
 
     describe('cap inner component', () => {
         it('renders normally when caps are present', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <CapCardBody
                     cap={{
                         id: 2,

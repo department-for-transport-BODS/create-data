@@ -25,10 +25,6 @@ import {
 } from '../../../src/interfaces/matchingJsonTypes';
 import { PRODUCTS_DATA_BUCKET_NAME } from '../../../src/constants';
 
-jest.mock('../../../src/utils/sessions');
-jest.mock('../../../src/data/auroradb');
-jest.mock('../../../src/data/s3');
-
 describe('searchOperators', () => {
     const updateSessionAttributeSpy = jest.spyOn(session, 'updateSessionAttribute');
 

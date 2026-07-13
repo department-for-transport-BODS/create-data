@@ -16,8 +16,8 @@ import {
 import { getProductsMatchingJson } from '../../../src/data/s3';
 import { TicketWithIds } from '../../../src/interfaces/matchingJsonTypes';
 
-jest.mock('../../../src/utils/apiUtils/index');
-jest.mock('../../../src/utils/apiUtils/userData');
+jest.mock('../../../src/data/auroradb');
+jest.mock('../../../src/data/s3');
 
 const expectedGeneratedReturn = {
     type: 'return',
@@ -259,9 +259,6 @@ const expectedGeneratedReturn = {
     returnPeriodValidity: { amount: '1', typeOfDuration: 'day' },
     unassignedStops: { inboundUnassignedStops: [], outboundUnassignedStops: [] },
 };
-
-jest.mock('../../../src/data/auroradb');
-jest.mock('../../../src/data/s3');
 
 describe('generateReturn', () => {
     const noc = 'mynoc';

@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 
 import Direction, { getServerSideProps } from '../../src/pages/direction';
 import * as auroradb from '../../src/data/auroradb';
@@ -9,7 +9,7 @@ import { TXC_SOURCE_ATTRIBUTE } from '../../src/constants/attributes';
 
 jest.mock('../../src/data/auroradb');
 
-jest.mock('../../src/data/auroradb.ts');
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('direction', () => {
@@ -18,7 +18,7 @@ describe('pages', () => {
         });
 
         it('should render correctly', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <Direction
                     errors={[]}
                     direction="outbound"
@@ -33,7 +33,7 @@ describe('pages', () => {
 
         describe('getServerSideProps', () => {
             it('returns correct values for props', async () => {
-                (({ ...getServiceByIdAndDataSource } as jest.Mock).mockImplementation(() => mockRawService));
+                (({ ...getServiceByIdAndDataSource }) as jest.Mock).mockImplementation(() => mockRawService);
 
                 const ctx = getMockContext({
                     body: { serviceId: '123' },

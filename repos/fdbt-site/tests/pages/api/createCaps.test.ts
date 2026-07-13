@@ -3,12 +3,9 @@ import * as index from '../../../src/utils/apiUtils';
 import { CREATE_CAPS_ATTRIBUTE } from '../../../src/constants/attributes';
 import createCaps from '../../../src/pages/api/createCaps';
 import * as db from '../../../src/data/auroradb';
-import { CapExpiryUnit, FromDb } from 'src/interfaces/matchingJsonTypes';
-import { Cap } from 'src/interfaces';
+import { CapExpiryUnit, FromDb } from '../../../src/interfaces/matchingJsonTypes';
+import { Cap } from '../../../src/interfaces';
 import { getMockRequestAndResponse } from '../../testData/mockData';
-
-jest.mock('../../../src/utils/sessions');
-jest.mock('../../../src/utils/apiUtils');
 
 describe('createCaps', () => {
     const writeHeadMock = jest.fn();
@@ -178,7 +175,7 @@ describe('createCaps', () => {
         getCapsSpy.mockResolvedValueOnce([]);
 
         await createCaps(req, res);
-        expect(updateSpy).not.toBeCalled();
+        expect(updateSpy).not.toHaveBeenCalled();
         expect(insertSpy).toHaveBeenCalledWith(undefined, expected);
 
         expect(res.writeHead).toHaveBeenCalledWith(302, {
@@ -211,7 +208,7 @@ describe('createCaps', () => {
         getCapsSpy.mockResolvedValueOnce([]);
 
         await createCaps(req, res);
-        expect(insertSpy).not.toBeCalled();
+        expect(insertSpy).not.toHaveBeenCalled();
         expect(updateSpy).toHaveBeenCalledWith(undefined, 1, expected);
 
         expect(res.writeHead).toHaveBeenCalledWith(302, {

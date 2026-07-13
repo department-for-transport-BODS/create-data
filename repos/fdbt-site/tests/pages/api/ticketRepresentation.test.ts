@@ -3,8 +3,6 @@ import { getMockRequestAndResponse } from '../../testData/mockData';
 import * as sessions from '../../../src/utils/sessions';
 import { FLAT_FARE_RETURN_ATTRIBUTE, TICKET_REPRESENTATION_ATTRIBUTE } from '../../../src/constants/attributes';
 
-jest.mock('../../../src/utils/sessions');
-
 describe('ticketRepresentation', () => {
     const writeHeadMock = jest.fn();
     const updateSessionAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');

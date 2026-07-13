@@ -19,8 +19,6 @@ import {
 } from '../../../../src/constants/attributes';
 import { TicketType } from '../../../../src/interfaces/matchingJsonTypes';
 
-jest.mock('../../../../src/data/s3');
-
 describe('apiUtils', () => {
     const writeHeadMock = jest.fn();
 
@@ -110,9 +108,7 @@ describe('apiUtils', () => {
                     [FARE_TYPE_ATTRIBUTE]: { fareType: 'FAKE FARE TYPE' as TicketType },
                 },
             });
-            expect(() => getFareTypeFromFromAttributes(req)).toThrowError(
-                'Incorrect fare type session attributes found.',
-            );
+            expect(() => getFareTypeFromFromAttributes(req)).toThrow('Incorrect fare type session attributes found.');
         });
 
         it("should throw an error when the fare type is 'schoolService', but there is no SCHOOL_FARE_TYPE_ATTRIBUTE", () => {
@@ -121,9 +117,7 @@ describe('apiUtils', () => {
                     [FARE_TYPE_ATTRIBUTE]: { fareType: 'schoolService' },
                 },
             });
-            expect(() => getFareTypeFromFromAttributes(req)).toThrowError(
-                'Incorrect fare type session attributes found.',
-            );
+            expect(() => getFareTypeFromFromAttributes(req)).toThrow('Incorrect fare type session attributes found.');
         });
     });
 
@@ -177,7 +171,7 @@ describe('apiUtils', () => {
 
             expect(() => {
                 redirectOnFareType(req, res);
-            }).toThrowError(new Error('Could not extract fareType from the fare type attribute.'));
+            }).toThrow(new Error('Could not extract fareType from the fare type attribute.'));
         });
     });
 

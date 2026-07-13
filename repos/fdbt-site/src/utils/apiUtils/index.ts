@@ -275,7 +275,7 @@ export const validatePasswordConformsToPolicy = (password: string): string[] => 
         passwordError.push('contain at least one number');
     }
 
-    if (!/[$^*.\[\]{}()?"!@#%&\/\\,><':;|_~`=+-]/.test(password)) {
+    if (!/[$^*.[\]{}()?"!@#%&/\\,><':;|_~`=+-]/.test(password)) {
         passwordError.push('contain at least one special character');
     }
 

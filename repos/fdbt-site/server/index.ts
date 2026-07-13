@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import express, { Request, Response, Express, NextFunction } from 'express';
 import nextjs from 'next';
 import requireAuth, { setDisableAuthParameters } from './middleware/authentication';
@@ -99,7 +98,7 @@ void (async (): Promise<void> => {
         });
 
         setupCsrfProtection(server);
-        setupSessions(server);
+        await setupSessions(server);
         setDisableAuthParameters(server);
 
         unauthenticatedGetRoutes.forEach((route) => {
@@ -128,7 +127,9 @@ void (async (): Promise<void> => {
         server.get('/definePricingPerDistance', requireAuth, (req, res) => {
             if (process.env.STAGE !== 'dev') {
                 redirectTo(res, '/error');
+                return;
             }
+            res.locals.csrfToken = req.csrfToken();
             return handle(req, res);
         });
 

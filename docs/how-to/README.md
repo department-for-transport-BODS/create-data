@@ -15,7 +15,6 @@ Common step by step actions
 - [manually-retrieve-reference-data](./manually-retrieve-reference-data.md)
 - [release-infrastructure-changes](./release-infrastructure-changes.md)
 - [rollback-a-release](./rollback-a-release.md)
-- [running-ui-tests-locally-and-in-browserstack](./running-ui-tests-locally-and-in-browserstack.md)
 - [scale-or-cycle-fargate-tasks](./scale-or-cycle-fargate-tasks.md)
 - [search-logs](./search-logs.md)
 - [setup-mfa-for-cfd-admin](./setup-mfa-for-cfd-admin.md)

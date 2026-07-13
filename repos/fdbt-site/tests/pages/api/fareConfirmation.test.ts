@@ -3,8 +3,6 @@ import * as apiUtils from '../../../src/utils/apiUtils';
 import { getMockRequestAndResponse, mockSchemOpIdToken } from '../../testData/mockData';
 import { OPERATOR_ATTRIBUTE, FARE_TYPE_ATTRIBUTE } from '../../../src/constants/attributes';
 
-jest.mock('../../../src/utils/apiUtils');
-
 describe('fareConfirmation', () => {
     const writeHeadMock = jest.fn();
     const redirectOnFareTypeSpy = jest.spyOn(apiUtils, 'redirectOnFareType');

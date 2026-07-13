@@ -4,8 +4,6 @@ import * as sessions from '../../../src/utils/sessions';
 import { FARE_TYPE_ATTRIBUTE, CARNET_FARE_TYPE_ATTRIBUTE } from '../../../src/constants/attributes';
 import { ErrorInfo } from '../../../src/interfaces';
 
-jest.mock('../../../src/utils/sessions');
-
 describe('fareType', () => {
     const writeHeadMock = jest.fn();
     const updateSessionAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');

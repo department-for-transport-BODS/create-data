@@ -4,8 +4,6 @@ import * as sessions from '../../../src/utils/sessions';
 import { getMockRequestAndResponse } from '../../testData/mockData';
 import { CarnetExpiryUnit, CarnetProductInfo } from '../../../src/interfaces/matchingJsonTypes';
 
-jest.mock('../../../src/utils/sessions');
-
 describe('carnetProductDetails', () => {
     const updateAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');
 

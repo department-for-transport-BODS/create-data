@@ -202,9 +202,7 @@ const ServiceList = ({
                             <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
                                 <h2 className="govuk-fieldset__heading">
                                     You previously uploaded{' '}
-                                    {!!exemptStops
-                                        ? `${exemptStops.split(', ').length} exempt stops`
-                                        : 'no exempt stops'}
+                                    {exemptStops ? `${exemptStops.split(', ').length} exempt stops` : 'no exempt stops'}
                                     . Do you want to edit them?{' '}
                                 </h2>
                             </legend>
@@ -492,7 +490,7 @@ export const getServerSideProps = async (ctx: NextPageContextWithSession): Promi
                     exemptedServices = secondaryOperatorFareInfo.exemptedServices;
                 }
             } catch (error) {
-                logger.warn(`Couldn't get additional operator info for noc: ${nocCode}`);
+                logger.warn(`Couldn't get additional operator info for noc: ${nocCode}`, error.stack);
             }
         } else {
             if ('selectedServices' in ticket) {

@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import ReturnService, { getServerSideProps } from '../../src/pages/returnService';
 import { getServicesByNocCodeAndDataSource, getTndsServicesByNocAndModes } from '../../src/data/auroradb';
 import { expectedReturnTicketWithAdditionalService, expectedSingleTicket, getMockContext } from '../testData/mockData';
@@ -12,6 +12,8 @@ import {
 import { OperatorAttribute, ServiceType } from '../../src/interfaces';
 
 jest.mock('../../src/data/auroradb');
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 const mockServices: ServiceType[] = [
     {
@@ -54,7 +56,7 @@ describe('pages', () => {
         });
 
         it('should render correctly', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ReturnService
                     operator="Connexions Buses"
                     passengerType="Adult"
@@ -70,7 +72,7 @@ describe('pages', () => {
         });
 
         it('shows operator name above the select box', () => {
-            const wrapper = shallow(
+            const { container } = render(
                 <ReturnService
                     operator="Connexions Buses"
                     passengerType="Adult"
@@ -82,13 +84,13 @@ describe('pages', () => {
                     dataSource="bods"
                 />,
             );
-            const operatorWelcome = wrapper.find('#service-operator-passenger-type-hint').first();
+            const operatorWelcome = container.querySelector('#service-operator-passenger-type-hint');
 
-            expect(operatorWelcome.text()).toBe('Connexions Buses - Adult');
+            expect(operatorWelcome?.textContent).toBe('Connexions Buses - Adult');
         });
 
         it('shows a list of services for the operator in the select box with bods data source', () => {
-            const wrapper = shallow(
+            const { container } = render(
                 <ReturnService
                     operator="Connexions Buses"
                     passengerType="Adult"
@@ -100,16 +102,16 @@ describe('pages', () => {
                     dataSource="bods"
                 />,
             );
-            const operatorServices = wrapper.find('.service-option');
+            const operatorServices = container.querySelectorAll('.service-option');
 
             expect(operatorServices).toHaveLength(3);
-            expect(operatorServices.first().text()).toBe('123 Manchester - Leeds (Start date 05/02/2020)');
-            expect(operatorServices.at(1).text()).toBe('X1 Edinburgh - N/A (Start date 06/02/2020)');
-            expect(operatorServices.at(2).text()).toBe('Infinity Line N/A - London (Start date 07/02/2020)');
+            expect(operatorServices[0].textContent).toBe('123 Manchester - Leeds (Start date 05/02/2020)');
+            expect(operatorServices[1].textContent).toBe('X1 Edinburgh - N/A (Start date 06/02/2020)');
+            expect(operatorServices[2].textContent).toBe('Infinity Line N/A - London (Start date 07/02/2020)');
         });
 
         it('shows a list of services for the operator in the select box with tnds data source', () => {
-            const wrapper = shallow(
+            const { container } = render(
                 <ReturnService
                     operator="Connexions Buses"
                     passengerType="Adult"
@@ -121,12 +123,12 @@ describe('pages', () => {
                     dataSource="tnds"
                 />,
             );
-            const operatorServices = wrapper.find('.service-option');
+            const operatorServices = container.querySelectorAll('.service-option');
 
             expect(operatorServices).toHaveLength(3);
-            expect(operatorServices.first().text()).toBe('123 Manchester - Leeds (Start date 05/02/2020)');
-            expect(operatorServices.at(1).text()).toBe('X1 Edinburgh - N/A (Start date 06/02/2020)');
-            expect(operatorServices.at(2).text()).toBe('Infinity Line N/A - London (Start date 07/02/2020)');
+            expect(operatorServices[0].textContent).toBe('123 Manchester - Leeds (Start date 05/02/2020)');
+            expect(operatorServices[1].textContent).toBe('X1 Edinburgh - N/A (Start date 06/02/2020)');
+            expect(operatorServices[2].textContent).toBe('Infinity Line N/A - London (Start date 07/02/2020)');
         });
 
         it('returns operator value and list of services when operator attribute exists with NOCCode', async () => {

@@ -1,12 +1,15 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import { getMockContext } from '../testData/mockData';
 import { getSalesOfferPackagesByNocCode } from '../../src/data/auroradb';
 import { FARE_TYPE_ATTRIBUTE, MULTIPLE_PRODUCT_ATTRIBUTE, OPERATOR_ATTRIBUTE } from '../../src/constants/attributes';
 import SelectPurchaseMethods, { getServerSideProps, PurchaseMethodsProps } from '../../src/pages/selectPurchaseMethods';
 import { FromDb, SalesOfferPackage } from '../../src/interfaces/matchingJsonTypes';
+import { getSessionAttribute } from '../../src/utils/sessions';
 
 jest.mock('../../src/data/auroradb');
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 const defaultSalesOfferPackageOne: FromDb<SalesOfferPackage> = {
     id: 1,
@@ -117,7 +120,7 @@ describe('pages', () => {
 
     describe('selectPurchaseMethods', () => {
         it('should render correctly', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <SelectPurchaseMethods
                     purchaseMethodsList={selectSalesOfferPackagePropsInfoNoError.purchaseMethodsList}
                     products={[
@@ -136,7 +139,7 @@ describe('pages', () => {
         });
 
         it('should render correctly for capped ticket', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <SelectPurchaseMethods
                     purchaseMethodsList={selectCappedSalesOfferPackagePropsInfoNoError.purchaseMethodsList}
                     products={[
@@ -155,7 +158,7 @@ describe('pages', () => {
         });
 
         it('should render correctly with no purchase methods', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <SelectPurchaseMethods
                     purchaseMethodsList={[]}
                     products={[
@@ -174,7 +177,7 @@ describe('pages', () => {
         });
 
         it('should render correctly with no purchase methods for capped ticket', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <SelectPurchaseMethods
                     purchaseMethodsList={[]}
                     products={[
@@ -193,7 +196,7 @@ describe('pages', () => {
         });
 
         it('should render an error when an error message is passed through to props', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <SelectPurchaseMethods
                     purchaseMethodsList={selectSalesOfferPackagePropsInfoWithError.purchaseMethodsList}
                     products={[]}
@@ -207,7 +210,7 @@ describe('pages', () => {
         });
 
         it('should render an error when an error message is passed through to props for capped ticket', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <SelectPurchaseMethods
                     purchaseMethodsList={selectCappedSalesOfferPackagePropsInfoWithError.purchaseMethodsList}
                     products={[]}
@@ -279,7 +282,7 @@ describe('pages', () => {
                     );
                     const expectedProductNamesLength = !multipleProducts
                         ? 1
-                        : ctx.req.session[MULTIPLE_PRODUCT_ATTRIBUTE].products.length;
+                        : (getSessionAttribute(ctx.req, MULTIPLE_PRODUCT_ATTRIBUTE)?.products?.length ?? 0);
                     expect(result.props.errors.length).toBe(0);
                     expect(result.props.products.length).toBe(expectedProductNamesLength);
                     expect(result.props.purchaseMethodsList).toEqual(expectedSalesOfferPackageList);

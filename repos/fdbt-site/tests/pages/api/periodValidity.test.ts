@@ -11,10 +11,6 @@ import * as db from '../../../src/data/auroradb';
 import { PeriodExpiry } from '../../../src/interfaces/matchingJsonTypes';
 import * as userData from '../../../src/utils/apiUtils/userData';
 
-jest.mock('../../../src/utils/sessions');
-jest.mock('../../../src/utils/apiUtils/userData');
-jest.mock('../../../src/data/auroradb');
-
 describe('periodValidity', () => {
     const updateSessionAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');
     const writeHeadMock = jest.fn();

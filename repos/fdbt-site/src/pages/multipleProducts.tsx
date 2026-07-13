@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { FullColumnLayout } from '../layout/Layout';
 import {
     MULTIPLE_PRODUCT_ATTRIBUTE,
@@ -39,7 +39,9 @@ const MultipleProducts = ({
     numberOfProductsToRender,
 }: MultipleProductProps): ReactElement => {
     const [numberOfProducts, setNumberOfProducts] = useState(numberOfProductsToRender);
-    const displayButton = (carnet || !flatFare) && typeof window !== 'undefined';
+    const [isMounted, setIsMounted] = useState(false);
+    useEffect(() => setIsMounted(true), []);
+    const displayButton = (carnet || !flatFare) && isMounted;
     return (
         <FullColumnLayout title={title} description={description} errors={errors}>
             <CsrfForm action="/api/multipleProducts" method="post" csrfToken={csrfToken}>

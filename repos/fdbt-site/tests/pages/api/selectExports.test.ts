@@ -6,11 +6,6 @@ import * as exporter from '../../../src/utils/apiUtils/export';
 import selectExports from '../../../src/pages/api/selectExports';
 import { MyFaresProduct } from '../../../src/interfaces/dbTypes';
 
-jest.mock('../../../src/data/s3');
-jest.mock('../../../src/data/auroradb');
-jest.mock('../../../src/utils/apiUtils/export');
-jest.mock('../../../src/utils/apiUtils/index');
-
 const mockProducts: MyFaresProduct[] = [
     {
         id: 1,

@@ -1,5 +1,4 @@
-import { shallow } from 'enzyme';
-import * as React from 'react';
+import { render, screen } from '@testing-library/react';
 import { getProductsMatchingJson } from '../../../src/data/s3';
 import { getMultiOperatorExternalProducts, getPassengerTypeById } from '../../../src/data/auroradb';
 import { expectedSchemeOperatorMultiServicesTicket, getMockContext } from '../../testData/mockData';
@@ -8,8 +7,6 @@ import MultiOperatorProducts, {
     MultiOperatorProductExternal,
 } from '../../../src/pages/products/multiOperatorProductsExternal';
 import * as utils from '../../../src/utils';
-
-jest.mock('../../../src/utils');
 
 jest.mock('../../../src/data/auroradb');
 jest.mock('../../../src/data/s3');
@@ -106,24 +103,25 @@ describe('multiOperatorProductsExternal page', () => {
     ];
 
     it('renders correctly', () => {
-        const tree = shallow(
+        const { asFragment } = render(
             <MultiOperatorProducts ownedProducts={ownedProducts} sharedProducts={sharedProducts} csrfToken="" />,
         );
 
-        expect(tree).toMatchSnapshot();
-        expect(tree.find('span').exists()).toBeFalsy();
+        expect(asFragment()).toMatchSnapshot();
+        expect(screen.queryByText('You currently have no multi-operator products')).toBeNull();
+        expect(screen.queryByText('There are no multi-operator products shared with you')).toBeNull();
     });
 
     it('displays a no products message when there are no owned products', () => {
-        const tree = shallow(<MultiOperatorProducts ownedProducts={[]} sharedProducts={sharedProducts} csrfToken="" />);
+        render(<MultiOperatorProducts ownedProducts={[]} sharedProducts={sharedProducts} csrfToken="" />);
 
-        expect(tree.find('span').first().text()).not.toContain('There are no multi-operator products shared with you');
+        expect(screen.getByText('You currently have no multi-operator products')).toBeTruthy();
     });
 
     it('displays a no products message when there are no shared products', () => {
-        const tree = shallow(<MultiOperatorProducts ownedProducts={ownedProducts} sharedProducts={[]} csrfToken="" />);
+        render(<MultiOperatorProducts ownedProducts={ownedProducts} sharedProducts={[]} csrfToken="" />);
 
-        expect(tree.find('span').first().text()).not.toContain('You currently have no multi-operator products');
+        expect(screen.getByText('There are no multi-operator products shared with you')).toBeTruthy();
     });
 
     describe('getServerSideProps', () => {

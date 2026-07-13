@@ -11,10 +11,6 @@ import { getMockRequestAndResponse, mockIdTokenMultiple, expectedSingleTicket } 
 import { MATCHING_JSON_ATTRIBUTE, MATCHING_JSON_META_DATA_ATTRIBUTE } from '../../../src/constants/attributes';
 import * as userData from '../../../src/utils/apiUtils/userData';
 
-jest.mock('../../../src/utils/apiUtils/userData');
-jest.mock('../../../src/data/auroradb');
-jest.mock('../../../src/utils/sessions');
-
 describe('defineTimeRestrictions', () => {
     const writeHeadMock = jest.fn();
     const s3Spy = jest.spyOn(userData, 'putUserDataInProductsBucketWithFilePath');

@@ -8,7 +8,7 @@ interface ErrorProps {
 
 const ErrorPage = ({ statusCode }: ErrorProps): ReactElement => <Error statusCode={statusCode} />;
 
-export const getServerSideProps = (ctx: NextPageContext): {} => {
+export const getServerSideProps = (ctx: NextPageContext): object => {
     return { props: { statusCode: ctx?.res?.statusCode } };
 };
 

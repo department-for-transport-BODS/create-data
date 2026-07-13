@@ -1,10 +1,9 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import Layout from '../../src/layout/Layout';
 
 describe('Layout', () => {
     it('should render correctly', () => {
-        const tree = shallow(<Layout title="title" description="description" />);
-        expect(tree).toMatchSnapshot();
+        const { asFragment } = render(<Layout title="title" description="description" />);
+        expect(asFragment()).toMatchSnapshot();
     });
 });

@@ -5,10 +5,6 @@ import { GS_OPERATOR_DETAILS_ATTRIBUTE } from '../../../src/constants/attributes
 import { getMockRequestAndResponse } from '../../testData/mockData';
 import manageOperatorDetails from '../../../src/pages/api/manageOperatorDetails';
 
-jest.mock('../../../src/utils/sessions');
-jest.mock('../../../src/data/auroradb');
-jest.mock('../../../src/utils/apiUtils/index');
-
 const updateSessionAttributeSpy = jest.spyOn(session, 'updateSessionAttribute');
 const upsertOperatorDetailsSpy = jest.spyOn(aurora, 'upsertOperatorDetails');
 

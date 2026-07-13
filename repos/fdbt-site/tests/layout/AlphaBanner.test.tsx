@@ -1,16 +1,16 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 import PhaseBanner from '../../src/layout/PhaseBanner';
 import { FEEDBACK_LINK } from '../../src/constants';
 
 describe('PhaseBanner', () => {
     it('should render correctly', () => {
-        const tree = shallow(<PhaseBanner />);
-        expect(tree).toMatchSnapshot();
+        const { asFragment } = render(<PhaseBanner />);
+        expect(asFragment()).toMatchSnapshot();
     });
 
     it('expect govuk_link to be correct gov.uk', () => {
-        const tree = shallow(<PhaseBanner />);
-        expect(tree.find('#feedback-link').prop('href')).toEqual(FEEDBACK_LINK);
+        render(<PhaseBanner />);
+        const feedbackLink = screen.getByRole('link', { name: 'give your feedback (opens in new tab)' });
+        expect(feedbackLink.getAttribute('href')).toEqual(FEEDBACK_LINK);
     });
 });

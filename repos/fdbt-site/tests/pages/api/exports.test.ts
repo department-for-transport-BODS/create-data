@@ -7,10 +7,6 @@ import { getMockRequestAndResponse } from '../../testData/mockData';
 import { DbProduct } from '../../../src/interfaces/dbTypes';
 import * as index from '../../../src/utils/apiUtils';
 import * as s3 from '../../../src/data/s3';
-
-jest.mock('../../../src/utils/apiUtils/export');
-jest.mock('../../../src/data/auroradb');
-jest.mock('../../../src/utils/apiUtils');
 jest.mock('../../../src/data/s3');
 
 const mockProducts: DbProduct[] = [

@@ -4,9 +4,6 @@ import * as session from '../../../src/utils/sessions';
 import * as aurora from '../../../src/data/auroradb';
 import { GS_TIME_RESTRICTION_ATTRIBUTE } from '../../../src/constants/attributes';
 
-jest.mock('../../../src/utils/sessions');
-jest.mock('../../../src/data/auroradb');
-
 const updateSessionAttributeSpy = jest.spyOn(session, 'updateSessionAttribute');
 const getTimeRestrictionByNameAndNocSpy = jest.spyOn(aurora, 'getTimeRestrictionByNameAndNoc');
 const insertTimeRestrictionSpy = jest.spyOn(aurora, 'insertTimeRestriction').mockResolvedValue();
@@ -183,7 +180,7 @@ describe('manageTimeRestriction', () => {
         });
     });
 
-    it('should return 302 redirect to /viewTimeRestrictions when there have been correct user inputs and the time restriction is saved to the db ', async () => {
+    it('should return 302 redirect to /viewTimeRestrictions when there have been correct user inputs and the time restriction is saved to the db', async () => {
         const writeHeadMock = jest.fn();
         getTimeRestrictionByNameAndNocSpy.mockResolvedValueOnce([]);
         const { req, res } = getMockRequestAndResponse({
@@ -234,7 +231,7 @@ describe('manageTimeRestriction', () => {
         );
     });
 
-    it('should handle fare day end for time restrictions ', async () => {
+    it('should handle fare day end for time restrictions', async () => {
         const writeHeadMock = jest.fn();
         getTimeRestrictionByNameAndNocSpy.mockResolvedValueOnce([]);
         const { req, res } = getMockRequestAndResponse({

@@ -17,9 +17,6 @@ import salesConfirmation from '../../../src/pages/api/salesConfirmation';
 import * as userData from '../../../src/utils/apiUtils/userData';
 import * as index from '../../../src/utils/apiUtils/index';
 
-jest.mock('../../../src/utils/apiUtils/userData');
-jest.mock('../../../src/utils/apiUtils/index');
-
 describe('salesConfirmation', () => {
     const getSchemeOperatorTicketJsonSpy = jest.spyOn(userData, 'getSchemeOperatorTicketJson');
     const getSingleTicketJsonSpy = jest.spyOn(userData, 'getSingleTicketJson');
@@ -47,7 +44,7 @@ describe('salesConfirmation', () => {
 
         await salesConfirmation(req, res);
 
-        expect(getSchemeOperatorTicketJsonSpy).toHaveBeenCalledWith(req, res);
+        expect(getSchemeOperatorTicketJsonSpy).toHaveBeenCalledWith(req);
     });
 
     it('gets single json for a single ticket', async () => {
@@ -310,7 +307,7 @@ describe('salesConfirmation', () => {
         expect(splitUserDataJsonByProductsSpy.mock.results[0].value[1]).toEqual(mockDataSplitOutProducts[1]);
         expect(splitUserDataJsonByProductsSpy.mock.results[0].value[2]).toEqual(mockDataSplitOutProducts[2]);
 
-        expect(insertDataToProductsBucketAndProductsTableSpy).toBeCalledTimes(3);
+        expect(insertDataToProductsBucketAndProductsTableSpy).toHaveBeenCalledTimes(3);
         expect(redirectToSpy).toHaveBeenCalledWith(res, '/productCreated');
     });
 });

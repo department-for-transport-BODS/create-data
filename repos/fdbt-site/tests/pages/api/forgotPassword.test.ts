@@ -4,9 +4,6 @@ import forgotPassword from '../../../src/pages/api/forgotPassword';
 import { getMockRequestAndResponse } from '../../testData/mockData';
 import { FORGOT_PASSWORD_ATTRIBUTE } from '../../../src/constants/attributes';
 
-jest.mock('../../../src/data/cognito');
-jest.mock('../../../src/utils/sessions');
-
 const writeHeadMock = jest.fn();
 const authSignInSpy = jest.spyOn(auth, 'forgotPassword');
 authSignInSpy.mockImplementation(() => Promise.resolve());

@@ -1,13 +1,15 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import TicketRepresentation, { getServerSideProps } from '../../src/pages/ticketRepresentation';
 import { getMockContext, mockSchemOpIdToken } from '../testData/mockData';
 import { CARNET_FARE_TYPE_ATTRIBUTE, FARE_TYPE_ATTRIBUTE, OPERATOR_ATTRIBUTE } from '../../src/constants/attributes';
 
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
+
 describe('pages', () => {
     describe('ticketRepresentation', () => {
         it('should render correctly when the fare type is a period ticket', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <TicketRepresentation
                     fareType="period"
                     errors={[]}
@@ -24,7 +26,7 @@ describe('pages', () => {
         });
 
         it('should render correctly when the fare type is a multi operator ticket', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <TicketRepresentation
                     fareType="multiOperator"
                     errors={[]}
@@ -41,7 +43,7 @@ describe('pages', () => {
         });
 
         it('price per distance radio not show when in test', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <TicketRepresentation
                     fareType="multiOperator"
                     errors={[]}
@@ -58,7 +60,7 @@ describe('pages', () => {
         });
 
         it('should render error messaging when errors are passed', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <TicketRepresentation
                     fareType="period"
                     errors={[

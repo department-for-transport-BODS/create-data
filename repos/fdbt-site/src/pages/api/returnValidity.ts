@@ -35,7 +35,8 @@ export const returnValiditySchema = yup
                                     .typeError(textInputError)
                                     .integer(textInputError)
                                     .min(1, textInputError)
-                                    .max(365, textInputError),
+                                    .max(365, textInputError)
+                                    .required(textInputError),
                         })
                         .when('duration', {
                             is: 'week',
@@ -45,7 +46,8 @@ export const returnValiditySchema = yup
                                     .typeError(textInputError)
                                     .integer(textInputError)
                                     .min(1, textInputError)
-                                    .max(1000, textInputError),
+                                    .max(1000, textInputError)
+                                    .required(textInputError),
                         })
                         .when('duration', {
                             is: 'month',
@@ -55,12 +57,18 @@ export const returnValiditySchema = yup
                                     .typeError(textInputError)
                                     .integer(textInputError)
                                     .min(1, textInputError)
-                                    .max(1000, textInputError),
+                                    .max(1000, textInputError)
+                                    .required(textInputError),
                         })
                         .when('duration', {
                             is: 'year',
                             then: () =>
-                                yup.number().typeError(textInputError).integer(textInputError).min(1, textInputError),
+                                yup
+                                    .number()
+                                    .typeError(textInputError)
+                                    .integer(textInputError)
+                                    .min(1, textInputError)
+                                    .required(textInputError),
                         })
                         .required(textInputError),
             }),

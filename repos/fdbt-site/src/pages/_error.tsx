@@ -47,7 +47,7 @@ const Error = ({ statusCode }: ErrorProps): ReactElement => (
     </TwoThirdsLayout>
 );
 
-export const getStaticProps = (ctx: NextPageContext): {} => {
+export const getStaticProps = (ctx: NextPageContext): object => {
     return { props: { statusCode: ctx.res?.statusCode ?? 500 } };
 };
 

@@ -14,10 +14,6 @@ import { GROUP_PASSENGER_TYPE } from '../../../src/constants';
 import { expectedSingleTicket } from '../../testData/mockData';
 import { GroupPassengerTypeDb } from '../../../src/interfaces/dbTypes';
 
-jest.mock('../../../src/utils/apiUtils/userData');
-jest.mock('../../../src/utils/sessions');
-jest.mock('../../../src/data/auroradb');
-
 const groupDbResult: GroupPassengerTypeDb = {
     id: 3,
     name: 'family group',

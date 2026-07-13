@@ -95,7 +95,7 @@ const buildOtherProductSection = (
                                 }
                             }}
                             // This onChange is here because of how we're using the 'checked' prop
-                            // eslint-disable-next-line @typescript-eslint/no-empty-function
+
                             onChange={() => {}}
                         />
                         <label
@@ -313,7 +313,7 @@ const SelectExports = ({ productsToDisplay, servicesToDisplay, csrf }: SelectExp
                                                                                     }
                                                                                 }}
                                                                                 // This onChange is here because of how we're using the 'checked' prop
-                                                                                // eslint-disable-next-line @typescript-eslint/no-empty-function
+
                                                                                 onChange={() => {}}
                                                                             />
                                                                             <label
@@ -556,10 +556,10 @@ export const getServerSideProps = async (
         );
 
         const matchingProducts = productsWithSameLineId.filter((product) => {
-            const momentProductStartDate = dayjs(product.startDate, 'DD/MM/YYYY').valueOf();
-            const momentProductEndDate = product.endDate && dayjs(product.endDate, 'DD/MM/YYYY').valueOf();
-            const momentServiceStartDate = dayjs(service.startDate, 'DD/MM/YYYY').valueOf();
-            const momentServiceEndDate = service.endDate ? dayjs(service.endDate, 'DD/MM/YYYY').valueOf() : undefined;
+            const momentProductStartDate = dayjs(product.startDate, 'D/M/YYYY').valueOf();
+            const momentProductEndDate = product.endDate && dayjs(product.endDate, 'D/M/YYYY').valueOf();
+            const momentServiceStartDate = dayjs(service.startDate, 'D/M/YYYY').valueOf();
+            const momentServiceEndDate = service.endDate ? dayjs(service.endDate, 'D/M/YYYY').valueOf() : undefined;
 
             const productMatchesService =
                 (!momentProductEndDate || momentProductEndDate >= momentServiceStartDate) &&

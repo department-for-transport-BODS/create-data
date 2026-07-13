@@ -1,11 +1,13 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import MultipleOperators from '../../src/pages/multipleOperators';
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('multipleOperators', () => {
         it('should render correctly with one operator NOC pair', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <MultipleOperators
                     errors={[]}
                     operatorsAndNocs={[{ name: 'test', nocCode: 'testNoc' }]}
@@ -15,7 +17,7 @@ describe('pages', () => {
             expect(tree).toMatchSnapshot();
         });
         it('should render correctly with multiple operator NOC pairs', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <MultipleOperators
                     errors={[]}
                     operatorsAndNocs={[
@@ -30,7 +32,7 @@ describe('pages', () => {
         });
 
         it('should render errors correctly', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <MultipleOperators
                     errors={[{ errorMessage: 'Choose an operator name and NOC from the options', id: 'operators' }]}
                     operatorsAndNocs={[

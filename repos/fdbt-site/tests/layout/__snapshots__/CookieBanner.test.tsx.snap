@@ -1,3 +1,70 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`CookieBanner should render correctly 1`] = `""`;
+exports[`CookieBanner should render correctly 1`] = `
+<DocumentFragment>
+  <div
+    aria-label="cookie banner"
+    class="govuk-cookie-banner"
+    id="global-cookie-message"
+    role="region"
+  >
+    <div
+      class="govuk-width-container"
+    >
+      <div
+        class="govuk-grid-row"
+      >
+        <div
+          class="govuk-grid-column-two-thirds"
+        >
+          <div
+            class="govuk-cookie-banner__content"
+          >
+            <h2
+              class="govuk-heading-m"
+            >
+              Tell us whether you accept cookies
+            </h2>
+            <p
+              class="govuk-body"
+            >
+              We use 
+              <a
+                class="govuk-link"
+                href="/cookieDetails"
+              >
+                cookies to collect information
+              </a>
+                about how you use the Create Fares Data Service. We use this information to make the website work as well as possible and to improve the service.
+            </p>
+          </div>
+          <div
+            class="govuk-button-group"
+          >
+            <div>
+              <button
+                class="govuk-button "
+                data-module="govuk-button"
+                id="accept-all-button"
+                type="button"
+              >
+                Accept All
+              </button>
+            </div>
+            <div>
+              <a
+                class="govuk-button "
+                href="/cookies"
+                id="set-cookie-preferences-link"
+                role="button"
+              >
+                Set cookie preferences
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

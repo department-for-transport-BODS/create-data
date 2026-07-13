@@ -1,6 +1,7 @@
 import {
     addOtherProductsIfNotPresent,
     addSingleProductIfNotPresent,
+    clearAndTypeById,
     clickElementById,
     clickElementByText,
     getElementByClass,
@@ -23,6 +24,8 @@ before(() => {
     addTestTimeRestrictions();
     clickElementByText('Fare day end');
     addTestFareDayEnd();
+    // Ensure the fare day end save popup has closed before navigating away
+    cy.get('.popup').should('not.exist');
     clickElementByText('Operator groups');
     addTestOperatorGroups();
 
@@ -30,8 +33,7 @@ before(() => {
     addOtherProductsIfNotPresent();
     cy.log('Global Settings set up for LNUD');
 
-    // Disabling the below, as schemes are currently not fully supported
-    /*
+    // Set up global settings for the scheme operator
     getHomePage('scheme');
     clickElementById('account-link');
     clickElementByText('Passenger types');
@@ -42,34 +44,34 @@ before(() => {
     addTestTimeRestrictions();
     clickElementByText('Fare day end');
     addTestFareDayEnd();
+    // Ensure the fare day end save popup has closed before navigating away
+    cy.get('.popup').should('not.exist');
+    clickElementByText('Operator groups');
+    addTestOperatorGroups();
     clickElementByText('Operator details');
     addTestOperatorDetails();
-    */
     cy.log('Global Settings set up for scheme');
 });
 
-// Disabling the below, as schemes are currently not fully supported
-/*
 const addTestOperatorDetails = (): void => {
-    clickElementById('operatorName').clear().type('Easy A to B');
-    clickElementById('contactNumber').clear().type('01492 451 652');
-    clickElementById('email').clear().type('info@easyab.co.uk');
-    clickElementById('url').clear().type('www.easyab.co.uk');
-    clickElementById('street').clear().type('123 Some Road');
-    clickElementById('town').clear().type('Awesomeville');
-    clickElementById('county').clear().type('Home County');
-    clickElementById('postcode').clear().type('AW23 8LE');
+    clearAndTypeById('operatorName', 'Easy A to B');
+    clearAndTypeById('contactNumber', '01492 451 652');
+    clearAndTypeById('email', 'info@easyab.co.uk');
+    clearAndTypeById('url', 'www.easyab.co.uk');
+    clearAndTypeById('street', '123 Some Road');
+    clearAndTypeById('town', 'Awesomeville');
+    clearAndTypeById('county', 'Home County');
+    clearAndTypeById('postcode', 'AW23 8LE');
     clickElementByText('Save');
 };
-*/
 
 const addTestOperatorGroups = (): void => {
     cy.get(`[data-card-count]`).then((element) => {
         const numberofOperatorGroups = Number(element.attr('data-card-count'));
         cy.log(`There are ${numberofOperatorGroups} operator groups`);
         cy.get(`[operator-groups]`).then((element) => {
-            const operatorGroups = element.attr('operator-groups').toString();
-            const operatorGroupsValue = operatorGroups.split(',');
+            const operatorGroups = element.attr('operator-groups')?.toString();
+            const operatorGroupsValue = operatorGroups?.split(',') ?? [];
             if (!operatorGroupsValue.includes('test')) {
                 addSingleMultiOperatorGroup('test', false, true);
             }
@@ -81,7 +83,7 @@ const addTestOperatorGroups = (): void => {
 };
 
 const addTestFareDayEnd = (): void => {
-    clickElementById('fare-day-end-input').clear().type('2323');
+    clearAndTypeById('fare-day-end-input', '2323');
     clickElementByText('Save');
     clickElementByText('Ok');
 };
@@ -134,7 +136,7 @@ const addTestPurchaseMethods = (): void => {
                 .last()
                 .invoke('attr', 'id')
                 .then((id) => {
-                    if (!id.startsWith('purchase-method-cap-')) {
+                    if (!id?.startsWith('purchase-method-cap-')) {
                         const cappedPurchaseMethod1 = {
                             purchaseLocations: ['checkbox-0-on-board'],
                             paymentMethods: ['checkbox-0-debit-card', 'checkbox-1-credit-card'],

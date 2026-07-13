@@ -621,10 +621,7 @@ export const getPointToPointPeriodJson = (
     };
 };
 
-export const getSchemeOperatorTicketJson = (
-    req: NextApiRequestWithSession,
-    _res: NextApiResponse,
-): WithBaseIds<BaseSchemeOperatorTicket> => {
+export const getSchemeOperatorTicketJson = (req: NextApiRequestWithSession): WithBaseIds<BaseSchemeOperatorTicket> => {
     const idToken = unescapeAndDecodeCookie(req, ID_TOKEN_COOKIE);
 
     const fareTypeAttribute = getSessionAttribute(req, FARE_TYPE_ATTRIBUTE);

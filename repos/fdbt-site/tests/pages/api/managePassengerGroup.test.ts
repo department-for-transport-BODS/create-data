@@ -5,9 +5,6 @@ import * as aurora from '../../../src/data/auroradb';
 import { GS_PASSENGER_GROUP_ATTRIBUTE } from '../../../src/constants/attributes';
 import { FullGroupPassengerType } from '../../../src/interfaces/dbTypes';
 
-jest.mock('../../../src/utils/sessions');
-jest.mock('../../../src/data/auroradb');
-
 const updateSessionAttributeSpy = jest.spyOn(session, 'updateSessionAttribute');
 const getGroupPassengerTypesFromGlobalSettingsSpy = jest.spyOn(aurora, 'getGroupPassengerTypesFromGlobalSettings');
 const convertToFullPassengerTypeSpy = jest.spyOn(aurora, 'convertToFullPassengerType');
@@ -318,7 +315,7 @@ describe('managePassengerGroup', () => {
         });
     });
 
-    it('should return 302 redirect to /viewPassengerTypes when there have been correct user inputs and the group is saved to the db ', async () => {
+    it('should return 302 redirect to /viewPassengerTypes when there have been correct user inputs and the group is saved to the db', async () => {
         const writeHeadMock = jest.fn();
 
         getGroupPassengerTypesFromGlobalSettingsSpy.mockResolvedValueOnce([]);
@@ -550,6 +547,6 @@ describe('managePassengerGroup', () => {
                 name: 'group',
             },
         });
-        expect(updateGroupPassengerTypeSpy).toBeCalledTimes(0);
+        expect(updateGroupPassengerTypeSpy).toHaveBeenCalledTimes(0);
     });
 });

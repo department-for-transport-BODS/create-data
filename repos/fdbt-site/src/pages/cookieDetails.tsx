@@ -195,7 +195,7 @@ const Contact = (): ReactElement => {
     );
 };
 
-export const getServerSideProps = (): {} => {
+export const getServerSideProps = (): object => {
     return { props: {} };
 };
 

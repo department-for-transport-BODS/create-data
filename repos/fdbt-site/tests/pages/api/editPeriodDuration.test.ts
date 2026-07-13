@@ -2,9 +2,7 @@ import { getMockRequestAndResponse, expectedPeriodGeoZoneTicketWithMultipleProdu
 import { MATCHING_JSON_ATTRIBUTE, MATCHING_JSON_META_DATA_ATTRIBUTE } from '../../../src/constants/attributes';
 import editPeriodDuration, { validateDuration } from '../../../src/pages/api/editPeriodDuration';
 import * as userData from '../../../src/utils/apiUtils/userData';
-import { ErrorInfo } from 'src/interfaces';
-
-jest.mock('../../../src/utils/apiUtils/userData');
+import { ErrorInfo } from '../../../src/interfaces';
 
 describe('editPeriodDuration tests', () => {
     let writeHeadMock: jest.Mock;

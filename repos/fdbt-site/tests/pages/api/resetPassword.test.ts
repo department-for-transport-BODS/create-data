@@ -4,9 +4,6 @@ import { USER_ATTRIBUTE } from '../../../src/constants/attributes';
 import * as auth from '../../../src/data/cognito';
 import * as sessions from '../../../src/utils/sessions';
 
-jest.mock('../../../src/data/cognito');
-jest.mock('../../../src/utils/sessions');
-
 describe('resetPassword', () => {
     const forgotPasswordSubmitSpy = jest.spyOn(auth, 'confirmForgotPassword');
     const updateSessionAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');

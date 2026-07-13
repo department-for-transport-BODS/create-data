@@ -3,8 +3,6 @@ import { getMockRequestAndResponse } from '../../testData/mockData';
 import * as sessionUtils from '../../../src/utils/sessions';
 import { GROUP_PASSENGER_TYPES_ATTRIBUTE } from '../../../src/constants/attributes';
 
-jest.mock('../../../src/utils/sessions');
-
 describe('groupPassengerTypes', () => {
     const writeHeadMock = jest.fn();
     const updateSessionAttributeSpy = jest.spyOn(sessionUtils, 'updateSessionAttribute');

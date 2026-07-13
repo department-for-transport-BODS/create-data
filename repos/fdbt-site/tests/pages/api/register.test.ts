@@ -1,4 +1,4 @@
-import { CognitoIdentityServiceProvider } from 'aws-sdk';
+import { AdminInitiateAuthCommandOutput } from '@aws-sdk/client-cognito-identity-provider';
 import register, { nocsWithNoServices } from '../../../src/pages/api/register';
 import * as auth from '../../../src/data/cognito';
 import * as auroradb from '../../../src/data/auroradb';
@@ -7,14 +7,9 @@ import { USER_ATTRIBUTE } from '../../../src/constants/attributes';
 import { getAllServicesByNocCode } from '../../../src/data/auroradb';
 import * as sessions from '../../../src/utils/sessions';
 
-jest.mock('../../../src/data/auroradb');
-jest.mock('../../../src/data/cognito');
-jest.mock('../../../src/utils/sessions');
-
-jest.mock('../../../src/data/auroradb.ts');
-
 describe('register', () => {
-    const mockAuthResponse: CognitoIdentityServiceProvider.AdminInitiateAuthResponse = {
+    const mockAuthResponse: AdminInitiateAuthCommandOutput = {
+        $metadata: {},
         ChallengeName: 'NEW_PASSWORD_REQUIRED',
         ChallengeParameters: {
             USER_ID_FOR_SRP: 'd3eddd2a-a1c6-4201-82d3-bdab8dcbb586',

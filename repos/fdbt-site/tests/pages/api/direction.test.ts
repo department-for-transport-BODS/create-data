@@ -2,8 +2,6 @@ import * as apiUtils from '../../../src/utils/apiUtils/index';
 import direction from '../../../src/pages/api/direction';
 import { getMockRequestAndResponse } from '../../testData/mockData';
 
-jest.mock('../../../src/utils/apiUtils/index');
-
 describe('direction', () => {
     const writeHeadMock = jest.fn();
 

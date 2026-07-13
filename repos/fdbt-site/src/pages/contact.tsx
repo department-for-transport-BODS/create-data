@@ -79,7 +79,7 @@ const Contact = ({ supportEmail, supportPhone }: ContactProps): ReactElement => 
     );
 };
 
-export const getServerSideProps = (): {} => {
+export const getServerSideProps = (): object => {
     return {
         props: {
             supportEmail: SUPPORT_EMAIL_ADDRESS,

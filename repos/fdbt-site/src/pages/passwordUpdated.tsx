@@ -28,7 +28,7 @@ const PasswordUpdated = ({ redirectTo }: PasswordUpdatedProps): ReactElement => 
     </TwoThirdsLayout>
 );
 
-export const getServerSideProps = (ctx: NextPageContextWithSession): {} => {
+export const getServerSideProps = (ctx: NextPageContextWithSession): object => {
     const userAttribute = getSessionAttribute(ctx.req, USER_ATTRIBUTE);
     const redirectTo = userAttribute?.redirectFrom === '/resetPassword' ? '/login' : '/account';
 

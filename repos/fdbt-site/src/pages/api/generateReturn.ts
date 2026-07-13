@@ -25,7 +25,7 @@ export const findTicketsToMakeReturn = (
 
             if (ticket.ticketPeriod.endDate) {
                 const today = dayjs.utc().startOf('day').valueOf();
-                const endDateAsUnixTime = dayjs.utc(ticket.ticketPeriod.endDate, 'DD/MM/YYYY').valueOf();
+                const endDateAsUnixTime = dayjs.utc(ticket.ticketPeriod.endDate, 'D/M/YYYY').valueOf();
                 if (endDateAsUnixTime < today) {
                     expired = true;
                 }

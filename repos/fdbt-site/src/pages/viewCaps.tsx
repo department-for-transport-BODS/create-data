@@ -23,7 +23,7 @@ interface CapProps {
 
 interface CapCardProps {
     cap: FromDb<Cap>;
-    index: Number;
+    index: number;
     deleteActionHandler: (id: number, name: string) => void;
 }
 

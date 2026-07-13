@@ -78,8 +78,8 @@ const Service = ({
                                 error.length > 0 && error[0].userInput
                                     ? error[0].userInput
                                     : warning && warning.length > 0
-                                    ? warning[0].userInput
-                                    : undefined
+                                      ? warning[0].userInput
+                                      : undefined
                             }
                         >
                             <option value="" disabled>

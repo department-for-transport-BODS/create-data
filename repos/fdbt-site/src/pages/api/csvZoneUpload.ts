@@ -237,7 +237,7 @@ export default async (req: NextApiRequestWithSession, res: NextApiResponse): Pro
         let stops: Stop[] = [];
         try {
             stops = await batchGetStopsByAtcoCode(deduplicatedAtcoCodes);
-        } catch (error) {
+        } catch {
             const errors: ErrorInfo[] = [
                 {
                     id: 'csv-upload',

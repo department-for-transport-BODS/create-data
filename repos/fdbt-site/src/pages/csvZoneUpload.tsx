@@ -112,7 +112,6 @@ const CsvZoneUpload = ({
                         csrfToken={csrfToken}
                     >
                         <UserDataUploadComponent
-                            // eslint-disable-next-line react/jsx-props-no-spreading
                             {...uploadProps}
                             errors={errors}
                             detailBody={
@@ -386,7 +385,7 @@ export const getServerSideProps = async (ctx: NextPageContextWithSession): Promi
                     selectedServices = secondaryOperatorFareInfo.selectedServices;
                 }
             } catch (error) {
-                logger.warn(`Couldn't get additional operator info for noc: ${nocCode}`);
+                logger.warn(`Couldn't get additional operator info for noc: ${nocCode}`, error.stack);
             }
         } else {
             if ('exemptedServices' in ticket && ticket.exemptedServices) {

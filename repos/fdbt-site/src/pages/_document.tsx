@@ -71,7 +71,7 @@ class MyDocument extends Document<DocumentProps> {
                             />
                             <script
                                 nonce={this.props.nonce}
-                                // eslint-disable-next-line react/no-danger
+
                                 dangerouslySetInnerHTML={{
                                     __html: `window['ga-disable-UA-173062045-1'] = ${!this.props.allowTracking};
                                         window.dataLayer = window.dataLayer || [];

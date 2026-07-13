@@ -4,8 +4,6 @@ import { getMockRequestAndResponse } from '../../testData/mockData';
 import { GROUP_SIZE_ATTRIBUTE } from '../../../src/constants/attributes';
 import * as sessions from '../../../src/utils/sessions';
 
-jest.mock('../../../src/utils/sessions');
-
 describe('groupSize', () => {
     const updateSessionAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');
     afterEach(() => {

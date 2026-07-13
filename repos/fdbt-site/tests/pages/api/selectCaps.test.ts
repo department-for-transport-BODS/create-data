@@ -11,10 +11,6 @@ import { expectedSingleTicket, getMockRequestAndResponse, mockIdTokenMultiple } 
 import * as userData from '../../../src/utils/apiUtils/userData';
 import { CapExpiryUnit } from '../../../src/interfaces/matchingJsonTypes';
 
-jest.mock('../../../src/utils/apiUtils/userData');
-jest.mock('../../../src/utils/sessions');
-jest.mock('../../../src/data/auroradb');
-
 describe('selectCaps', () => {
     const writeHeadMock = jest.fn();
     const s3Spy = jest.spyOn(userData, 'putUserDataInProductsBucketWithFilePath');
@@ -63,7 +59,7 @@ describe('selectCaps', () => {
         expect(getCapByNocAndIdSpy).toHaveBeenCalledWith('HELLO', 2);
     });
 
-    it('should update the product details redirect to select purchase methods ', async () => {
+    it('should update the product details redirect to select purchase methods', async () => {
         const updateSessionAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');
         const getCapByNocAndIdSpy = jest.spyOn(auroradb, 'getCapByNocAndId');
 

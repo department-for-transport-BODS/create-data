@@ -23,14 +23,8 @@ import * as userData from '../../../src/utils/apiUtils/userData';
 import * as auroradb from '../../../src/data/auroradb';
 import { ReturnTicket, SingleTicket, WithIds } from '../../../src/interfaces/matchingJsonTypes';
 
-jest.mock('../../../src/data/s3');
-jest.mock('../../../src/utils/apiUtils/userData');
-jest.mock('../../../src/utils/logger');
-jest.mock('../../../src/utils/apiUtils/fileUpload');
-jest.mock('../../../src/utils/sessions');
-jest.mock('../../../src/utils/apiUtils/virusScan');
-
 jest.mock('../../../src/data/auroradb');
+
 jest.spyOn(s3, 'putDataInS3');
 jest.spyOn(userData, 'putUserDataInProductsBucketWithFilePath');
 
@@ -58,16 +52,18 @@ describe('csvUpload', () => {
             uuid: {},
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -75,7 +71,7 @@ describe('csvUpload', () => {
             files: file,
             fileContents: csvData.testCsvDuplicateFareStages,
             fields: {
-                poundsOrPence: 'pence',
+                poundsOrPence: ['pence'],
             },
         });
 
@@ -102,16 +98,18 @@ describe('csvUpload', () => {
             uuid: {},
         });
 
-        const file = {
-            'csv-upload': {
-                size: 2,
-                path: 'string',
-                name: 'string',
-                type: 'string',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 2,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'string',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -119,7 +117,7 @@ describe('csvUpload', () => {
             files: file,
             fileContents: '',
             fields: {
-                poundsOrPence: 'pence',
+                poundsOrPence: ['pence'],
             },
         });
 
@@ -153,16 +151,18 @@ describe('csvUpload', () => {
             uuid: {},
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999999999999999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999999999999999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -206,16 +206,18 @@ describe('csvUpload', () => {
             uuid: {},
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/pdf',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/pdf',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -254,16 +256,18 @@ describe('csvUpload', () => {
             uuid: {},
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -291,16 +295,18 @@ describe('csvUpload', () => {
             uuid: {},
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -336,16 +342,18 @@ describe('csvUpload', () => {
             uuid: {},
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -383,16 +391,18 @@ describe('csvUpload', () => {
             },
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -428,16 +438,18 @@ describe('csvUpload', () => {
             },
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -471,16 +483,18 @@ describe('csvUpload', () => {
             uuid: {},
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -520,16 +534,18 @@ describe('csvUpload', () => {
             uuid: {},
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -562,16 +578,18 @@ describe('csvUpload', () => {
             uuid: {},
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -610,16 +628,18 @@ describe('csvUpload', () => {
             uuid: {},
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -659,16 +679,18 @@ describe('csvUpload', () => {
             uuid: {},
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -701,16 +723,18 @@ describe('csvUpload', () => {
             uuid: {},
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -744,16 +768,18 @@ describe('csvUpload', () => {
             uuid: {},
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -799,16 +825,18 @@ describe('csvUpload', () => {
             },
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -853,16 +881,18 @@ describe('csvUpload', () => {
             },
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -1070,16 +1100,18 @@ describe('csvUpload', () => {
             uuid: '1e0459b3-082e-4e70-89db-96e8ae173e10',
         };
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -1320,16 +1352,18 @@ describe('csvUpload', () => {
             },
         };
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({

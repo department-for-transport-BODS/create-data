@@ -15,16 +15,10 @@ import {
     MATCHING_JSON_META_DATA_ATTRIBUTE,
 } from '../../../src/constants/attributes';
 import * as userData from '../../../src/utils/apiUtils/userData';
-import { FileJSON } from 'formidable';
 
-jest.mock('../../../src/data/s3');
-jest.mock('../../../src/utils/apiUtils/userData');
-jest.mock('../../../src/utils/sessions');
-jest.mock('../../../src/utils/apiUtils/fileUpload');
-jest.mock('../../../src/utils/apiUtils/virusScan');
+jest.mock('../../../src/data/auroradb');
 
 const putDataInS3Spy = jest.spyOn(s3, 'putDataInS3');
-jest.mock('../../../src/data/auroradb');
 jest.spyOn(userData, 'putUserDataInProductsBucketWithFilePath');
 
 describe('csvZoneUpload', () => {
@@ -51,16 +45,18 @@ describe('csvZoneUpload', () => {
     ])(
         'should put the unprocessed data in S3 as a csv and the processed data in S3 as json',
         async (csv, expectedUnprocessed, expectedProcessed) => {
-            const file = {
-                'csv-upload': {
-                    size: 999,
-                    path: 'string',
-                    name: 'string',
-                    type: 'text/csv',
-                    toJSON(): FileJSON {
-                        return '' as unknown as FileJSON;
+            const file: any = {
+                'csv-upload': [
+                    {
+                        size: 999,
+                        filepath: 'string',
+                        originalFilename: 'string',
+                        mimetype: 'text/csv',
+                        toJSON(): any {
+                            return '';
+                        },
                     },
-                },
+                ],
             };
 
             jest.spyOn(fileUpload, 'getFormData')
@@ -88,16 +84,18 @@ describe('csvZoneUpload', () => {
     );
 
     it('should return 302 redirect to /multipleProducts when valid a valid file is processed and put in S3', async () => {
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): FileJSON {
-                    return '' as unknown as FileJSON;
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         jest.spyOn(fileUpload, 'getFormData')
@@ -120,16 +118,18 @@ describe('csvZoneUpload', () => {
     });
 
     it('should return 302 redirect to /multipleProducts when valid a service is exempted and valid file is processed and put in S3', async () => {
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): FileJSON {
-                    return '' as unknown as FileJSON;
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         jest.spyOn(fileUpload, 'getFormData')
@@ -246,16 +246,18 @@ describe('csvZoneUpload', () => {
             ],
         };
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         jest.spyOn(fileUpload, 'getFormData')
@@ -298,16 +300,18 @@ describe('csvZoneUpload', () => {
             },
         }).req;
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): FileJSON {
-                    return '' as unknown as FileJSON;
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         jest.spyOn(fileUpload, 'getFormData')
@@ -330,16 +334,18 @@ describe('csvZoneUpload', () => {
     });
 
     it('should redirect to /error when an error is thrown in the default', async () => {
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): FileJSON {
-                    return '' as unknown as FileJSON;
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
         const auroradbError = 'Could not fetch data from auroradb in test';
 
@@ -363,16 +369,18 @@ describe('csvZoneUpload', () => {
     });
 
     it('should redirect to /csvZoneUpload when an user selected yes in exempt service but not selected any service', async () => {
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): FileJSON {
-                    return '' as unknown as FileJSON;
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         jest.spyOn(fileUpload, 'getFormData')
@@ -399,16 +407,18 @@ describe('csvZoneUpload', () => {
 
     describe('fileIsValid', () => {
         it('should return 302 redirect to /csvZoneUpload when an empty file is attached', async () => {
-            const file = {
-                'csv-upload': {
-                    size: 999,
-                    path: 'string',
-                    name: 'string',
-                    type: 'text/csv',
-                    toJSON(): FileJSON {
-                        return '' as unknown as FileJSON;
+            const file: any = {
+                'csv-upload': [
+                    {
+                        size: 999,
+                        filepath: 'string',
+                        originalFilename: 'string',
+                        mimetype: 'text/csv',
+                        toJSON(): any {
+                            return '';
+                        },
                     },
-                },
+                ],
             };
 
             jest.spyOn(fileUpload, 'getFormData')
@@ -439,16 +449,18 @@ describe('csvZoneUpload', () => {
         });
 
         it('should return 302 redirect to /csvZoneUpload with an error message when file is too big', async () => {
-            const file = {
-                'csv-upload': {
-                    size: 6000000,
-                    path: 'string',
-                    name: 'string',
-                    type: 'text/csv',
-                    toJSON(): FileJSON {
-                        return '' as unknown as FileJSON;
+            const file: any = {
+                'csv-upload': [
+                    {
+                        size: 6000000,
+                        filepath: 'string',
+                        originalFilename: 'string',
+                        mimetype: 'text/csv',
+                        toJSON(): any {
+                            return '';
+                        },
                     },
-                },
+                ],
             };
 
             jest.spyOn(fileUpload, 'getFormData')
@@ -479,16 +491,18 @@ describe('csvZoneUpload', () => {
         });
 
         it('should return 302 redirect to /csvZoneUpload with an error message when file is not an allowed type', async () => {
-            const file = {
-                'csv-upload': {
-                    size: 999,
-                    path: 'string',
-                    name: 'string',
-                    type: 'text/pdf',
-                    toJSON(): FileJSON {
-                        return '' as unknown as FileJSON;
+            const file: any = {
+                'csv-upload': [
+                    {
+                        size: 999,
+                        filepath: 'string',
+                        originalFilename: 'string',
+                        mimetype: 'text/pdf',
+                        toJSON(): any {
+                            return '';
+                        },
                     },
-                },
+                ],
             };
 
             jest.spyOn(fileUpload, 'getFormData')
@@ -521,16 +535,18 @@ describe('csvZoneUpload', () => {
         it('should return 302 redirect to /csvZoneUpload with an error message when file contains a virus', async () => {
             process.env.ENABLE_VIRUS_SCAN = '1';
 
-            const file = {
-                'csv-upload': {
-                    size: 999,
-                    path: 'string',
-                    name: 'string',
-                    type: 'text/pdf',
-                    toJSON(): FileJSON {
-                        return '' as unknown as FileJSON;
+            const file: any = {
+                'csv-upload': [
+                    {
+                        size: 999,
+                        filepath: 'string',
+                        originalFilename: 'string',
+                        mimetype: 'text/pdf',
+                        toJSON(): any {
+                            return '';
+                        },
                     },
-                },
+                ],
             };
 
             jest.spyOn(fileUpload, 'getFormData')

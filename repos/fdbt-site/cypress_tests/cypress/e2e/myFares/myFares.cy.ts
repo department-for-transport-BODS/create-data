@@ -247,45 +247,45 @@ describe('my fares multi-operator products (internal) pages', () => {
     it("allows the user to edit a multi-operator product's passenger type", () => {
         getHomePage();
         clickElementById('account-link');
-        clickElementByText('Multi-operator products (internal));
+        clickElementByText('Multi-operator products (internal)');
         editPassengerTypeOtherProductsPage();
     });
 
     it("allows the user to edit a multi-operator product's time restriction", () => {
         getHomePage();
         clickElementById('account-link');
-        clickElementByText('Multi-operator products (internal));
+        clickElementByText('Multi-operator products (internal)');
         editTimeRestrictionMultiOperatorProductsPage();
     });
     it("allows the user to edit a multi-operator product's purchase method", () => {
         getHomePage();
         clickElementById('account-link');
-        clickElementByText('Multi-operator products (internal));
+        clickElementByText('Multi-operator products (internal)');
         editPurchaseMethodOtherProductsPage();
     });
     it("allows the user to edit a multi-operator product's start date", () => {
         getHomePage();
         clickElementById('account-link');
-        clickElementByText('Multi-operator products (internal));
+        clickElementByText('Multi-operator products (internal)');
         clickRandomElementInTable('govuk-table__body', 'product-link');
         editStartDate();
     });
     it("allows the user to edit a multi-operator product's end date", () => {
         getHomePage();
         clickElementById('account-link');
-        clickElementByText('Multi-operator products (internal));
+        clickElementByText('Multi-operator products (internal)');
         editEndDateOtherProductsPage();
     });
     it('allows the user to edit multi-operator groups for geozone multi-operator tickets', () => {
         getHomePage();
         clickElementById('account-link');
-        clickElementByText('Multi-operator products (internal));
+        clickElementByText('Multi-operator products (internal)');
         editOperatorGroupMultiOperatorProductsPage();
     });
     it('allows the user to delete the multi-operator product', () => {
         getHomePage();
         clickElementById('account-link');
-        clickElementByText('Multi-operator products (internal));
+        clickElementByText('Multi-operator products (internal)');
         deleteMultiOperatorProduct();
     });
 });

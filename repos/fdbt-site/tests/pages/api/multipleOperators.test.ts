@@ -3,8 +3,6 @@ import multipleOperators from '../../../src/pages/api/multipleOperators';
 import * as sessions from '../../../src/utils/sessions';
 import { OPERATOR_ATTRIBUTE } from '../../../src/constants/attributes';
 
-jest.mock('../../../src/utils/sessions');
-
 describe('multipleOperators', () => {
     const updateSessionAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');
 

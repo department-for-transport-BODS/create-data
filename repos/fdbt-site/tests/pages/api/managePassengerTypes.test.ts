@@ -5,10 +5,6 @@ import { MANAGE_PASSENGER_TYPE_ERRORS_ATTRIBUTE } from '../../../src/constants/a
 import managePassengerTypes from '../../../src/pages/api/managePassengerTypes';
 import { getMockRequestAndResponse } from '../../testData/mockData';
 
-jest.mock('../../../src/utils/apiUtils/index');
-jest.mock('../../../src/utils/sessions');
-jest.mock('../../../src/data/auroradb');
-
 const getAndValidateNocSpy = jest.spyOn(utils, 'getAndValidateNoc');
 const updateSessionAttributeSpy = jest.spyOn(session, 'updateSessionAttribute');
 const getSinglePassengerTypeByNameAndNationalOperatorCodeSpy = jest.spyOn(

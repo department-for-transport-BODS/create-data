@@ -6,8 +6,6 @@ import additionalPricingStructures, {
 import { ErrorInfo, AdditionalPricing } from '../../../src/interfaces';
 import { ADDITIONAL_PRICING_ATTRIBUTE } from '../../../src/constants/attributes';
 
-jest.mock('../../../src/utils/sessions');
-
 describe('additionalPricingStructures', () => {
     const updateSessionAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');
     const writeHeadMock = jest.fn();
@@ -170,7 +168,7 @@ describe('validate additional structures input tests', () => {
 
         expect(errors).toEqual(errorsResult);
     });
-    it('makes sure no negative numbers are allowed ', () => {
+    it('makes sure no negative numbers are allowed', () => {
         const pricingStructureStart = '-2';
         const structureDiscount = '-2.22';
 

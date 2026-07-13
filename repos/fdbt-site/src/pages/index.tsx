@@ -65,7 +65,7 @@ const Start = (): ReactElement => (
     </BaseLayout>
 );
 
-export const getServerSideProps = (): { props: {} } => ({
+export const getServerSideProps = (): { props: object } => ({
     props: {},
 });
 

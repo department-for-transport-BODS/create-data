@@ -1,45 +1,47 @@
-import { shallow } from 'enzyme';
-import React from 'react';
+import { fireEvent, render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import SelectMultiOperatorExports, { getServerSideProps } from '../../../src/pages/products/selectMultiOperatorExports';
 import { getMockContext, mockMultiOperatorExtProducts } from '../../testData/mockData';
 import * as getExportProgress from '../../../src/pages/api/getExportProgress';
 
-jest.mock('../../../src/pages/api/getExportProgress');
-
 describe('selectMultiOperatorExports', () => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    const event = Object.assign(jest.fn(), { preventDefault: () => {} });
+    const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
     it('renders appropriately when the user has no products', () => {
-        const tree = shallow(<SelectMultiOperatorExports csrf={''} productsToDisplay={[]} />);
+        const tree = renderToFragment(<SelectMultiOperatorExports csrf={''} productsToDisplay={[]} />);
         expect(tree).toMatchSnapshot();
     });
 
     it('renders appropriately when the user has products', () => {
-        const tree = shallow(<SelectMultiOperatorExports csrf={''} productsToDisplay={mockMultiOperatorExtProducts} />);
+        const tree = renderToFragment(
+            <SelectMultiOperatorExports csrf={''} productsToDisplay={mockMultiOperatorExtProducts} />,
+        );
         expect(tree).toMatchSnapshot();
     });
 
     it('selects all the checkboxes when the select all button is clicked, and unselects them properly also', () => {
-        const tree = shallow(<SelectMultiOperatorExports csrf={''} productsToDisplay={mockMultiOperatorExtProducts} />);
-        expect(tree).toMatchSnapshot();
+        const { container, asFragment } = render(
+            <SelectMultiOperatorExports csrf={''} productsToDisplay={mockMultiOperatorExtProducts} />,
+        );
+        expect(asFragment()).toMatchSnapshot();
 
-        const checkboxes = tree.find('checkbox');
+        const getCheckboxes = () => container.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
+        const selectAll = () => fireEvent.click(container.querySelector('#select-all') as HTMLButtonElement);
 
-        checkboxes.forEach((checkbox) => {
-            expect(checkbox.props().checked).toBeFalsy();
+        getCheckboxes().forEach((checkbox) => {
+            expect(checkbox.checked).toBeFalsy();
         });
 
-        tree.find('#select-all').simulate('click', event);
+        selectAll();
 
-        checkboxes.forEach((checkbox) => {
-            expect(checkbox.props().checked).toBeTruthy();
+        getCheckboxes().forEach((checkbox) => {
+            expect(checkbox.checked).toBeTruthy();
         });
 
-        tree.find('#select-all').simulate('click', event);
+        selectAll();
 
-        checkboxes.forEach((checkbox) => {
-            expect(checkbox.props().checked).toBeFalsy();
+        getCheckboxes().forEach((checkbox) => {
+            expect(checkbox.checked).toBeFalsy();
         });
     });
 

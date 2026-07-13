@@ -26,9 +26,6 @@ import {
 } from '../../../src/constants/attributes';
 import * as sessions from '../../../src/utils/sessions';
 
-jest.mock('../../../src/utils/apiUtils');
-jest.mock('../../../src/utils/sessions');
-
 describe('multipleProducts', () => {
     let writeHeadMock: jest.Mock;
 
@@ -337,7 +334,7 @@ describe('multipleProducts', () => {
         expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/ticketConfirmation' });
     });
 
-    it('redirects to page for a multi operator ticket with no flat fare ', () => {
+    it('redirects to page for a multi operator ticket with no flat fare', () => {
         const { req, res } = getMockRequestAndResponse({
             cookieValues: {},
             body: {

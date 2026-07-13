@@ -5,10 +5,6 @@ import { GS_FARE_DAY_END_ATTRIBUTE } from '../../../src/constants/attributes';
 import { getMockRequestAndResponse } from '../../testData/mockData';
 import manageFareDayEnd from '../../../src/pages/api/manageFareDayEnd';
 
-jest.mock('../../../src/utils/sessions');
-jest.mock('../../../src/data/auroradb');
-jest.mock('../../../src/utils/apiUtils/index');
-
 const updateSessionAttributeSpy = jest.spyOn(session, 'updateSessionAttribute');
 const upsertFareDayEndSpy = jest.spyOn(aurora, 'upsertFareDayEnd');
 

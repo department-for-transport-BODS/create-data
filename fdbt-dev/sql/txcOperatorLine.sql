@@ -301,7 +301,7 @@ INSERT INTO `txcOperatorLine` (id,nocCode,lineName,lineId,startDate,serviceCode,
 
 -- ensuring every row has an end date
 
-UPDATE txcOperatorLine SET endDate = "2025-04-05";
+UPDATE txcOperatorLine SET endDate = DATE_ADD(CURDATE(), INTERVAL 1 YEAR);
 
 -- update a few rows to test end date logic for services
 

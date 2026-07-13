@@ -228,7 +228,6 @@ export const getNocFromIdToken = (ctx: NextPageContext): string | null => getAtt
 
 export const getAndValidateNoc = (ctx: NextPageContextWithSession): string => {
     const idTokenNoc = getNocFromIdToken(ctx);
-    console.log(idTokenNoc);
     const operatorAttribute = getSessionAttribute(ctx.req, OPERATOR_ATTRIBUTE);
     const sessionNoc = operatorAttribute?.nocCode;
     const splitNoc = idTokenNoc?.split('|');

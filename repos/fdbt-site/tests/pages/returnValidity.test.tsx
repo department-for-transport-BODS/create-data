@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 
 import ReturnValidity, { getServerSideProps, getFieldset } from '../../src/pages/returnValidity';
 import {
@@ -12,6 +12,8 @@ import {
 } from '../testData/mockData';
 import { ErrorInfo } from '../../src/interfaces';
 import { RETURN_VALIDITY_ATTRIBUTE } from '../../src/constants/attributes';
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('returnValidity', () => {
@@ -30,7 +32,7 @@ describe('pages', () => {
         ];
 
         it('should render the page correctly', () => {
-            const wrapper = shallow(
+            const wrapper = renderToFragment(
                 <ReturnValidity errors={[]} fieldset={mockReturnValidityFieldset} csrfToken="" backHref="" />,
             );
             expect(wrapper).toMatchSnapshot();
@@ -46,7 +48,9 @@ describe('pages', () => {
             ],
             ['radio', mockReturnValidityFieldsetWithRadioErrors, radioError],
         ])('should render the page with errors when %s errors are present', (_case, fieldset, errors) => {
-            const wrapper = shallow(<ReturnValidity errors={errors} fieldset={fieldset} csrfToken="" backHref="" />);
+            const wrapper = renderToFragment(
+                <ReturnValidity errors={errors} fieldset={fieldset} csrfToken="" backHref="" />,
+            );
             expect(wrapper).toMatchSnapshot();
         });
 

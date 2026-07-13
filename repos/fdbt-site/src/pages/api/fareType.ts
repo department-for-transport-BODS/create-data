@@ -49,6 +49,10 @@ export default async (req: NextApiRequestWithSession, res: NextApiResponse): Pro
                 const reformedFareType = camelCase(fareType.split('carnet')[1]) as 'flatFare' | 'period';
                 updateSessionAttribute(req, FARE_TYPE_ATTRIBUTE, { fareType: reformedFareType });
 
+                const operatorAttribute = getSessionAttribute(req, OPERATOR_ATTRIBUTE);
+                const uuid = buildUuid(nocCode);
+                updateSessionAttribute(req, OPERATOR_ATTRIBUTE, { ...operatorAttribute, uuid });
+
                 redirectTo(res, '/selectPassengerType');
                 return;
             }

@@ -4,8 +4,6 @@ import * as session from '../../../src/utils/sessions';
 import { ErrorInfo, SalesOfferPackageInfoWithErrors, SalesOfferPackageInfo } from '../../../src/interfaces';
 import { SOP_INFO_ATTRIBUTE } from '../../../src/constants/attributes';
 
-jest.mock('../../../src/utils/sessions');
-
 describe('salesOfferPackages', () => {
     const mockErrorObject: ErrorInfo = { errorMessage: expect.any(String), id: expect.any(String) };
     const updateSessionAttributeSpy = jest.spyOn(session, 'updateSessionAttribute');

@@ -18,7 +18,7 @@ export const buildEditUrl = (
     serviceId: string | undefined,
 ): string => {
     return `/api/editProductName?id=${idToEdit}&productName=${productName}&_csrf=${csrfToken}${
-        !!serviceId ? `&serviceId=${serviceId}` : ''
+        serviceId ? `&serviceId=${serviceId}` : ''
     }`;
 };
 

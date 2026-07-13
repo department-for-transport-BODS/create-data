@@ -30,7 +30,7 @@ export default async (req: NextApiRequestWithSession, res: NextApiResponse): Pro
         redirectTo(
             res,
             `/products/productDetails?productId=${newProductId}&copied=true${
-                !!serviceId ? `&serviceId=${serviceId}` : ''
+                serviceId ? `&serviceId=${serviceId}` : ''
             }`,
         );
     } catch (error) {

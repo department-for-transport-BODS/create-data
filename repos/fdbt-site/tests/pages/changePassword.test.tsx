@@ -1,17 +1,19 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import { getMockContext } from '../testData/mockData';
 import ChangePassword, { getServerSideProps } from '../../src/pages/changePassword';
 import { USER_ATTRIBUTE } from '../../src/constants/attributes';
 
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
+
 describe('changePassword', () => {
     it('should render correctly', () => {
-        const tree = shallow(<ChangePassword csrfToken="" errors={[]} />);
+        const tree = renderToFragment(<ChangePassword csrfToken="" errors={[]} />);
         expect(tree).toMatchSnapshot();
     });
 
     it('should render error messaging when errors are passed', () => {
-        const tree = shallow(
+        const tree = renderToFragment(
             <ChangePassword
                 csrfToken=""
                 errors={[

@@ -1,4 +1,3 @@
-import awsParamStore from 'aws-param-store';
 import dayjs from '../utils/dayjs';
 import difference from 'lodash/difference';
 import { ResultSetHeader } from 'mysql2';
@@ -34,6 +33,7 @@ import {
     ProductAdditionaNocs,
 } from '../interfaces/dbTypes';
 import { Stop, FromDb, SalesOfferPackage, CompanionInfo, OperatorDetails } from '../interfaces/matchingJsonTypes';
+import { getSsmValue } from './ssm';
 
 interface ServiceQueryData {
     operatorShortName: string;
@@ -90,7 +90,7 @@ export class MultipleResultsError extends Error {
     }
 }
 
-export const getAuroraDBClient = (): Pool => {
+export const getAuroraDBClient = async (): Promise<Pool> => {
     let client: Pool;
 
     if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
@@ -106,8 +106,8 @@ export const getAuroraDBClient = (): Pool => {
     } else {
         client = createPool({
             host: process.env.RDS_HOST,
-            user: awsParamStore.getParameterSync('fdbt-rds-site-username', { region: 'eu-west-2' }).Value,
-            password: awsParamStore.getParameterSync('fdbt-rds-site-password', { region: 'eu-west-2' }).Value,
+            user: await getSsmValue('fdbt-rds-site-username'),
+            password: await getSsmValue('fdbt-rds-site-password'),
             database: 'fdbt',
             waitForConnections: true,
             connectionLimit: 5,
@@ -125,7 +125,7 @@ export const replaceInternalNocCode = (nocCode: string): string => {
     return nocCode;
 };
 
-let connectionPool: Pool;
+let connectionPoolPromise: Promise<Pool> | undefined;
 
 const executeQuery = async <T>(
     query: string,
@@ -133,9 +133,11 @@ const executeQuery = async <T>(
     values: any | any[] | { [param: string]: any },
     insertMultiple?: boolean,
 ): Promise<T> => {
-    if (!connectionPool) {
-        connectionPool = getAuroraDBClient();
+    if (!connectionPoolPromise) {
+        connectionPoolPromise = getAuroraDBClient();
     }
+
+    const connectionPool = await connectionPoolPromise;
 
     const [rows] = await (insertMultiple
         ? connectionPool.query(query, [values])

@@ -5,9 +5,8 @@ import { GS_PURCHASE_METHOD_ATTRIBUTE } from '../../../src/constants/attributes'
 import * as db from '../../../src/data/auroradb';
 import { FromDb, SalesOfferPackage } from '../../../src/interfaces/matchingJsonTypes';
 
-jest.mock('../../../src/utils/sessions');
-
 jest.mock('../../../src/data/auroradb');
+
 const insertSpy = jest.spyOn(db, 'insertSalesOfferPackage');
 const updateSpy = jest.spyOn(db, 'updateSalesOfferPackage');
 const getSpy = jest.spyOn(db, 'getSalesOfferPackagesByNocCode');
@@ -437,7 +436,7 @@ describe('managePurchaseMethod', () => {
 
         await managePurchaseMethod(req, res);
 
-        expect(updateSpy).not.toBeCalled();
+        expect(updateSpy).not.toHaveBeenCalled();
         expect(insertSpy).toHaveBeenCalledWith('TEST', expected);
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_PURCHASE_METHOD_ATTRIBUTE, undefined);
         expect(res.writeHead).toHaveBeenCalledWith(302, {
@@ -466,7 +465,7 @@ describe('managePurchaseMethod', () => {
 
         await managePurchaseMethod(req, res);
 
-        expect(updateSpy).not.toBeCalled();
+        expect(updateSpy).not.toHaveBeenCalled();
         expect(insertSpy).toHaveBeenCalledWith('TEST', expected);
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_PURCHASE_METHOD_ATTRIBUTE, undefined);
         expect(res.writeHead).toHaveBeenCalledWith(302, {
@@ -499,7 +498,7 @@ describe('managePurchaseMethod', () => {
 
         await managePurchaseMethod(req, res);
 
-        expect(insertSpy).not.toBeCalled();
+        expect(insertSpy).not.toHaveBeenCalled();
         expect(updateSpy).toHaveBeenCalledWith('TEST', expected);
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_PURCHASE_METHOD_ATTRIBUTE, undefined);
         expect(res.writeHead).toHaveBeenCalledWith(302, {
@@ -532,7 +531,7 @@ describe('managePurchaseMethod', () => {
 
         await managePurchaseMethod(req, res);
 
-        expect(insertSpy).not.toBeCalled();
+        expect(insertSpy).not.toHaveBeenCalled();
         expect(updateSpy).toHaveBeenCalledWith('TEST', expected);
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_PURCHASE_METHOD_ATTRIBUTE, undefined);
         expect(res.writeHead).toHaveBeenCalledWith(302, {

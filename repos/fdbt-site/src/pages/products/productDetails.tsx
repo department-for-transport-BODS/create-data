@@ -505,7 +505,7 @@ const createProductDetails = async (
                         exemptedServices = secondaryOperatorFareInfo.exemptedServices.map(({ lineName }) => lineName);
                     }
                 } catch (error) {
-                    logger.warn(`Couldn't get additional operator info for noc: ${additionalNoc}`);
+                    logger.warn(`Couldn't get additional operator info for noc: ${additionalNoc}`, error.stack);
                 }
 
                 productDetailsElements.push({
@@ -556,7 +556,10 @@ const createProductDetails = async (
                         );
                     }
                 } catch (error) {
-                    logger.warn(`Couldn't get additional operator info for noc: ${additionalOperator.nocCode}`);
+                    logger.warn(
+                        `Couldn't get additional operator info for noc: ${additionalOperator.nocCode}`,
+                        error.stack,
+                    );
                 }
 
                 productDetailsElements.push({
@@ -787,7 +790,7 @@ export const getServerSideProps = async (ctx: NextPageContextWithSession): Promi
         matchingJsonLink,
     });
 
-    const dataSource = !!getSessionAttribute(ctx.req, MULTI_MODAL_ATTRIBUTE) ? 'tnds' : 'bods';
+    const dataSource = getSessionAttribute(ctx.req, MULTI_MODAL_ATTRIBUTE) ? 'tnds' : 'bods';
 
     const productDetails = await createProductDetails(
         ticket,

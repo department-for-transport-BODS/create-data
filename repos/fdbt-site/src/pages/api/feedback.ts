@@ -69,13 +69,13 @@ export const redactEmailAddress = (
     if (toRedact !== undefined) {
         if (typeof toRedact === 'string') {
             return redact(toRedact);
-        } else if (toRedact.hasOwnProperty('name') && toRedact.hasOwnProperty('address')) {
+        } else if (typeof toRedact === 'object' && 'name' in toRedact && 'address' in toRedact) {
             const email = toRedact as Mail.Address;
             return redact(email.address);
         } else if (typeof toRedact === 'object') {
             const addresses = toRedact as Mail.Address[];
             return addresses.map((email) => {
-                if (email.hasOwnProperty('name') && email.hasOwnProperty('address')) {
+                if (typeof email !== 'string' && 'name' in email && 'address' in email) {
                     return redact(email.address);
                 } else {
                     return redact(email as unknown as string);

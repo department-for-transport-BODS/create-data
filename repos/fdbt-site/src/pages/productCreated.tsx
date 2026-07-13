@@ -92,7 +92,7 @@ const ProductCreated = ({ isMultiOperatorExternalProduct = false, csrfToken }: P
     </TwoThirdsLayout>
 );
 
-export const getServerSideProps = (ctx: NextPageContextWithSession): {} => {
+export const getServerSideProps = (ctx: NextPageContextWithSession): object => {
     const uuid = getUuidFromSession(ctx);
     const noc = getAndValidateNoc(ctx);
 

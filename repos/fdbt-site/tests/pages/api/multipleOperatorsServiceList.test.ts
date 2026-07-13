@@ -5,8 +5,6 @@ import getMultiOperatorServiceList, {
 } from '../../../src/pages/api/multipleOperatorsServiceList';
 import * as sessions from '../../../src/utils/sessions';
 
-jest.mock('../../../src/utils/sessions');
-
 describe('getMultiOperatorsDataFromRequests tests', () => {
     it('should return operator data for one operator', () => {
         const response = getMultiOperatorsDataFromRequest({ 'BLAC#237#123#abc#12/06/2020': 'Some description' });

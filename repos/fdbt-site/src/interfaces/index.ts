@@ -304,7 +304,6 @@ export interface S3NetexFile {
     carnet: boolean;
 }
 
-/* eslint-disable camelcase */
 export interface CognitoIdToken {
     sub: string;
     aud: string;

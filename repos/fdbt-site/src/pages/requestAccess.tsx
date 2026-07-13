@@ -32,7 +32,7 @@ const RequestAccess = (): ReactElement => (
     </BaseLayout>
 );
 
-export const getServerSideProps = (): {} => {
+export const getServerSideProps = (): object => {
     return { props: {} };
 };
 

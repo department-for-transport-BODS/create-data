@@ -1,10 +1,9 @@
-import { shallow } from 'enzyme';
-import React from 'react';
+import { render } from '@testing-library/react';
 import ExpirySelector from '../../src/components/ExpirySelector';
 
 describe('ExpirySelector', () => {
     it('should render the selector for a non-carnet', () => {
-        const wrapper = shallow(
+        const { asFragment } = render(
             <ExpirySelector
                 quantityId="test-quantity-id"
                 unitId="test-unit-id"
@@ -13,11 +12,11 @@ describe('ExpirySelector', () => {
                 hideFormGroupError={false}
             />,
         );
-        expect(wrapper).toMatchSnapshot();
+        expect(asFragment()).toMatchSnapshot();
     });
 
     it('should render the selector for a carnet', () => {
-        const wrapper = shallow(
+        const { asFragment } = render(
             <ExpirySelector
                 quantityId="test-quantity-id"
                 unitId="test-unit-id"
@@ -27,11 +26,11 @@ describe('ExpirySelector', () => {
                 hideFormGroupError={false}
             />,
         );
-        expect(wrapper).toMatchSnapshot();
+        expect(asFragment()).toMatchSnapshot();
     });
 
     it('should render the selector for a school ticket', () => {
-        const wrapper = shallow(
+        const { asFragment } = render(
             <ExpirySelector
                 quantityId="test-quantity-id"
                 unitId="test-unit-id"
@@ -42,6 +41,6 @@ describe('ExpirySelector', () => {
                 hideFormGroupError={false}
             />,
         );
-        expect(wrapper).toMatchSnapshot();
+        expect(asFragment()).toMatchSnapshot();
     });
 });

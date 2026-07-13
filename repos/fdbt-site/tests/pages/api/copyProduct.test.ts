@@ -5,8 +5,6 @@ import * as index from '../../../src/utils/apiUtils/index';
 import { getProductById, getProductIdByMatchingJsonLink } from '../../../src/data/auroradb';
 import { getProductsMatchingJson } from '../../../src/data/s3';
 
-jest.mock('../../../src/utils/apiUtils/index');
-
 jest.mock('../../../src/data/auroradb');
 jest.mock('../../../src/data/s3');
 

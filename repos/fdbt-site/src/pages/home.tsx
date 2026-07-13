@@ -69,7 +69,7 @@ const Home = ({
                     <a
                         href={'/products/multiOperatorProductsExternal'}
                         className="govuk-link govuk-!-font-size-19"
-                        id="account-link"
+                        id="multi-operator-fares-link"
                     >
                         {'View and manage multi-operator fares'}
                     </a>
@@ -126,7 +126,7 @@ const Home = ({
     </BaseLayout>
 );
 
-export const getServerSideProps = async (ctx: NextPageContextWithSession): Promise<{}> => {
+export const getServerSideProps = async (ctx: NextPageContextWithSession): Promise<object> => {
     regenerateSession(ctx.req);
     const multipleOperators = checkIfMultipleOperators(ctx);
 

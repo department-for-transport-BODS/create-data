@@ -25,7 +25,7 @@ const ResetLinkExpired: NextPage = (): ReactElement => (
     </TwoThirdsLayout>
 );
 
-export const getServerSideProps = (ctx: NextPageContextWithSession): {} => {
+export const getServerSideProps = (ctx: NextPageContextWithSession): object => {
     updateSessionAttribute(ctx.req, USER_ATTRIBUTE, undefined);
     return { props: {} };
 };

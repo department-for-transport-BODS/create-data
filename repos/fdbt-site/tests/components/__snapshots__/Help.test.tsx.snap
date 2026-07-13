@@ -1,23 +1,24 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Help should render the Help component 1`] = `
-<div>
-  <h2
-    className="govuk-heading-s"
-  >
-    Help and Support
-  </h2>
-  <p
-    className="govuk-body"
-  >
-    If you are having problems, please contact the Create Fares Data Service via this link:
-     
-    <a
-      className="govuk-link govuk-!-font-size-19"
-      href="/contact"
+<DocumentFragment>
+  <div>
+    <h2
+      class="govuk-heading-s"
     >
-      Contact us
-    </a>
-  </p>
-</div>
+      Help and Support
+    </h2>
+    <p
+      class="govuk-body"
+    >
+      If you are having problems, please contact the Create Fares Data Service via this link: 
+      <a
+        class="govuk-link govuk-!-font-size-19"
+        href="/contact"
+      >
+        Contact us
+      </a>
+    </p>
+  </div>
+</DocumentFragment>
 `;

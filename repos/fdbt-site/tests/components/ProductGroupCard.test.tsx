@@ -1,10 +1,9 @@
-import { shallow } from 'enzyme';
-import React from 'react';
+import { render } from '@testing-library/react';
 import ProductGroupCard from '../../src/components/ProductGroupCard';
 
 describe('ProductGroupCard', () => {
     it('should render not checked', () => {
-        const wrapper = shallow(
+        const { asFragment } = render(
             <ProductGroupCard
                 groupDetails={{
                     id: 1,
@@ -15,11 +14,11 @@ describe('ProductGroupCard', () => {
                 defaultChecked={false}
             />,
         );
-        expect(wrapper).toMatchSnapshot();
+        expect(asFragment()).toMatchSnapshot();
     });
 
     it('should render checked', () => {
-        const wrapper = shallow(
+        const { asFragment } = render(
             <ProductGroupCard
                 groupDetails={{
                     id: 1,
@@ -30,11 +29,11 @@ describe('ProductGroupCard', () => {
                 defaultChecked
             />,
         );
-        expect(wrapper).toMatchSnapshot();
+        expect(asFragment()).toMatchSnapshot();
     });
 
     it('should render with delete handler', () => {
-        const wrapper = shallow(
+        const { asFragment } = render(
             <ProductGroupCard
                 groupDetails={{
                     id: 1,
@@ -46,6 +45,6 @@ describe('ProductGroupCard', () => {
                 deleteActionHandler={jest.fn()}
             />,
         );
-        expect(wrapper).toMatchSnapshot();
+        expect(asFragment()).toMatchSnapshot();
     });
 });

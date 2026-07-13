@@ -32,7 +32,7 @@ export default async (req: NextApiRequestWithSession, res: NextApiResponse): Pro
 
         const ticket = getSessionAttribute(req, MATCHING_JSON_ATTRIBUTE);
         const matchingJsonMetaData = getSessionAttribute(req, MATCHING_JSON_META_DATA_ATTRIBUTE);
-        const { fareType } = getSessionAttribute(req, FARE_TYPE_ATTRIBUTE) as FareType;
+        const fareType = (getSessionAttribute(req, FARE_TYPE_ATTRIBUTE) as FareType | undefined)?.fareType;
 
         if (multipleOperators) {
             if (fareType === 'multiOperatorExt') {

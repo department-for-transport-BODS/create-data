@@ -188,11 +188,11 @@ const PointToPointProductsTable = (
 };
 
 export const filterProductsNotToDisplay = (service: MyFaresService, products: MyFaresProduct[]): MyFaresProduct[] => {
-    const serviceStartDate = dayjs.utc(service.startDate, 'DD/MM/YYYY').valueOf();
-    const serviceEndDate = service.endDate ? dayjs.utc(service.endDate, 'DD/MM/YYYY').valueOf() : undefined;
+    const serviceStartDate = dayjs.utc(service.startDate, 'D/M/YYYY').valueOf();
+    const serviceEndDate = service.endDate ? dayjs.utc(service.endDate, 'D/M/YYYY').valueOf() : undefined;
     return products.filter((product) => {
-        const productStartDate = dayjs.utc(product.startDate, 'DD/MM/YYYY').valueOf();
-        const productEndDate = product.endDate && dayjs.utc(product.endDate, 'DD/MM/YYYY').valueOf();
+        const productStartDate = dayjs.utc(product.startDate, 'D/M/YYYY').valueOf();
+        const productEndDate = product.endDate && dayjs.utc(product.endDate, 'D/M/YYYY').valueOf();
         return (
             (!productEndDate || productEndDate >= serviceStartDate) &&
             (!serviceEndDate || productStartDate <= serviceEndDate)
@@ -210,7 +210,7 @@ export const getServerSideProps = async (
         throw new Error('Unable to find line name to show products for.');
     }
 
-    const dataSource = !!getSessionAttribute(ctx.req, MULTI_MODAL_ATTRIBUTE) ? 'tnds' : 'bods';
+    const dataSource = getSessionAttribute(ctx.req, MULTI_MODAL_ATTRIBUTE) ? 'tnds' : 'bods';
     const service = await getServiceByNocAndId(noc, serviceId, dataSource);
     const products = await getPointToPointProductsByLineId(noc, service.lineId);
     const productsToDisplay = filterProductsNotToDisplay(service, products);

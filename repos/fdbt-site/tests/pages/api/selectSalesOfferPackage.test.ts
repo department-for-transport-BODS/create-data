@@ -20,9 +20,6 @@ import {
 import * as userData from '../../../src/utils/apiUtils/userData';
 import { ExpiryUnit, TicketWithIds } from '../../../src/interfaces/matchingJsonTypes';
 
-jest.mock('../../../src/utils/apiUtils/userData');
-jest.mock('../../../src/utils/sessions');
-
 describe('selectSalesOfferPackage', () => {
     const writeHeadMock = jest.fn();
     const s3Spy = jest.spyOn(userData, 'putUserDataInProductsBucketWithFilePath');
@@ -295,7 +292,7 @@ describe('selectSalesOfferPackage', () => {
                 },
             ]);
         });
-        it('returns multipleProducts if multipleProducts is present ', () => {
+        it('returns multipleProducts if multipleProducts is present', () => {
             expect(getProductsByValues(expectedFlatFareTicket as TicketWithIds, undefined, '')).toEqual([
                 {
                     productName: 'Weekly Rider',

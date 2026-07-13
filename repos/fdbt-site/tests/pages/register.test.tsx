@@ -1,9 +1,11 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import Register, { getServerSideProps } from '../../src/pages/register';
 import { getMockContext } from '../testData/mockData';
 import { USER_ATTRIBUTE } from '../../src/constants/attributes';
 import { ErrorInfo } from '../../src/interfaces';
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('register', () => {
@@ -16,12 +18,12 @@ describe('pages', () => {
         ];
 
         it('should render correctly', () => {
-            const tree = shallow(<Register regKey="abcdefg" errors={[]} csrfToken="" />);
+            const tree = renderToFragment(<Register regKey="abcdefg" errors={[]} csrfToken="" />);
             expect(tree).toMatchSnapshot();
         });
 
         it('should render errors correctly', () => {
-            const tree = shallow(<Register regKey="abcdefg" errors={mockErrors} csrfToken="" />);
+            const tree = renderToFragment(<Register regKey="abcdefg" errors={mockErrors} csrfToken="" />);
             expect(tree).toMatchSnapshot();
         });
 

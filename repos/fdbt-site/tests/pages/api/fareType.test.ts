@@ -6,9 +6,6 @@ import * as aurora from '../../../src/data/auroradb';
 import { FARE_TYPE_ATTRIBUTE, CARNET_FARE_TYPE_ATTRIBUTE } from '../../../src/constants/attributes';
 import { ErrorInfo } from '../../../src/interfaces';
 
-jest.mock('../../../src/utils/sessions');
-jest.mock('../../../src/data/auroradb');
-
 const services = [
     {
         id: 11,
@@ -154,7 +151,7 @@ describe('fareType', () => {
             mockWriteHeadFn: writeHeadMock,
         });
         await fareType(req, res);
-        expect(updateSessionAttributeSpy).toBeCalledTimes(0);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledTimes(0);
         expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/noServices',
         });

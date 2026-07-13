@@ -10,12 +10,6 @@ import * as userData from '../../../src/utils/apiUtils/userData';
 import * as sessions from '../../../src/utils/sessions';
 import * as utils from '../../../src/utils';
 import {
-
-jest.mock('../../../src/utils/apiUtils/index');
-jest.mock('../../../src/data/auroradb');
-jest.mock('../../../src/utils');
-jest.mock('../../../src/utils/apiUtils/userData');
-jest.mock('../../../src/utils/sessions');
     expectedReturnTicketWithAdditionalService,
     expectedSingleTicket,
     getMockRequestAndResponse,

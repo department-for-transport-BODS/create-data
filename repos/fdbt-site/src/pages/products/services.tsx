@@ -103,8 +103,8 @@ export const getProductStatus = (
     }
 
     const today = dayjs.utc().startOf('day').valueOf();
-    const startDateAsUnixTime = dayjs.utc(startDate, 'DD/MM/YYYY').valueOf();
-    const endDateAsUnixTime = endDate ? dayjs.utc(endDate, 'DD/MM/YYYY').valueOf() : undefined;
+    const startDateAsUnixTime = dayjs.utc(startDate, 'D/M/YYYY').valueOf();
+    const endDateAsUnixTime = endDate ? dayjs.utc(endDate, 'D/M/YYYY').valueOf() : undefined;
 
     if (startDateAsUnixTime <= today && (!endDateAsUnixTime || endDateAsUnixTime >= today)) {
         return 'active';
@@ -149,8 +149,8 @@ export const showProductAgainstService = (
 ): boolean => {
     const momentProductStartDate = dayjs(productStartDate).valueOf();
     const momentProductEndDate = productEndDate && dayjs(productEndDate).valueOf();
-    const momentServiceStartDate = dayjs(serviceStartDate, 'DD/MM/YYYY').valueOf();
-    const momentServiceEndDate = serviceEndDate ? dayjs(serviceEndDate, 'DD/MM/YYYY').valueOf() : undefined;
+    const momentServiceStartDate = dayjs(serviceStartDate, 'D/M/YYYY').valueOf();
+    const momentServiceEndDate = serviceEndDate ? dayjs(serviceEndDate, 'D/M/YYYY').valueOf() : undefined;
 
     // returns TRUE if:
     // there is no product end date OR there is a product end date and it is after the service start date
@@ -196,7 +196,7 @@ export const matchProductsToServices = (
 
 export const getServerSideProps = async (ctx: NextPageContextWithSession): Promise<{ props: ServicesProps }> => {
     const noc = getAndValidateNoc(ctx);
-    const dataSource = !!getSessionAttribute(ctx.req, MULTI_MODAL_ATTRIBUTE) ? 'tnds' : 'bods';
+    const dataSource = getSessionAttribute(ctx.req, MULTI_MODAL_ATTRIBUTE) ? 'tnds' : 'bods';
     const services: MyFaresService[] = await getBodsOrTndsServicesByNoc(noc, dataSource);
     const servicesWithNoDuplicates = removeDuplicateServices<MyFaresService>(services);
 

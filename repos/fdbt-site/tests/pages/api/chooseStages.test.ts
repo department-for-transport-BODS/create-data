@@ -4,9 +4,6 @@ import { getMockRequestAndResponse } from '../../testData/mockData';
 import { FARE_STAGES_ATTRIBUTE } from '../../../src/constants/attributes';
 import * as sessions from '../../../src/utils/sessions';
 
-jest.mock('../../../src/utils/apiUtils/index');
-jest.mock('../../../src/utils/sessions');
-
 describe('chooseStages', () => {
     let writeHeadMock: jest.Mock;
 
@@ -17,7 +14,7 @@ describe('chooseStages', () => {
     afterEach(() => {
         jest.resetAllMocks();
     });
-    const cases: {}[] = [
+    const cases: object[] = [
         [{}, { Location: '/chooseStages' }],
         [{ fareStageInput: 'abcdefghijk' }, { Location: '/chooseStages' }],
         [{ fareStageInput: '1.2' }, { Location: '/chooseStages' }],

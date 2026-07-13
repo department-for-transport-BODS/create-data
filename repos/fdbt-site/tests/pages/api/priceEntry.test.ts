@@ -3,8 +3,6 @@ import priceEntry, { inputsValidityCheck } from '../../../src/pages/api/priceEnt
 import { getMockRequestAndResponse } from '../../testData/mockData';
 import { DIRECTION_ATTRIBUTE } from '../../../src/constants/attributes';
 
-jest.mock('../../../src/data/s3');
-
 describe('priceEntry', () => {
     describe('API validation of number of price inputs', () => {
         it('should return fares information with no errors if inputs are valid', () => {
@@ -67,7 +65,7 @@ describe('priceEntry', () => {
             jest.clearAllMocks();
         });
 
-        const cases: {}[] = [
+        const cases: object[] = [
             [{}, { Location: '/error' }],
             [{ 'Crawley-Acomb Lane': '0' }, { Location: '/outboundMatching' }],
             [{ 'Crawley-Acomb Lane': '100' }, { Location: '/outboundMatching' }],

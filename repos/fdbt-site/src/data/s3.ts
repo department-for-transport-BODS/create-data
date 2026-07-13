@@ -1,5 +1,20 @@
-import { S3 } from 'aws-sdk';
-import { PromiseResult } from 'aws-sdk/lib/request';
+import {
+    DeleteObjectCommand,
+    DeleteObjectsCommand,
+    DeleteObjectsCommandInput,
+    GetObjectCommand,
+    GetObjectCommandOutput,
+    HeadObjectCommand,
+    ListObjectsV2Command,
+    ListObjectsV2CommandInput,
+    ObjectIdentifier,
+    PutObjectCommand,
+    PutObjectCommandInput,
+    S3Client,
+    S3ClientConfig,
+    _Object,
+} from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import {
     USER_DATA_BUCKET_NAME,
     RAW_USER_DATA_BUCKET_NAME,
@@ -12,27 +27,28 @@ import {
 import { UserFareStages, UserFareZone } from '../interfaces';
 import logger from '../utils/logger';
 import { triggerZipper } from '../utils/apiUtils/export';
-import { DeleteObjectsRequest, ListObjectsV2Request, ObjectIdentifierList, ObjectList } from 'aws-sdk/clients/s3';
 import { objectKeyMatchesExportNameExactly } from '../utils';
 import { SecondaryOperatorFareInfo, Ticket, TicketWithIds } from '../interfaces/matchingJsonTypes';
 import { ExportMetadata } from '../interfaces/integrationTypes';
 
-const getS3Client = (): S3 => {
-    let options: S3.ClientConfiguration = {
+const getS3Client = (): S3Client => {
+    let options: S3ClientConfig = {
         region: 'eu-west-2',
     };
 
     if (process.env.NODE_ENV === 'development') {
         options = {
-            s3ForcePathStyle: true,
-            accessKeyId: 'S3RVER',
-            secretAccessKey: 'S3RVER',
+            forcePathStyle: true,
+            credentials: {
+                accessKeyId: 'S3RVER',
+                secretAccessKey: 'S3RVER',
+            },
             endpoint: 'http://127.0.0.1:4566',
             region: 'eu-west-2',
         };
     }
 
-    return new S3(options);
+    return new S3Client(options);
 };
 
 const s3 = getS3Client();
@@ -50,8 +66,8 @@ export const getUserFareStages = async (uuid: string): Promise<UserFareStages> =
             uuid,
         });
 
-        const response = await s3.getObject(params).promise();
-        const dataAsString = response.Body?.toString('utf-8') ?? '';
+        const response = await s3.send(new GetObjectCommand(params));
+        const dataAsString = (await response.Body?.transformToString('utf-8')) ?? '';
 
         return JSON.parse(dataAsString) as UserFareStages;
     } catch (error) {
@@ -66,8 +82,8 @@ export const getMatchingJson = async (path: string): Promise<Ticket> => {
     };
 
     try {
-        const response = await s3.getObject(params).promise();
-        const dataAsString = response.Body?.toString('utf-8') ?? '';
+        const response = await s3.send(new GetObjectCommand(params));
+        const dataAsString = (await response.Body?.transformToString('utf-8')) ?? '';
 
         return JSON.parse(dataAsString) as Ticket;
     } catch (error) {
@@ -82,8 +98,8 @@ export const getProductsMatchingJson = async (path: string): Promise<TicketWithI
     };
 
     try {
-        const response = await s3.getObject(params).promise();
-        const dataAsString = response.Body?.toString('utf-8') ?? '';
+        const response = await s3.send(new GetObjectCommand(params));
+        const dataAsString = (await response.Body?.transformToString('utf-8')) ?? '';
 
         return JSON.parse(dataAsString) as TicketWithIds;
     } catch (error) {
@@ -98,8 +114,8 @@ export const getProductsSecondaryOperatorInfo = async (path: string): Promise<Se
     };
 
     try {
-        const response = await s3.getObject(params).promise();
-        const dataAsString = response.Body?.toString('utf-8') ?? '';
+        const response = await s3.send(new GetObjectCommand(params));
+        const dataAsString = (await response.Body?.transformToString('utf-8')) ?? '';
 
         return JSON.parse(dataAsString) as SecondaryOperatorFareInfo;
     } catch (error) {
@@ -120,9 +136,9 @@ export const getCsvZoneUploadData = async (key: string): Promise<string[]> => {
             key,
         });
 
-        const response = await s3.getObject(params).promise();
+        const response = await s3.send(new GetObjectCommand(params));
 
-        const dataAsString = response.Body?.toString('utf-8') ?? '';
+        const dataAsString = (await response.Body?.transformToString('utf-8')) ?? '';
 
         const parsedData: UserFareZone[] = JSON.parse(dataAsString);
 
@@ -147,14 +163,14 @@ export const putStringInS3 = async (
         key,
     });
 
-    const request: AWS.S3.Types.PutObjectRequest = {
+    const request: PutObjectCommandInput = {
         Bucket: bucketName,
         Key: key,
         Body: Buffer.from(text, 'utf8'),
         ContentType: contentType,
     };
 
-    await s3.putObject(request).promise();
+    await s3.send(new PutObjectCommand(request));
 };
 
 export const putDataInS3 = async (
@@ -190,22 +206,20 @@ export const getNetexSignedUrl = async (key: string): Promise<string> => {
             Key: key,
         };
 
-        return s3.getSignedUrlPromise('getObject', request);
+        return await getSignedUrl(s3, new GetObjectCommand(request), { expiresIn: 900 });
     } catch (error) {
         throw new Error(`Failed to get signed url for key: ${key}, ${error.stack}`);
     }
 };
 
-export const getMatchingDataObject = async (
-    key: string,
-): Promise<PromiseResult<AWS.S3.GetObjectOutput, AWS.AWSError>> => {
+export const getMatchingDataObject = async (key: string): Promise<GetObjectCommandOutput> => {
     try {
-        const request: AWS.S3.GetObjectRequest = {
+        const request = {
             Bucket: MATCHING_DATA_BUCKET_NAME,
             Key: key,
         };
 
-        return s3.getObject(request).promise();
+        return await s3.send(new GetObjectCommand(request));
     } catch (error) {
         throw new Error(`Failed to get matching data for key: ${key}, ${error.stack}`);
     }
@@ -213,12 +227,12 @@ export const getMatchingDataObject = async (
 
 export const retrieveExportZip = async (noc: string, exportName: string): Promise<string | undefined> => {
     const prefix = `${noc}/zips/${exportName}/`;
-    const zipResponse = await s3
-        .listObjectsV2({
+    const zipResponse = await s3.send(
+        new ListObjectsV2Command({
             Bucket: NETEX_BUCKET_NAME,
             Prefix: prefix,
-        })
-        .promise();
+        }),
+    );
 
     const zipReady = zipResponse.Contents?.some((object) => object.Key?.endsWith('.zip'));
     const zipStarted = zipResponse.Contents?.some((object) => object.Key?.endsWith('_started'));
@@ -239,14 +253,14 @@ export const getS3FolderCount = async (bucketName: string, path: string): Promis
         let objectCount = 0;
 
         const getObjectsWithContinuationToken = async (continuationToken: string | undefined) => {
-            const params: ListObjectsV2Request = {
+            const params: ListObjectsV2CommandInput = {
                 Bucket: bucketName,
                 Prefix: path,
                 Delimiter: '/',
                 ContinuationToken: continuationToken,
             };
 
-            const listObjectsResponse = await s3.listObjectsV2(params).promise();
+            const listObjectsResponse = await s3.send(new ListObjectsV2Command(params));
 
             if (listObjectsResponse.Contents || listObjectsResponse.CommonPrefixes) {
                 objectCount =
@@ -273,14 +287,14 @@ export const getS3Exports = async (noc: string): Promise<string[]> => {
         const exportNames: string[] = [];
 
         const getObjectsWithContinuationToken = async (continuationToken: string | undefined) => {
-            const params: ListObjectsV2Request = {
+            const params: ListObjectsV2CommandInput = {
                 Bucket: MATCHING_DATA_BUCKET_NAME,
                 Prefix: `${noc}/exports/`,
                 Delimiter: '/',
                 ContinuationToken: continuationToken,
             };
 
-            const listObjectsResponse = await s3.listObjectsV2(params).promise();
+            const listObjectsResponse = await s3.send(new ListObjectsV2Command(params));
 
             if (listObjectsResponse.CommonPrefixes) {
                 listObjectsResponse.CommonPrefixes.forEach((prefix) => {
@@ -311,14 +325,14 @@ export const getNetexFileNames = async (path: string, validated: boolean): Promi
         const netexFileNames: string[] = [];
 
         const getObjectsWithContinuationToken = async (continuationToken: string | undefined) => {
-            const params: ListObjectsV2Request = {
+            const params: ListObjectsV2CommandInput = {
                 Bucket: validated ? NETEX_BUCKET_NAME : UNVALIDATED_NETEX_BUCKET_NAME,
                 Prefix: path,
                 Delimiter: '/',
                 ContinuationToken: continuationToken,
             };
 
-            const listObjectsResponse = await s3.listObjectsV2(params).promise();
+            const listObjectsResponse = await s3.send(new ListObjectsV2Command(params));
 
             if (listObjectsResponse.Contents) {
                 listObjectsResponse.Contents.forEach((content) => {
@@ -348,7 +362,7 @@ export const deleteFromS3 = async (key: string, bucketName: string): Promise<voi
             message: `Deleting ${key} in ${bucketName}`,
         });
         const bucketParams = { Bucket: bucketName, Key: key };
-        await s3.deleteObject(bucketParams).promise();
+        await s3.send(new DeleteObjectCommand(bucketParams));
     } catch (error) {
         throw new Error(`Deletion of ${key} in ${bucketName} unsuccessful: ${(error as Error).stack}`);
     }
@@ -369,23 +383,23 @@ export const deleteMultipleObjectsFromS3 = async (keys: string[], bucketName: st
                 Bucket: bucketName,
                 Delete: { Objects: bucketKeys },
             };
-            await s3.deleteObjects(bucketParams).promise();
+            await s3.send(new DeleteObjectsCommand(bucketParams));
         }
     } catch (error) {
         throw new Error(`Deletion of ${keys.join(', ')} in ${bucketName} unsuccessful: ${(error as Error).stack}`);
     }
 };
 
-const listBucketObjects = async (bucket: string): Promise<ObjectList> => {
-    const objects: {}[] = [];
+const listBucketObjects = async (bucket: string): Promise<_Object[]> => {
+    const objects: object[] = [];
 
     const getObjectsWithPaginationToken = async (continuationToken: string | undefined) => {
-        const params: ListObjectsV2Request = {
+        const params: ListObjectsV2CommandInput = {
             Bucket: bucket,
             ContinuationToken: continuationToken,
         };
 
-        const listObjectsResponse = await s3.listObjectsV2(params).promise();
+        const listObjectsResponse = await s3.send(new ListObjectsV2Command(params));
 
         if (listObjectsResponse.Contents) {
             objects.push(...listObjectsResponse.Contents);
@@ -407,27 +421,27 @@ export const deleteExport = async (exportName: string, bucket: string): Promise<
         objectKeyMatchesExportNameExactly(obj.Key as string, exportName),
     );
 
-    const deleteParams: DeleteObjectsRequest = {
+    const deleteParams: DeleteObjectsCommandInput = {
         Bucket: bucket,
         Delete: {
             Objects: objectsInExport.map((obj) => ({
                 Key: obj.Key,
-            })) as ObjectIdentifierList,
+            })) as ObjectIdentifier[],
         },
     };
 
-    await s3.deleteObjects(deleteParams).promise();
+    await s3.send(new DeleteObjectsCommand(deleteParams));
 };
 
 export const getExportMetaData = async (key: string): Promise<ExportMetadata> => {
     try {
-        const request: AWS.S3.GetObjectRequest = {
+        const request = {
             Bucket: EXPORT_METADATA_BUCKET_NAME,
             Key: key,
         };
 
-        const response = await s3.getObject(request).promise();
-        const dataAsString = response.Body?.toString('utf-8') ?? '';
+        const response = await s3.send(new GetObjectCommand(request));
+        const dataAsString = (await response.Body?.transformToString('utf-8')) ?? '';
 
         return JSON.parse(dataAsString) as ExportMetadata;
     } catch (error) {
@@ -437,14 +451,14 @@ export const getExportMetaData = async (key: string): Promise<ExportMetadata> =>
 
 export const checkIfMetaDataExists = async (key: string): Promise<boolean> => {
     try {
-        const request: AWS.S3.HeadObjectRequest = {
+        const request = {
             Bucket: EXPORT_METADATA_BUCKET_NAME,
             Key: key,
         };
 
-        await s3.headObject(request).promise();
+        await s3.send(new HeadObjectCommand(request));
         return true;
-    } catch (error) {
+    } catch {
         logger.info('', {
             context: 'data.s3.checkIfMetaDataExists',
             message: `Metadata does not exist for ${key}`,

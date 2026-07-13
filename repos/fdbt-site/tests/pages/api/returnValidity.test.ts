@@ -16,9 +16,6 @@ import {
 import { ErrorInfo } from '../../../src/interfaces';
 import * as userData from '../../../src/utils/apiUtils/userData';
 
-jest.mock('../../../src/utils/sessions');
-jest.mock('../../../src/utils/apiUtils/userData');
-
 describe('returnValidity', () => {
     const writeHeadMock = jest.fn();
     const updateSessionAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');
