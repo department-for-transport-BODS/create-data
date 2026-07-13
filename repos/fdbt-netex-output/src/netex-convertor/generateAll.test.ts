@@ -1,96 +1,92 @@
-import fs from "fs";
-import * as db from "../data/auroradb";
-import type { Operator } from "../types";
-import { buildNocList } from "./handler";
-import netexGenerator from "./netexGenerator";
-import { allOperatorData } from "./test-data/operatorData";
+import fs from 'fs';
+import { Operator } from '../types';
+import { buildNocList } from './handler';
+import netexGenerator from './netexGenerator';
+import libxslt from 'libxslt';
+import * as db from '../data/auroradb';
+import { allOperatorData } from './test-data/operatorData';
 
-// Transform XML by replacing spaces with underscores in id/ref attributes and removing empty elements
-const transformXml = (xml: string): string => {
-	// Replace spaces with underscores in id attributes
-	let transformed = xml.replace(/id="([^"]*)"/g, (match, value) => {
-		return `id="${value.replace(/ /g, "_")}"`;
-	});
+const xsl = `
+    <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+        <xsl:output omit-xml-declaration="yes" indent="yes"/>
+        <xsl:strip-space elements="*"/>
 
-	// Replace spaces with underscores in ref attributes
-	transformed = transformed.replace(/ref="([^"]*)"/g, (match, value) => {
-		return `ref="${value.replace(/ /g, "_")}"`;
-	});
+        <xsl:template match="node()|@*">
+            <xsl:copy>
+                <xsl:apply-templates select="node()|@*"/>
+            </xsl:copy>
+        </xsl:template>
 
-	// Remove empty elements (whitespace only)
-	transformed = transformed.replace(/<([^>]+)>\s*<\/\1>/g, "");
+        <xsl:template match="@id">
+            <xsl:attribute name="id">
+                <xsl:value-of select="translate(., ' ', '_')"/>
+            </xsl:attribute>
+        </xsl:template>
 
-	return transformed;
-};
+        <xsl:template match="@ref">
+            <xsl:attribute name="ref">
+                <xsl:value-of select="translate(., ' ', '_')"/>
+            </xsl:attribute>
+        </xsl:template>
 
-describe("generateAll", () => {
-	jest.spyOn(global.Date, "now").mockImplementation(() => 1625753009685);
+        <xsl:template match="*[not(@*|*|comment()|processing-instruction()) and normalize-space()='']"/>
+    </xsl:stylesheet>
+`;
 
-	process.env.SNS_ALERTS_ARN = "arn:aws:sns:us-east-1:000000000000:AlertsTopic";
-	process.env.STAGE = "dev";
+describe('generateAll', () => {
+    jest.spyOn(global.Date, 'now').mockImplementation(() => 1625753009685);
 
-	const dataPath = "../../fdbt-dev/data";
-	const generatedNetexPath = `${dataPath}/generatedNetex/`;
-	const matchingDataPath = `${dataPath}/matchingData/`;
+    process.env.SNS_ALERTS_ARN = 'arn:aws:sns:us-east-1:000000000000:AlertsTopic';
+    process.env.STAGE = 'dev';
 
-	beforeAll(() => {
-		if (!fs.existsSync(generatedNetexPath)) {
-			fs.mkdirSync(generatedNetexPath);
-		}
+    const dataPath = '../../fdbt-dev/data';
+    const generatedNetexPath = `${dataPath}/generatedNetex/`;
+    const matchingDataPath = `${dataPath}/matchingData/`;
 
-		jest.spyOn(db, "getOperatorDetailsByNoc").mockResolvedValue(undefined);
-	});
+    beforeAll(() => {
+        if (!fs.existsSync(generatedNetexPath)) {
+            fs.mkdirSync(generatedNetexPath);
+        }
 
-	const fileNames: string[] = fs.readdirSync(matchingDataPath);
+        jest.spyOn(db, 'getOperatorDetailsByNoc').mockResolvedValue(undefined);
+    });
 
-	it.each(
-		fileNames,
-	)("should generate identical xml for %s", async (fileName) => {
-		// noc of logged in user
-		let baseNoc = "";
+    const fileNames: string[] = fs.readdirSync(matchingDataPath);
 
-		const ticket = JSON.parse(
-			await fs.promises.readFile(`${matchingDataPath}${fileName}`, "utf-8"),
-		);
+    it.each(fileNames)('should generate identical xml for %s', async fileName => {
+        // noc of logged in user
+        let baseNoc = '';
 
-		if ("nocCode" in ticket) {
-			baseNoc = ticket.nocCode;
-		}
+        const ticket = JSON.parse(await fs.promises.readFile(`${matchingDataPath}${fileName}`, 'utf-8'));
 
-		const nocs: string[] = buildNocList(ticket);
+        if ('nocCode' in ticket) {
+            baseNoc = ticket.nocCode;
+        }
 
-		if (baseNoc) {
-			nocs.push(baseNoc);
-		}
+        const nocs: string[] = buildNocList(ticket);
 
-		const operatorData: Operator[] = [];
-		nocs.forEach((noc) => {
-			const findOperatorByNoc = allOperatorData.find(
-				(operator) => operator.nocCode === noc,
-			);
-			if (findOperatorByNoc) {
-				operatorData.push(findOperatorByNoc);
-			}
-		});
+        if (baseNoc) {
+            nocs.push(baseNoc);
+        }
 
-		const netexGen = await netexGenerator(ticket, operatorData);
-		const generatedNetex = await netexGen.generate();
-		const transformedNetex = transformXml(generatedNetex);
+        const operatorData: Operator[] = [];
+        nocs.forEach(noc => {
+            const findOperatorByNoc = allOperatorData.find(operator => operator.nocCode === noc);
+            if (findOperatorByNoc) {
+                operatorData.push(findOperatorByNoc);
+            }
+        });
 
-		const xmlFileName = `${fileName.split(".")[0]}.xml`;
-		await fs.promises.writeFile(
-			`${generatedNetexPath}${xmlFileName}`,
-			transformedNetex,
-		);
+        const netexGen = await netexGenerator(ticket, operatorData);
+        const generatedNetex = await netexGen.generate();
+        const parsedXsl = libxslt.parse(xsl);
+        const transformedNetex = parsedXsl.apply(generatedNetex);
 
-		const file1 = await fs.promises.readFile(
-			`../../fdbt-dev/data/generatedNetex/${xmlFileName}`,
-			"utf-8",
-		);
-		const file2 = await fs.promises.readFile(
-			`../../fdbt-dev/data/netexData/${xmlFileName}`,
-			"utf-8",
-		);
-		expect(file1).toEqual(file2);
-	});
+        const xmlFileName = `${fileName.split('.')[0]}.xml`;
+        await fs.promises.writeFile(`${generatedNetexPath}${xmlFileName}`, transformedNetex);
+
+        const file1 = await fs.promises.readFile(`../../fdbt-dev/data/generatedNetex/${xmlFileName}`, 'utf-8');
+        const file2 = await fs.promises.readFile(`../../fdbt-dev/data/netexData/${xmlFileName}`, 'utf-8');
+        expect(file1).toEqual(file2);
+    });
 });

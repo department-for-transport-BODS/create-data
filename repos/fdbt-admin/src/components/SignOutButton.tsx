@@ -1,6 +1,6 @@
-import { Auth } from 'aws-amplify';
 import { Button } from 'govuk-react';
-import type { ReactElement } from 'react';
+import { Auth } from 'aws-amplify';
+import { ReactElement } from 'react';
 import { useHistory } from 'react-router-dom';
 
 interface SignOutButtonProps {
@@ -23,6 +23,10 @@ const SignOutButton = ({ className }: SignOutButtonProps): ReactElement => {
             Sign Out
         </Button>
     );
+};
+
+SignOutButton.defaultProps = {
+    className: '',
 };
 
 export default SignOutButton;
