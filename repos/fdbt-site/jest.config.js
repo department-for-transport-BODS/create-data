@@ -40,7 +40,7 @@ module.exports = async (...args) => {
         }
     }
     config.transformIgnorePatterns = (config.transformIgnorePatterns || []).map((pattern) =>
-        pattern.replace('/node_modules/', '/node_modules/(?!(uuid)/)'),
+        pattern.replace('/node_modules/', '/node_modules/(?!(uuid|jose)/)'),
     );
     return config;
 };

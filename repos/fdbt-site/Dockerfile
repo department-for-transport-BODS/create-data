@@ -31,5 +31,6 @@ COPY ./package*.json ./next.config.ts ./
 RUN npm ci --ignore-scripts
 COPY --from=build /tmp/.next ./.next
 COPY --from=build /tmp/dist ./dist
+COPY --from=build /tmp/public ./public
 CMD ["supervisord",  "-c",  "/etc/supervisor/supervisord.conf", "-n"]
 EXPOSE 80
