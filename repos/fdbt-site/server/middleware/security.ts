@@ -22,11 +22,11 @@ export default (server: Express): void => {
     ];
     const styleSrc = ["'self'"];
 
-    // if (process.env.NODE_ENV !== 'production') {
-    scriptSrc.push("'unsafe-eval'");
-    scriptSrc.push("'unsafe-inline'");
-    styleSrc.push("'unsafe-inline'");
-    // }
+    if (process.env.NODE_ENV !== 'production') {
+        scriptSrc.push("'unsafe-eval'");
+        scriptSrc.push("'unsafe-inline'");
+        styleSrc.push("'unsafe-inline'");
+    }
 
     server.use(
         helmet({

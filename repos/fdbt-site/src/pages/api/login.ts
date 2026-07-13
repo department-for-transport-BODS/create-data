@@ -1,5 +1,5 @@
 import { NextApiResponse } from 'next';
-import { decode } from 'jsonwebtoken';
+import { decodeJwt } from 'jose';
 import { redirectTo, redirectToError, setCookieOnResponseObject, checkEmailValid } from '../../utils/apiUtils';
 import { ID_TOKEN_COOKIE, REFRESH_TOKEN_COOKIE } from '../../constants';
 import { OPERATOR_ATTRIBUTE } from '../../constants/attributes';
@@ -43,7 +43,7 @@ export default async (req: NextApiRequestWithSession, res: NextApiResponse): Pro
                 const idToken = authResponse.AuthenticationResult.IdToken as string;
                 const refreshToken = authResponse.AuthenticationResult.RefreshToken as string;
 
-                const decodedIdToken = decode(idToken) as CognitoIdToken;
+                const decodedIdToken = decodeJwt(idToken) as CognitoIdToken;
                 const nocCode = decodedIdToken['custom:noc'];
                 const schemeOpName = decodedIdToken['custom:schemeOperator'];
                 const schemeOpRegion = decodedIdToken['custom:schemeRegionCode'];

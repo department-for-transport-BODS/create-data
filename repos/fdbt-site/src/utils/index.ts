@@ -2,7 +2,7 @@ import * as cookie from 'cookie';
 import Cookies from 'js-cookie';
 import { NextPageContext } from 'next';
 import { IncomingMessage } from 'http';
-import { decode } from 'jsonwebtoken';
+import { decodeJwt as decode } from 'jose';
 import startCase from 'lodash/startCase';
 import toLower from 'lodash/toLower';
 import dayjs from './dayjs';

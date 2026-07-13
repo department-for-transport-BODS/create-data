@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import zxcvbn from 'zxcvbn';
 import { parseCookie, serialize } from 'cookie';
 import { IncomingMessage, ServerResponse } from 'http';
-import { decode } from 'jsonwebtoken';
+import { decodeJwt as decode } from 'jose';
 import { DISABLE_AUTH_COOKIE, ID_TOKEN_COOKIE, REFRESH_TOKEN_COOKIE } from '../../constants';
 import {
     CARNET_FARE_TYPE_ATTRIBUTE,

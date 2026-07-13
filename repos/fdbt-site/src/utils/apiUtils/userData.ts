@@ -1,4 +1,4 @@
-import { decode } from 'jsonwebtoken';
+import { decodeJwt as decode } from 'jose';
 import { NextApiResponse } from 'next';
 import { getAndValidateNoc, getUuidFromSession, unescapeAndDecodeCookie, isSchemeOperator } from './index';
 import { ID_TOKEN_COOKIE, PRODUCTS_DATA_BUCKET_NAME } from '../../constants';
