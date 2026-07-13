@@ -146,5 +146,5 @@ export default defineConfig([
             '@typescript-eslint/no-require-imports': 'off',
         },
     },
-    globalIgnores(['**/.next', '**/cypress_tests', '**/node_modules/', '**/dist']),
+    globalIgnores(['**/.next', '**/cypress_tests', '**/node_modules/', '**/dist', '**/next-env.d.ts']),
 ]);
