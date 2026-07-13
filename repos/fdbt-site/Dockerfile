@@ -27,7 +27,7 @@ RUN apk update && \
     sed -i 's/^#Foreground yes/Foreground yes/g' /etc/clamav/clamd.conf && \
     sed -i 's/^#Foreground yes/Foreground yes/g' /etc/clamav/freshclam.conf && \
     freshclam --stdout
-COPY ./package*.json ./next.config.js ./
+COPY ./package*.json ./next.config.ts ./
 RUN npm ci --ignore-scripts
 COPY --from=build /tmp/.next ./.next
 COPY --from=build /tmp/dist ./dist
