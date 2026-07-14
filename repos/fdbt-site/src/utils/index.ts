@@ -91,50 +91,6 @@ export const formatFailedFileNames = (failedExportFileNames: string[]): string =
 export const getProofDocumentsString = (documents: string[]): string =>
     documents.map((document) => sentenceCaseString(document)).join(', ');
 
-export const getCookieValue = (ctx: NextPageContext, cookie: string, jsonAttribute = ''): string | null => {
-    const cookies = parseCookiesFromContext(ctx);
-
-    if (cookies[cookie]) {
-        if (jsonAttribute) {
-            const parsedCookie = JSON.parse(cookies[cookie]);
-
-            return parsedCookie[jsonAttribute] as string;
-        }
-
-        return cookies[cookie];
-    }
-
-    return null;
-};
-
-export const setCookieOnServerSide = (ctx: NextPageContext, cookieName: string, cookieValue: string): void => {
-    if (ctx.req && ctx.res) {
-        appendSetCookieHeader(
-            ctx,
-            cookie.serialize(cookieName, cookieValue, {
-                path: '/',
-                sameSite: 'strict',
-                secure: process.env.NODE_ENV !== 'development',
-            }),
-        );
-    }
-};
-
-export const deleteCookieOnServerSide = (ctx: NextPageContext, cookieName: string): void => {
-    if (ctx.req && ctx.res) {
-        appendSetCookieHeader(
-            ctx,
-            cookie.serialize(cookieName, '', {
-                expires: new Date(0),
-                maxAge: 0,
-                path: '/',
-                sameSite: 'strict',
-                secure: process.env.NODE_ENV !== 'development',
-            }),
-        );
-    }
-};
-
 export const deleteAllCookiesOnServerSide = (ctx: NextPageContext): void => {
     const cookies = parseCookiesFromContext(ctx);
     const cookieWhitelist = [
