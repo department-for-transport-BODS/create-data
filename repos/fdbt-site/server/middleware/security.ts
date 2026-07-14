@@ -34,22 +34,19 @@ export default (server: Express): void => {
                 action: 'deny',
             },
             noSniff: true,
-            contentSecurityPolicy:
-                process.env.NODE_ENV === 'production'
-                    ? {
-                          directives: {
-                              objectSrc: ["'none'"],
-                              frameAncestors: ["'none'"],
-                              scriptSrc,
-                              baseUri: ["'none'"],
-                              styleSrc,
-                              imgSrc: ["'self'", 'data:', 'https:'],
-                              defaultSrc: ["'self'"],
-                              connectSrc: ["'self'", 'https://www.google-analytics.com'],
-                              upgradeInsecureRequests: [],
-                          },
-                      }
-                    : false,
+            contentSecurityPolicy: {
+                directives: {
+                    objectSrc: ["'none'"],
+                    frameAncestors: ["'none'"],
+                    scriptSrc,
+                    baseUri: ["'none'"],
+                    styleSrc,
+                    imgSrc: ["'self'", 'data:', 'https:'],
+                    defaultSrc: ["'self'"],
+                    connectSrc: ["'self'", 'https://www.google-analytics.com'],
+                    upgradeInsecureRequests: [],
+                },
+            },
             hsts: {
                 includeSubDomains: true,
                 preload: true,

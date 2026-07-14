@@ -66,7 +66,7 @@ export const invalidUrlInput = (value: string): boolean => {
     // anything not in the above is considered invalid
     const regularExpression = new RegExp("[^\\ssa-zA-Z()_0-9'\\:@,&+.\\-\\/]+");
     // URL has at least one dot
-    const hasDot = /[A-Za-z0-9_-]+\.[A-Za-z0-9_-]/.exec(value) ? true : false;
+    const hasDot = /[A-Za-z0-9_-]\.[A-Za-z0-9_-]/.exec(value) ? true : false;
     // URL has no spaces
     const hasSpace = !/^[^ ]+$/.exec(value) ? true : false;
     return regularExpression.test(value) || !hasDot || hasSpace;
