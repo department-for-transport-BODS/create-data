@@ -22,7 +22,7 @@ Note that some IDEs have database GUIs already so this tool would not be needed
 
 ## Local Database Access
 
-- Spin up local env with `mise run run` in the root of the repo
+- Spin up local env with `mise run dev` in the root of the repo
 - Enter the following credentials into Sequel Pro
 
 | Field    | Content               |

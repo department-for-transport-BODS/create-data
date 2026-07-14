@@ -4,7 +4,7 @@ node = "18"
 python = "3.10"
 npm = "12"
 
-[tasks.run]
+[tasks.dev]
 description = "Run everything locally"
 run = "mise -C fdbt-dev run dev"
 
