@@ -1,4 +1,7 @@
 import { ReactElement } from 'react';
+import { MULTI_MODAL_ATTRIBUTE } from '../../constants/attributes';
+import { getBodsOrTndsServicesByNoc, getPointToPointProducts } from '../../data/auroradb';
+import { MyFaresProduct } from '../../interfaces/dbTypes';
 import {
     MyFaresService,
     MyFaresServiceWithProductCount,
@@ -6,12 +9,9 @@ import {
     ProductStatus,
 } from '../../interfaces/index';
 import { BaseLayout } from '../../layout/Layout';
-import { getPointToPointProducts, getBodsOrTndsServicesByNoc } from '../../data/auroradb';
 import { getAndValidateNoc, removeDuplicateServices } from '../../utils';
-import { MyFaresProduct } from '../../interfaces/dbTypes';
+import dayjs, { convertDateToUnixTime, convertUtcDateToUnixTime } from '../../utils/dayjs';
 import { getSessionAttribute } from '../../utils/sessions';
-import { MULTI_MODAL_ATTRIBUTE } from '../../constants/attributes';
-import dayjs from '../../utils/dayjs';
 
 const title = 'Services - Create Fares Data Service';
 const description = 'View and access your services in one place.';
@@ -103,8 +103,8 @@ export const getProductStatus = (
     }
 
     const today = dayjs.utc().startOf('day').valueOf();
-    const startDateAsUnixTime = dayjs.utc(startDate, 'D/M/YYYY').valueOf();
-    const endDateAsUnixTime = endDate ? dayjs.utc(endDate, 'D/M/YYYY').valueOf() : undefined;
+    const startDateAsUnixTime = convertUtcDateToUnixTime(startDate);
+    const endDateAsUnixTime = endDate ? convertUtcDateToUnixTime(endDate) : undefined;
 
     if (startDateAsUnixTime <= today && (!endDateAsUnixTime || endDateAsUnixTime >= today)) {
         return 'active';
@@ -147,18 +147,18 @@ export const showProductAgainstService = (
     // 05/04/2020 format
     serviceEndDate: string | undefined,
 ): boolean => {
-    const momentProductStartDate = dayjs(productStartDate).valueOf();
-    const momentProductEndDate = productEndDate && dayjs(productEndDate).valueOf();
-    const momentServiceStartDate = dayjs(serviceStartDate, 'D/M/YYYY').valueOf();
-    const momentServiceEndDate = serviceEndDate ? dayjs(serviceEndDate, 'D/M/YYYY').valueOf() : undefined;
+    const unixProductStartDate = dayjs(productStartDate).valueOf();
+    const unixProductEndDate = productEndDate && dayjs(productEndDate).valueOf();
+    const unixServiceStartDate = convertDateToUnixTime(serviceStartDate);
+    const unixServiceEndDate = serviceEndDate ? convertDateToUnixTime(serviceEndDate) : undefined;
 
     // returns TRUE if:
     // there is no product end date OR there is a product end date and it is after the service start date
     //          AND
     // there is no service end date OR there is a service end date and it is after the product start date
     return (
-        (!momentProductEndDate || momentProductEndDate >= momentServiceStartDate) &&
-        (!momentServiceEndDate || momentServiceEndDate >= momentProductStartDate)
+        (!unixProductEndDate || unixProductEndDate >= unixServiceStartDate) &&
+        (!unixServiceEndDate || unixServiceEndDate >= unixProductStartDate)
     );
 };
 

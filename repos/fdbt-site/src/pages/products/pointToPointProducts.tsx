@@ -1,23 +1,23 @@
+import isArray from 'lodash/isArray';
 import { ReactElement, useState } from 'react';
-import { MyFaresPointToPointProduct, MyFaresService, NextPageContextWithSession } from '../../interfaces/index';
-import { BaseLayout } from '../../layout/Layout';
+import BackButton from '../../components/BackButton';
+import DeleteConfirmationPopup from '../../components/DeleteConfirmationPopup';
+import { MULTI_MODAL_ATTRIBUTE } from '../../constants/attributes';
 import {
-    getServiceByNocAndId,
     getPassengerTypeNameByIdAndNoc,
     getPointToPointProductsByLineId,
+    getServiceByNocAndId,
     getTimeRestrictionByIdAndNoc,
 } from '../../data/auroradb';
 import { getProductsMatchingJson } from '../../data/s3';
-import { convertDateFormat, getAndValidateNoc, getCsrfToken } from '../../utils';
-import dayjs from '../../utils/dayjs';
-import isArray from 'lodash/isArray';
-import { getProductStatusTag } from './services';
-import BackButton from '../../components/BackButton';
-import DeleteConfirmationPopup from '../../components/DeleteConfirmationPopup';
-import { buildDeleteUrl } from './otherProducts';
 import { MyFaresProduct } from '../../interfaces/dbTypes';
+import { MyFaresPointToPointProduct, MyFaresService, NextPageContextWithSession } from '../../interfaces/index';
+import { BaseLayout } from '../../layout/Layout';
+import { convertDateFormat, getAndValidateNoc, getCsrfToken } from '../../utils';
+import { convertUtcDateToUnixTime } from '../../utils/dayjs';
 import { getSessionAttribute } from '../../utils/sessions';
-import { MULTI_MODAL_ATTRIBUTE } from '../../constants/attributes';
+import { buildDeleteUrl } from './otherProducts';
+import { getProductStatusTag } from './services';
 
 const title = 'Point To Point Products - Create Fares Data Service';
 const description = 'View and access your point to point products in one place.';
@@ -188,11 +188,11 @@ const PointToPointProductsTable = (
 };
 
 export const filterProductsNotToDisplay = (service: MyFaresService, products: MyFaresProduct[]): MyFaresProduct[] => {
-    const serviceStartDate = dayjs.utc(service.startDate, 'D/M/YYYY').valueOf();
-    const serviceEndDate = service.endDate ? dayjs.utc(service.endDate, 'D/M/YYYY').valueOf() : undefined;
+    const serviceStartDate = convertUtcDateToUnixTime(service.startDate);
+    const serviceEndDate = service.endDate ? convertUtcDateToUnixTime(service.endDate) : undefined;
     return products.filter((product) => {
-        const productStartDate = dayjs.utc(product.startDate, 'D/M/YYYY').valueOf();
-        const productEndDate = product.endDate && dayjs.utc(product.endDate, 'D/M/YYYY').valueOf();
+        const productStartDate = convertUtcDateToUnixTime(product.startDate);
+        const productEndDate = product.endDate && convertUtcDateToUnixTime(product.endDate);
         return (
             (!productEndDate || productEndDate >= serviceStartDate) &&
             (!serviceEndDate || productStartDate <= serviceEndDate)

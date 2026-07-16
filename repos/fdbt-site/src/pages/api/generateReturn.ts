@@ -1,14 +1,14 @@
 import { NextApiResponse } from 'next';
-import dayjs from '../../utils/dayjs';
 import { getProductIdByMatchingJsonLink, getServiceByIdAndDataSource } from '../../data/auroradb';
 import { NextApiRequestWithSession } from '../../interfaces';
-import { TicketWithIds, WithIds, SingleTicket, ReturnTicket } from '../../interfaces/matchingJsonTypes';
+import { ReturnTicket, SingleTicket, TicketWithIds, WithIds } from '../../interfaces/matchingJsonTypes';
 import { isPointToPointTicket } from '../../interfaces/typeGuards';
 import { getAndValidateNoc, redirectTo, redirectToError } from '../../utils/apiUtils';
 import {
     collectInfoForMatchingTickets,
     insertDataToProductsBucketAndProductsTable,
 } from '../../utils/apiUtils/userData';
+import dayjs, { convertUtcDateToUnixTime } from '../../utils/dayjs';
 import { buildUuid } from '../fareType';
 
 export const findTicketsToMakeReturn = (
@@ -25,7 +25,7 @@ export const findTicketsToMakeReturn = (
 
             if (ticket.ticketPeriod.endDate) {
                 const today = dayjs.utc().startOf('day').valueOf();
-                const endDateAsUnixTime = dayjs.utc(ticket.ticketPeriod.endDate, 'D/M/YYYY').valueOf();
+                const endDateAsUnixTime = convertUtcDateToUnixTime(ticket.ticketPeriod.endDate);
                 if (endDateAsUnixTime < today) {
                     expired = true;
                 }

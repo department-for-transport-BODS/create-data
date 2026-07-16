@@ -1,38 +1,38 @@
-import dayjs from '../utils/dayjs';
 import difference from 'lodash/difference';
 import { ResultSetHeader } from 'mysql2';
 import { createPool, Pool } from 'mysql2/promise';
 import { INTERNAL_NOC } from '../constants';
 import {
+    Cap,
+    MyFaresService,
     Operator,
     OperatorGroup,
     PremadeTimeRestriction,
-    ServiceType,
     ServiceCount,
-    MyFaresService,
+    ServiceType,
     ServiceWithOriginAndDestination,
-    Cap,
 } from '../interfaces';
-import logger from '../utils/logger';
-import { convertDateFormat } from '../utils';
 import {
-    RawService,
-    RawJourneyPattern,
-    RawSalesOfferPackage,
-    DbTimeRestriction,
-    PassengerType,
-    GroupPassengerType,
-    GroupPassengerTypeReference,
-    SinglePassengerType,
-    GroupPassengerTypeDb,
-    FullGroupPassengerType,
-    MyFaresProduct,
-    RawMyFaresProduct,
-    MyFaresOtherProduct,
     DbProduct,
+    DbTimeRestriction,
+    FullGroupPassengerType,
+    GroupPassengerType,
+    GroupPassengerTypeDb,
+    GroupPassengerTypeReference,
+    MyFaresOtherProduct,
+    MyFaresProduct,
+    PassengerType,
     ProductAdditionaNocs,
+    RawJourneyPattern,
+    RawMyFaresProduct,
+    RawSalesOfferPackage,
+    RawService,
+    SinglePassengerType,
 } from '../interfaces/dbTypes';
-import { Stop, FromDb, SalesOfferPackage, CompanionInfo, OperatorDetails } from '../interfaces/matchingJsonTypes';
+import { CompanionInfo, FromDb, OperatorDetails, SalesOfferPackage, Stop } from '../interfaces/matchingJsonTypes';
+import { convertDateFormat } from '../utils';
+import dayjs from '../utils/dayjs';
+import logger from '../utils/logger';
 import { getSsmValue } from './ssm';
 
 interface ServiceQueryData {
@@ -117,6 +117,8 @@ export const getAuroraDBClient = async (): Promise<Pool> => {
 
     return client;
 };
+
+const formatMysqlDate = (date: string): string => dayjs(date).format('YYYY-MM-DD HH:mm:ss');
 
 export const replaceInternalNocCode = (nocCode: string): string => {
     if (nocCode === INTERNAL_NOC) {
@@ -1883,8 +1885,8 @@ export const insertProducts = async (
             dateModified,
             fareType,
             lineId || '',
-            dayjs(startDate).format('YYYY-MM-DD HH:mm:ss'),
-            endDate ? dayjs(endDate).format('YYYY-MM-DD HH:mm:ss') : '',
+            formatMysqlDate(startDate),
+            endDate ? formatMysqlDate(endDate) : '',
             incomplete,
             operatorGroupId || null,
         ]);
@@ -2028,8 +2030,8 @@ export const updateProductDates = async (
                              WHERE id = ?`;
 
         const meta = await executeQuery<ResultSetHeader>(updateQuery, [
-            dayjs(startDate).format('YYYY-MM-DD HH:mm:ss'),
-            endDate ? dayjs(endDate).format('YYYY-MM-DD HH:mm:ss') : '',
+            formatMysqlDate(startDate),
+            endDate ? formatMysqlDate(endDate) : '',
             dateTime,
             productId,
         ]);

@@ -1,18 +1,18 @@
 import startCase from 'lodash/startCase';
+import { GetServerSidePropsResult } from 'next';
 import React, { ReactElement, useState } from 'react';
-import { MULTI_MODAL_ATTRIBUTE } from '../../constants/attributes';
-import { getSessionAttribute } from '../../utils/sessions';
 import BackButton from '../../components/BackButton';
 import CsrfForm from '../../components/CsrfForm';
+import { MULTI_MODAL_ATTRIBUTE } from '../../constants/attributes';
 import { getAllPassengerTypesByNoc, getAllProductsByNoc, getBodsOrTndsServicesByNoc } from '../../data/auroradb';
 import { getProductsMatchingJson } from '../../data/s3';
 import { MyFaresService, NextPageContextWithSession, ProductToDisplay, ServiceToDisplay } from '../../interfaces';
 import { BaseLayout } from '../../layout/Layout';
 import { getAndValidateNoc, getCsrfToken } from '../../utils';
 import { getActiveOrPendingProducts } from '../../utils/apiUtils/export';
+import { convertDateToUnixTime } from '../../utils/dayjs';
+import { getSessionAttribute } from '../../utils/sessions';
 import { getAllExports } from '../api/getExportProgress';
-import { GetServerSidePropsResult } from 'next';
-import dayjs from '../../utils/dayjs';
 
 const title = 'Select Exports';
 const description = 'Export selected products into NeTEx.';
@@ -556,14 +556,14 @@ export const getServerSideProps = async (
         );
 
         const matchingProducts = productsWithSameLineId.filter((product) => {
-            const momentProductStartDate = dayjs(product.startDate, 'D/M/YYYY').valueOf();
-            const momentProductEndDate = product.endDate && dayjs(product.endDate, 'D/M/YYYY').valueOf();
-            const momentServiceStartDate = dayjs(service.startDate, 'D/M/YYYY').valueOf();
-            const momentServiceEndDate = service.endDate ? dayjs(service.endDate, 'D/M/YYYY').valueOf() : undefined;
+            const productStartDate = convertDateToUnixTime(product.startDate);
+            const productEndDate = product.endDate && convertDateToUnixTime(product.endDate);
+            const serviceStartDate = convertDateToUnixTime(service.startDate);
+            const serviceEndDate = service.endDate ? convertDateToUnixTime(service.endDate) : undefined;
 
             const productMatchesService =
-                (!momentProductEndDate || momentProductEndDate >= momentServiceStartDate) &&
-                (!momentServiceEndDate || momentServiceEndDate >= momentProductStartDate);
+                (!productEndDate || productEndDate >= serviceStartDate) &&
+                (!serviceEndDate || serviceEndDate >= productStartDate);
 
             return productMatchesService;
         });
