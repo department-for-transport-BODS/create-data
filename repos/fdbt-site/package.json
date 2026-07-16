@@ -18,6 +18,7 @@
         "lint:fix": "eslint --fix . --ext .ts,.tsx",
         "lint:cypress": "cd cypress_tests && npm run lint",
         "lint:cypress-fix": "cd cypress_tests && npm run lint:fix",
+        "type-check": "tsc --noEmit",
         "postshrinkwrap": "npm install --no-package-lock --no-audit --no-fund --no-progress --silent && npx prettier --write ./package-lock.json",
         "precommit": ". npm run lint && npm run lint:cypress && npm run tsc && CI=true jest --silent",
         "prepare": "cd ../.. && husky repos/fdbt-site/.husky"

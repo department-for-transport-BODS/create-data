@@ -138,6 +138,10 @@ run = "mise run -C ${FDBT_ROOT}/repos/fdbt-site lint"
 description = "Run the site tests"
 run = "mise run -C ${FDBT_ROOT}/repos/fdbt-site test"
 
+[tasks.type-check-site]
+description = "Run the site type check"
+run = "mise run -C ${FDBT_ROOT}/repos/fdbt-site type-check"
+
 # NETEX CONVERTOR
 
 [tasks.generate]

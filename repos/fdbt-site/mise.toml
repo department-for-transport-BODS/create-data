@@ -23,6 +23,10 @@ run = "npm run lint"
 description = "Run the site tests"
 run = "npm run test"
 
+[tasks.type-check]
+description = "Run the site type check"
+run = "npm run type-check"
+
 [tasks."cypress:open"]
 run = """
 cd cypress_tests
