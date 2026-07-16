@@ -1,7 +1,8 @@
 [tools]
-node = "24"
+node = "18"
 awscli-local = { version = "0.22.2", extras = "ver1" }
 localstack = "4"
+npm = "10"
 
 [env]
 PROJECT_NAME = "fdbt"
@@ -47,6 +48,35 @@ schemeOperatorMultiServices \
 schemeCarnetMultipleServices \
 singleGroupMultipleAdults
 """
+
+[tasks.install]
+description = "Install all node modules"
+run = [
+    "mise -C ${FDBT_ROOT}/repos/fdbt-site run install",
+    "cd ${FDBT_ROOT}/repos/fdbt-netex-output && npm i",
+    "cd ${FDBT_ROOT}/repos/fdbt-netex-output/src/netex-validator && npm i",
+    "cd ${FDBT_ROOT}/repos/fdbt-reference-data-service/src/retrievers && npm i",
+    "cd ${FDBT_ROOT}/repos/fdbt-reference-data-service/src/uploaders && npm i",
+    "cd ${FDBT_ROOT}/repos/exporter && npm i",
+    "cd ${FDBT_ROOT}/repos/fdbt-emailer && npm i",
+    """
+    pip3 install -r ${FDBT_ROOT}/repos/fdbt-reference-data-service/src/retrievers/requirements.txt \
+    -r ${FDBT_ROOT}/repos/fdbt-reference-data-service/src/uploaders/requirements.txt \
+    -r ${FDBT_ROOT}/repos/fdbt-netex-output/src/netex-validator/requirements.txt
+    """
+]
+
+[tasks.audit-fix]
+description = "Fix all npm audit issues"
+run = [
+    "cd ${FDBT_ROOT}/repos/fdbt-netex-output && npm audit fix",
+    "cd ${FDBT_ROOT}/repos/fdbt-netex-output/src/netex-validator && npm audit fix",
+    "cd ${FDBT_ROOT}/repos/fdbt-site && npm audit fix",
+    "cd ${FDBT_ROOT}/repos/fdbt-reference-data-service/src/retrievers && npm audit fix",
+    "cd ${FDBT_ROOT}/repos/fdbt-reference-data-service/src/uploaders && npm audit fix",
+    "cd ${FDBT_ROOT}/repos/exporter && npm audit fix",
+    "cd ${FDBT_ROOT}/repos/fdbt-emailer && npm audit fix",
+]
 
 [tasks.dev]
 description = "Bring up the full local environment and start the site"
@@ -97,10 +127,16 @@ run = 'docker rmi -f $(docker images ${PROJECT_NAME}* -qa)'
 [tasks.start-site]
 description = "Run the site locally"
 run = '''
-    cd ../repos/fdbt-site
-    export STAGE=dev
-    npm run dev
+    mise run -C ${FDBT_ROOT}/repos/fdbt-site start
 '''
+
+[tasks.lint-site]
+description = "Run the site linter"
+run = "mise run -C ${FDBT_ROOT}/repos/fdbt-site lint"
+
+[tasks.test-site]
+description = "Run the site tests"
+run = "mise run -C ${FDBT_ROOT}/repos/fdbt-site test"
 
 # NETEX CONVERTOR
 
@@ -221,27 +257,23 @@ run = '''
 
 [tasks."cypress:open"]
 run = """
-cd ../repos/fdbt-site/cypress_tests
-npm run openCypress
+mise -C ${FDBT_ROOT}/repos/fdbt-site run cypress:open
 """
 
 [tasks."cypress:run:chrome"]
 env = { BROWSER = "chrome" }
 run = """
-cd ../repos/fdbt-site/cypress_tests
-npm run runCypress
+mise -C ${FDBT_ROOT}/repos/fdbt-site run cypress:run
 """
 
 [tasks."cypress:run:chromium"]
 env = { BROWSER = "chromium" }
 run = """
-cd ../repos/fdbt-site/cypress_tests
-npm run runCypress
+mise -C ${FDBT_ROOT}/repos/fdbt-site run cypress:run
 """
 
 [tasks."cypress:run:edge"]
 env = { BROWSER = "edge" }
 run = """
-cd ../repos/fdbt-site/cypress_tests
-npm run runCypress
+mise -C ${FDBT_ROOT}/repos/fdbt-site run cypress:run
 """

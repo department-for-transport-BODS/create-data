@@ -1,2 +1,36 @@
 [tools]
 node = "24"
+npm = "12"
+
+[tasks.install]
+sources = ["./package-lock.json"]
+run = """
+npm install
+"""
+
+[tasks.start]
+description = "Run the site locally"
+run = '''
+    export STAGE=dev
+    npm run dev
+'''
+
+[tasks.lint]
+description = "Run the site linter"
+run = "npm run lint"
+
+[tasks.test]
+description = "Run the site tests"
+run = "npm run test"
+
+[tasks."cypress:open"]
+run = """
+cd cypress_tests
+npm run openCypress
+"""
+
+[tasks."cypress:run"]
+run = """
+cd cypress_tests
+npm run runCypress
+"""

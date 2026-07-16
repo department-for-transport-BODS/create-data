@@ -40,44 +40,16 @@ export FDBT_USER_POOL_ID={COGNITO_USER_POOL_ID}
 export FDBT_USER_POOL_CLIENT_ID={COGNITO_USER_POOL_CLIENT_ID}
 ```
 
-LocalStack now requires an auth token for local development. Each developer should create a LocalStack account and add their token to a `.env` file in the `fdbt-dev` directory.
-
-Create the file:
+Install dependencies from the fdbt-dev folder:
 
 ```bash
-cd ${FDBT_ROOT}/fdbt-dev
-touch .env
-```
-
-Add the following value to `.env`:
-
-```bash
-LOCALSTACK_AUTH_TOKEN={LOCALSTACK_AUTH_TOKEN}
-```
-
-The `.env` file is ignored by git and must not be committed.
-
-Install node dependencies:
-
-```bash
-cd ${FDBT_ROOT}/repos/fdbt-netex-output && npm i
-cd ${FDBT_ROOT}/repos/fdbt-netex-output/src/netex-validator && npm i
-cd ${FDBT_ROOT}/repos/fdbt-site && npm i
-```
-
-Install python dependencies:
-
-```bash
-pip3 install \
--r ${FDBT_ROOT}/repos/fdbt-reference-data-service/src/retrievers/requirements.txt \
--r ${FDBT_ROOT}/repos/fdbt-reference-data-service/src/uploaders/requirements.txt \
--r ${FDBT_ROOT}/repos/fdbt-netex-output/src/netex-validator/requirements.txt
+mise -C ${FDBT_ROOT}/fdbt-dev run install
 ```
 
 The site and infrastructure can then be brought up by simply running:
 
 ```bash
-make
+mise -C ${FDBT_ROOT}/fdbt-dev run dev
 ```
 
 This will start the following:
