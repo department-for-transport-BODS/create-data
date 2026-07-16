@@ -1,8 +1,5 @@
 [tools]
-node = "18"
-awscli-local = { version = "0.22.2", extras = "ver1" }
 localstack = "4"
-npm = "10"
 
 [env]
 PROJECT_NAME = "fdbt"
