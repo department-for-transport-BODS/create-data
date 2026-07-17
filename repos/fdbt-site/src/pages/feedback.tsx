@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import TwoThirdsLayout from '../layout/Layout';
 import { NextPageContextWithSession } from '../interfaces';
 import CsrfForm from '../components/CsrfForm';

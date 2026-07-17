@@ -1,10 +1,15 @@
 import { UNASSIGNED_STOPS_ATTRIBUTE } from '../../../src/constants/attributes';
 import outboundMatching from '../../../src/pages/api/outboundMatching';
-import { getMockRequestAndResponse, service, mockMatchingUserFareStages } from '../../testData/mockData';
+import {
+    getMockRequestAndResponse,
+    service,
+    mockMatchingUserFareStages,
+    selections,
+    selectedOptionsWithAnUnassignedStop,
+} from '../../testData/mockData';
 import * as sessions from '../../../src/utils/sessions';
 import { MatchingInfo, MatchingWithErrors } from '../../../src/interfaces/matchingInterface';
 import { MATCHING_ATTRIBUTE } from '../../../src/constants/attributes';
-import { selections, selectedOptionsWithAnUnassignedStop } from './matching.test';
 
 describe('Outbound Matching API', () => {
     const updateSessionAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');
@@ -34,7 +39,7 @@ describe('Outbound Matching API', () => {
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, MATCHING_ATTRIBUTE, expectedMatchingInfo);
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, UNASSIGNED_STOPS_ATTRIBUTE, []);
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/inboundMatching' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/inboundMatching' });
     });
 
     it('adds the unassigned stops to the outbound session attribute', () => {
@@ -63,7 +68,7 @@ describe('Outbound Matching API', () => {
             },
         ]);
 
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/inboundMatching' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/inboundMatching' });
     });
 
     it('correctly generates matching error info, updates the MATCHING_ATTRIBUTE and then redirects to outboundMatching page when there are no assigned fare stages', () => {
@@ -85,7 +90,7 @@ describe('Outbound Matching API', () => {
         outboundMatching(req, res);
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, MATCHING_ATTRIBUTE, expectedMatchingError);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/outboundMatching',
         });
     });
@@ -113,7 +118,7 @@ describe('Outbound Matching API', () => {
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, MATCHING_ATTRIBUTE, expectedMatchingError);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/outboundMatching',
         });
     });
@@ -125,7 +130,7 @@ describe('Outbound Matching API', () => {
         });
 
         outboundMatching(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/error',
         });
     });
@@ -141,7 +146,7 @@ describe('Outbound Matching API', () => {
         });
 
         outboundMatching(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/error',
         });
     });

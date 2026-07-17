@@ -1,23 +1,23 @@
-import React, { ReactElement, useState } from 'react';
-import { MyFaresPointToPointProduct, MyFaresService, NextPageContextWithSession } from '../../interfaces/index';
-import { BaseLayout } from '../../layout/Layout';
+import isArray from 'lodash/isArray';
+import { ReactElement, useState } from 'react';
+import BackButton from '../../components/BackButton';
+import DeleteConfirmationPopup from '../../components/DeleteConfirmationPopup';
+import { MULTI_MODAL_ATTRIBUTE } from '../../constants/attributes';
 import {
-    getServiceByNocAndId,
     getPassengerTypeNameByIdAndNoc,
     getPointToPointProductsByLineId,
+    getServiceByNocAndId,
     getTimeRestrictionByIdAndNoc,
 } from '../../data/auroradb';
 import { getProductsMatchingJson } from '../../data/s3';
-import { convertDateFormat, getAndValidateNoc, getCsrfToken } from '../../utils';
-import moment from 'moment';
-import { isArray } from 'lodash';
-import { getProductStatusTag } from './services';
-import BackButton from '../../components/BackButton';
-import DeleteConfirmationPopup from '../../components/DeleteConfirmationPopup';
-import { buildDeleteUrl } from './otherProducts';
 import { MyFaresProduct } from '../../interfaces/dbTypes';
+import { MyFaresPointToPointProduct, MyFaresService, NextPageContextWithSession } from '../../interfaces/index';
+import { BaseLayout } from '../../layout/Layout';
+import { convertDateFormat, getAndValidateNoc, getCsrfToken } from '../../utils';
+import { convertUtcDateToUnixTime } from '../../utils/dayjs';
 import { getSessionAttribute } from '../../utils/sessions';
-import { MULTI_MODAL_ATTRIBUTE } from '../../constants/attributes';
+import { buildDeleteUrl } from './otherProducts';
+import { getProductStatusTag } from './services';
 
 const title = 'Point To Point Products - Create Fares Data Service';
 const description = 'View and access your point to point products in one place.';
@@ -188,11 +188,11 @@ const PointToPointProductsTable = (
 };
 
 export const filterProductsNotToDisplay = (service: MyFaresService, products: MyFaresProduct[]): MyFaresProduct[] => {
-    const serviceStartDate = moment.utc(service.startDate, 'DD/MM/YYYY').valueOf();
-    const serviceEndDate = service.endDate ? moment.utc(service.endDate, 'DD/MM/YYYY').valueOf() : undefined;
+    const serviceStartDate = convertUtcDateToUnixTime(service.startDate);
+    const serviceEndDate = service.endDate ? convertUtcDateToUnixTime(service.endDate) : undefined;
     return products.filter((product) => {
-        const productStartDate = moment.utc(product.startDate, 'DD/MM/YYYY').valueOf();
-        const productEndDate = product.endDate && moment.utc(product.endDate, 'DD/MM/YYYY').valueOf();
+        const productStartDate = convertUtcDateToUnixTime(product.startDate);
+        const productEndDate = product.endDate && convertUtcDateToUnixTime(product.endDate);
         return (
             (!productEndDate || productEndDate >= serviceStartDate) &&
             (!serviceEndDate || productStartDate <= serviceEndDate)
@@ -210,7 +210,7 @@ export const getServerSideProps = async (
         throw new Error('Unable to find line name to show products for.');
     }
 
-    const dataSource = !!getSessionAttribute(ctx.req, MULTI_MODAL_ATTRIBUTE) ? 'tnds' : 'bods';
+    const dataSource = getSessionAttribute(ctx.req, MULTI_MODAL_ATTRIBUTE) ? 'tnds' : 'bods';
     const service = await getServiceByNocAndId(noc, serviceId, dataSource);
     const products = await getPointToPointProductsByLineId(noc, service.lineId);
     const productsToDisplay = filterProductsNotToDisplay(service, products);

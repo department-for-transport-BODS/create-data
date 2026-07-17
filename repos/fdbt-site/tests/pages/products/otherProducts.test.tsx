@@ -1,5 +1,5 @@
-import { shallow } from 'enzyme';
-import * as React from 'react';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import { getProductsMatchingJson } from '../../../src/data/s3';
 import { getOtherProductsByNoc, getPassengerTypeNameByIdAndNoc } from '../../../src/data/auroradb';
 import { MyFaresOtherFaresProduct } from '../../../src/interfaces';
@@ -81,16 +81,22 @@ const testProducts: MyFaresOtherFaresProduct[] = [
     },
 ];
 
+jest.mock('next/router', () => ({
+    useRouter: () => ({ pathname: '/products/otherProducts' }),
+}));
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
+
 describe('myfares pages', () => {
     describe('otherProducts', () => {
         it('should render correctly when some non-Point-to-Point products exist', () => {
-            const tree = shallow(<OtherProducts otherProducts={testProducts} csrfToken="" />);
+            const tree = renderToFragment(<OtherProducts otherProducts={testProducts} csrfToken="" />);
 
             expect(tree).toMatchSnapshot();
         });
 
         it('should render correctly when no non-Point-to-Point products exist', () => {
-            const tree = shallow(<OtherProducts otherProducts={[]} csrfToken={''} />);
+            const tree = renderToFragment(<OtherProducts otherProducts={[]} csrfToken={''} />);
 
             expect(tree).toMatchSnapshot();
         });

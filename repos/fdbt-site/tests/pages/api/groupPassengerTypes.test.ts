@@ -19,10 +19,10 @@ describe('groupPassengerTypes', () => {
         });
         groupPassengerTypes(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/groupPassengerTypes',
         });
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GROUP_PASSENGER_TYPES_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GROUP_PASSENGER_TYPES_ATTRIBUTE, {
             errors: [{ errorMessage: 'Choose one or two passenger types from the options', id: 'passenger-type-0' }],
         });
     });
@@ -37,10 +37,10 @@ describe('groupPassengerTypes', () => {
         });
         groupPassengerTypes(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/groupPassengerTypes',
         });
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GROUP_PASSENGER_TYPES_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GROUP_PASSENGER_TYPES_ATTRIBUTE, {
             errors: [
                 {
                     errorMessage: 'Choose one or two passenger types - you cannot exceed this limit',
@@ -59,10 +59,10 @@ describe('groupPassengerTypes', () => {
         });
         groupPassengerTypes(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/definePassengerType?groupPassengerType=adult',
         });
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GROUP_PASSENGER_TYPES_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GROUP_PASSENGER_TYPES_ATTRIBUTE, {
             passengerTypes: input,
         });
     });

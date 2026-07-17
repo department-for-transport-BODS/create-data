@@ -1,29 +1,31 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`LoadingSpinner should render the loading spinner 1`] = `
-<div
-  className="spinner-wrapper"
->
+<DocumentFragment>
   <div
-    className="spinner govuk-!-margin-bottom-4"
+    class="spinner-wrapper"
   >
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
+    <div
+      class="spinner govuk-!-margin-bottom-4"
+    >
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+    </div>
+    <span
+      class="govuk-heading-s"
+    >
+      Loading exports
+    </span>
   </div>
-  <span
-    className="govuk-heading-s"
-  >
-    Loading exports
-  </span>
-</div>
+</DocumentFragment>
 `;

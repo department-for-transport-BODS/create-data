@@ -1,7 +1,1 @@
-#!/usr/bin/env sh
-. "$(dirname "$0")/_/husky.sh"
-cd ./repos/fdbt-site
-
-npm test;
-npm run lint;
-npm run tsc;
+mise -C ${FDBT_ROOT}/fdbt-dev run test-site ::: lint-site ::: type-check-site

@@ -52,7 +52,7 @@ describe('fareType', () => {
 
         await selectExports(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/products/selectExports',
         });
     });
@@ -70,7 +70,7 @@ describe('fareType', () => {
 
         await selectExports(req, res);
 
-        expect(triggerExportSpy).toBeCalledWith({
+        expect(triggerExportSpy).toHaveBeenCalledWith({
             noc,
             paths: [
                 mockProducts[0].matchingJsonLink,
@@ -80,7 +80,7 @@ describe('fareType', () => {
             exportPrefix: expect.any(String),
         });
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/products/exports?exportStarted=true',
         });
     });
@@ -94,13 +94,13 @@ describe('fareType', () => {
 
         await selectExports(req, res);
 
-        expect(triggerExportSpy).toBeCalledWith({
+        expect(triggerExportSpy).toHaveBeenCalledWith({
             noc,
             paths: [mockProducts[0].matchingJsonLink],
             exportPrefix: expect.any(String),
         });
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/products/exports?exportStarted=true',
         });
     });

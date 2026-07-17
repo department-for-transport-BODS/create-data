@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import CarnetProductDetails, { getServerSideProps } from '../../src/pages/carnetProductDetails';
 import { getMockContext } from '../testData/mockData';
 import { FARE_ZONE_ATTRIBUTE, OPERATOR_ATTRIBUTE, PASSENGER_TYPE_ATTRIBUTE } from '../../src/constants/attributes';
@@ -14,10 +14,12 @@ const mockProductDetails: CarnetProductInfo = {
     },
 };
 
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
+
 describe('pages', () => {
     describe('carnetProductDetails', () => {
         it('should render correctly', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <CarnetProductDetails product={mockProductDetails} hintText="Test Hint" csrfToken="" errors={[]} />,
             );
             expect(tree).toMatchSnapshot();

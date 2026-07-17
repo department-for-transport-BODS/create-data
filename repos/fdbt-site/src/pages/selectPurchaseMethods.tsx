@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, ReactElement, useState } from 'react';
+import { ChangeEventHandler, ReactElement, useState } from 'react';
 import CsrfForm from '../components/CsrfForm';
 import ErrorSummary from '../components/ErrorSummary';
 import FormElementWrapper, { FormGroupWrapper } from '../components/FormElementWrapper';
@@ -60,7 +60,7 @@ const generateCheckbox = (
                     selected && selected[productName]?.find((selectedEntry) => selectedEntry.name === offer.name);
 
                 const updateSelected: ChangeEventHandler = () => {
-                    const newSelected: { [key: string]: SalesOfferPackage[] } = { ...selected } || {};
+                    const newSelected: { [key: string]: SalesOfferPackage[] } = { ...selected };
                     const sops = newSelected[productName] || [];
                     newSelected[productName] = sops.find((sop) => sop.name === offer.name)
                         ? sops.filter((it) => it.name !== offer.name)

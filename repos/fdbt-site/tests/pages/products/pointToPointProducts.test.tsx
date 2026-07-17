@@ -1,11 +1,13 @@
-import { shallow } from 'enzyme';
-import * as React from 'react';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import PointToPointProducts, { filterProductsNotToDisplay } from '../../../src/pages/products/pointToPointProducts';
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('myfares pages', () => {
     describe('pointToPointProducts', () => {
         it('should render correctly when no products against service', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <PointToPointProducts
                     csrfToken={''}
                     service={{
@@ -26,7 +28,7 @@ describe('myfares pages', () => {
         });
 
         it('should render correctly when products present against service and the product requires attention', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <PointToPointProducts
                     csrfToken={''}
                     service={{
@@ -56,7 +58,7 @@ describe('myfares pages', () => {
         });
 
         it('should render correctly when products present against service and the product does not require attention', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <PointToPointProducts
                     csrfToken={''}
                     service={{

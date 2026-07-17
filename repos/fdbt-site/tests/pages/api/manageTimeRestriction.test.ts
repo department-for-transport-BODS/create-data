@@ -42,10 +42,10 @@ describe('manageTimeRestriction', () => {
             mockWriteHeadFn: writeHeadMock,
         });
         await manageTimeRestriction(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/manageTimeRestriction',
         });
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GS_TIME_RESTRICTION_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_TIME_RESTRICTION_ATTRIBUTE, {
             errors: [
                 { id: 'time-restriction-name', errorMessage: 'Time restriction name is required.', userInput: '' },
                 { id: 'time-restriction-days', errorMessage: 'You must select at least one day.' },
@@ -86,10 +86,10 @@ describe('manageTimeRestriction', () => {
             mockWriteHeadFn: writeHeadMock,
         });
         await manageTimeRestriction(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/manageTimeRestriction',
         });
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GS_TIME_RESTRICTION_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_TIME_RESTRICTION_ATTRIBUTE, {
             errors: [
                 {
                     errorMessage: 'Start time is required if end time is provided.',
@@ -151,10 +151,10 @@ describe('manageTimeRestriction', () => {
             mockWriteHeadFn: writeHeadMock,
         });
         await manageTimeRestriction(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/manageTimeRestriction',
         });
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GS_TIME_RESTRICTION_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_TIME_RESTRICTION_ATTRIBUTE, {
             errors: [
                 {
                     errorMessage: `You already have a time restriction named test. Choose another name.`,
@@ -180,7 +180,7 @@ describe('manageTimeRestriction', () => {
         });
     });
 
-    it('should return 302 redirect to /viewTimeRestrictions when there have been correct user inputs and the time restriction is saved to the db ', async () => {
+    it('should return 302 redirect to /viewTimeRestrictions when there have been correct user inputs and the time restriction is saved to the db', async () => {
         const writeHeadMock = jest.fn();
         getTimeRestrictionByNameAndNocSpy.mockResolvedValueOnce([]);
         const { req, res } = getMockRequestAndResponse({
@@ -209,11 +209,11 @@ describe('manageTimeRestriction', () => {
             mockWriteHeadFn: writeHeadMock,
         });
         await manageTimeRestriction(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/viewTimeRestrictions',
         });
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GS_TIME_RESTRICTION_ATTRIBUTE, undefined);
-        expect(insertTimeRestrictionSpy).toBeCalledWith(
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_TIME_RESTRICTION_ATTRIBUTE, undefined);
+        expect(insertTimeRestrictionSpy).toHaveBeenCalledWith(
             'TEST',
             [
                 { day: 'monday', timeBands: [{ startTime: '0600', endTime: '2200' }] },
@@ -231,7 +231,7 @@ describe('manageTimeRestriction', () => {
         );
     });
 
-    it('should handle fare day end for time restrictions ', async () => {
+    it('should handle fare day end for time restrictions', async () => {
         const writeHeadMock = jest.fn();
         getTimeRestrictionByNameAndNocSpy.mockResolvedValueOnce([]);
         const { req, res } = getMockRequestAndResponse({
@@ -261,8 +261,8 @@ describe('manageTimeRestriction', () => {
             mockWriteHeadFn: writeHeadMock,
         });
         await manageTimeRestriction(req, res);
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GS_TIME_RESTRICTION_ATTRIBUTE, undefined);
-        expect(insertTimeRestrictionSpy).toBeCalledWith(
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_TIME_RESTRICTION_ATTRIBUTE, undefined);
+        expect(insertTimeRestrictionSpy).toHaveBeenCalledWith(
             'TEST',
             [
                 { day: 'monday', timeBands: [{ startTime: '0600', endTime: '2200' }] },
@@ -278,7 +278,7 @@ describe('manageTimeRestriction', () => {
             ],
             'test',
         );
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/viewTimeRestrictions',
         });
     });

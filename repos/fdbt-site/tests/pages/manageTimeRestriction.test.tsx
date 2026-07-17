@@ -1,12 +1,14 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import ManageTimeRestriction from '../../src/pages/manageTimeRestriction';
 import { PremadeTimeRestriction } from '../../src/interfaces';
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('manage time restriction', () => {
         it('should render correctly', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ManageTimeRestriction
                     csrfToken={''}
                     errors={[]}
@@ -31,7 +33,7 @@ describe('pages', () => {
                 ],
             };
 
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ManageTimeRestriction csrfToken={''} errors={[]} inputs={inputs} editMode fareDayEnd={'1234'} />,
             );
 
@@ -47,7 +49,7 @@ describe('pages', () => {
                 contents: [],
             };
 
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ManageTimeRestriction csrfToken={''} errors={errors} inputs={inputs} editMode fareDayEnd={'1234'} />,
             );
 
@@ -86,7 +88,7 @@ describe('pages', () => {
                 ],
             };
 
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ManageTimeRestriction csrfToken={''} errors={errors} inputs={inputs} editMode fareDayEnd={'1234'} />,
             );
 
@@ -130,7 +132,7 @@ describe('pages', () => {
                 ],
             };
 
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ManageTimeRestriction csrfToken={''} errors={errors} inputs={inputs} editMode fareDayEnd={'1234'} />,
             );
 
@@ -156,7 +158,7 @@ describe('pages', () => {
                 ],
             };
 
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ManageTimeRestriction
                     csrfToken={''}
                     errors={errors}

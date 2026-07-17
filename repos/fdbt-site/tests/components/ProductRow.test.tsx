@@ -1,20 +1,19 @@
-import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import ProductRow from '../../src/components/ProductRow';
 
 describe('product row', () => {
     it('renders the right amount of rows for a flatfare carnet', () => {
         const numberToRender = 2;
-        const wrapper = shallow(
+        const { container, asFragment } = render(
             <ProductRow numberOfProductsToDisplay={numberToRender} errors={[]} userInput={[]} flatFare carnet school />,
         );
-        expect(wrapper.find('.flex-container')).toHaveLength(numberToRender);
-        expect(wrapper).toMatchSnapshot();
+        expect(container.querySelectorAll('.flex-container')).toHaveLength(numberToRender);
+        expect(asFragment()).toMatchSnapshot();
     });
 
     it('renders the right amount of rows for a period carnet', () => {
         const numberToRender = 1;
-        const wrapper = shallow(
+        const { container, asFragment } = render(
             <ProductRow
                 numberOfProductsToDisplay={numberToRender}
                 errors={[]}
@@ -24,13 +23,13 @@ describe('product row', () => {
                 school
             />,
         );
-        expect(wrapper.find('.flex-container')).toHaveLength(numberToRender);
-        expect(wrapper).toMatchSnapshot();
+        expect(container.querySelectorAll('.flex-container')).toHaveLength(numberToRender);
+        expect(asFragment()).toMatchSnapshot();
     });
 
     it('renders the right amount of rows for a period ticket', () => {
         const numberToRender = 4;
-        const wrapper = shallow(
+        const { container, asFragment } = render(
             <ProductRow
                 numberOfProductsToDisplay={numberToRender}
                 errors={[]}
@@ -40,13 +39,13 @@ describe('product row', () => {
                 school={false}
             />,
         );
-        expect(wrapper.find('.flex-container')).toHaveLength(numberToRender);
-        expect(wrapper).toMatchSnapshot();
+        expect(container.querySelectorAll('.flex-container')).toHaveLength(numberToRender);
+        expect(asFragment()).toMatchSnapshot();
     });
 
     it('renders the right amount of rows for a flatFare ticket', () => {
         const numberToRender = 3;
-        const wrapper = shallow(
+        const { container, asFragment } = render(
             <ProductRow
                 numberOfProductsToDisplay={numberToRender}
                 errors={[]}
@@ -56,7 +55,7 @@ describe('product row', () => {
                 school={false}
             />,
         );
-        expect(wrapper.find('.flex-container')).toHaveLength(numberToRender);
-        expect(wrapper).toMatchSnapshot();
+        expect(container.querySelectorAll('.flex-container')).toHaveLength(numberToRender);
+        expect(asFragment()).toMatchSnapshot();
     });
 });

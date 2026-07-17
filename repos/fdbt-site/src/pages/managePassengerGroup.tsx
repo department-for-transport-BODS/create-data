@@ -1,5 +1,5 @@
 import upperFirst from 'lodash/upperFirst';
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import InformationSummary from '../components/InformationSummary';
 import CsrfForm from '../components/CsrfForm';
 import ErrorSummary from '../components/ErrorSummary';
@@ -91,80 +91,76 @@ const ManagePassengerGroup = ({
                                 errorClass="govuk-checkboxes--error"
                             >
                                 <div className="govuk-checkboxes" data-module="govuk-checkboxes">
-                                    {passengers.map(
-                                        (passenger, index): ReactElement => (
-                                            <div key={passenger.id}>
-                                                <div className="govuk-checkboxes__item" key={passenger.id}>
-                                                    <input
-                                                        className="govuk-checkboxes__input"
-                                                        id={`passenger-type-${index}`}
-                                                        name="passengerTypes"
-                                                        type="checkbox"
-                                                        value={passenger.id}
-                                                        data-aria-controls={`conditional-input-${index}`}
-                                                        defaultChecked={!!findCorrectPassengerType(inputs, passenger)}
-                                                    />
-                                                    <label
-                                                        className="govuk-label govuk-checkboxes__label"
-                                                        htmlFor={`passenger-type-${index}`}
-                                                    >
-                                                        {upperFirst(`${passenger.name}`)}
-                                                    </label>
-                                                </div>
-                                                <div
-                                                    className="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
-                                                    id={`conditional-input-${index}`}
-                                                >
-                                                    <label htmlFor={`maximum-passengers-${passenger.name}`}>
-                                                        <h1 className="govuk-heading-s" id="individual-limit-heading">
-                                                            We need to know how many passengers can use this at one time
-                                                        </h1>
-                                                    </label>
-                                                    <div className="govuk-form-group">
-                                                        <label
-                                                            className="govuk-label"
-                                                            htmlFor={`minimum-passengers-${passenger.id}`}
-                                                        >
-                                                            Minimum (optional)
-                                                        </label>
-                                                        <input
-                                                            className="govuk-input govuk-!-width-one-third"
-                                                            id={`minimum-passengers-${passenger.id}`}
-                                                            name={`minimumPassengers${passenger.id}`}
-                                                            data-test-id={'minimum-passengers'}
-                                                            defaultValue={
-                                                                findCorrectPassengerType(inputs, passenger)
-                                                                    ?.minNumber ?? ''
-                                                            }
-                                                        />
-                                                    </div>
-                                                    <div className="govuk-form-group">
-                                                        <label
-                                                            className="govuk-label"
-                                                            htmlFor={`maximum-passengers-${passenger.id}`}
-                                                        >
-                                                            Maximum (required)
-                                                        </label>
-                                                        <input
-                                                            className="govuk-input govuk-!-width-one-third"
-                                                            id={`maximum-passengers-${passenger.id}`}
-                                                            name={`maximumPassengers${passenger.id}`}
-                                                            data-test-id={'maximum-passengers'}
-                                                            defaultValue={
-                                                                findCorrectPassengerType(inputs, passenger)
-                                                                    ?.maxNumber ?? ''
-                                                            }
-                                                        />
-                                                    </div>
-                                                </div>
+                                    {passengers.map((passenger, index): ReactElement => (
+                                        <div key={passenger.id}>
+                                            <div className="govuk-checkboxes__item" key={passenger.id}>
                                                 <input
-                                                    type="hidden"
-                                                    name={`passengerType${passenger.id}`}
-                                                    value={passenger.name}
+                                                    className="govuk-checkboxes__input"
+                                                    id={`passenger-type-${index}`}
+                                                    name="passengerTypes"
+                                                    type="checkbox"
+                                                    value={passenger.id}
+                                                    data-aria-controls={`conditional-input-${index}`}
+                                                    defaultChecked={!!findCorrectPassengerType(inputs, passenger)}
                                                 />
+                                                <label
+                                                    className="govuk-label govuk-checkboxes__label"
+                                                    htmlFor={`passenger-type-${index}`}
+                                                >
+                                                    {upperFirst(`${passenger.name}`)}
+                                                </label>
                                             </div>
-                                        ),
-                                    )}
+                                            <div
+                                                className="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                                                id={`conditional-input-${index}`}
+                                            >
+                                                <label htmlFor={`maximum-passengers-${passenger.name}`}>
+                                                    <h1 className="govuk-heading-s" id="individual-limit-heading">
+                                                        We need to know how many passengers can use this at one time
+                                                    </h1>
+                                                </label>
+                                                <div className="govuk-form-group">
+                                                    <label
+                                                        className="govuk-label"
+                                                        htmlFor={`minimum-passengers-${passenger.id}`}
+                                                    >
+                                                        Minimum (optional)
+                                                    </label>
+                                                    <input
+                                                        className="govuk-input govuk-!-width-one-third"
+                                                        id={`minimum-passengers-${passenger.id}`}
+                                                        name={`minimumPassengers${passenger.id}`}
+                                                        data-test-id={'minimum-passengers'}
+                                                        defaultValue={
+                                                            findCorrectPassengerType(inputs, passenger)?.minNumber ?? ''
+                                                        }
+                                                    />
+                                                </div>
+                                                <div className="govuk-form-group">
+                                                    <label
+                                                        className="govuk-label"
+                                                        htmlFor={`maximum-passengers-${passenger.id}`}
+                                                    >
+                                                        Maximum (required)
+                                                    </label>
+                                                    <input
+                                                        className="govuk-input govuk-!-width-one-third"
+                                                        id={`maximum-passengers-${passenger.id}`}
+                                                        name={`maximumPassengers${passenger.id}`}
+                                                        data-test-id={'maximum-passengers'}
+                                                        defaultValue={
+                                                            findCorrectPassengerType(inputs, passenger)?.maxNumber ?? ''
+                                                        }
+                                                    />
+                                                </div>
+                                            </div>
+                                            <input
+                                                type="hidden"
+                                                name={`passengerType${passenger.id}`}
+                                                value={passenger.name}
+                                            />
+                                        </div>
+                                    ))}
                                 </div>
                             </FormElementWrapper>
                         </fieldset>

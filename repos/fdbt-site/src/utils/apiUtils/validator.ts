@@ -1,4 +1,4 @@
-import { startCase } from 'lodash';
+import startCase from 'lodash/startCase';
 
 export const removeExcessWhiteSpace = (input: undefined | string): string => {
     // this will remove all whitespace on the front and end of a string, and reduce internal whitespaces to one whitespace
@@ -66,7 +66,7 @@ export const invalidUrlInput = (value: string): boolean => {
     // anything not in the above is considered invalid
     const regularExpression = new RegExp("[^\\ssa-zA-Z()_0-9'\\:@,&+.\\-\\/]+");
     // URL has at least one dot
-    const hasDot = /[A-Za-z0-9_\-]+\.[A-Za-z0-9_\-]/.exec(value) ? true : false;
+    const hasDot = /[A-Za-z0-9_-]\.[A-Za-z0-9_-]/.exec(value) ? true : false;
     // URL has no spaces
     const hasSpace = !/^[^ ]+$/.exec(value) ? true : false;
     return regularExpression.test(value) || !hasDot || hasSpace;

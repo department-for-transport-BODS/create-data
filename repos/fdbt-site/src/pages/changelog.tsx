@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import TwoThirdsLayout from '../layout/Layout';
 
 const title = 'Changelog - Create Fares Data Service';
@@ -51,7 +51,7 @@ const Changelog = (): ReactElement => (
     </TwoThirdsLayout>
 );
 
-export const getServerSideProps = (): { props: {} } => ({
+export const getServerSideProps = (): { props: object } => ({
     props: {},
 });
 

@@ -1,11 +1,13 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import CsvUpload from '../../src/pages/csvUpload';
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('csvUpload', () => {
         it('should render correctly', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <CsvUpload
                     csvUploadTitle="Upload fares triangle as CSV"
                     csvUploadHintText=""

@@ -1,6 +1,9 @@
-import { shallow } from 'enzyme';
-import * as React from 'react';
+import { render } from '@testing-library/react';
 import { GlobalSettingsViewPage } from '../../src/components/GlobalSettingsViewPage';
+
+jest.mock('next/router', () => ({
+    useRouter: () => ({ pathname: '/' }),
+}));
 
 const CardBody = ({ entity: { id, name } }: { entity: { id: number; name: string } }) => (
     <h1>
@@ -10,7 +13,7 @@ const CardBody = ({ entity: { id, name } }: { entity: { id: number; name: string
 
 describe('GlobalSettingsViewPage', () => {
     it('should render correctly when no entities', () => {
-        const tree = shallow(
+        const { asFragment } = render(
             <GlobalSettingsViewPage
                 csrfToken={''}
                 entities={[]}
@@ -21,11 +24,11 @@ describe('GlobalSettingsViewPage', () => {
                 CardBody={CardBody}
             />,
         );
-        expect(tree).toMatchSnapshot();
+        expect(asFragment()).toMatchSnapshot();
     });
 
     it('should render correctly when entities exist', () => {
-        const tree = shallow(
+        const { asFragment } = render(
             <GlobalSettingsViewPage
                 csrfToken={''}
                 entities={[
@@ -40,11 +43,11 @@ describe('GlobalSettingsViewPage', () => {
                 CardBody={CardBody}
             />,
         );
-        expect(tree).toMatchSnapshot();
+        expect(asFragment()).toMatchSnapshot();
     });
 
     it('should render correctly when entities exist and env is not test', () => {
-        const tree = shallow(
+        const { asFragment } = render(
             <GlobalSettingsViewPage
                 csrfToken={''}
                 entities={[
@@ -59,6 +62,6 @@ describe('GlobalSettingsViewPage', () => {
                 CardBody={CardBody}
             />,
         );
-        expect(tree).toMatchSnapshot();
+        expect(asFragment()).toMatchSnapshot();
     });
 });

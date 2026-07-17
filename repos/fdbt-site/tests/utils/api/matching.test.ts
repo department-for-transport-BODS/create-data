@@ -21,20 +21,21 @@ import {
 import * as s3 from '../../../src/data/s3';
 import { RawJourneyPattern, StopPoint } from '../../../src/interfaces/dbTypes';
 
+jest.mock('../../../src/data/auroradb');
+jest.mock('../../../src/data/s3');
+
 describe('matching', () => {
     describe('getMatchingProps', () => {
-        const getServiceByNocCodeLineNameAndDataSourceSpy = jest.spyOn(auroradb, 'getServiceByIdAndDataSource');
-        const batchGetStopsByAtcoCodeWithErrorCheckSpy = jest.spyOn(auroradb, 'batchGetStopsByAtcoCodeWithErrorCheck');
-        const getUserFareStagesSpy = jest.spyOn(s3, 'getUserFareStages');
-
-        getServiceByNocCodeLineNameAndDataSourceSpy.mockImplementation(() => Promise.resolve(mockRawService));
-
-        batchGetStopsByAtcoCodeWithErrorCheckSpy.mockImplementation(() =>
-            Promise.resolve({ results: [], successful: false, missingStops: [] }),
-        );
-        getUserFareStagesSpy.mockImplementation(() => Promise.resolve(userFareStages));
-
-        beforeEach(jest.clearAllMocks);
+        beforeEach(() => {
+            jest.clearAllMocks();
+            jest.mocked(auroradb.getServiceByIdAndDataSource).mockResolvedValue(mockRawService);
+            jest.mocked(auroradb.batchGetStopsByAtcoCodeWithErrorCheck).mockResolvedValue({
+                results: [],
+                successful: false,
+                missingStops: [],
+            });
+            jest.mocked(s3.getUserFareStages).mockResolvedValue(userFareStages);
+        });
 
         it('generates the correct list of master stops', async () => {
             const ctx = getMockContext({
@@ -52,8 +53,8 @@ describe('matching', () => {
 
             await getMatchingProps(ctx, {});
 
-            expect(auroradb.batchGetStopsByAtcoCodeWithErrorCheck).toBeCalledTimes(1);
-            expect(auroradb.batchGetStopsByAtcoCodeWithErrorCheck).toBeCalledWith([
+            expect(auroradb.batchGetStopsByAtcoCodeWithErrorCheck).toHaveBeenCalledTimes(1);
+            expect(auroradb.batchGetStopsByAtcoCodeWithErrorCheck).toHaveBeenCalledWith([
                 '13003921A',
                 '13003305E',
                 '13003306B',
@@ -73,8 +74,8 @@ describe('matching', () => {
         });
 
         it('preserves the stops order', async () => {
-            getServiceByNocCodeLineNameAndDataSourceSpy.mockImplementation(() => Promise.resolve(mockRawService));
-            batchGetStopsByAtcoCodeWithErrorCheckSpy.mockResolvedValue({
+            jest.mocked(auroradb.getServiceByIdAndDataSource).mockResolvedValue(mockRawService);
+            jest.mocked(auroradb.batchGetStopsByAtcoCodeWithErrorCheck).mockResolvedValue({
                 results: zoneStops,
                 successful: true,
                 missingStops: [],
@@ -100,9 +101,7 @@ describe('matching', () => {
         });
 
         it('generates the correct list of master stops given journeys with duplicate start and end points', async () => {
-            getServiceByNocCodeLineNameAndDataSourceSpy.mockImplementation(() =>
-                Promise.resolve(mockRawServiceWithDuplicates),
-            );
+            jest.mocked(auroradb.getServiceByIdAndDataSource).mockResolvedValue(mockRawServiceWithDuplicates);
 
             const ctx = getMockContext({
                 session: {
@@ -119,7 +118,7 @@ describe('matching', () => {
 
             await getMatchingProps(ctx, {});
 
-            expect(auroradb.batchGetStopsByAtcoCodeWithErrorCheck).toBeCalledTimes(1);
+            expect(auroradb.batchGetStopsByAtcoCodeWithErrorCheck).toHaveBeenCalledTimes(1);
         });
 
         it('throws an error if no stops can be found', async () => {

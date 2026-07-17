@@ -1,15 +1,16 @@
-import { shallow } from 'enzyme';
-import React from 'react';
+import { render } from '@testing-library/react';
 import CapTable from '../../src/components/CapTable';
 import { CapExpiryUnit } from '../../src/interfaces/matchingJsonTypes';
 
 describe('CapTable', () => {
     it('should render the table upon first opening of page', () => {
-        const wrapper = shallow(<CapTable errors={[]} userInputtedCaps={[]} numberOfEntitesByDistancesToDisplay={1} />);
-        expect(wrapper).toMatchSnapshot();
+        const { asFragment } = render(
+            <CapTable errors={[]} userInputtedCaps={[]} numberOfEntitesByDistancesToDisplay={1} />,
+        );
+        expect(asFragment()).toMatchSnapshot();
     });
     it('should render the table with no errors', () => {
-        const wrapper = shallow(
+        const { asFragment } = render(
             <CapTable
                 errors={[]}
                 userInputtedCaps={[
@@ -29,11 +30,11 @@ describe('CapTable', () => {
                 numberOfEntitesByDistancesToDisplay={2}
             />,
         );
-        expect(wrapper).toMatchSnapshot();
+        expect(asFragment()).toMatchSnapshot();
     });
 
     it('should render the table with errors', () => {
-        const wrapper = shallow(
+        const { asFragment } = render(
             <CapTable
                 errors={[{ errorMessage: 'Cap names must be unique', id: 'cap-name-0' }]}
                 userInputtedCaps={[
@@ -53,6 +54,6 @@ describe('CapTable', () => {
                 numberOfEntitesByDistancesToDisplay={2}
             />,
         );
-        expect(wrapper).toMatchSnapshot();
+        expect(asFragment()).toMatchSnapshot();
     });
 });

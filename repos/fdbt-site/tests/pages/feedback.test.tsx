@@ -1,20 +1,22 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import Feedback, { getServerSideProps } from '../../src/pages/feedback';
 import { getMockContext } from '../testData/mockData';
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('feedback', () => {
         it('should render correctly when the page is first visited', () => {
-            const tree = shallow(<Feedback feedbackSubmitted="false" csrfToken="" />);
+            const tree = renderToFragment(<Feedback feedbackSubmitted="false" csrfToken="" />);
             expect(tree).toMatchSnapshot();
         });
         it('should render correctly after feedback has been successfully submitted', () => {
-            const tree = shallow(<Feedback feedbackSubmitted="submitted" csrfToken="" />);
+            const tree = renderToFragment(<Feedback feedbackSubmitted="submitted" csrfToken="" />);
             expect(tree).toMatchSnapshot();
         });
         it('should render correctly after the user tries to submit no feedback', () => {
-            const tree = shallow(<Feedback feedbackSubmitted="not submitted" csrfToken="" />);
+            const tree = renderToFragment(<Feedback feedbackSubmitted="not submitted" csrfToken="" />);
             expect(tree).toMatchSnapshot();
         });
 

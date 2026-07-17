@@ -15,7 +15,7 @@ describe('cookies', () => {
     it('should redirect back to itself (i.e. /cookies) when no tracking selection is sent to the API', () => {
         const { req, res } = getMockRequestAndResponse({ body: {}, mockWriteHeadFn: writeHeadMock });
         cookies(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/cookies' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/cookies' });
     });
 
     it("should update all cookies, with the cookie policy 'usage' as false when the user disables tracking", () => {
@@ -45,7 +45,7 @@ describe('cookies', () => {
             oneYearInSeconds,
             false,
         );
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/cookies?settingsSaved=true' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/cookies?settingsSaved=true' });
     });
 
     it("should update all cookies, with the cookie policy 'usage' as true when the user enables tracking", () => {
@@ -75,6 +75,6 @@ describe('cookies', () => {
             oneYearInSeconds,
             false,
         );
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/cookies?settingsSaved=true' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/cookies?settingsSaved=true' });
     });
 });

@@ -1,238 +1,203 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`ExpirySelector should render the selector for a carnet 1`] = `
-<div
-  className="govuk-input__wrapper expiry-selector-wrapper"
->
-  <FormElementWrapper
-    addFormGroupError={true}
-    errorClass="govuk-input--error"
-    errorId="test-quantity-id"
-    errors={Array []}
-    hideText={true}
+<DocumentFragment>
+  <div
+    class="govuk-input__wrapper expiry-selector-wrapper"
   >
-    <input
-      aria-labelledby=""
-      className="govuk-input govuk-input--width-3"
-      defaultValue=""
-      id="test-quantity-id"
-      name="testQuantityName"
-      type="text"
-    />
-  </FormElementWrapper>
-  <FormElementWrapper
-    errorClass="govuk-select--error"
-    errorId="test-unit-id"
-    errors={Array []}
-    hideText={true}
-  >
-    <select
-      aria-labelledby=""
-      className="govuk-select expiry-selector-units"
-      defaultValue=""
-      id="test-unit-id"
-      name="testUnitName"
+    <div
+      class=""
     >
-      <option
-        disabled={true}
-        key="select-one"
+      <input
+        aria-labelledby=""
+        class="govuk-input govuk-input--width-3"
+        id="test-quantity-id"
+        name="testQuantityName"
+        type="text"
         value=""
+      />
+    </div>
+    <div
+      class=""
+    >
+      <select
+        aria-labelledby=""
+        class="govuk-select expiry-selector-units"
+        id="test-unit-id"
+        name="testUnitName"
       >
-        Select One
-      </option>
-      <option
-        key="hour"
-        value="hour"
-      >
-        Hours
-      </option>
-      <option
-        key="day"
-        value="day"
-      >
-        Days
-      </option>
-      <option
-        key="week"
-        value="week"
-      >
-        Weeks
-      </option>
-      <option
-        key="month"
-        value="month"
-      >
-        Months
-      </option>
-      <option
-        key="year"
-        value="year"
-      >
-        Years
-      </option>
-      <option
-        key="no expiry"
-        value="no expiry"
-      >
-        No expiry
-      </option>
-    </select>
-  </FormElementWrapper>
-</div>
+        <option
+          disabled=""
+          selected=""
+          value=""
+        >
+          Select One
+        </option>
+        <option
+          value="hour"
+        >
+          Hours
+        </option>
+        <option
+          value="day"
+        >
+          Days
+        </option>
+        <option
+          value="week"
+        >
+          Weeks
+        </option>
+        <option
+          value="month"
+        >
+          Months
+        </option>
+        <option
+          value="year"
+        >
+          Years
+        </option>
+        <option
+          value="no expiry"
+        >
+          No expiry
+        </option>
+      </select>
+    </div>
+  </div>
+</DocumentFragment>
 `;
 
 exports[`ExpirySelector should render the selector for a non-carnet 1`] = `
-<div
-  className="govuk-input__wrapper expiry-selector-wrapper"
->
-  <FormElementWrapper
-    addFormGroupError={true}
-    errorClass="govuk-input--error"
-    errorId="test-quantity-id"
-    errors={Array []}
-    hideText={true}
+<DocumentFragment>
+  <div
+    class="govuk-input__wrapper expiry-selector-wrapper"
   >
-    <input
-      aria-labelledby=""
-      className="govuk-input govuk-input--width-3"
-      defaultValue=""
-      id="test-quantity-id"
-      name="testQuantityName"
-      type="text"
-    />
-  </FormElementWrapper>
-  <FormElementWrapper
-    errorClass="govuk-select--error"
-    errorId="test-unit-id"
-    errors={Array []}
-    hideText={true}
-  >
-    <select
-      aria-labelledby=""
-      className="govuk-select expiry-selector-units"
-      defaultValue=""
-      id="test-unit-id"
-      name="testUnitName"
+    <div
+      class=""
     >
-      <option
-        disabled={true}
-        key="select-one"
+      <input
+        aria-labelledby=""
+        class="govuk-input govuk-input--width-3"
+        id="test-quantity-id"
+        name="testQuantityName"
+        type="text"
         value=""
+      />
+    </div>
+    <div
+      class=""
+    >
+      <select
+        aria-labelledby=""
+        class="govuk-select expiry-selector-units"
+        id="test-unit-id"
+        name="testUnitName"
       >
-        Select One
-      </option>
-      <option
-        key="hour"
-        value="hour"
-      >
-        Hours
-      </option>
-      <option
-        key="day"
-        value="day"
-      >
-        Days
-      </option>
-      <option
-        key="week"
-        value="week"
-      >
-        Weeks
-      </option>
-      <option
-        key="month"
-        value="month"
-      >
-        Months
-      </option>
-      <option
-        key="year"
-        value="year"
-      >
-        Years
-      </option>
-    </select>
-  </FormElementWrapper>
-</div>
+        <option
+          disabled=""
+          selected=""
+          value=""
+        >
+          Select One
+        </option>
+        <option
+          value="hour"
+        >
+          Hours
+        </option>
+        <option
+          value="day"
+        >
+          Days
+        </option>
+        <option
+          value="week"
+        >
+          Weeks
+        </option>
+        <option
+          value="month"
+        >
+          Months
+        </option>
+        <option
+          value="year"
+        >
+          Years
+        </option>
+      </select>
+    </div>
+  </div>
+</DocumentFragment>
 `;
 
 exports[`ExpirySelector should render the selector for a school ticket 1`] = `
-<div
-  className="govuk-input__wrapper expiry-selector-wrapper"
->
-  <FormElementWrapper
-    addFormGroupError={true}
-    errorClass="govuk-input--error"
-    errorId="test-quantity-id"
-    errors={Array []}
-    hideText={true}
+<DocumentFragment>
+  <div
+    class="govuk-input__wrapper expiry-selector-wrapper"
   >
-    <input
-      aria-labelledby=""
-      className="govuk-input govuk-input--width-3"
-      defaultValue=""
-      id="test-quantity-id"
-      name="testQuantityName"
-      type="text"
-    />
-  </FormElementWrapper>
-  <FormElementWrapper
-    errorClass="govuk-select--error"
-    errorId="test-unit-id"
-    errors={Array []}
-    hideText={true}
-  >
-    <select
-      aria-labelledby=""
-      className="govuk-select expiry-selector-units"
-      defaultValue=""
-      id="test-unit-id"
-      name="testUnitName"
+    <div
+      class=""
     >
-      <option
-        disabled={true}
-        key="select-one"
+      <input
+        aria-labelledby=""
+        class="govuk-input govuk-input--width-3"
+        id="test-quantity-id"
+        name="testQuantityName"
+        type="text"
         value=""
+      />
+    </div>
+    <div
+      class=""
+    >
+      <select
+        aria-labelledby=""
+        class="govuk-select expiry-selector-units"
+        id="test-unit-id"
+        name="testUnitName"
       >
-        Select One
-      </option>
-      <option
-        key="hour"
-        value="hour"
-      >
-        Hours
-      </option>
-      <option
-        key="day"
-        value="day"
-      >
-        Days
-      </option>
-      <option
-        key="week"
-        value="week"
-      >
-        Weeks
-      </option>
-      <option
-        key="month"
-        value="month"
-      >
-        Months
-      </option>
-      <option
-        key="year"
-        value="year"
-      >
-        Years
-      </option>
-      <option
-        key="term"
-        value="term"
-      >
-        Terms
-      </option>
-    </select>
-  </FormElementWrapper>
-</div>
+        <option
+          disabled=""
+          selected=""
+          value=""
+        >
+          Select One
+        </option>
+        <option
+          value="hour"
+        >
+          Hours
+        </option>
+        <option
+          value="day"
+        >
+          Days
+        </option>
+        <option
+          value="week"
+        >
+          Weeks
+        </option>
+        <option
+          value="month"
+        >
+          Months
+        </option>
+        <option
+          value="year"
+        >
+          Years
+        </option>
+        <option
+          value="term"
+        >
+          Terms
+        </option>
+      </select>
+    </div>
+  </div>
+</DocumentFragment>
 `;

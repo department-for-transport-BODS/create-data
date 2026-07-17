@@ -164,7 +164,7 @@ describe('resetPassword', () => {
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, USER_ATTRIBUTE, { redirectFrom: '/resetPassword' });
         expect(forgotPasswordSubmitSpy).toHaveBeenCalled();
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/passwordUpdated',
         });
     });
@@ -189,7 +189,7 @@ describe('resetPassword', () => {
 
         await resetPassword(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/resetLinkExpired',
         });
     });

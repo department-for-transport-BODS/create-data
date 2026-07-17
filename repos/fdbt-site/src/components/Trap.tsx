@@ -1,5 +1,5 @@
 import FocusTrap from 'focus-trap-react';
-import React, { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 
 interface TrapProps {
     active: boolean;

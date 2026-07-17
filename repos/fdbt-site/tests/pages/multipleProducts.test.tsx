@@ -1,5 +1,5 @@
-import { shallow } from 'enzyme';
-import React from 'react';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import MultipleProducts, { getServerSideProps } from '../../src/pages/multipleProducts';
 import { getMockContext } from '../testData/mockData';
 import {
@@ -9,10 +9,12 @@ import {
     TICKET_REPRESENTATION_ATTRIBUTE,
 } from '../../src/constants/attributes';
 
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
+
 describe('pages', () => {
     describe('multipleProduct', () => {
         it('should render correctly for a non flat fare non carnet', () => {
-            const wrapper = shallow(
+            const wrapper = renderToFragment(
                 <MultipleProducts
                     numberOfProductsToRender={1}
                     errors={[]}
@@ -27,7 +29,7 @@ describe('pages', () => {
         });
 
         it('should render correctly for a flat fare non carnet', () => {
-            const wrapper = shallow(
+            const wrapper = renderToFragment(
                 <MultipleProducts
                     numberOfProductsToRender={1}
                     errors={[]}
@@ -42,7 +44,7 @@ describe('pages', () => {
         });
 
         it('should render correctly for a flat fare carnet', () => {
-            const wrapper = shallow(
+            const wrapper = renderToFragment(
                 <MultipleProducts
                     numberOfProductsToRender={1}
                     errors={[]}
@@ -57,7 +59,7 @@ describe('pages', () => {
         });
 
         it('should render correctly for a period carnet', () => {
-            const wrapper = shallow(
+            const wrapper = renderToFragment(
                 <MultipleProducts
                     numberOfProductsToRender={1}
                     errors={[]}
@@ -72,7 +74,7 @@ describe('pages', () => {
         });
 
         it('should render correctly for 5 products', () => {
-            const wrapper = shallow(
+            const wrapper = renderToFragment(
                 <MultipleProducts
                     numberOfProductsToRender={5}
                     errors={[]}
@@ -94,7 +96,7 @@ describe('pages', () => {
                     [TICKET_REPRESENTATION_ATTRIBUTE]: { name: 'multipleServicesFlatFareMultiOperator' },
                 },
             });
-            const wrapper = shallow(
+            const wrapper = renderToFragment(
                 <MultipleProducts
                     numberOfProductsToRender={1}
                     errors={[]}

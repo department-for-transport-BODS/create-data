@@ -8,7 +8,7 @@ import { getProductStatusTag } from '../products/services';
 import DeleteConfirmationPopup from '../../components/DeleteConfirmationPopup';
 import logger from '../../utils/logger';
 import { MyFaresOtherProduct } from '../../interfaces/dbTypes';
-import { FlatFareByDistanceProduct, Product } from 'src/interfaces/matchingJsonTypes';
+import { FlatFareByDistanceProduct, Product } from '../../interfaces/matchingJsonTypes';
 import { fareTypes } from '../../constants';
 
 const title = 'Other products - Create Fares Data Service';

@@ -34,7 +34,7 @@ export default (req: NextApiRequestWithSession, res: NextApiResponse): void => {
         delete req.body.service;
         delete req.body.userfarestages;
 
-        if (isFareStageUnassigned(userFareStages, matchingFareZones) && matchingFareZones !== {}) {
+        if (isFareStageUnassigned(userFareStages, matchingFareZones)) {
             const selectedStagesList: string[][] = getSelectedStages(req);
             const matchingAttributeError: MatchingWithErrors = {
                 error: 'One or more fare stages have not been assigned, assign each fare stage to a stop',

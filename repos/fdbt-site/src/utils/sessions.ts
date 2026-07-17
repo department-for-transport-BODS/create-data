@@ -179,10 +179,7 @@ export interface SessionAttributeTypes {
     [CARNET_PRODUCT_DETAILS_ATTRIBUTE]: CarnetProductInfo | WithErrors<CarnetProductInfo>;
     [PRICE_ENTRY_ATTRIBUTE]: FaresInformation;
     [SALES_OFFER_PACKAGES_ATTRIBUTE]:
-        | SelectSalesOfferPackageWithError
-        | SalesOfferPackage[]
-        | ProductWithSalesOfferPackages[]
-        | undefined;
+        SelectSalesOfferPackageWithError | SalesOfferPackage[] | ProductWithSalesOfferPackages[] | undefined;
     [GROUP_SIZE_ATTRIBUTE]: GroupTicketAttribute | GroupTicketAttributeWithErrors;
     [GROUP_PASSENGER_TYPES_ATTRIBUTE]: GroupPassengerTypesCollection | GroupPassengerTypesCollectionWithErrors;
     [GROUP_PASSENGER_INFO_ATTRIBUTE]: CompanionInfo[];
@@ -246,8 +243,7 @@ export interface SessionAttributeTypes {
     [PRICING_PER_DISTANCE_ATTRIBUTE]: DistancePricingData | WithErrors<DistancePricingData>;
     [MULTI_TAPS_PRICING_ATTRIBUTE]: MultiTapPricing | WithErrors<MultiTapPricing>;
     [ADDITIONAL_PRICING_ATTRIBUTE]:
-        | AdditionalPricing
-        | { clickedYes: boolean; additionalPricingStructures: WithErrors<AdditionalPricing> };
+        AdditionalPricing | { clickedYes: boolean; additionalPricingStructures: WithErrors<AdditionalPricing> };
     [MULTI_MODAL_ATTRIBUTE]: { modes: string[] };
     [CAPS_DEFINITION_ATTRIBUTE]: CapSelection[] | { errors: ErrorInfo[] };
     [SERVICE_LIST_EXEMPTION_ATTRIBUTE]: ServiceListAttribute | { errors: ErrorInfo[] };
@@ -277,14 +273,15 @@ export const getRequiredSessionAttribute = <T extends keyof SessionAttributeType
 export const getSessionAttribute = <T extends keyof SessionAttributeTypes>(
     req: IncomingMessageWithSession,
     attributeName: T,
-): SessionAttributeTypes[T] | undefined => req?.session?.[attributeName] as SessionAttributeTypes[T];
+): SessionAttributeTypes[T] | undefined =>
+    (req?.session as unknown as Record<string, unknown>)?.[attributeName] as SessionAttributeTypes[T];
 
 export const updateSessionAttribute = <T extends string>(
     req: IncomingMessageWithSession,
     attributeName: T,
     attributeValue: SessionAttribute<T> | undefined,
 ): void => {
-    req.session[attributeName] = attributeValue;
+    (req.session as unknown as Record<string, unknown>)[attributeName] = attributeValue;
 };
 
 export const regenerateSession = (req: IncomingMessageWithSession): void => {

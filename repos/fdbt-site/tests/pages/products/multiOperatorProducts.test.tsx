@@ -1,5 +1,5 @@
-import { shallow } from 'enzyme';
-import * as React from 'react';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import { getProductsMatchingJson } from '../../../src/data/s3';
 import { getOtherProductsByNoc, getPassengerTypeById } from '../../../src/data/auroradb';
 import {
@@ -97,16 +97,22 @@ const testProducts: MultiOperatorProduct[] = [
     },
 ];
 
+jest.mock('next/router', () => ({
+    useRouter: () => ({ pathname: '/products/multiOperatorProducts' }),
+}));
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
+
 describe('myfares pages', () => {
     describe('multiOperatorProducts', () => {
         it('should render correctly when some non-Point-to-Point products exist', () => {
-            const tree = shallow(<MultiOperatorProducts multiOperatorProducts={testProducts} csrfToken="" />);
+            const tree = renderToFragment(<MultiOperatorProducts multiOperatorProducts={testProducts} csrfToken="" />);
 
             expect(tree).toMatchSnapshot();
         });
 
         it('should render correctly when no non-Point-to-Point products exist', () => {
-            const tree = shallow(<MultiOperatorProducts multiOperatorProducts={[]} csrfToken={''} />);
+            const tree = renderToFragment(<MultiOperatorProducts multiOperatorProducts={[]} csrfToken={''} />);
 
             expect(tree).toMatchSnapshot();
         });

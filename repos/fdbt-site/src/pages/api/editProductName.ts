@@ -43,10 +43,7 @@ export default async (req: NextApiRequestWithSession, res: NextApiResponse): Pro
         };
 
         await putUserDataInProductsBucketWithFilePath(updatedTicket, matchingJsonLink);
-        redirectTo(
-            res,
-            `/products/productDetails?productId=${productId}${!!serviceId ? `&serviceId=${serviceId}` : ''}`,
-        );
+        redirectTo(res, `/products/productDetails?productId=${productId}${serviceId ? `&serviceId=${serviceId}` : ''}`);
     } catch (error) {
         redirectToError(res, 'There was a problem editing the selected product name', 'api.editProductName', error);
     }

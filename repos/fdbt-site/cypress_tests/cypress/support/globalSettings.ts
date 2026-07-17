@@ -4,7 +4,7 @@ export const deleteAllCards = (): void => {
     cy.get(`[data-card-count]`).then((element) => {
         const length = Number(element.attr('data-card-count'));
 
-        // in reverse so we delete groups first before the individuals
+        // In reverse so we delete groups first before the individuals
         for (let i = length - 1; i >= 0; i--) {
             getElementByClass('card').eq(i).contains('Delete').click();
             getElementById('popup-delete-button').click();

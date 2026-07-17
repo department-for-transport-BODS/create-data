@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import PeriodValidity, { getFieldset } from '../../src/pages/selectPeriodValidity';
 import {
     mockSelectPeriodValidityFieldset,
@@ -8,17 +8,19 @@ import {
 } from '../testData/mockData';
 import { ErrorInfo } from '../../src/interfaces';
 
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
+
 describe('pages', () => {
     describe('periodValidity', () => {
         it('should render correctly', () => {
-            const tree = shallow(
-                <PeriodValidity errors={[]} csrfToken="" fieldset={mockSelectPeriodValidityFieldset} backHref="" />,
+            const tree = renderToFragment(
+                <PeriodValidity errors={[]} csrfToken="" fieldset={getFieldset([], '')} backHref="" />,
             );
             expect(tree).toMatchSnapshot();
         });
 
         it('should render error messaging when errors are passed', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <PeriodValidity
                     errors={[
                         {
@@ -27,7 +29,7 @@ describe('pages', () => {
                         },
                     ]}
                     csrfToken=""
-                    fieldset={mockSelectPeriodValidityFieldset}
+                    fieldset={getFieldset([], '')}
                     backHref=""
                 />,
             );

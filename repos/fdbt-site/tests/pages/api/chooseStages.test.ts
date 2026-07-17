@@ -14,7 +14,7 @@ describe('chooseStages', () => {
     afterEach(() => {
         jest.resetAllMocks();
     });
-    const cases: {}[] = [
+    const cases: object[] = [
         [{}, { Location: '/chooseStages' }],
         [{ fareStageInput: 'abcdefghijk' }, { Location: '/chooseStages' }],
         [{ fareStageInput: '1.2' }, { Location: '/chooseStages' }],
@@ -40,7 +40,7 @@ describe('chooseStages', () => {
 
         jest.spyOn(apiUtils, 'setCookieOnResponseObject');
         chooseStages(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, expectedLocation);
+        expect(writeHeadMock).toHaveBeenCalledWith(302, expectedLocation);
     });
 
     it('should set the fare stages attribute according to the specified number of fare stages', () => {
@@ -55,7 +55,7 @@ describe('chooseStages', () => {
 
         chooseStages(req, res);
 
-        expect(setUpdateSessionspy).toBeCalledWith(req, FARE_STAGES_ATTRIBUTE, mockFareStages);
+        expect(setUpdateSessionspy).toHaveBeenCalledWith(req, FARE_STAGES_ATTRIBUTE, mockFareStages);
     });
 });
 

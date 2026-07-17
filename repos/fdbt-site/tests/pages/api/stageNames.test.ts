@@ -81,7 +81,7 @@ describe('stageNames', () => {
         const mockWriteHeadFn = jest.fn();
         const { req, res } = getMockRequestAndResponse({ cookieValues: {}, body: mockBody, uuid: {}, mockWriteHeadFn });
         stageNames(req, res);
-        expect(mockWriteHeadFn).toBeCalledWith(302, {
+        expect(mockWriteHeadFn).toHaveBeenCalledWith(302, {
             Location: '/stageNames',
         });
     });
@@ -93,12 +93,12 @@ describe('stageNames', () => {
         const mockWriteHeadFn = jest.fn();
         const { req, res } = getMockRequestAndResponse({ cookieValues: {}, body: mockBody, uuid: {}, mockWriteHeadFn });
         stageNames(req, res);
-        expect(mockWriteHeadFn).toBeCalledWith(302, {
+        expect(mockWriteHeadFn).toHaveBeenCalledWith(302, {
             Location: '/stageNamesConfirmation',
         });
     });
 
-    it('should set the STAGE_NAMES_ATTRIBUTE with values matching the valid data entered by the user ', () => {
+    it('should set the STAGE_NAMES_ATTRIBUTE with values matching the valid data entered by the user', () => {
         const setUpdateSessionspy = jest.spyOn(sessions, 'updateSessionAttribute');
         const mockBody = { stageNameInput: ['a', 'b', 'c', 'd'] };
         const { req, res } = getMockRequestAndResponse({ cookieValues: {}, body: mockBody });
@@ -129,6 +129,6 @@ describe('stageNames', () => {
             { input: 'b', error: '', id: 'fare-stage-name-4' },
         ];
         stageNames(req, res);
-        expect(setUpdateSessionspy).toBeCalledWith(req, STAGE_NAMES_ATTRIBUTE, mockInputCheck);
+        expect(setUpdateSessionspy).toHaveBeenCalledWith(req, STAGE_NAMES_ATTRIBUTE, mockInputCheck);
     });
 });

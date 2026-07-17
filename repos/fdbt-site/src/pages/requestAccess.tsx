@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { BaseLayout } from '../layout/Layout';
 
 const title = 'Request Access - Create Fares Data Service';
@@ -32,7 +32,7 @@ const RequestAccess = (): ReactElement => (
     </BaseLayout>
 );
 
-export const getServerSideProps = (): {} => {
+export const getServerSideProps = (): object => {
     return { props: {} };
 };
 

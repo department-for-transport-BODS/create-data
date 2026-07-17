@@ -1,844 +1,812 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`CapTable should render the table upon first opening of page 1`] = `
-<div>
-  <fieldset
-    className="govuk-fieldset"
-    key="0"
-  >
-    <legend
-      className="govuk-fieldset__legend govuk-visually-hidden"
+<DocumentFragment>
+  <div>
+    <fieldset
+      class="govuk-fieldset"
     >
-      Enter details for cap 1
-    </legend>
-    <div
-      className="flex-container"
-    >
-      <div
-        className="govuk-!-margin-left-4 govuk-!-margin-right-2"
+      <legend
+        class="govuk-fieldset__legend govuk-visually-hidden"
       >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "cap-name-0",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
-        >
-          <label
-            className="govuk-label"
-            htmlFor="cap-name-0"
-          >
-            <span
-              className="govuk-visually-hidden"
-            >
-              Cap Name - Cap 1
-            </span>
-            <span
-              aria-hidden={true}
-            >
-              Cap name
-            </span>
-          </label>
-          <span
-            className="govuk-hint"
-            id="cap-name-hint-0"
-          >
-            50 characters max
-          </span>
-           
-          <FormElementWrapper
-            addFormGroupError={false}
-            errorClass="govuk-input--error"
-            errorId="cap-name-0"
-            errors={Array []}
-            hideText={true}
-          >
-            <input
-              aria-describedby="cap-name-hint-0"
-              className="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
-              defaultValue=""
-              id="cap-name-0"
-              maxLength={50}
-              name="capNameInput0"
-              type="text"
-            />
-          </FormElementWrapper>
-        </FormGroupWrapper>
-      </div>
+        Enter details for cap 1
+      </legend>
       <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
+        class="flex-container"
       >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "cap-price-0",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
+        <div
+          class="govuk-!-margin-left-4 govuk-!-margin-right-2"
         >
-          <label
-            className="govuk-label"
-            htmlFor="cap-price-0"
-          >
-            <span
-              className="govuk-visually-hidden"
-            >
-              Cap Price, in pounds - Cap 1
-            </span>
-            <span
-              aria-hidden={true}
-            >
-              Price
-            </span>
-          </label>
-          <span
-            className="govuk-hint"
-            id="cap-price-hint-0"
-          >
-            e.g. 2.99
-          </span>
           <div
-            className="govuk-currency-input"
+            class="govuk-form-group "
           >
-            <div
-              className="govuk-currency-input__inner"
+            <label
+              class="govuk-label"
+              for="cap-name-0"
             >
               <span
-                className="govuk-currency-input__inner__unit"
+                class="govuk-visually-hidden"
               >
-                £
+                Cap Name - Cap 1
               </span>
-              <FormElementWrapper
-                addFormGroupError={false}
-                errorClass="govuk-input--error"
-                errorId="cap-price-0"
-                errors={Array []}
-                hideText={true}
+              <span
+                aria-hidden="true"
               >
-                <input
-                  aria-describedby="cap-price-hint-0"
-                  className="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
-                  data-non-numeric={true}
-                  defaultValue=""
-                  id="cap-price-0"
-                  name="capPriceInput0"
-                  type="text"
-                />
-              </FormElementWrapper>
+                Cap name
+              </span>
+            </label>
+            <span
+              class="govuk-hint"
+              id="cap-name-hint-0"
+            >
+              50 characters max
+            </span>
+             
+            <div
+              class=""
+            >
+              <input
+                aria-describedby="cap-name-hint-0"
+                class="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
+                id="cap-name-0"
+                maxlength="50"
+                name="capNameInput0"
+                type="text"
+                value=""
+              />
             </div>
           </div>
-        </FormGroupWrapper>
-      </div>
-      <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "cap-period-duration-quantity-0",
-              "cap-period-duration-unit-0",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
         >
-          <label
-            className="govuk-label"
-            htmlFor="cap-period-duration"
+          <div
+            class="govuk-form-group "
           >
-            Cap duration
-          </label>
-          <span
-            className="govuk-hint"
-            id="cap-duration-hint"
+            <label
+              class="govuk-label"
+              for="cap-price-0"
+            >
+              <span
+                class="govuk-visually-hidden"
+              >
+                Cap Price, in pounds - Cap 1
+              </span>
+              <span
+                aria-hidden="true"
+              >
+                Price
+              </span>
+            </label>
+            <span
+              class="govuk-hint"
+              id="cap-price-hint-0"
+            >
+              e.g. 2.99
+            </span>
+            <div
+              class="govuk-currency-input"
+            >
+              <div
+                class="govuk-currency-input__inner"
+              >
+                <span
+                  class="govuk-currency-input__inner__unit"
+                >
+                  £
+                </span>
+                <div
+                  class=""
+                >
+                  <input
+                    aria-describedby="cap-price-hint-0"
+                    class="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
+                    data-non-numeric="true"
+                    id="cap-price-0"
+                    name="capPriceInput0"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
+        >
+          <div
+            class="govuk-form-group "
           >
-            For example, 3 days
-          </span>
-          <ExpirySelector
-            cap={true}
-            defaultDuration=""
-            errors={Array []}
-            hideFormGroupError={true}
-            hintId="cap-duration-hint"
-            quantityId="cap-period-duration-quantity-0"
-            quantityName="capDurationInput0"
-            unitId="cap-duration-unit-0"
-            unitName="capDurationUnitsInput0"
-          />
-        </FormGroupWrapper>
+            <label
+              class="govuk-label"
+              for="cap-period-duration"
+            >
+              Cap duration
+            </label>
+            <span
+              class="govuk-hint"
+              id="cap-duration-hint"
+            >
+              For example, 3 days
+            </span>
+            <div
+              class="govuk-input__wrapper expiry-selector-wrapper"
+            >
+              <div
+                class=""
+              >
+                <input
+                  aria-labelledby="cap-duration-hint"
+                  class="govuk-input govuk-input--width-3"
+                  id="cap-period-duration-quantity-0"
+                  name="capDurationInput0"
+                  type="text"
+                  value=""
+                />
+              </div>
+              <div
+                class=""
+              >
+                <select
+                  aria-labelledby="cap-duration-hint"
+                  class="govuk-select expiry-selector-units"
+                  id="cap-duration-unit-0"
+                  name="capDurationUnitsInput0"
+                >
+                  <option
+                    disabled=""
+                    selected=""
+                    value=""
+                  >
+                    Select One
+                  </option>
+                  <option
+                    value="day"
+                  >
+                    Days
+                  </option>
+                  <option
+                    value="week"
+                  >
+                    Weeks
+                  </option>
+                  <option
+                    value="month"
+                  >
+                    Months
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </fieldset>
-</div>
+    </fieldset>
+  </div>
+</DocumentFragment>
 `;
 
 exports[`CapTable should render the table with errors 1`] = `
-<div>
-  <fieldset
-    className="govuk-fieldset"
-    key="0"
-  >
-    <legend
-      className="govuk-fieldset__legend govuk-visually-hidden"
+<DocumentFragment>
+  <div>
+    <fieldset
+      class="govuk-fieldset"
     >
-      Enter details for cap 1
-    </legend>
-    <div
-      className="flex-container"
-    >
-      <div
-        className="govuk-!-margin-left-4 govuk-!-margin-right-2"
+      <legend
+        class="govuk-fieldset__legend govuk-visually-hidden"
       >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "cap-name-0",
-            ]
-          }
-          errors={
-            Array [
-              Object {
-                "errorMessage": "Cap names must be unique",
-                "id": "cap-name-0",
-              },
-            ]
-          }
-          hideErrorBar={true}
-        >
-          <label
-            className="govuk-label"
-            htmlFor="cap-name-0"
-          >
-            <span
-              className="govuk-visually-hidden"
-            >
-              Cap Name - Cap 1
-            </span>
-            <span
-              aria-hidden={true}
-            >
-              Cap name
-            </span>
-          </label>
-          <span
-            className="govuk-hint"
-            id="cap-name-hint-0"
-          >
-            50 characters max
-          </span>
-           
-          <FormElementWrapper
-            addFormGroupError={false}
-            errorClass="govuk-input--error"
-            errorId="cap-name-0"
-            errors={
-              Array [
-                Object {
-                  "errorMessage": "Cap names must be unique",
-                  "id": "cap-name-0",
-                },
-              ]
-            }
-            hideText={true}
-          >
-            <input
-              aria-describedby="cap-name-hint-0"
-              className="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
-              defaultValue="First cap"
-              id="cap-name-0"
-              maxLength={50}
-              name="capNameInput0"
-              type="text"
-            />
-          </FormElementWrapper>
-        </FormGroupWrapper>
-      </div>
+        Enter details for cap 1
+      </legend>
       <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
+        class="flex-container"
       >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "cap-price-0",
-            ]
-          }
-          errors={
-            Array [
-              Object {
-                "errorMessage": "Cap names must be unique",
-                "id": "cap-name-0",
-              },
-            ]
-          }
-          hideErrorBar={true}
-        >
-          <label
-            className="govuk-label"
-            htmlFor="cap-price-0"
-          >
-            <span
-              className="govuk-visually-hidden"
-            >
-              Cap Price, in pounds - Cap 1
-            </span>
-            <span
-              aria-hidden={true}
-            >
-              Price
-            </span>
-          </label>
-          <span
-            className="govuk-hint"
-            id="cap-price-hint-0"
-          >
-            e.g. 2.99
-          </span>
-          <div
-            className="govuk-currency-input"
-          >
-            <div
-              className="govuk-currency-input__inner"
-            >
-              <span
-                className="govuk-currency-input__inner__unit"
-              >
-                £
-              </span>
-              <FormElementWrapper
-                addFormGroupError={false}
-                errorClass="govuk-input--error"
-                errorId="cap-price-0"
-                errors={
-                  Array [
-                    Object {
-                      "errorMessage": "Cap names must be unique",
-                      "id": "cap-name-0",
-                    },
-                  ]
-                }
-                hideText={true}
-              >
-                <input
-                  aria-describedby="cap-price-hint-0"
-                  className="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
-                  data-non-numeric={true}
-                  defaultValue="2.33"
-                  id="cap-price-0"
-                  name="capPriceInput0"
-                  type="text"
-                />
-              </FormElementWrapper>
-            </div>
-          </div>
-        </FormGroupWrapper>
-      </div>
-      <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "cap-period-duration-quantity-0",
-              "cap-period-duration-unit-0",
-            ]
-          }
-          errors={
-            Array [
-              Object {
-                "errorMessage": "Cap names must be unique",
-                "id": "cap-name-0",
-              },
-            ]
-          }
-          hideErrorBar={true}
-        >
-          <label
-            className="govuk-label"
-            htmlFor="cap-period-duration"
-          >
-            Cap duration
-          </label>
-          <span
-            className="govuk-hint"
-            id="cap-duration-hint"
-          >
-            For example, 3 days
-          </span>
-          <ExpirySelector
-            cap={true}
-            defaultDuration="2"
-            defaultUnit="week"
-            errors={
-              Array [
-                Object {
-                  "errorMessage": "Cap names must be unique",
-                  "id": "cap-name-0",
-                },
-              ]
-            }
-            hideFormGroupError={true}
-            hintId="cap-duration-hint"
-            quantityId="cap-period-duration-quantity-0"
-            quantityName="capDurationInput0"
-            unitId="cap-duration-unit-0"
-            unitName="capDurationUnitsInput0"
-          />
-        </FormGroupWrapper>
-      </div>
-    </div>
-  </fieldset>
-  <fieldset
-    className="govuk-fieldset"
-    key="1"
-  >
-    <legend
-      className="govuk-fieldset__legend govuk-visually-hidden"
-    >
-      Enter details for cap 2
-    </legend>
-    <div
-      className="flex-container"
-    >
-      <div
-        className="govuk-!-margin-left-4 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "cap-name-1",
-            ]
-          }
-          errors={
-            Array [
-              Object {
-                "errorMessage": "Cap names must be unique",
-                "id": "cap-name-0",
-              },
-            ]
-          }
-          hideErrorBar={true}
-        >
-          <FormElementWrapper
-            addFormGroupError={false}
-            errorClass="govuk-input--error"
-            errorId="cap-name-1"
-            errors={
-              Array [
-                Object {
-                  "errorMessage": "Cap names must be unique",
-                  "id": "cap-name-0",
-                },
-              ]
-            }
-            hideText={true}
-          >
-            <input
-              aria-describedby="cap-name-hint-1"
-              className="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
-              defaultValue="First cap"
-              id="cap-name-1"
-              maxLength={50}
-              name="capNameInput1"
-              type="text"
-            />
-          </FormElementWrapper>
-        </FormGroupWrapper>
-      </div>
-      <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "cap-price-1",
-            ]
-          }
-          errors={
-            Array [
-              Object {
-                "errorMessage": "Cap names must be unique",
-                "id": "cap-name-0",
-              },
-            ]
-          }
-          hideErrorBar={true}
+        <div
+          class="govuk-!-margin-left-4 govuk-!-margin-right-2"
         >
           <div
-            className="govuk-currency-input"
+            class="govuk-form-group "
           >
-            <div
-              className="govuk-currency-input__inner"
+            <label
+              class="govuk-label"
+              for="cap-name-0"
             >
               <span
-                className="govuk-currency-input__inner__unit"
+                class="govuk-visually-hidden"
               >
-                £
+                Cap Name - Cap 1
               </span>
-              <FormElementWrapper
-                addFormGroupError={false}
-                errorClass="govuk-input--error"
-                errorId="cap-price-1"
-                errors={
-                  Array [
-                    Object {
-                      "errorMessage": "Cap names must be unique",
-                      "id": "cap-name-0",
-                    },
-                  ]
-                }
-                hideText={true}
+              <span
+                aria-hidden="true"
               >
-                <input
-                  aria-describedby="cap-price-hint-1"
-                  className="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
-                  data-non-numeric={true}
-                  defaultValue="3.33"
-                  id="cap-price-1"
-                  name="capPriceInput1"
-                  type="text"
-                />
-              </FormElementWrapper>
+                Cap name
+              </span>
+            </label>
+            <span
+              class="govuk-hint"
+              id="cap-name-hint-0"
+            >
+              50 characters max
+            </span>
+             
+            <div
+              class=""
+            >
+              <input
+                aria-describedby="cap-name-0-error"
+                class="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input govuk-input--error"
+                id="cap-name-0"
+                maxlength="50"
+                name="capNameInput0"
+                type="text"
+                value="First cap"
+              />
             </div>
           </div>
-        </FormGroupWrapper>
-      </div>
-      <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "cap-period-duration-quantity-1",
-              "cap-period-duration-unit-1",
-            ]
-          }
-          errors={
-            Array [
-              Object {
-                "errorMessage": "Cap names must be unique",
-                "id": "cap-name-0",
-              },
-            ]
-          }
-          hideErrorBar={true}
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
         >
-          <ExpirySelector
-            cap={true}
-            defaultDuration="2"
-            defaultUnit="day"
-            errors={
-              Array [
-                Object {
-                  "errorMessage": "Cap names must be unique",
-                  "id": "cap-name-0",
-                },
-              ]
-            }
-            hideFormGroupError={true}
-            hintId="cap-duration-hint"
-            quantityId="cap-period-duration-quantity-1"
-            quantityName="capDurationInput1"
-            unitId="cap-duration-unit-1"
-            unitName="capDurationUnitsInput1"
-          />
-        </FormGroupWrapper>
+          <div
+            class="govuk-form-group "
+          >
+            <label
+              class="govuk-label"
+              for="cap-price-0"
+            >
+              <span
+                class="govuk-visually-hidden"
+              >
+                Cap Price, in pounds - Cap 1
+              </span>
+              <span
+                aria-hidden="true"
+              >
+                Price
+              </span>
+            </label>
+            <span
+              class="govuk-hint"
+              id="cap-price-hint-0"
+            >
+              e.g. 2.99
+            </span>
+            <div
+              class="govuk-currency-input"
+            >
+              <div
+                class="govuk-currency-input__inner"
+              >
+                <span
+                  class="govuk-currency-input__inner__unit"
+                >
+                  £
+                </span>
+                <div
+                  class=""
+                >
+                  <input
+                    aria-describedby="cap-price-hint-0"
+                    class="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
+                    data-non-numeric="true"
+                    id="cap-price-0"
+                    name="capPriceInput0"
+                    type="text"
+                    value="2.33"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
+        >
+          <div
+            class="govuk-form-group "
+          >
+            <label
+              class="govuk-label"
+              for="cap-period-duration"
+            >
+              Cap duration
+            </label>
+            <span
+              class="govuk-hint"
+              id="cap-duration-hint"
+            >
+              For example, 3 days
+            </span>
+            <div
+              class="govuk-input__wrapper expiry-selector-wrapper"
+            >
+              <div
+                class=""
+              >
+                <input
+                  aria-labelledby="cap-duration-hint"
+                  class="govuk-input govuk-input--width-3"
+                  id="cap-period-duration-quantity-0"
+                  name="capDurationInput0"
+                  type="text"
+                  value="2"
+                />
+              </div>
+              <div
+                class=""
+              >
+                <select
+                  aria-labelledby="cap-duration-hint"
+                  class="govuk-select expiry-selector-units"
+                  id="cap-duration-unit-0"
+                  name="capDurationUnitsInput0"
+                >
+                  <option
+                    disabled=""
+                    value=""
+                  >
+                    Select One
+                  </option>
+                  <option
+                    value="day"
+                  >
+                    Days
+                  </option>
+                  <option
+                    selected=""
+                    value="week"
+                  >
+                    Weeks
+                  </option>
+                  <option
+                    value="month"
+                  >
+                    Months
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </fieldset>
-</div>
+    </fieldset>
+    <fieldset
+      class="govuk-fieldset"
+    >
+      <legend
+        class="govuk-fieldset__legend govuk-visually-hidden"
+      >
+        Enter details for cap 2
+      </legend>
+      <div
+        class="flex-container"
+      >
+        <div
+          class="govuk-!-margin-left-4 govuk-!-margin-right-2"
+        >
+          <div
+            class="govuk-form-group "
+          >
+            <div
+              class=""
+            >
+              <input
+                aria-describedby="cap-name-hint-1"
+                class="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
+                id="cap-name-1"
+                maxlength="50"
+                name="capNameInput1"
+                type="text"
+                value="First cap"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
+        >
+          <div
+            class="govuk-form-group "
+          >
+            <div
+              class="govuk-currency-input"
+            >
+              <div
+                class="govuk-currency-input__inner"
+              >
+                <span
+                  class="govuk-currency-input__inner__unit"
+                >
+                  £
+                </span>
+                <div
+                  class=""
+                >
+                  <input
+                    aria-describedby="cap-price-hint-1"
+                    class="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
+                    data-non-numeric="true"
+                    id="cap-price-1"
+                    name="capPriceInput1"
+                    type="text"
+                    value="3.33"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
+        >
+          <div
+            class="govuk-form-group "
+          >
+            <div
+              class="govuk-input__wrapper expiry-selector-wrapper"
+            >
+              <div
+                class=""
+              >
+                <input
+                  aria-labelledby="cap-duration-hint"
+                  class="govuk-input govuk-input--width-3"
+                  id="cap-period-duration-quantity-1"
+                  name="capDurationInput1"
+                  type="text"
+                  value="2"
+                />
+              </div>
+              <div
+                class=""
+              >
+                <select
+                  aria-labelledby="cap-duration-hint"
+                  class="govuk-select expiry-selector-units"
+                  id="cap-duration-unit-1"
+                  name="capDurationUnitsInput1"
+                >
+                  <option
+                    disabled=""
+                    value=""
+                  >
+                    Select One
+                  </option>
+                  <option
+                    selected=""
+                    value="day"
+                  >
+                    Days
+                  </option>
+                  <option
+                    value="week"
+                  >
+                    Weeks
+                  </option>
+                  <option
+                    value="month"
+                  >
+                    Months
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</DocumentFragment>
 `;
 
 exports[`CapTable should render the table with no errors 1`] = `
-<div>
-  <fieldset
-    className="govuk-fieldset"
-    key="0"
-  >
-    <legend
-      className="govuk-fieldset__legend govuk-visually-hidden"
+<DocumentFragment>
+  <div>
+    <fieldset
+      class="govuk-fieldset"
     >
-      Enter details for cap 1
-    </legend>
-    <div
-      className="flex-container"
-    >
-      <div
-        className="govuk-!-margin-left-4 govuk-!-margin-right-2"
+      <legend
+        class="govuk-fieldset__legend govuk-visually-hidden"
       >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "cap-name-0",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
-        >
-          <label
-            className="govuk-label"
-            htmlFor="cap-name-0"
-          >
-            <span
-              className="govuk-visually-hidden"
-            >
-              Cap Name - Cap 1
-            </span>
-            <span
-              aria-hidden={true}
-            >
-              Cap name
-            </span>
-          </label>
-          <span
-            className="govuk-hint"
-            id="cap-name-hint-0"
-          >
-            50 characters max
-          </span>
-           
-          <FormElementWrapper
-            addFormGroupError={false}
-            errorClass="govuk-input--error"
-            errorId="cap-name-0"
-            errors={Array []}
-            hideText={true}
-          >
-            <input
-              aria-describedby="cap-name-hint-0"
-              className="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
-              defaultValue="First cap"
-              id="cap-name-0"
-              maxLength={50}
-              name="capNameInput0"
-              type="text"
-            />
-          </FormElementWrapper>
-        </FormGroupWrapper>
-      </div>
+        Enter details for cap 1
+      </legend>
       <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
+        class="flex-container"
       >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "cap-price-0",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
-        >
-          <label
-            className="govuk-label"
-            htmlFor="cap-price-0"
-          >
-            <span
-              className="govuk-visually-hidden"
-            >
-              Cap Price, in pounds - Cap 1
-            </span>
-            <span
-              aria-hidden={true}
-            >
-              Price
-            </span>
-          </label>
-          <span
-            className="govuk-hint"
-            id="cap-price-hint-0"
-          >
-            e.g. 2.99
-          </span>
-          <div
-            className="govuk-currency-input"
-          >
-            <div
-              className="govuk-currency-input__inner"
-            >
-              <span
-                className="govuk-currency-input__inner__unit"
-              >
-                £
-              </span>
-              <FormElementWrapper
-                addFormGroupError={false}
-                errorClass="govuk-input--error"
-                errorId="cap-price-0"
-                errors={Array []}
-                hideText={true}
-              >
-                <input
-                  aria-describedby="cap-price-hint-0"
-                  className="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
-                  data-non-numeric={true}
-                  defaultValue="2.33"
-                  id="cap-price-0"
-                  name="capPriceInput0"
-                  type="text"
-                />
-              </FormElementWrapper>
-            </div>
-          </div>
-        </FormGroupWrapper>
-      </div>
-      <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "cap-period-duration-quantity-0",
-              "cap-period-duration-unit-0",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
-        >
-          <label
-            className="govuk-label"
-            htmlFor="cap-period-duration"
-          >
-            Cap duration
-          </label>
-          <span
-            className="govuk-hint"
-            id="cap-duration-hint"
-          >
-            For example, 3 days
-          </span>
-          <ExpirySelector
-            cap={true}
-            defaultDuration="2"
-            defaultUnit="week"
-            errors={Array []}
-            hideFormGroupError={true}
-            hintId="cap-duration-hint"
-            quantityId="cap-period-duration-quantity-0"
-            quantityName="capDurationInput0"
-            unitId="cap-duration-unit-0"
-            unitName="capDurationUnitsInput0"
-          />
-        </FormGroupWrapper>
-      </div>
-    </div>
-  </fieldset>
-  <fieldset
-    className="govuk-fieldset"
-    key="1"
-  >
-    <legend
-      className="govuk-fieldset__legend govuk-visually-hidden"
-    >
-      Enter details for cap 2
-    </legend>
-    <div
-      className="flex-container"
-    >
-      <div
-        className="govuk-!-margin-left-4 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "cap-name-1",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
-        >
-          <FormElementWrapper
-            addFormGroupError={false}
-            errorClass="govuk-input--error"
-            errorId="cap-name-1"
-            errors={Array []}
-            hideText={true}
-          >
-            <input
-              aria-describedby="cap-name-hint-1"
-              className="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
-              defaultValue="Second cap"
-              id="cap-name-1"
-              maxLength={50}
-              name="capNameInput1"
-              type="text"
-            />
-          </FormElementWrapper>
-        </FormGroupWrapper>
-      </div>
-      <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "cap-price-1",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
+        <div
+          class="govuk-!-margin-left-4 govuk-!-margin-right-2"
         >
           <div
-            className="govuk-currency-input"
+            class="govuk-form-group "
           >
-            <div
-              className="govuk-currency-input__inner"
+            <label
+              class="govuk-label"
+              for="cap-name-0"
             >
               <span
-                className="govuk-currency-input__inner__unit"
+                class="govuk-visually-hidden"
               >
-                £
+                Cap Name - Cap 1
               </span>
-              <FormElementWrapper
-                addFormGroupError={false}
-                errorClass="govuk-input--error"
-                errorId="cap-price-1"
-                errors={Array []}
-                hideText={true}
+              <span
+                aria-hidden="true"
               >
-                <input
-                  aria-describedby="cap-price-hint-1"
-                  className="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
-                  data-non-numeric={true}
-                  defaultValue="3.33"
-                  id="cap-price-1"
-                  name="capPriceInput1"
-                  type="text"
-                />
-              </FormElementWrapper>
+                Cap name
+              </span>
+            </label>
+            <span
+              class="govuk-hint"
+              id="cap-name-hint-0"
+            >
+              50 characters max
+            </span>
+             
+            <div
+              class=""
+            >
+              <input
+                aria-describedby="cap-name-hint-0"
+                class="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
+                id="cap-name-0"
+                maxlength="50"
+                name="capNameInput0"
+                type="text"
+                value="First cap"
+              />
             </div>
           </div>
-        </FormGroupWrapper>
-      </div>
-      <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "cap-period-duration-quantity-1",
-              "cap-period-duration-unit-1",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
         >
-          <ExpirySelector
-            cap={true}
-            defaultDuration="2"
-            defaultUnit="day"
-            errors={Array []}
-            hideFormGroupError={true}
-            hintId="cap-duration-hint"
-            quantityId="cap-period-duration-quantity-1"
-            quantityName="capDurationInput1"
-            unitId="cap-duration-unit-1"
-            unitName="capDurationUnitsInput1"
-          />
-        </FormGroupWrapper>
+          <div
+            class="govuk-form-group "
+          >
+            <label
+              class="govuk-label"
+              for="cap-price-0"
+            >
+              <span
+                class="govuk-visually-hidden"
+              >
+                Cap Price, in pounds - Cap 1
+              </span>
+              <span
+                aria-hidden="true"
+              >
+                Price
+              </span>
+            </label>
+            <span
+              class="govuk-hint"
+              id="cap-price-hint-0"
+            >
+              e.g. 2.99
+            </span>
+            <div
+              class="govuk-currency-input"
+            >
+              <div
+                class="govuk-currency-input__inner"
+              >
+                <span
+                  class="govuk-currency-input__inner__unit"
+                >
+                  £
+                </span>
+                <div
+                  class=""
+                >
+                  <input
+                    aria-describedby="cap-price-hint-0"
+                    class="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
+                    data-non-numeric="true"
+                    id="cap-price-0"
+                    name="capPriceInput0"
+                    type="text"
+                    value="2.33"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
+        >
+          <div
+            class="govuk-form-group "
+          >
+            <label
+              class="govuk-label"
+              for="cap-period-duration"
+            >
+              Cap duration
+            </label>
+            <span
+              class="govuk-hint"
+              id="cap-duration-hint"
+            >
+              For example, 3 days
+            </span>
+            <div
+              class="govuk-input__wrapper expiry-selector-wrapper"
+            >
+              <div
+                class=""
+              >
+                <input
+                  aria-labelledby="cap-duration-hint"
+                  class="govuk-input govuk-input--width-3"
+                  id="cap-period-duration-quantity-0"
+                  name="capDurationInput0"
+                  type="text"
+                  value="2"
+                />
+              </div>
+              <div
+                class=""
+              >
+                <select
+                  aria-labelledby="cap-duration-hint"
+                  class="govuk-select expiry-selector-units"
+                  id="cap-duration-unit-0"
+                  name="capDurationUnitsInput0"
+                >
+                  <option
+                    disabled=""
+                    value=""
+                  >
+                    Select One
+                  </option>
+                  <option
+                    value="day"
+                  >
+                    Days
+                  </option>
+                  <option
+                    selected=""
+                    value="week"
+                  >
+                    Weeks
+                  </option>
+                  <option
+                    value="month"
+                  >
+                    Months
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </fieldset>
-</div>
+    </fieldset>
+    <fieldset
+      class="govuk-fieldset"
+    >
+      <legend
+        class="govuk-fieldset__legend govuk-visually-hidden"
+      >
+        Enter details for cap 2
+      </legend>
+      <div
+        class="flex-container"
+      >
+        <div
+          class="govuk-!-margin-left-4 govuk-!-margin-right-2"
+        >
+          <div
+            class="govuk-form-group "
+          >
+            <div
+              class=""
+            >
+              <input
+                aria-describedby="cap-name-hint-1"
+                class="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
+                id="cap-name-1"
+                maxlength="50"
+                name="capNameInput1"
+                type="text"
+                value="Second cap"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
+        >
+          <div
+            class="govuk-form-group "
+          >
+            <div
+              class="govuk-currency-input"
+            >
+              <div
+                class="govuk-currency-input__inner"
+              >
+                <span
+                  class="govuk-currency-input__inner__unit"
+                >
+                  £
+                </span>
+                <div
+                  class=""
+                >
+                  <input
+                    aria-describedby="cap-price-hint-1"
+                    class="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
+                    data-non-numeric="true"
+                    id="cap-price-1"
+                    name="capPriceInput1"
+                    type="text"
+                    value="3.33"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
+        >
+          <div
+            class="govuk-form-group "
+          >
+            <div
+              class="govuk-input__wrapper expiry-selector-wrapper"
+            >
+              <div
+                class=""
+              >
+                <input
+                  aria-labelledby="cap-duration-hint"
+                  class="govuk-input govuk-input--width-3"
+                  id="cap-period-duration-quantity-1"
+                  name="capDurationInput1"
+                  type="text"
+                  value="2"
+                />
+              </div>
+              <div
+                class=""
+              >
+                <select
+                  aria-labelledby="cap-duration-hint"
+                  class="govuk-select expiry-selector-units"
+                  id="cap-duration-unit-1"
+                  name="capDurationUnitsInput1"
+                >
+                  <option
+                    disabled=""
+                    value=""
+                  >
+                    Select One
+                  </option>
+                  <option
+                    selected=""
+                    value="day"
+                  >
+                    Days
+                  </option>
+                  <option
+                    value="week"
+                  >
+                    Weeks
+                  </option>
+                  <option
+                    value="month"
+                  >
+                    Months
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</DocumentFragment>
 `;

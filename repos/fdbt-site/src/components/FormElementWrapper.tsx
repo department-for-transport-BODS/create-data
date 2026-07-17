@@ -5,7 +5,7 @@ interface FormElementWrapperProps {
     errors: ErrorInfo[];
     errorId: string;
     errorClass: string;
-    children: ReactElement;
+    children: ReactElement<ErrorDecoratableProps>;
     addFormGroupError?: boolean;
     hideText?: boolean;
 }
@@ -22,7 +22,16 @@ interface FormErrorBlockProps {
     errorIds: string[];
 }
 
-const addErrorClasses = (child: ReactElement, errorClass: string, errorId: string): ReactElement =>
+interface ErrorDecoratableProps {
+    className?: string;
+    'aria-describedby'?: string;
+}
+
+const addErrorClasses = (
+    child: ReactElement<ErrorDecoratableProps>,
+    errorClass: string,
+    errorId: string,
+): ReactElement<ErrorDecoratableProps> =>
     React.cloneElement(child, {
         className: child.props.className ? `${child.props.className} ${errorClass}` : errorClass,
         'aria-describedby': `${errorId}-error`,
@@ -75,9 +84,7 @@ const FormElementWrapper = ({
                 </span>
             )}
 
-            {errorForElement
-                ? React.Children.map(children, (child: ReactElement) => addErrorClasses(child, errorClass, errorId))
-                : children}
+            {errorForElement ? addErrorClasses(children, errorClass, errorId) : children}
         </div>
     );
 };

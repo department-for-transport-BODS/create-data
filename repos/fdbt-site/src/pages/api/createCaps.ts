@@ -106,7 +106,7 @@ export default async (req: NextApiRequestWithSession, res: NextApiResponse): Pro
 
         if (errors.length > 0) {
             updateSessionAttribute(req, CREATE_CAPS_ATTRIBUTE, { errors, ...createdCap });
-            redirectTo(res, `/createCaps${!!id ? `?id=${id}` : ''}`);
+            redirectTo(res, `/createCaps${id ? `?id=${id}` : ''}`);
             return;
         }
 

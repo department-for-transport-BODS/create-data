@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import InsetText from '../components/InsetText';
 import { getSessionAttribute } from '../utils/sessions';
 import TwoThirdsLayout from '../layout/Layout';
@@ -54,25 +54,23 @@ const GroupPassengerTypes = ({ groupPassengerInfo, csrfToken }: GroupPassengerTy
                                 errorClass="govuk-checkboxes--error"
                             >
                                 <div className="govuk-checkboxes">
-                                    {PASSENGER_TYPES_LIST.map(
-                                        (passenger, index): ReactElement => (
-                                            <div className="govuk-checkboxes__item" key={passenger.passengerTypeValue}>
-                                                <input
-                                                    className="govuk-checkboxes__input"
-                                                    id={`passenger-type-${index}`}
-                                                    name="passengerTypes"
-                                                    type="checkbox"
-                                                    value={passenger.passengerTypeValue}
-                                                />
-                                                <label
-                                                    className="govuk-label govuk-checkboxes__label"
-                                                    htmlFor={`passenger-type-${index}`}
-                                                >
-                                                    {`${passenger.passengerTypeDisplay}`}
-                                                </label>
-                                            </div>
-                                        ),
-                                    )}
+                                    {PASSENGER_TYPES_LIST.map((passenger, index): ReactElement => (
+                                        <div className="govuk-checkboxes__item" key={passenger.passengerTypeValue}>
+                                            <input
+                                                className="govuk-checkboxes__input"
+                                                id={`passenger-type-${index}`}
+                                                name="passengerTypes"
+                                                type="checkbox"
+                                                value={passenger.passengerTypeValue}
+                                            />
+                                            <label
+                                                className="govuk-label govuk-checkboxes__label"
+                                                htmlFor={`passenger-type-${index}`}
+                                            >
+                                                {`${passenger.passengerTypeDisplay}`}
+                                            </label>
+                                        </div>
+                                    ))}
                                 </div>
                             </FormElementWrapper>
                         </fieldset>

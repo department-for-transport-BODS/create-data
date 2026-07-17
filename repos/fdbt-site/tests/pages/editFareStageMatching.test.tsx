@@ -1,17 +1,21 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
-import { shallow, ShallowWrapper } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import * as auroradb from '../../src/data/auroradb';
 import * as s3 from '../../src/data/s3';
-import { mockRawService, userFareStages, fareStageNames, zoneStops, selectedFareStages } from '../testData/mockData';
+import {
+    mockRawService,
+    userFareStages,
+    fareStageNames,
+    zoneStops,
+    editSelectedFareStages,
+} from '../testData/mockData';
 
 import EditFareStageMatching from '../../src/pages/editFareStageMatching';
 
-jest.mock('../../src/data/auroradb.ts');
-jest.mock('../../src/data/s3.ts');
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('Edit Fare Stage Matching Page', () => {
-    let wrapper: ShallowWrapper;
+    let wrapper: DocumentFragment;
     let getServiceByNocCodeLineNameAndDataSourceSpy = jest.spyOn(auroradb, 'getServiceByIdAndDataSource');
     let batchGetStopsByAtcoCodeSpy = jest.spyOn(auroradb, 'batchGetStopsByAtcoCode');
     let getUserFareStagesSpy = jest.spyOn(s3, 'getUserFareStages');
@@ -25,12 +29,12 @@ describe('Edit Fare Stage Matching Page', () => {
         batchGetStopsByAtcoCodeSpy.mockImplementation(() => Promise.resolve([]));
         getUserFareStagesSpy.mockImplementation(() => Promise.resolve(userFareStages));
 
-        wrapper = shallow(
+        wrapper = renderToFragment(
             <EditFareStageMatching
                 fareStages={fareStageNames}
                 stops={zoneStops}
                 errors={[]}
-                selectedFareStages={selectedFareStages}
+                selectedFareStages={editSelectedFareStages}
                 csrfToken=""
                 backHref=""
                 warning={false}
@@ -50,12 +54,12 @@ describe('Edit Fare Stage Matching Page', () => {
     });
 
     it('should render correctly for tnds data source', () => {
-        wrapper = shallow(
+        wrapper = renderToFragment(
             <EditFareStageMatching
                 fareStages={fareStageNames}
                 stops={zoneStops}
                 errors={[]}
-                selectedFareStages={selectedFareStages}
+                selectedFareStages={editSelectedFareStages}
                 csrfToken=""
                 backHref=""
                 warning={false}
@@ -68,12 +72,12 @@ describe('Edit Fare Stage Matching Page', () => {
     });
 
     it('should render correctly for inbound', () => {
-        wrapper = shallow(
+        wrapper = renderToFragment(
             <EditFareStageMatching
                 fareStages={fareStageNames}
                 stops={zoneStops}
                 errors={[]}
-                selectedFareStages={selectedFareStages}
+                selectedFareStages={editSelectedFareStages}
                 csrfToken=""
                 backHref=""
                 warning={false}
@@ -86,7 +90,7 @@ describe('Edit Fare Stage Matching Page', () => {
     });
 
     it('should render with error', () => {
-        wrapper = shallow(
+        wrapper = renderToFragment(
             <EditFareStageMatching
                 fareStages={fareStageNames}
                 stops={zoneStops}
@@ -97,7 +101,7 @@ describe('Edit Fare Stage Matching Page', () => {
                         id: 'option-0',
                     },
                 ]}
-                selectedFareStages={selectedFareStages}
+                selectedFareStages={editSelectedFareStages}
                 csrfToken=""
                 backHref=""
                 warning={false}
@@ -110,12 +114,12 @@ describe('Edit Fare Stage Matching Page', () => {
     });
 
     it('should render with warning', () => {
-        wrapper = shallow(
+        wrapper = renderToFragment(
             <EditFareStageMatching
                 fareStages={fareStageNames}
                 stops={zoneStops}
                 errors={[]}
-                selectedFareStages={selectedFareStages}
+                selectedFareStages={editSelectedFareStages}
                 csrfToken=""
                 backHref=""
                 warning={true}

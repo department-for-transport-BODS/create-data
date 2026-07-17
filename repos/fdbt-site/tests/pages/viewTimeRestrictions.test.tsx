@@ -1,7 +1,11 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import ViewTimeRestrictions, { TimeRestrictionCardBody } from '../../src/pages/viewTimeRestrictions';
 import { PremadeTimeRestriction } from '../../src/interfaces';
+
+jest.mock('next/router', () => ({ useRouter: () => ({ pathname: '/viewTimeRestrictions' }) }));
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 const timeRestrictions: PremadeTimeRestriction[] = [
     {
@@ -56,7 +60,7 @@ const timeRestrictions: PremadeTimeRestriction[] = [
 describe('pages', () => {
     describe('view time restrictions', () => {
         it('should render correctly when no time restrictions', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ViewTimeRestrictions
                     csrfToken={''}
                     timeRestrictions={[]}
@@ -68,7 +72,7 @@ describe('pages', () => {
         });
 
         it('should render correctly when time restrictions exist', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ViewTimeRestrictions
                     csrfToken={''}
                     timeRestrictions={timeRestrictions}
@@ -82,7 +86,7 @@ describe('pages', () => {
 
     describe('time restrictions inner component', () => {
         it('renders normally when time restrictions are present', () => {
-            const tree = shallow(<TimeRestrictionCardBody entity={timeRestrictions[0]} />);
+            const tree = renderToFragment(<TimeRestrictionCardBody entity={timeRestrictions[0]} />);
             expect(tree).toMatchSnapshot();
         });
     });

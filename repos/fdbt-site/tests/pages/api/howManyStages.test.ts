@@ -17,7 +17,7 @@ describe('howManyStages', () => {
         });
         howManyStages(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/howManyStages',
         });
     });
@@ -32,7 +32,7 @@ describe('howManyStages', () => {
 
         howManyStages(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/error',
         });
     });
@@ -47,7 +47,7 @@ describe('howManyStages', () => {
 
         howManyStages(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/csvUpload',
         });
     });
@@ -62,7 +62,7 @@ describe('howManyStages', () => {
 
         howManyStages(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/chooseStages',
         });
     });

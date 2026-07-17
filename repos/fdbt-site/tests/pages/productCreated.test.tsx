@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import ProductCreated, { getServerSideProps } from '../../src/pages/productCreated';
 import { getMockContext } from '../testData/mockData';
 import {
@@ -9,16 +9,19 @@ import {
     SERVICE_ATTRIBUTE,
 } from '../../src/constants/attributes';
 import { OperatorAttribute } from '../../src/interfaces';
+import { getSessionAttribute } from '../../src/utils/sessions';
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('productCreated', () => {
         it('should render correctly for products that are not multi-operator external products', () => {
-            const tree = shallow(<ProductCreated csrfToken={'test'} isMultiOperatorExternalProduct={false} />);
+            const tree = renderToFragment(<ProductCreated csrfToken={'test'} isMultiOperatorExternalProduct={false} />);
             expect(tree).toMatchSnapshot();
         });
 
         it('should render correctly for multi-operator external products', () => {
-            const tree = shallow(<ProductCreated csrfToken={'test'} isMultiOperatorExternalProduct={true} />);
+            const tree = renderToFragment(<ProductCreated csrfToken={'test'} isMultiOperatorExternalProduct={true} />);
             expect(tree).toMatchSnapshot();
         });
     });
@@ -49,10 +52,10 @@ describe('pages', () => {
 
             getServerSideProps(ctx);
 
-            expect(ctx.req.session[OPERATOR_ATTRIBUTE]).toEqual(operatorData);
-            expect(ctx.req.session[FARE_TYPE_ATTRIBUTE]).toBeUndefined();
-            expect(ctx.req.session[SERVICE_ATTRIBUTE]).toBeUndefined();
-            expect(ctx.req.session[INPUT_METHOD_ATTRIBUTE]).toBeUndefined();
+            expect(getSessionAttribute(ctx.req, OPERATOR_ATTRIBUTE)).toEqual(operatorData);
+            expect(getSessionAttribute(ctx.req, FARE_TYPE_ATTRIBUTE)).toBeUndefined();
+            expect(getSessionAttribute(ctx.req, SERVICE_ATTRIBUTE)).toBeUndefined();
+            expect(getSessionAttribute(ctx.req, INPUT_METHOD_ATTRIBUTE)).toBeUndefined();
         });
     });
 });

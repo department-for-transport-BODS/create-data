@@ -1,10 +1,9 @@
-import { shallow } from 'enzyme';
-import React from 'react';
+import { render } from '@testing-library/react';
 import LoadingSpinner from '../../src/components/LoadingSpinner';
 
 describe('LoadingSpinner', () => {
     it('should render the loading spinner', () => {
-        const wrapper = shallow(<LoadingSpinner />);
-        expect(wrapper).toMatchSnapshot();
+        const { asFragment } = render(<LoadingSpinner />);
+        expect(asFragment()).toMatchSnapshot();
     });
 });

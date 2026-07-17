@@ -1,13 +1,15 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import PasswordUpdated, { getServerSideProps } from '../../src/pages/passwordUpdated';
 import { getMockContext } from '../testData/mockData';
 import { USER_ATTRIBUTE } from '../../src/constants/attributes';
 
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
+
 describe('passwordUpdated', () => {
     it('should render correctly', () => {
         const redirectTo = '/';
-        const tree = shallow(<PasswordUpdated redirectTo={redirectTo} />);
+        const tree = renderToFragment(<PasswordUpdated redirectTo={redirectTo} />);
         expect(tree).toMatchSnapshot();
     });
 

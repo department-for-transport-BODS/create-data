@@ -13,18 +13,40 @@ import {
 } from './steps';
 import { DateInput } from './types';
 
-export const throwInvalidRandomSelectorError = (): void => {
+export const throwInvalidRandomSelectorError = (): never => {
     throw new Error('Invalid random selector');
 };
 
 export const getElementById = (id: string): Cypress.Chainable<JQuery> => cy.get(`[id=${id}]`);
-export const getElementByText = (text: string): Cypress.Chainable<JQuery> => cy.contains(text);
+export const getElementByText = (text: string): Cypress.Chainable<JQuery> =>
+    cy.contains(text) as unknown as Cypress.Chainable<JQuery>;
 export const getElementByName = (id: string): Cypress.Chainable<JQuery> => cy.get(`[name=${id}]`);
 export const getElementByClass = (id: string): Cypress.Chainable<JQuery> => cy.get(`[class=${id}]`);
 export const getElementByDataTestId = (id: string): Cypress.Chainable<JQuery> => cy.get(`[data-test-id=${id}]`);
 
-export const clickElementById = (id: string): Cypress.Chainable<JQuery> => getElementById(id).click();
+export const clickElementById = (id: string): Cypress.Chainable<JQuery> => {
+    // Wait for the page to hydrate before interacting. The app adds `js-enabled`
+    // to <body> once React has mounted (_app.tsx). Clicking before hydration -
+    // common on the slower deployed environment - can silently drop the
+    // interaction (e.g. a radio selection is lost, so the form submits empty and
+    // bounces back on validation). This resolves after hydration, so it avoids
+    // acting too early.
+    cy.get('body.js-enabled', { timeout: 30000 });
+    return getElementById(id).click();
+};
 export const clickElementByText = (text: string): Cypress.Chainable<JQuery> => getElementByText(text).click();
+
+export const clearAndTypeById = (id: string, text: string): void => {
+    getElementById(id).click();
+    getElementById(id).clear();
+    getElementById(id).type(text);
+};
+
+export const clearAndTypeByName = (name: string, text: string): void => {
+    getElementByName(name).click();
+    getElementByName(name).clear();
+    getElementByName(name).type(text);
+};
 
 export const getRandomNumber = (min: number, max: number): number => Cypress._.random(min, max);
 
@@ -37,7 +59,16 @@ export const fareTypeToFareTypeIdMapper = (fareType: FareType): string => `radio
 
 export const startPageLinkClick = (): Cypress.Chainable<JQuery> => clickElementById('faretype-link');
 
-export const continueButtonClick = (): Cypress.Chainable<JQuery> => clickElementById('continue-button');
+// Clicks the continue submit button and waits for the resulting navigation to
+// commit (the URL changes) before returning. Consecutive continues (e.g. the two
+// in defineUserTypeAndTimeRestrictions) would otherwise race: the second fires
+// while the first's redirect is still in flight and re-submits the previous page.
+export const continueButtonClick = (): void => {
+    cy.url().then((before) => {
+        clickElementById('continue-button');
+        cy.url({ timeout: 30000 }).should('not.equal', before);
+    });
+};
 
 export const submitButtonClick = (): Cypress.Chainable<JQuery> => clickElementById('submit-button');
 
@@ -139,7 +170,7 @@ export const randomlySelectMultiServices = (): void => {
             break;
         case 2:
             cy.log('Few checkbox are selected');
-            getElementByClass('govuk-checkboxes__item').each((checkbox, index, checkboxes) => {
+            cy.get('.govuk-checkboxes__item').each((checkbox, index, checkboxes) => {
                 const numberOfCheckboxes = checkboxes.length;
                 if (numberOfCheckboxes === 1 || index !== numberOfCheckboxes - 1) {
                     cy.wrap(checkbox).click();
@@ -148,7 +179,7 @@ export const randomlySelectMultiServices = (): void => {
             break;
         case 3:
             cy.log('All checkbox are selected');
-            getElementByClass('govuk-checkboxes__item').each((checkbox) => {
+            cy.get('.govuk-checkboxes__item').each((checkbox) => {
                 cy.wrap(checkbox).click();
             });
             break;
@@ -249,9 +280,9 @@ export const completeDefineGroupPassengersPages = (groupSize: string): void => {
     const sortedPassengerTypes: string[] = [];
 
     getElementById(sortedPassengerTypeIds[0]).then(($elm0) => {
-        sortedPassengerTypes.push($elm0.attr('value'));
+        sortedPassengerTypes.push($elm0.attr('value') ?? '');
         getElementById(sortedPassengerTypeIds[1]).then(($elm1) => {
-            sortedPassengerTypes.push($elm1.attr('value'));
+            sortedPassengerTypes.push($elm1.attr('value') ?? '');
             continueButtonClick();
             sortedPassengerTypes.forEach((passengerType) => {
                 completeUserDetailsPage(true, groupSize, passengerType);
@@ -317,11 +348,11 @@ export const completePricingPerDistancePage = (productName: string): void => {
         getElementById(`price-per-km-${i}`).type(pricePerKm);
 
         if (i !== 0) {
-            getElementById(`distance-from-${i}`).clear().type(fromDistance);
+            clearAndTypeById(`distance-from-${i}`, fromDistance);
         }
 
         if (i !== randomSelector - 1) {
-            getElementById(`distance-to-${i}`).clear().type(toDistance);
+            clearAndTypeById(`distance-to-${i}`, toDistance);
         }
     }
 };
@@ -333,15 +364,20 @@ export const completeGroupPassengerDetailsPages = (): void => {
 
 export const randomlyDetermineUserType = (): void => {
     let passengerType;
-    getElementByClass('govuk-radios__input')
+    // Scope to the passenger type radios (name="passengerTypeId") rather than any
+    // `.govuk-radios__input`, so Cypress waits for the select passenger type page
+    // to render instead of grabbing radios from the previous page mid-navigation
+    // (e.g. the fareType page's `radio-option-*` radios).
+    cy.get('[name="passengerTypeId"]')
         .its('length')
         .then((length) => {
             const randomNumber = getRandomNumber(0, length - 1);
-            getElementByClass('govuk-radios__input')
+            cy.get('[name="passengerTypeId"]').eq(randomNumber).click();
+            cy.get('[name="passengerTypeId"]')
                 .eq(randomNumber)
-                .click()
                 .then(($radio) => {
-                    passengerType = $radio.attr('aria-label');
+                    // The radio id is `${name}-radio`; derive the passenger type name from it
+                    passengerType = $radio.attr('id')?.replace(/-radio$/, '');
                     cy.wrap(passengerType).as('passengerType');
                 });
         });
@@ -355,11 +391,11 @@ export const randomlyDeterminePurchaseType = (isOtherProduct?: boolean): void =>
         .its('length')
         .then((length) => {
             const randomNumber = getRandomNumber(0, length - 1);
+            getElementByClass('govuk-checkboxes__input').eq(randomNumber).click();
             getElementByClass('govuk-checkboxes__input')
                 .eq(randomNumber)
-                .click()
                 .then(($radio) => {
-                    const radioPurchaseType = $radio.attr('value');
+                    const radioPurchaseType = $radio.attr('value') ?? '';
                     purchaseType = (JSON.parse(radioPurchaseType) as { name: string }).name;
                     cy.wrap(purchaseType).as('purchaseType');
                     if (isOtherProduct) {
@@ -380,10 +416,10 @@ export const selectTimeRestriction = (): void => {
         .its('length')
         .then((length) => {
             const randomNumber = getRandomNumber(0, length - 1);
+            getElementById('conditional-time-restriction').find('[class=govuk-radios__input]').eq(randomNumber).click();
             getElementById('conditional-time-restriction')
                 .find('[class=govuk-radios__input]')
                 .eq(randomNumber)
-                .click()
                 .then(($radio) => {
                     const timeRestriction = $radio.attr('value');
                     cy.wrap(timeRestriction).as('timeRestriction');
@@ -418,10 +454,17 @@ export const randomlyDecideTimeRestrictions = (isEditing?: boolean): void => {
         });
     }
     cy.get('@noSelected').then((noSelected) => {
-        if (randomNumber === 1 && noSelected) {
-            // otherwise select a time restriction
-            clickElementById('valid-days-required');
-            selectTimeRestriction();
+        if (noSelected) {
+            if (randomNumber === 1) {
+                // choose "Yes" and pick a time restriction
+                clickElementById('valid-days-required');
+                selectTimeRestriction();
+            } else {
+                // Explicitly choose "No" rather than relying on the radio's default
+                // checked state, so the form always submits a valid selection and
+                // doesn't bounce back on validation.
+                clickElementById('valid-days-not-required');
+            }
         }
     });
     continueButtonClick();
@@ -439,9 +482,9 @@ export const randomlyDecideTermRestrictions = (): void => {
 export const clickAllCheckboxes = (): string[] => {
     const input: string[] = [];
     getElementByClass('govuk-checkboxes__input').each((checkbox, index) => {
-        cy.wrap(checkbox).click();
+        cy.wrap(checkbox).check();
         const name = checkbox.attr('name');
-        input[index] = name.split('#')[0];
+        input[index] = name?.split('#')[0] ?? '';
         cy.wrap(input).as('input');
     });
     return input;
@@ -452,7 +495,7 @@ export const getAllCheckboxesData = (): void => {
     getElementByClass('govuk-checkboxes__input').each((checkbox, index) => {
         cy.wrap(checkbox);
         const name = checkbox.attr('name');
-        input[index] = name.split('#')[0];
+        input[index] = name?.split('#')[0] ?? '';
         cy.wrap(input).as('input');
     });
 };
@@ -475,9 +518,9 @@ export const clickSomeCheckboxes = (): void => {
     getElementByClass('govuk-checkboxes__input').each((checkbox, index, checkboxes) => {
         const numberOfCheckboxes = checkboxes.length;
         if (numberOfCheckboxes === 1 || index !== numberOfCheckboxes - 1) {
-            cy.wrap(checkbox).click();
+            cy.wrap(checkbox).check();
             const name = checkbox.attr('name');
-            input[index] = name.split('#')[0];
+            input[index] = name?.split('#')[0] ?? '';
             cy.wrap(input).as('input');
         }
     });
@@ -486,7 +529,7 @@ export const clickSomeCheckboxes = (): void => {
 export const clickFirstCheckboxIfMultiple = (): void => {
     getElementByClass('govuk-checkboxes__input').each((checkbox, index, checkboxes) => {
         if (checkboxes.length > 1 && index === 0) {
-            cy.wrap(checkbox).click();
+            cy.wrap(checkbox).uncheck();
         }
     });
 };
@@ -510,14 +553,18 @@ export const completeSalesOfferPackagesForMultipleProducts = (
             const randomSalesOfferPackageIndex = getRandomNumber(0, numberOfSalesOfferPackages - 1);
 
             getElementById(`${idPrefix}${randomSalesOfferPackageIndex}`).click();
+            getElementById(`${idPrefix}${randomSalesOfferPackageIndex}`).should('be.checked');
             if (getRandomNumber(0, 1) === 1 && numberOfSalesOfferPackages > 1) {
                 const otherIndex =
                     randomSalesOfferPackageIndex === numberOfSalesOfferPackages - 1
                         ? randomSalesOfferPackageIndex - 1
                         : randomSalesOfferPackageIndex + 1;
 
+                // Wait for the checkbox state to settle (it re-renders the price input) before typing
                 getElementById(`${idPrefix}${otherIndex}`).click();
-                getElementById(`${productName}-price-${otherIndex}`).clear().type('9.99');
+                getElementById(`${idPrefix}${otherIndex}`).should('be.checked');
+                getElementById(`${productName}-price-${otherIndex}`).should('be.enabled');
+                clearAndTypeById(`${productName}-price-${otherIndex}`, '9.99');
             }
         });
     }
@@ -591,7 +638,7 @@ export const completeProductDateInformationPage = (): DateInput => {
         }
     }
     continueButtonClick();
-    return input;
+    return input as DateInput;
 };
 
 export const isFinished = (): void => {
@@ -639,11 +686,11 @@ export const clickRandomElementInTable = (tableName: string, elementId: string):
 };
 
 export const completeOperatorSearch = (): void => {
-    getElementByClass('govuk-radios__input').each((element) => {
-        if (element.attr('aria-label') === 'test') {
-            cy.wrap(element).click();
-        }
-    });
+    // Select the operator group named exactly 'test' (not 'test2') on the reuseOperatorGroup page
+    cy.contains('h4', /^test$/)
+        .parents('.card')
+        .find('.govuk-radios__input')
+        .click();
 
     continueButtonClick();
 };
@@ -662,7 +709,10 @@ export const addOtherProductsIfNotPresent = (): void => {
     let flatFareWithExemptions = false;
     cy.wrap(flatFareWithExemptions).as('flatFareWithExemptions');
 
-    cy.get(`[data-card-count]`).then((element) => {
+    // The other products page renders server-side and fetches matching JSON from
+    // S3 (plus DB lookups) for every existing product, so it can take well over
+    // Cypress's 4s default to load on the deployed environment. Allow more time.
+    cy.get(`[data-card-count]`, { timeout: 30000 }).then((element) => {
         const totNumberOfProducts = Number(element.attr('data-card-count'));
         if (totNumberOfProducts > 0) {
             getElementByClass('govuk-table__body')
@@ -800,9 +850,8 @@ export const addSingleProductIfNotPresent = (): void => {
 
 export const retryRouteChoiceOnReturnProductError = (): void => {
     cy.get('main').then(($main) => {
-        if ($main.text().includes('you cannot create a return product for this service')) {
-            cy.log('Retrying, could not create a return product for for the first service');
-            selectRandomOptionFromDropDown('service');
+        if ($main.text().includes('this service only operates in one direction')) {
+            cy.log('Service only operates in one direction, continuing as a circular service');
             continueButtonClick();
         }
     });

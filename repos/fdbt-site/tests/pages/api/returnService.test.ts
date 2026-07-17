@@ -46,11 +46,11 @@ describe('returnService', () => {
 
         await returnService(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/returnService?selectedServiceId=1',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, RETURN_SERVICE_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, RETURN_SERVICE_ATTRIBUTE, {
             lineName: '',
             lineId: '',
             nocCode: '',
@@ -76,7 +76,7 @@ describe('returnService', () => {
 
         await returnService(req, res);
 
-        expect(redirectToErrorSpy).toBeCalledWith(
+        expect(redirectToErrorSpy).toHaveBeenCalledWith(
             res,
             'There was a problem selecting the additional return service:',
             'api.returnService',
@@ -108,7 +108,7 @@ describe('returnService', () => {
 
         await returnService(req, res);
 
-        expect(redirectToErrorSpy).toBeCalledWith(
+        expect(redirectToErrorSpy).toHaveBeenCalledWith(
             res,
             'There was a problem selecting the additional return service:',
             'api.returnService',
@@ -133,7 +133,7 @@ describe('returnService', () => {
         });
         await returnService(req, res);
 
-        expect(userData.putUserDataInProductsBucketWithFilePath).toBeCalledWith(
+        expect(userData.putUserDataInProductsBucketWithFilePath).toHaveBeenCalledWith(
             {
                 ...expectedReturnTicketWithAdditionalService,
                 additionalServices: [
@@ -149,9 +149,9 @@ describe('returnService', () => {
             'matchingJsonLink',
         );
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, RETURN_SERVICE_ATTRIBUTE, undefined);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, RETURN_SERVICE_ATTRIBUTE, undefined);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/products/productDetails?productId=1&serviceId=2',
         });
     });

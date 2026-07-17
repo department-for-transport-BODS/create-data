@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import Service, { getServerSideProps } from '../../src/pages/service';
 import { getServicesByNocCodeAndDataSource } from '../../src/data/auroradb';
 import { getMockContext } from '../testData/mockData';
@@ -12,6 +12,8 @@ import {
 import { ServiceType } from '../../src/interfaces';
 
 jest.mock('../../src/data/auroradb');
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 const mockServices: ServiceType[] = [
     {
@@ -52,28 +54,9 @@ describe('pages', () => {
         beforeEach(() => {
             (getServicesByNocCodeAndDataSource as jest.Mock).mockImplementation(() => mockServices);
         });
-        /*
-         it('should render correctly when data source is tnds', () => {
-             const tree = shallow(
-                 <Service
-                     operator="Connexions Buses"
-                     passengerType="Adult"
-                     services={mockServices}
-                     error={[]}
-                     dataSourceAttribute={{
-                         source: 'tnds',
-                         hasTnds: true,
-                         hasBods: false,
-                     }}
-                     csrfToken=""
-                 />,
-             );
-             expect(tree).toMatchSnapshot();
-         });
-         */
 
         it('should render correctly when data source is bods', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <Service
                     operator="Connexions Buses"
                     passengerType="Adult"
@@ -92,7 +75,7 @@ describe('pages', () => {
         });
 
         it('shows operator name above the select box', () => {
-            const wrapper = shallow(
+            const { container } = render(
                 <Service
                     operator="Connexions Buses"
                     passengerType="Adult"
@@ -107,13 +90,13 @@ describe('pages', () => {
                     csrfToken=""
                 />,
             );
-            const operatorWelcome = wrapper.find('#service-operator-passenger-type-hint').first();
+            const operatorWelcome = container.querySelector('#service-operator-passenger-type-hint');
 
-            expect(operatorWelcome.text()).toBe('Connexions Buses - Adult');
+            expect(operatorWelcome?.textContent).toBe('Connexions Buses - Adult');
         });
 
         it('shows a list of services for the operator in the select box with tnds data source', () => {
-            const wrapper = shallow(
+            const { container } = render(
                 <Service
                     operator="Connexions Buses"
                     passengerType="Adult"
@@ -128,16 +111,16 @@ describe('pages', () => {
                     csrfToken=""
                 />,
             );
-            const operatorServices = wrapper.find('.service-option');
+            const operatorServices = container.querySelectorAll('.service-option');
 
             expect(operatorServices).toHaveLength(3);
-            expect(operatorServices.first().text()).toBe('123 - Start date 05/02/2020');
-            expect(operatorServices.at(1).text()).toBe('X1 - Start date 06/02/2020');
-            expect(operatorServices.at(2).text()).toBe('Infinity Line - Start date 07/02/2020');
+            expect(operatorServices[0].textContent).toBe('123 - Start date 05/02/2020');
+            expect(operatorServices[1].textContent).toBe('X1 - Start date 06/02/2020');
+            expect(operatorServices[2].textContent).toBe('Infinity Line - Start date 07/02/2020');
         });
 
         it('shows a list of services for the operator in the select box with bods data source', () => {
-            const wrapper = shallow(
+            const { container } = render(
                 <Service
                     operator="Connexions Buses"
                     passengerType="Adult"
@@ -152,12 +135,12 @@ describe('pages', () => {
                     csrfToken=""
                 />,
             );
-            const operatorServices = wrapper.find('.service-option');
+            const operatorServices = container.querySelectorAll('.service-option');
 
             expect(operatorServices).toHaveLength(3);
-            expect(operatorServices.first().text()).toBe('123 Manchester - Leeds (Start date 05/02/2020)');
-            expect(operatorServices.at(1).text()).toBe('X1 Edinburgh - N/A (Start date 06/02/2020)');
-            expect(operatorServices.at(2).text()).toBe('Infinity Line N/A - London (Start date 07/02/2020)');
+            expect(operatorServices[0].textContent).toBe('123 Manchester - Leeds (Start date 05/02/2020)');
+            expect(operatorServices[1].textContent).toBe('X1 Edinburgh - N/A (Start date 06/02/2020)');
+            expect(operatorServices[2].textContent).toBe('Infinity Line N/A - London (Start date 07/02/2020)');
         });
 
         it('returns operator value and list of services for the multi modal operator if multi modal attribute is present in session', async () => {
@@ -306,7 +289,7 @@ describe('pages', () => {
 
             await getServerSideProps(ctx);
 
-            expect(ctx.res?.writeHead).toBeCalledWith(302, { Location: '/noServices' });
+            expect(ctx.res?.writeHead).toHaveBeenCalledWith(302, { Location: '/noServices' });
         });
 
         it('throws error if noc invalid', async () => {

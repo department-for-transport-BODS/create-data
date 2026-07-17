@@ -1,4 +1,4 @@
-import React, { ReactElement, PropsWithChildren } from 'react';
+import { ReactElement, PropsWithChildren } from 'react';
 import { ErrorInfo } from '../interfaces';
 
 interface ErrorSummary {

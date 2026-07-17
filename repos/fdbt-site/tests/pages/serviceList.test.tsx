@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import ServiceList, { getServerSideProps } from '../../src/pages/serviceList';
 import { expectedMultiOperatorGeoZoneTicketWithMultipleProducts, getMockContext } from '../testData/mockData';
 import {
@@ -18,6 +18,8 @@ import {
 import { ErrorInfo, ServiceType, ServicesInfo } from '../../src/interfaces';
 
 jest.mock('../../src/data/auroradb');
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('serviceList', () => {
@@ -109,7 +111,7 @@ describe('pages', () => {
         });
 
         it('should render correctly with bods data source', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ServiceList
                     serviceList={mockServiceList}
                     errors={[]}
@@ -132,7 +134,7 @@ describe('pages', () => {
         });
 
         it('should render correctly for multiOperator', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ServiceList
                     serviceList={mockServiceList}
                     errors={[]}
@@ -155,7 +157,7 @@ describe('pages', () => {
         });
 
         it('should render an error when the error flag is set to true', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ServiceList
                     serviceList={[]}
                     errors={mockError}
@@ -178,7 +180,7 @@ describe('pages', () => {
         });
 
         it('should render correctly when in edit mode', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ServiceList
                     serviceList={mockServiceList}
                     errors={[]}

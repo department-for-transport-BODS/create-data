@@ -302,7 +302,7 @@ describe('searchOperators', () => {
             selectedOperators: [],
         });
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/searchOperators?searchOperator=manchester',
         });
     });
@@ -333,7 +333,7 @@ describe('searchOperators', () => {
             expectedSessionAttributeCall,
         );
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/searchOperators',
         });
     });
@@ -383,7 +383,7 @@ describe('searchOperators', () => {
             expectedSessionAttributeCall,
         );
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/searchOperators',
         });
     });
@@ -428,7 +428,7 @@ describe('searchOperators', () => {
             MULTIPLE_OPERATOR_ATTRIBUTE,
             expectedSessionAttributeCall,
         );
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/searchOperators',
         });
     });
@@ -462,7 +462,7 @@ describe('searchOperators', () => {
         await searchOperators(req, res);
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, MULTIPLE_OPERATOR_ATTRIBUTE, undefined);
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/viewOperatorGroups',
         });
     });
@@ -496,7 +496,7 @@ describe('searchOperators', () => {
         await searchOperators(req, res);
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, MULTIPLE_OPERATOR_ATTRIBUTE, undefined);
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/viewOperatorGroups',
         });
     });
@@ -531,7 +531,7 @@ describe('searchOperators', () => {
         await searchOperators(req, res);
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, MULTIPLE_OPERATOR_ATTRIBUTE, undefined);
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/viewOperatorGroups',
         });
     });

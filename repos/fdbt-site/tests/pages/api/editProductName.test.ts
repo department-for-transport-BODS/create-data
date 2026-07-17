@@ -34,7 +34,7 @@ describe('editProductName', () => {
 
         await editProductName(req, res);
 
-        expect(userData.putUserDataInProductsBucketWithFilePath).toBeCalledWith(
+        expect(userData.putUserDataInProductsBucketWithFilePath).toHaveBeenCalledWith(
             {
                 ...expectedPointToPointPeriodTicket,
                 products: [{ ...expectedPointToPointPeriodTicket.products[0], productName: 'My product' }],
@@ -42,7 +42,7 @@ describe('editProductName', () => {
             'test/path',
         );
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/products/productDetails?productId=2',
         });
     });
@@ -88,7 +88,7 @@ describe('editProductName', () => {
 
         await editProductName(req, res);
 
-        expect(redirectToErrorSpy).toBeCalledWith(
+        expect(redirectToErrorSpy).toHaveBeenCalledWith(
             res,
             'There was a problem editing the selected product name',
             'api.editProductName',
@@ -109,7 +109,7 @@ describe('editProductName', () => {
 
         await editProductName(req, res);
 
-        expect(redirectToErrorSpy).toBeCalledWith(
+        expect(redirectToErrorSpy).toHaveBeenCalledWith(
             res,
             'There was a problem editing the selected product name',
             'api.editProductName',
@@ -137,7 +137,7 @@ describe('editProductName', () => {
 
         await editProductName(req, res);
 
-        expect(redirectToErrorSpy).toBeCalledWith(
+        expect(redirectToErrorSpy).toHaveBeenCalledWith(
             res,
             'There was a problem editing the selected product name',
             'api.editProductName',

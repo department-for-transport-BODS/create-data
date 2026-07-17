@@ -1,4 +1,4 @@
-import { clickElementById, clickElementByText, getElementByClass, getElementByName } from './helpers';
+import { clearAndTypeByName, clickElementById, clickElementByText, getElementByClass } from './helpers';
 
 interface PurchaseMethod {
     purchaseLocations: string[];
@@ -12,11 +12,15 @@ const enterPurchaseMethodDetails = ({ purchaseLocations, paymentMethods, ticketF
     paymentMethods.map(clickElementById);
     ticketFormats.map(clickElementById);
 
-    getElementByName('name').clear().type(name);
+    clearAndTypeByName('name', name);
 };
 
 export const addPurchaseMethod = (purchaseMethod: PurchaseMethod, isCapped = false): void => {
-    isCapped ? clickElementByText('Add a capped purchase method') : clickElementByText('Add a purchase method');
+    if (isCapped) {
+        clickElementByText('Add a capped purchase method');
+    } else {
+        clickElementByText('Add a purchase method');
+    }
     enterPurchaseMethodDetails(purchaseMethod);
     clickElementByText('Add purchase method');
 };
@@ -40,12 +44,16 @@ export const createEditPurchaseMethod = (isCapped = false): void => {
     const purchaseMethodCard = getElementByClass('card').eq(0);
     purchaseMethodCard.should('include.text', purchaseMethod.name);
     purchaseMethodCard.should('include.text', 'Purchase locations: On board');
-    isCapped
-        ? purchaseMethodCard.should('include.text', 'Payment methods: Debit card, Credit card')
-        : purchaseMethodCard.should('include.text', 'Payment methods: Cash, Debit card');
-    isCapped
-        ? purchaseMethodCard.should('include.text', 'Ticket formats: Mobile app')
-        : purchaseMethodCard.should('include.text', 'Ticket formats: Digital');
+    if (isCapped) {
+        purchaseMethodCard.should('include.text', 'Payment methods: Debit card, Credit card');
+    } else {
+        purchaseMethodCard.should('include.text', 'Payment methods: Cash, Debit card');
+    }
+    if (isCapped) {
+        purchaseMethodCard.should('include.text', 'Ticket formats: Mobile app');
+    } else {
+        purchaseMethodCard.should('include.text', 'Ticket formats: Digital');
+    }
 
     purchaseMethodCard.contains('Edit').click();
 
@@ -64,13 +72,19 @@ export const createEditPurchaseMethod = (isCapped = false): void => {
 
     const editedCard = getElementByClass('card').eq(0);
     editedCard.should('include.text', editedPurchaseMethod.name);
-    isCapped
-        ? editedCard.should('include.text', 'Purchase locations: Mobile device')
-        : editedCard.should('include.text', 'Purchase locations: Online');
-    isCapped
-        ? editedCard.should('include.text', 'Payment methods: Debit card, Credit card, Mobile phone')
-        : editedCard.should('include.text', 'Payment methods: Cash, Debit card, Credit card');
-    isCapped
-        ? editedCard.should('include.text', 'Ticket formats: Mobile app, Smart card')
-        : editedCard.should('include.text', 'Ticket formats: Paper ticket, Digital');
+    if (isCapped) {
+        editedCard.should('include.text', 'Purchase locations: Mobile device');
+    } else {
+        editedCard.should('include.text', 'Purchase locations: Online');
+    }
+    if (isCapped) {
+        editedCard.should('include.text', 'Payment methods: Debit card, Credit card, Mobile phone');
+    } else {
+        editedCard.should('include.text', 'Payment methods: Cash, Debit card, Credit card');
+    }
+    if (isCapped) {
+        editedCard.should('include.text', 'Ticket formats: Mobile app, Smart card');
+    } else {
+        editedCard.should('include.text', 'Ticket formats: Paper ticket, Digital');
+    }
 };

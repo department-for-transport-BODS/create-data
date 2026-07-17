@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import * as sessions from '../../src/utils/sessions';
 import FareType, { buildUuid, getServerSideProps } from '../../src/pages/fareType';
 import { getMockContext, mockSchemOpIdToken } from '../testData/mockData';
@@ -7,6 +7,8 @@ import { getAllServicesByNocCode, getOperatorDetails } from '../../src/data/auro
 import { GS_REFERER, OPERATOR_ATTRIBUTE } from '../../src/constants/attributes';
 
 jest.mock('../../src/data/auroradb');
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     const writeHeadMock = jest.fn();
@@ -19,19 +21,21 @@ describe('pages', () => {
 
     describe('fareType', () => {
         it('should render correctly', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <FareType operatorName="Blackpool Transport" schemeOp={false} errors={[]} csrfToken="" />,
             );
             expect(tree).toMatchSnapshot();
         });
 
         it('should render correctly for a scheme operator', () => {
-            const tree = shallow(<FareType operatorName="Blackpool Transport" schemeOp errors={[]} csrfToken="" />);
+            const tree = renderToFragment(
+                <FareType operatorName="Blackpool Transport" schemeOp errors={[]} csrfToken="" />,
+            );
             expect(tree).toMatchSnapshot();
         });
 
         it('should render error messaging when errors are passed to the page', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <FareType operatorName="Blackpool Transport" schemeOp={false} errors={mockErrors} csrfToken="" />,
             );
             expect(tree).toMatchSnapshot();
@@ -65,7 +69,7 @@ describe('pages', () => {
                 const updateSessionAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');
                 const mockContext = getMockContext();
                 await getServerSideProps(mockContext);
-                expect(updateSessionAttributeSpy).toBeCalledWith(mockContext.req, GS_REFERER, undefined);
+                expect(updateSessionAttributeSpy).toHaveBeenCalledWith(mockContext.req, GS_REFERER, undefined);
             });
 
             it('should return expected props when a the user logged in is not a scheme operator', async () => {
@@ -98,7 +102,7 @@ describe('pages', () => {
                     },
                 });
                 await getServerSideProps(mockContext);
-                expect(writeHeadMock).toBeCalledWith(302, { Location: '/manageOperatorDetails' });
+                expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/manageOperatorDetails' });
             });
         });
     });

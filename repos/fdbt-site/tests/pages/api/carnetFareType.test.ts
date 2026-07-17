@@ -18,7 +18,7 @@ describe('fareType', () => {
             mockWriteHeadFn: writeHeadMock,
         });
         carnetFareType(req, res);
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, CARNET_FARE_TYPE_ATTRIBUTE, true);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, CARNET_FARE_TYPE_ATTRIBUTE, true);
     });
 
     it('should return 302 redirect to /definePassengerType when schoolService is selected', () => {
@@ -27,11 +27,11 @@ describe('fareType', () => {
             mockWriteHeadFn: writeHeadMock,
         });
         carnetFareType(req, res);
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, FARE_TYPE_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, FARE_TYPE_ATTRIBUTE, {
             fareType: req.body.fareType,
         });
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/selectPassengerType',
         });
     });
@@ -42,10 +42,10 @@ describe('fareType', () => {
             mockWriteHeadFn: writeHeadMock,
         });
         carnetFareType(req, res);
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, FARE_TYPE_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, FARE_TYPE_ATTRIBUTE, {
             fareType: req.body.fareType,
         });
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/selectPassengerType',
         });
     });
@@ -62,10 +62,10 @@ describe('fareType', () => {
             },
         });
         carnetFareType(req, res);
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, FARE_TYPE_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, FARE_TYPE_ATTRIBUTE, {
             errors: mockError,
         });
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/carnetFareType',
         });
     });

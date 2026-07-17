@@ -1,39 +1,39 @@
-import awsParamStore from 'aws-param-store';
+import difference from 'lodash/difference';
 import { ResultSetHeader } from 'mysql2';
 import { createPool, Pool } from 'mysql2/promise';
 import { INTERNAL_NOC } from '../constants';
 import {
+    Cap,
+    MyFaresService,
     Operator,
     OperatorGroup,
     PremadeTimeRestriction,
-    ServiceType,
     ServiceCount,
-    MyFaresService,
+    ServiceType,
     ServiceWithOriginAndDestination,
-    Cap,
 } from '../interfaces';
-import logger from '../utils/logger';
-import { convertDateFormat } from '../utils';
-import { difference } from 'lodash';
 import {
-    RawService,
-    RawJourneyPattern,
-    RawSalesOfferPackage,
-    DbTimeRestriction,
-    PassengerType,
-    GroupPassengerType,
-    GroupPassengerTypeReference,
-    SinglePassengerType,
-    GroupPassengerTypeDb,
-    FullGroupPassengerType,
-    MyFaresProduct,
-    RawMyFaresProduct,
-    MyFaresOtherProduct,
     DbProduct,
+    DbTimeRestriction,
+    FullGroupPassengerType,
+    GroupPassengerType,
+    GroupPassengerTypeDb,
+    GroupPassengerTypeReference,
+    MyFaresOtherProduct,
+    MyFaresProduct,
+    PassengerType,
     ProductAdditionaNocs,
+    RawJourneyPattern,
+    RawMyFaresProduct,
+    RawSalesOfferPackage,
+    RawService,
+    SinglePassengerType,
 } from '../interfaces/dbTypes';
-import { Stop, FromDb, SalesOfferPackage, CompanionInfo, OperatorDetails } from '../interfaces/matchingJsonTypes';
-import moment from 'moment';
+import { CompanionInfo, FromDb, OperatorDetails, SalesOfferPackage, Stop } from '../interfaces/matchingJsonTypes';
+import { convertDateFormat } from '../utils';
+import dayjs from '../utils/dayjs';
+import logger from '../utils/logger';
+import { getSsmValue } from './ssm';
 
 interface ServiceQueryData {
     operatorShortName: string;
@@ -90,7 +90,7 @@ export class MultipleResultsError extends Error {
     }
 }
 
-export const getAuroraDBClient = (): Pool => {
+export const getAuroraDBClient = async (): Promise<Pool> => {
     let client: Pool;
 
     if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
@@ -106,8 +106,8 @@ export const getAuroraDBClient = (): Pool => {
     } else {
         client = createPool({
             host: process.env.RDS_HOST,
-            user: awsParamStore.getParameterSync('fdbt-rds-site-username', { region: 'eu-west-2' }).Value,
-            password: awsParamStore.getParameterSync('fdbt-rds-site-password', { region: 'eu-west-2' }).Value,
+            user: await getSsmValue('fdbt-rds-site-username'),
+            password: await getSsmValue('fdbt-rds-site-password'),
             database: 'fdbt',
             waitForConnections: true,
             connectionLimit: 5,
@@ -118,6 +118,8 @@ export const getAuroraDBClient = (): Pool => {
     return client;
 };
 
+const formatMysqlDate = (date: string): string => dayjs(date).format('YYYY-MM-DD HH:mm:ss');
+
 export const replaceInternalNocCode = (nocCode: string): string => {
     if (nocCode === INTERNAL_NOC) {
         return 'BLAC';
@@ -125,7 +127,7 @@ export const replaceInternalNocCode = (nocCode: string): string => {
     return nocCode;
 };
 
-let connectionPool: Pool;
+let connectionPoolPromise: Promise<Pool> | undefined;
 
 const executeQuery = async <T>(
     query: string,
@@ -133,9 +135,11 @@ const executeQuery = async <T>(
     values: any | any[] | { [param: string]: any },
     insertMultiple?: boolean,
 ): Promise<T> => {
-    if (!connectionPool) {
-        connectionPool = getAuroraDBClient();
+    if (!connectionPoolPromise) {
+        connectionPoolPromise = getAuroraDBClient();
     }
+
+    const connectionPool = await connectionPoolPromise;
 
     const [rows] = await (insertMultiple
         ? connectionPool.query(query, [values])
@@ -1531,7 +1535,7 @@ export const getPassengerTypesByNocCode = async <T extends keyof SavedPassengerT
         if (type === 'single') {
             return queryResults.map(
                 (row) =>
-                    ({ id: row.id, name: row.name, passengerType: JSON.parse(row.contents) } as SavedPassengerType[T]),
+                    ({ id: row.id, name: row.name, passengerType: JSON.parse(row.contents) }) as SavedPassengerType[T],
             );
         } else {
             // filter out the ones with IDs that are created in global settings
@@ -1881,8 +1885,8 @@ export const insertProducts = async (
             dateModified,
             fareType,
             lineId || '',
-            startDate,
-            endDate || '',
+            formatMysqlDate(startDate),
+            endDate ? formatMysqlDate(endDate) : '',
             incomplete,
             operatorGroupId || null,
         ]);
@@ -2000,7 +2004,7 @@ export const updateProductIncompleteStatus = async (productId: number | string, 
     });
 
     try {
-        const dateTime = moment().toDate();
+        const dateTime = dayjs().toDate();
         const updateProductsQuery = 'UPDATE products SET incomplete = ?, dateModified = ? WHERE id = ?';
         await executeQuery<ResultSetHeader>(updateProductsQuery, [incomplete, dateTime, productId]);
     } catch (error) {
@@ -2020,12 +2024,17 @@ export const updateProductDates = async (
     });
 
     try {
-        const dateTime = moment().toDate();
+        const dateTime = dayjs().toDate();
         const updateQuery = `UPDATE products
                              SET startDate = ?, endDate = ?, dateModified = ?
                              WHERE id = ?`;
 
-        const meta = await executeQuery<ResultSetHeader>(updateQuery, [startDate, endDate, dateTime, productId]);
+        const meta = await executeQuery<ResultSetHeader>(updateQuery, [
+            formatMysqlDate(startDate),
+            endDate ? formatMysqlDate(endDate) : '',
+            dateTime,
+            productId,
+        ]);
 
         if (meta.affectedRows > 1) {
             throw new Error(`Updated too many rows when updating product dates ${meta}`);
@@ -2076,7 +2085,7 @@ export const updateProductFareTriangleModifiedByNocCodeAndId = async (
     });
 
     try {
-        const dateTime = moment().toDate();
+        const dateTime = dayjs().toDate();
         const updateQuery = `
                 UPDATE products
                 SET fareTriangleModified = ?, dateModified = ?

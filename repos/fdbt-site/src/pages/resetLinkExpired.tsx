@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { NextPage } from 'next';
 import TwoThirdsLayout from '../layout/Layout';
 import { USER_ATTRIBUTE } from '../constants/attributes';
@@ -25,7 +25,7 @@ const ResetLinkExpired: NextPage = (): ReactElement => (
     </TwoThirdsLayout>
 );
 
-export const getServerSideProps = (ctx: NextPageContextWithSession): {} => {
+export const getServerSideProps = (ctx: NextPageContextWithSession): object => {
     updateSessionAttribute(ctx.req, USER_ATTRIBUTE, undefined);
     return { props: {} };
 };

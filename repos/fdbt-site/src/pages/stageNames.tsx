@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import uniqBy from 'lodash/uniqBy';
 import TwoThirdsLayout from '../layout/Layout';
 import { FARE_STAGES_ATTRIBUTE, STAGE_NAMES_ATTRIBUTE } from '../constants/attributes';

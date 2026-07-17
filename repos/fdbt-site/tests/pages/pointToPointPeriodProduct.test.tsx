@@ -1,11 +1,13 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import PointToPointPeriodProduct from '../../src/pages/pointToPointPeriodProduct';
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('pointToPointPeriodProduct', () => {
         it('should render correctly on first load', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <PointToPointPeriodProduct
                     errors={[]}
                     csrfToken=""
@@ -19,7 +21,7 @@ describe('pages', () => {
         });
 
         it('should render correctly for school ticket', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <PointToPointPeriodProduct
                     errors={[]}
                     csrfToken=""
@@ -33,7 +35,7 @@ describe('pages', () => {
         });
 
         it('should render error messaging when errors are passed', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <PointToPointPeriodProduct
                     errors={[
                         {

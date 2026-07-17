@@ -1,8 +1,10 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import ResetPassword, { getServerSideProps } from '../../src/pages/resetPassword';
 import { getMockContext } from '../testData/mockData';
 import { USER_ATTRIBUTE } from '../../src/constants/attributes';
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('resetPassword', () => {
     // gets the time value in seconds and adds one hour
@@ -19,7 +21,7 @@ describe('resetPassword', () => {
     });
 
     it('should render correctly', () => {
-        const tree = shallow(
+        const tree = renderToFragment(
             <ResetPassword
                 username="test@tfn.com"
                 regKey="123456"
@@ -32,7 +34,7 @@ describe('resetPassword', () => {
     });
 
     it('should render error messaging when errors are passed', () => {
-        const tree = shallow(
+        const tree = renderToFragment(
             <ResetPassword
                 username="test@tfn.com"
                 regKey="123456"
@@ -65,7 +67,7 @@ describe('resetPassword', () => {
 
         it('should throw an error when a query string parameter is missing', () => {
             const ctx = getMockContext();
-            expect(() => getServerSideProps(ctx)).toThrowError('Could not retrieve parameters from query string');
+            expect(() => getServerSideProps(ctx)).toThrow('Could not retrieve parameters from query string');
         });
 
         it('should redirect to /resetLinkExpired when the link has expired', () => {

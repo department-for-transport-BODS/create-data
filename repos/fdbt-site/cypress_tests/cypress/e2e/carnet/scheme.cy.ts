@@ -7,7 +7,7 @@ import {
     completeMultiOpGeoZonePages,
 } from '../../support/steps';
 
-describe.skip('the scheme carnet product journeys', () => {
+describe('the scheme carnet product journeys', () => {
     it('completes successfully for a single product scheme carnet flat fare', () => {
         selectFareType('carnetFlatFare', true);
         defineUserTypeAndTimeRestrictions();

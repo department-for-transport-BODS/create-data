@@ -40,41 +40,44 @@ export const sanitiseReqBody = (
 ): SanitisedBodyAndErrors => {
     const errors: ErrorInfo[] = [];
 
-    const sanitisedBody = products.reduce((sanitisedBody, product) => {
-        const sopInput = req.body[`${productPrefix}${product.productName}`];
+    const sanitisedBody = products.reduce(
+        (sanitisedBody, product) => {
+            const sopInput = req.body[`${productPrefix}${product.productName}`];
 
-        if (!sopInput) {
-            errors.push({
-                errorMessage: 'Choose at least one sales offer package from the options',
-                id: `${productPrefix}${removeAllWhiteSpace(product.productName)}-checkbox-0`,
-            });
-            return sanitisedBody;
-        }
-
-        const sops = toArray(sopInput).map((sop) => JSON.parse(sop) as SalesOfferPackage);
-
-        const sopsWithPrices = sops.map((sop) => {
-            const priceInput = req.body[`${pricePrefix}${product.productName}-${sop.id}`];
-            if (priceInput === undefined) {
-                return sop;
-            }
-            const price = removeExcessWhiteSpace(priceInput);
-            const priceError = checkPriceIsValid(price, 'product');
-            if (priceError) {
+            if (!sopInput) {
                 errors.push({
-                    errorMessage: priceError,
-                    id: `price-${removeAllWhiteSpace(product.productName)}-${sop.id}`,
+                    errorMessage: 'Choose at least one sales offer package from the options',
+                    id: `${productPrefix}${removeAllWhiteSpace(product.productName)}-checkbox-0`,
                 });
+                return sanitisedBody;
             }
-            return {
-                ...sop,
-                price,
-            };
-        });
 
-        sanitisedBody[product.productName] = sopsWithPrices;
-        return sanitisedBody;
-    }, {} as { [key: string]: SalesOfferPackage[] });
+            const sops = toArray(sopInput).map((sop) => JSON.parse(sop) as SalesOfferPackage);
+
+            const sopsWithPrices = sops.map((sop) => {
+                const priceInput = req.body[`${pricePrefix}${product.productName}-${sop.id}`];
+                if (priceInput === undefined) {
+                    return sop;
+                }
+                const price = removeExcessWhiteSpace(priceInput);
+                const priceError = checkPriceIsValid(price, 'product');
+                if (priceError) {
+                    errors.push({
+                        errorMessage: priceError,
+                        id: `price-${removeAllWhiteSpace(product.productName)}-${sop.id}`,
+                    });
+                }
+                return {
+                    ...sop,
+                    price,
+                };
+            });
+
+            sanitisedBody[product.productName] = sopsWithPrices;
+            return sanitisedBody;
+        },
+        {} as { [key: string]: SalesOfferPackage[] },
+    );
 
     return {
         sanitisedBody,
@@ -91,7 +94,7 @@ export const getProductsByValues = (
         return multipleProductAttribute.products;
     }
     // if it has a price per distance attribute e.g. 'capped' or 'flatFare'
-    if (!!pricePerDistanceName) {
+    if (pricePerDistanceName) {
         return [{ productName: pricePerDistanceName, productPrice: '' }];
     }
     if (ticket && 'products' in ticket && 'productName' in ticket.products[0] && 'productPrice' in ticket.products[0]) {
@@ -172,7 +175,7 @@ export default async (req: NextApiRequestWithSession, res: NextApiResponse): Pro
         }
 
         if (!multipleProductAttribute) {
-            const key = !!cappedProductName ? cappedProductName : 'product';
+            const key = cappedProductName ? cappedProductName : 'product';
             const salesOfferPackages: SalesOfferPackage[] = sanitisedBody[key];
 
             updateSessionAttribute(req, SALES_OFFER_PACKAGES_ATTRIBUTE, salesOfferPackages);

@@ -19,7 +19,7 @@ import * as virusCheck from '../../../src/utils/apiUtils/virusScan';
 import * as auroradb from '../../../src/data/auroradb';
 import { secondTestCsv } from '../../testData/csvZoneData';
 import * as s3 from '../../../src/data/s3';
-import { AWSError } from 'aws-sdk';
+import { S3ServiceException } from '@aws-sdk/client-s3';
 
 describe('serviceList', () => {
     const writeHeadMock = jest.fn();
@@ -31,17 +31,20 @@ describe('serviceList', () => {
     const getProductsSecondaryOperatorInfoSpy = jest.spyOn(s3, 'getProductsSecondaryOperatorInfo');
     const updateProductAdditionalNocSpy = jest.spyOn(auroradb, 'updateProductAdditionalNoc');
 
-    const file = {
-        'csv-upload': {
-            size: 999,
-            path: 'string',
-            name: 'string',
-            type: 'text/csv',
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            toJSON(): any {
-                return '';
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const file: any = {
+        'csv-upload': [
+            {
+                size: 999,
+                filepath: 'string',
+                originalFilename: 'string',
+                mimetype: 'text/csv',
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                toJSON(): any {
+                    return '';
+                },
             },
-        },
+        ],
     };
 
     afterEach(() => {
@@ -67,11 +70,11 @@ describe('serviceList', () => {
 
         await serviceList(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/serviceList',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, SERVICE_LIST_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, SERVICE_LIST_ATTRIBUTE, {
             errors: [{ errorMessage: 'Choose at least one service from the options', id: 'checkbox-0' }],
         });
     });
@@ -102,11 +105,11 @@ describe('serviceList', () => {
 
         await serviceList(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/multipleProducts',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, SERVICE_LIST_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, SERVICE_LIST_ATTRIBUTE, {
             selectedServices: [
                 {
                     lineId: 'YpQjUw',
@@ -162,11 +165,11 @@ describe('serviceList', () => {
 
         await serviceList(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/multipleProducts',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, SERVICE_LIST_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, SERVICE_LIST_ATTRIBUTE, {
             selectedServices: [
                 {
                     lineId: 'YpQjUw',
@@ -192,7 +195,9 @@ describe('serviceList', () => {
             ],
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, STOPS_EXEMPTION_ATTRIBUTE, { exemptStops: zoneStops });
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, STOPS_EXEMPTION_ATTRIBUTE, {
+            exemptStops: zoneStops,
+        });
     });
 
     it('redirects to /searchOperators if input is valid and the user is entering details for a multi-operator ticket', async () => {
@@ -225,7 +230,7 @@ describe('serviceList', () => {
 
         await serviceList(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/reuseOperatorGroup',
         });
     });
@@ -260,7 +265,7 @@ describe('serviceList', () => {
 
         await serviceList(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/multipleProducts',
         });
     });
@@ -292,7 +297,7 @@ describe('serviceList', () => {
 
         await serviceList(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/products/productDetails?productId=2',
         });
     });
@@ -354,7 +359,7 @@ describe('serviceList', () => {
 
         await serviceList(req, res);
 
-        expect(putUserDataInProductsBucketWithFilePathSpy).toBeCalledWith(
+        expect(putUserDataInProductsBucketWithFilePathSpy).toHaveBeenCalledWith(
             {
                 exemptStops: [
                     {
@@ -378,8 +383,8 @@ describe('serviceList', () => {
             },
             'test/path_TEST.json',
         );
-        expect(updateProductAdditionalNocSpy).toBeCalledWith('2', 'TEST', false);
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(updateProductAdditionalNocSpy).toHaveBeenCalledWith('2', 'TEST', false);
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/products/productDetails?productId=2',
         });
     });
@@ -442,7 +447,7 @@ describe('serviceList', () => {
 
         await serviceList(req, res);
 
-        expect(putUserDataInProductsBucketWithFilePathSpy).toBeCalledWith(
+        expect(putUserDataInProductsBucketWithFilePathSpy).toHaveBeenCalledWith(
             {
                 exemptStops: [
                     {
@@ -466,8 +471,8 @@ describe('serviceList', () => {
             },
             'test/path_NWBT.json',
         );
-        expect(updateProductAdditionalNocSpy).toBeCalledWith('2', 'NWBT', false);
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(updateProductAdditionalNocSpy).toHaveBeenCalledWith('2', 'NWBT', false);
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/products/productDetails?productId=2',
         });
     });
@@ -504,16 +509,15 @@ describe('serviceList', () => {
         });
 
         getProductsSecondaryOperatorInfoSpy.mockImplementation().mockRejectedValue({
-            name: 'AWSError',
+            name: 'NoSuchKey',
             message: 'No data found',
-            code: 'NoSuchKey',
-        } as AWSError);
+        } as S3ServiceException);
 
         updateProductAdditionalNocSpy.mockResolvedValue(undefined);
 
         await serviceList(req, res);
 
-        expect(putUserDataInProductsBucketWithFilePathSpy).toBeCalledWith(
+        expect(putUserDataInProductsBucketWithFilePathSpy).toHaveBeenCalledWith(
             {
                 selectedServices: [
                     {
@@ -527,8 +531,8 @@ describe('serviceList', () => {
             },
             'test/path_NWBT.json',
         );
-        expect(updateProductAdditionalNocSpy).toBeCalledWith('2', 'NWBT', false);
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(updateProductAdditionalNocSpy).toHaveBeenCalledWith('2', 'NWBT', false);
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/products/productDetails?productId=2',
         });
     });

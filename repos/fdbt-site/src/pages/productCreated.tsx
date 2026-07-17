@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import TwoThirdsLayout from '../layout/Layout';
 import { FEEDBACK_LINK, INTERNAL_NOC } from '../constants';
 import { getUuidFromSession, deleteAllCookiesOnServerSide, getAndValidateNoc, getCsrfToken } from '../utils';
@@ -92,7 +92,7 @@ const ProductCreated = ({ isMultiOperatorExternalProduct = false, csrfToken }: P
     </TwoThirdsLayout>
 );
 
-export const getServerSideProps = (ctx: NextPageContextWithSession): {} => {
+export const getServerSideProps = (ctx: NextPageContextWithSession): object => {
     const uuid = getUuidFromSession(ctx);
     const noc = getAndValidateNoc(ctx);
 

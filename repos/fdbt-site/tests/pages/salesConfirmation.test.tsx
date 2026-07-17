@@ -1,6 +1,5 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
-import moment from 'moment';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import SalesConfirmation, {
     buildSalesConfirmationElements,
     getServerSideProps,
@@ -11,11 +10,14 @@ import { getMockContext } from '../testData/mockData';
 import { CAPS_DEFINITION_ATTRIBUTE, PRODUCT_DATE_ATTRIBUTE } from '../../src/constants/attributes';
 import { CapExpiryUnit } from '../../src/interfaces/matchingJsonTypes';
 import * as db from '../../src/data/auroradb';
+import dayjs from 'dayjs';
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('confirmation', () => {
         it('should render correctly', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <SalesConfirmation
                     salesOfferPackages={[
                         {
@@ -151,8 +153,8 @@ describe('pages', () => {
                         isCapped: false,
                     },
                 ],
-                moment().toISOString(),
-                moment().add(100, 'years').toISOString(),
+                dayjs().toISOString(),
+                dayjs().add(100, 'years').toISOString(),
                 'single',
                 true,
                 false,
@@ -180,12 +182,12 @@ describe('pages', () => {
                     name: 'Sales offer package 2 - Another sales offer package',
                 },
                 {
-                    content: moment().format('DD-MM-YYYY'),
+                    content: dayjs().format('DD-MM-YYYY'),
                     href: 'productDateInformation',
                     name: 'Ticket start date',
                 },
                 {
-                    content: moment().add(100, 'years').format('DD-MM-YYYY'),
+                    content: dayjs().add(100, 'years').format('DD-MM-YYYY'),
                     href: 'productDateInformation',
                     name: 'Ticket end date',
                 },
@@ -198,7 +200,7 @@ describe('pages', () => {
         });
 
         it('builds confirmation elements for multi product fares', () => {
-            const now = moment('2021-06-20');
+            const now = dayjs('2021-06-20');
 
             const result = buildSalesConfirmationElements(
                 [

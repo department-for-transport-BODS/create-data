@@ -20,7 +20,7 @@ describe('forgotPassword', () => {
         });
         await forgotPassword(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/resetConfirmation',
         });
     });
@@ -36,7 +36,7 @@ describe('forgotPassword', () => {
         });
         await forgotPassword(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/forgotPassword',
         });
     });
@@ -46,6 +46,6 @@ describe('forgotPassword', () => {
         const mockBody = { email: 'test@email.com' };
         const { req, res } = getMockRequestAndResponse({ cookieValues: {}, body: mockBody });
         await forgotPassword(req, res);
-        expect(updateSessionSpy).toBeCalledWith(req, FORGOT_PASSWORD_ATTRIBUTE, mockBody);
+        expect(updateSessionSpy).toHaveBeenCalledWith(req, FORGOT_PASSWORD_ATTRIBUTE, mockBody);
     });
 });

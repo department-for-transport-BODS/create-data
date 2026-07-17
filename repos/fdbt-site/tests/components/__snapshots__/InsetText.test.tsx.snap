@@ -1,9 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`InsetText should render the inset text 1`] = `
-<div
-  className="govuk-inset-text"
->
-  Snapshot text
-</div>
+<DocumentFragment>
+  <div
+    class="govuk-inset-text"
+  >
+    Snapshot text
+  </div>
+</DocumentFragment>
 `;

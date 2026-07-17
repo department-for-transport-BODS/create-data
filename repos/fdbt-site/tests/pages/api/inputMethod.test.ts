@@ -21,7 +21,7 @@ describe('inputMethod', () => {
             body: { inputMethod: selectedInputMethod },
         });
         inputMethod(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: redirect,
         });
     });
@@ -33,9 +33,9 @@ describe('inputMethod', () => {
         });
         inputMethod(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/inputMethod',
         });
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, INPUT_METHOD_ATTRIBUTE, mockError);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, INPUT_METHOD_ATTRIBUTE, mockError);
     });
 });

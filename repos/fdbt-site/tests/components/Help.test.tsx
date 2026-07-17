@@ -1,10 +1,9 @@
-import { shallow } from 'enzyme';
-import React from 'react';
+import { render } from '@testing-library/react';
 import Help from '../../src/components/Help';
 
 describe('Help', () => {
     it('should render the Help component', () => {
-        const wrapper = shallow(<Help />);
-        expect(wrapper).toMatchSnapshot();
+        const { asFragment } = render(<Help />);
+        expect(asFragment()).toMatchSnapshot();
     });
 });

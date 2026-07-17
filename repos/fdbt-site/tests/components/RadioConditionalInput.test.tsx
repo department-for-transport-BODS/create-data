@@ -1,5 +1,6 @@
-import { shallow } from 'enzyme';
-import React, { ReactElement } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import {
     conditionalRadioWithCheckedCheckboxInput,
     conditionalRadioWithDateInput,
@@ -30,8 +31,8 @@ describe('RadioConditionalInput', () => {
             ],
             radioError: [],
         };
-        const wrapper = shallow(<RadioConditionalInput fieldset={fieldset} />);
-        expect(wrapper).toMatchSnapshot();
+        const { asFragment } = render(<RadioConditionalInput fieldset={fieldset} />);
+        expect(asFragment()).toMatchSnapshot();
     });
 
     it('should hide the radio button heading when the fieldset has a hidden flag set', () => {
@@ -47,8 +48,8 @@ describe('RadioConditionalInput', () => {
             ],
             radioError: [],
         };
-        const wrapper = shallow(<RadioConditionalInput fieldset={fieldset} />);
-        expect(wrapper).toMatchSnapshot();
+        const { asFragment } = render(<RadioConditionalInput fieldset={fieldset} />);
+        expect(asFragment()).toMatchSnapshot();
     });
 
     it('should render a set of radio buttons with conditional inputs when given a fieldset referencing inputs', () => {
@@ -80,8 +81,8 @@ describe('RadioConditionalInput', () => {
             ],
             radioError: [],
         };
-        const wrapper = shallow(<RadioConditionalInput fieldset={fieldset} />);
-        expect(wrapper).toMatchSnapshot();
+        const { asFragment } = render(<RadioConditionalInput fieldset={fieldset} />);
+        expect(asFragment()).toMatchSnapshot();
     });
 
     describe('renderConditionalTextInput', () => {
@@ -106,7 +107,7 @@ describe('RadioConditionalInput', () => {
                 ],
                 inputErrors,
             };
-            const textInputElements: ReactElement = renderConditionalTextInput(mockRadio);
+            const textInputElements = renderConditionalTextInput(mockRadio) as ReactElement<any>;
             const ageRangeMinTextInput = textInputElements.props.children.props.children[1][0];
             const ageRangeMinFormElementWrapper = ageRangeMinTextInput.props.children[1];
 
@@ -139,7 +140,7 @@ describe('RadioConditionalInput', () => {
                 ],
                 inputErrors: [],
             };
-            const textInputElements: ReactElement = renderConditionalTextWithUnitsInput(mockRadio);
+            const textInputElements = renderConditionalTextWithUnitsInput(mockRadio) as ReactElement<any>;
             const inputFormGroup = textInputElements.props.children.props.children[1][0];
             const inputFormElementWrapper = inputFormGroup.props.children[1];
             expect(inputFormElementWrapper.props.children.type).toEqual('input');
@@ -172,7 +173,7 @@ describe('RadioConditionalInput', () => {
                 ],
                 inputErrors: [],
             };
-            const textInputElements: ReactElement = renderConditionalTextWithUnitsInput(mockRadio);
+            const textInputElements = renderConditionalTextWithUnitsInput(mockRadio) as ReactElement<any>;
             const textInputFormGroup = textInputElements.props.children.props.children[1][0];
             const selectInputFormGroup = textInputElements.props.children.props.children[1][1];
             const textInputFormElementWrapper = textInputFormGroup.props.children[1];
@@ -219,7 +220,7 @@ describe('RadioConditionalInput', () => {
                 ],
                 inputErrors,
             };
-            const textInputElements: ReactElement = renderConditionalTextWithUnitsInput(mockRadio);
+            const textInputElements = renderConditionalTextWithUnitsInput(mockRadio) as ReactElement<any>;
             const textInputFormGroup = textInputElements.props.children.props.children[1][0];
             const selectInputFormGroup = textInputElements.props.children.props.children[1][1];
             const textInputFormElementWrapper = textInputFormGroup.props.children[1];

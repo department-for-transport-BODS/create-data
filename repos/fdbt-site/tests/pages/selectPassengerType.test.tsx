@@ -1,7 +1,9 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import SelectPassengerType from '../../src/pages/selectPassengerType';
 import { FullGroupPassengerType, SinglePassengerType } from '../../src/interfaces/dbTypes';
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     const savedGroups: FullGroupPassengerType[] = [
@@ -83,7 +85,7 @@ describe('pages', () => {
 
     describe('selectPassengerType', () => {
         it('should render correctly with saved groups and saved passenger types', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <SelectPassengerType
                     errors={[]}
                     csrfToken="csrf"
@@ -96,7 +98,7 @@ describe('pages', () => {
             expect(tree).toMatchSnapshot();
         });
         it('should render correctly with saved groups and saved passenger types and errors', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <SelectPassengerType
                     errors={[{ errorMessage: 'Select a passenger type', id: 'individual-passengers' }]}
                     csrfToken="csrf"
@@ -109,7 +111,7 @@ describe('pages', () => {
             expect(tree).toMatchSnapshot();
         });
         it('should render correctly with no saved groups and saved passenger types', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <SelectPassengerType
                     errors={[]}
                     csrfToken="csrf"
@@ -123,7 +125,7 @@ describe('pages', () => {
         });
 
         it('should render correctly with no saved groups and no saved passenger types', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <SelectPassengerType
                     errors={[]}
                     csrfToken="csrf"

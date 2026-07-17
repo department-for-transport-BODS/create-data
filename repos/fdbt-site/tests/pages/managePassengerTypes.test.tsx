@@ -1,11 +1,13 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import ManagePassengerTypes from '../../src/pages/managePassengerTypes';
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('manage passenger types', () => {
         it('should render correctly', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ManagePassengerTypes editMode={false} csrfToken={''} errors={[]} inputs={undefined} />,
             );
 
@@ -22,7 +24,7 @@ describe('pages', () => {
                 },
             };
 
-            const tree = shallow(<ManagePassengerTypes editMode csrfToken={''} errors={[]} inputs={inputs} />);
+            const tree = renderToFragment(<ManagePassengerTypes editMode csrfToken={''} errors={[]} inputs={inputs} />);
 
             expect(tree).toMatchSnapshot();
         });
@@ -41,7 +43,7 @@ describe('pages', () => {
                 },
             };
 
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ManagePassengerTypes editMode={false} csrfToken={''} errors={errors} inputs={inputs} />,
             );
 
@@ -63,7 +65,7 @@ describe('pages', () => {
                 },
             };
 
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ManagePassengerTypes editMode={false} csrfToken={''} errors={errors} inputs={inputs} />,
             );
 
@@ -83,7 +85,9 @@ describe('pages', () => {
                 },
             };
 
-            const tree = shallow(<ManagePassengerTypes editMode={false} csrfToken={''} errors={[]} inputs={inputs} />);
+            const tree = renderToFragment(
+                <ManagePassengerTypes editMode={false} csrfToken={''} errors={[]} inputs={inputs} />,
+            );
 
             expect(tree).toMatchSnapshot();
         });

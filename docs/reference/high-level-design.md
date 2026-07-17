@@ -202,11 +202,9 @@ Logs are all exported into CloudWatch Logs where insights can then be used for a
 
 ## Rollout
 
-We adhere to a GitFlow development workflow primarily, feature branches are created from develop and then merged back in after review to release to the test environment and run the suite of Selenium Automation tests. PRs are then created into the master branch and merged to trigger a release to the pre-Production environment. When ready for release to production, a release tag is created from master, there is also a manual approval step in the production pipeline to verify the release.
+We adhere to a GitFlow development workflow primarily, feature branches are created from develop and then merged back in after review to release to the test environment. PRs are then created into the master branch and merged to trigger a release to the pre-Production environment. When ready for release to production, a release tag is created from master, there is also a manual approval step in the production pipeline to verify the release.
 
-We use CircleCI as our primary CI tool, it is used to run all tests, auditing of dependencies and linting of the code.
-
-Automation tests are written in Selenium with Java and are committed to GitHub. These are pulled down as part of the release to test pipeline and ran using BrowserStack Automate.
+We use Github Actions as our primary CI tool, it is used to run all tests, auditing of dependencies and linting of the code.
 
 ## Cost Estimates
 

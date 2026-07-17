@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import TwoThirdsLayout from '../layout/Layout';
 import { USER_ATTRIBUTE } from '../constants/attributes';
 import { NextPageContextWithSession } from '../interfaces';
@@ -28,7 +28,7 @@ const PasswordUpdated = ({ redirectTo }: PasswordUpdatedProps): ReactElement => 
     </TwoThirdsLayout>
 );
 
-export const getServerSideProps = (ctx: NextPageContextWithSession): {} => {
+export const getServerSideProps = (ctx: NextPageContextWithSession): object => {
     const userAttribute = getSessionAttribute(ctx.req, USER_ATTRIBUTE);
     const redirectTo = userAttribute?.redirectFrom === '/resetPassword' ? '/login' : '/account';
 

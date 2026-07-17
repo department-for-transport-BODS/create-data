@@ -2,7 +2,7 @@ import { getMockRequestAndResponse, expectedPeriodGeoZoneTicketWithMultipleProdu
 import { MATCHING_JSON_ATTRIBUTE, MATCHING_JSON_META_DATA_ATTRIBUTE } from '../../../src/constants/attributes';
 import editPeriodDuration, { validateDuration } from '../../../src/pages/api/editPeriodDuration';
 import * as userData from '../../../src/utils/apiUtils/userData';
-import { ErrorInfo } from 'src/interfaces';
+import { ErrorInfo } from '../../../src/interfaces';
 
 describe('editPeriodDuration tests', () => {
     let writeHeadMock: jest.Mock;
@@ -32,7 +32,7 @@ describe('editPeriodDuration tests', () => {
         });
         await editPeriodDuration(req, res);
 
-        expect(userData.putUserDataInProductsBucketWithFilePath).toBeCalledWith(
+        expect(userData.putUserDataInProductsBucketWithFilePath).toHaveBeenCalledWith(
             {
                 ...expectedPeriodGeoZoneTicketWithMultipleProducts,
                 products: [
@@ -42,7 +42,7 @@ describe('editPeriodDuration tests', () => {
             'test/path',
         );
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/products/productDetails?productId=2',
         });
     });

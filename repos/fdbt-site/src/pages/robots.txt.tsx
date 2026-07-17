@@ -1,7 +1,7 @@
 import React from 'react';
 import { NextPageContextWithSession } from '../interfaces';
 
-export const getServerSideProps = (ctx: NextPageContextWithSession): { props: {} } => {
+export const getServerSideProps = (ctx: NextPageContextWithSession): { props: object } => {
     const { res } = ctx;
 
     if (res) {

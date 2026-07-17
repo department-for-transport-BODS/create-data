@@ -1,21 +1,21 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`ConfirmationTable should render the table with options 1`] = `
-<Fragment>
+<DocumentFragment>
   <div
-    className="govuk-warning-text"
+    class="govuk-warning-text"
   >
     <span
       aria-hidden="true"
-      className="govuk-warning-text__icon"
+      class="govuk-warning-text__icon"
     >
       !
     </span>
     <strong
-      className="govuk-warning-text__text"
+      class="govuk-warning-text__text"
     >
       <span
-        className="govuk-visually-hidden"
+        class="govuk-visually-hidden"
       >
         Warning
       </span>
@@ -23,36 +23,33 @@ exports[`ConfirmationTable should render the table with options 1`] = `
     </strong>
   </div>
   <dl
-    className="govuk-summary-list"
+    class="govuk-summary-list"
   >
     <div
-      className="govuk-summary-list__row"
-      key="Name"
+      class="govuk-summary-list__row"
     >
       <dt
-        className="govuk-summary-list__key"
+        class="govuk-summary-list__key"
       >
         Name
       </dt>
       <dd
-        className="govuk-summary-list__value"
+        class="govuk-summary-list__value"
       >
-        <div
-          key="Bob"
-        >
+        <div>
           Bob
         </div>
       </dd>
       <dd
-        className="govuk-summary-list__actions"
+        class="govuk-summary-list__actions"
       >
         <a
-          className="govuk-link"
+          class="govuk-link"
           href="/login"
         >
           change
           <span
-            className="govuk-visually-hidden"
+            class="govuk-visually-hidden"
           >
             Name
           </span>
@@ -61,36 +58,33 @@ exports[`ConfirmationTable should render the table with options 1`] = `
     </div>
   </dl>
   <dl
-    className="govuk-summary-list"
+    class="govuk-summary-list"
   >
     <div
-      className="govuk-summary-list__row"
-      key="House"
+      class="govuk-summary-list__row"
     >
       <dt
-        className="govuk-summary-list__key"
+        class="govuk-summary-list__key"
       >
         House
       </dt>
       <dd
-        className="govuk-summary-list__value"
+        class="govuk-summary-list__value"
       >
-        <div
-          key="Big"
-        >
+        <div>
           Big
         </div>
       </dd>
       <dd
-        className="govuk-summary-list__actions"
+        class="govuk-summary-list__actions"
       >
         <a
-          className="govuk-link"
+          class="govuk-link"
           href="/fareType"
         >
           change
           <span
-            className="govuk-visually-hidden"
+            class="govuk-visually-hidden"
           >
             House
           </span>
@@ -98,5 +92,5 @@ exports[`ConfirmationTable should render the table with options 1`] = `
       </dd>
     </div>
   </dl>
-</Fragment>
+</DocumentFragment>
 `;

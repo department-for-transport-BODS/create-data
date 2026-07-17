@@ -1,5 +1,5 @@
 import { capitalize } from 'lodash';
-import React, { FunctionComponent, ReactElement, useState } from 'react';
+import { FunctionComponent, ReactElement, useState } from 'react';
 import { ErrorInfo } from '../interfaces';
 import DeleteConfirmationPopup from '../components/DeleteConfirmationPopup';
 import { BaseLayout } from '../layout/Layout';

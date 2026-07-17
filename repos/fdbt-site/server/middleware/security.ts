@@ -1,4 +1,5 @@
-import { Express, Response, Request } from 'express';
+import { Express, Response } from 'express';
+import { IncomingMessage, ServerResponse } from 'node:http';
 import { v4 as uuidv4 } from 'uuid';
 import helmet from 'helmet';
 import nocache from 'nocache';
@@ -11,11 +12,13 @@ export default (server: Express): void => {
 
     server.disable('x-powered-by');
 
-    const nonce = (_req: Request, res: Response): string => `'nonce-${res.locals.nonce}'`;
+    const nonce = (_req: IncomingMessage, res: ServerResponse): string => `'nonce-${(res as Response).locals.nonce}'`;
     const scriptSrc = [
         nonce,
         "'strict-dynamic'",
-        'https://www.google-analytics.com https://ssl.google-analytics.com https://www.googletagmanager.com',
+        'https://www.google-analytics.com',
+        'https://ssl.google-analytics.com',
+        'https://www.googletagmanager.com',
     ];
     const styleSrc = ["'self'"];
 
@@ -41,17 +44,13 @@ export default (server: Express): void => {
                     imgSrc: ["'self'", 'data:', 'https:'],
                     defaultSrc: ["'self'"],
                     connectSrc: ["'self'", 'https://www.google-analytics.com'],
-                    upgradeInsecureRequests: true,
+                    upgradeInsecureRequests: [],
                 },
             },
             hsts: {
                 includeSubDomains: true,
                 preload: true,
                 maxAge: 31536000,
-            },
-            expectCt: {
-                maxAge: 86400,
-                enforce: true,
             },
             referrerPolicy: {
                 policy: 'same-origin',

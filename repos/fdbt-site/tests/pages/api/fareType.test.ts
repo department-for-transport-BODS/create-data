@@ -61,11 +61,11 @@ describe('fareType', () => {
             mockWriteHeadFn: writeHeadMock,
         });
         await fareType(req, res);
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, FARE_TYPE_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, FARE_TYPE_ATTRIBUTE, {
             fareType: req.body.fareType,
         });
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/selectPassengerType',
         });
     });
@@ -77,10 +77,10 @@ describe('fareType', () => {
             mockWriteHeadFn: writeHeadMock,
         });
         await fareType(req, res);
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, FARE_TYPE_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, FARE_TYPE_ATTRIBUTE, {
             fareType: req.body.fareType,
         });
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/selectPassengerType',
         });
     });
@@ -94,10 +94,10 @@ describe('fareType', () => {
             mockWriteHeadFn: writeHeadMock,
         });
         await fareType(req, res);
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, FARE_TYPE_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, FARE_TYPE_ATTRIBUTE, {
             errors: mockError,
         });
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/fareType',
         });
     });
@@ -109,9 +109,9 @@ describe('fareType', () => {
             mockWriteHeadFn: writeHeadMock,
         });
         await fareType(req, res);
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, CARNET_FARE_TYPE_ATTRIBUTE, true);
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, FARE_TYPE_ATTRIBUTE, undefined);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, CARNET_FARE_TYPE_ATTRIBUTE, true);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, FARE_TYPE_ATTRIBUTE, undefined);
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/carnetFareType',
         });
     });
@@ -123,9 +123,9 @@ describe('fareType', () => {
             mockWriteHeadFn: writeHeadMock,
         });
         await fareType(req, res);
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, CARNET_FARE_TYPE_ATTRIBUTE, true);
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, FARE_TYPE_ATTRIBUTE, { fareType: 'period' });
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, CARNET_FARE_TYPE_ATTRIBUTE, true);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, FARE_TYPE_ATTRIBUTE, { fareType: 'period' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/selectPassengerType',
         });
     });
@@ -137,9 +137,9 @@ describe('fareType', () => {
             mockWriteHeadFn: writeHeadMock,
         });
         await fareType(req, res);
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, CARNET_FARE_TYPE_ATTRIBUTE, true);
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, FARE_TYPE_ATTRIBUTE, { fareType: 'flatFare' });
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, CARNET_FARE_TYPE_ATTRIBUTE, true);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, FARE_TYPE_ATTRIBUTE, { fareType: 'flatFare' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/selectPassengerType',
         });
     });
@@ -151,8 +151,8 @@ describe('fareType', () => {
             mockWriteHeadFn: writeHeadMock,
         });
         await fareType(req, res);
-        expect(updateSessionAttributeSpy).toBeCalledTimes(0);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledTimes(0);
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/noServices',
         });
     });
@@ -164,12 +164,12 @@ describe('fareType', () => {
             mockWriteHeadFn: writeHeadMock,
         });
         await fareType(req, res);
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, TXC_SOURCE_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, TXC_SOURCE_ATTRIBUTE, {
             source: 'bods',
             hasBods: true,
             hasTnds: false,
         });
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/selectPassengerType',
         });
     });

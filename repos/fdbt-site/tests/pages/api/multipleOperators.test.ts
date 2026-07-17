@@ -23,7 +23,7 @@ describe('multipleOperators', () => {
             name: 'Infinity Line',
             nocCode: 'TEST',
         });
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/home',
         });
     });
@@ -44,7 +44,7 @@ describe('multipleOperators', () => {
                 },
             ],
         });
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/multipleOperators',
         });
     });

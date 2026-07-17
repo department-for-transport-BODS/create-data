@@ -1,31 +1,32 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`PhaseBanner should render correctly 1`] = `
-<div
-  className="govuk-phase-banner app-phase-banner app-width-container"
->
-  <p
-    className="govuk-phase-banner__content"
+<DocumentFragment>
+  <div
+    class="govuk-phase-banner app-phase-banner app-width-container"
   >
-    <strong
-      className="govuk-tag govuk-phase-banner__content__tag"
+    <p
+      class="govuk-phase-banner__content"
     >
-      Beta
-    </strong>
-    <span
-      className="govuk-phase-banner__text"
-    >
-      This is a new service. Help us improve it and
-       
-      <a
-        className="govuk-link"
-        href="/feedback"
-        id="feedback-link"
+      <strong
+        class="govuk-tag govuk-phase-banner__content__tag"
       >
-        give your feedback (opens in new tab)
-      </a>
-      .
-    </span>
-  </p>
-</div>
+        Beta
+      </strong>
+      <span
+        class="govuk-phase-banner__text"
+      >
+        This is a new service. Help us improve it and 
+        <a
+          class="govuk-link"
+          href="/feedback"
+          id="feedback-link"
+        >
+          give your feedback (opens in new tab)
+        </a>
+        .
+      </span>
+    </p>
+  </div>
+</DocumentFragment>
 `;

@@ -1,4 +1,4 @@
-FROM node:18-alpine AS build
+FROM node:24-alpine AS build
 RUN apk add --no-cache git
 ENV NODE_ENV production
 RUN npm install -g npm
@@ -7,7 +7,7 @@ COPY . .
 RUN npm install --ignore-scripts --include=dev
 RUN npm run build
 
-FROM node:18-alpine
+FROM node:24-alpine
 ENV NODE_ENV production
 RUN npm install -g npm
 WORKDIR /home/node/app
@@ -27,9 +27,10 @@ RUN apk update && \
     sed -i 's/^#Foreground yes/Foreground yes/g' /etc/clamav/clamd.conf && \
     sed -i 's/^#Foreground yes/Foreground yes/g' /etc/clamav/freshclam.conf && \
     freshclam --stdout
-COPY ./package*.json ./next.config.js ./
+COPY ./package*.json ./next.config.ts ./
 RUN npm ci --ignore-scripts
 COPY --from=build /tmp/.next ./.next
 COPY --from=build /tmp/dist ./dist
+COPY --from=build /tmp/public ./public
 CMD ["supervisord",  "-c",  "/etc/supervisor/supervisord.conf", "-n"]
 EXPOSE 80

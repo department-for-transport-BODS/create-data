@@ -1,9 +1,17 @@
 import { Express } from 'express';
-import * as session from 'express-session';
+import session from 'express-session';
 import MySQLStore from 'express-mysql-session';
-import awsParamStore from 'aws-param-store';
+import { OPERATOR_ATTRIBUTE } from '../../src/constants/attributes';
+import { OperatorAttribute } from '../../src/interfaces';
+import { getSsmValue } from '../../src/data/ssm';
 
-const getOptions = () => {
+declare module 'express-session' {
+    interface SessionData {
+        [OPERATOR_ATTRIBUTE]: OperatorAttribute;
+    }
+}
+
+const getOptions = async () => {
     let options;
 
     if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
@@ -28,8 +36,8 @@ const getOptions = () => {
         options = {
             host: process.env.RDS_HOST,
             port: 3306,
-            user: awsParamStore.getParameterSync('fdbt-rds-site-username', { region: 'eu-west-2' }).Value,
-            password: awsParamStore.getParameterSync('fdbt-rds-site-password', { region: 'eu-west-2' }).Value,
+            user: await getSsmValue('fdbt-rds-site-username'),
+            password: await getSsmValue('fdbt-rds-site-password'),
             database: 'fdbt',
             createDatabaseTable: false,
             charset: 'utf8mb4_bin',
@@ -47,10 +55,10 @@ const getOptions = () => {
     return options;
 };
 
-export default (server: Express): void => {
+export default async (server: Express): Promise<void> => {
     const Store = MySQLStore(session);
 
-    const options = getOptions();
+    const options = await getOptions();
 
     const sessionStore = new Store(options);
 
@@ -66,5 +74,5 @@ export default (server: Express): void => {
         store: sessionStore,
     };
 
-    server.use(session.default(sessionOptions));
+    server.use(session(sessionOptions));
 };

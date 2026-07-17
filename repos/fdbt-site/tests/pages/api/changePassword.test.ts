@@ -24,7 +24,7 @@ describe('changePassword', () => {
 
     it('should set the USER_ATTRIBUTE and redirect to /passwordUpdated when password update is successful', async () => {
         getAttributeSpy.mockImplementation(() => 'fake.address@email.com');
-        initiateAuthSpy.mockImplementation(() => Promise.resolve({ AuthenticationResult: {} }));
+        initiateAuthSpy.mockImplementation(() => Promise.resolve({ $metadata: {}, AuthenticationResult: {} }));
         const { req, res } = getMockRequestAndResponse({
             cookieValues: {},
             body: {
@@ -39,21 +39,21 @@ describe('changePassword', () => {
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, USER_ATTRIBUTE, {
             redirectFrom: '/changePassword',
         });
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/passwordUpdated',
         });
     });
 
     it('should redirect to the error page when the ID_TOKEN_COOKIE is missing the username attribute', async () => {
         getAttributeSpy.mockImplementation(() => null);
-        initiateAuthSpy.mockImplementation(() => Promise.resolve({ AuthenticationResult: {} }));
+        initiateAuthSpy.mockImplementation(() => Promise.resolve({ $metadata: {}, AuthenticationResult: {} }));
         const { req, res } = getMockRequestAndResponse({
             cookieValues: {},
             body: {},
             mockWriteHeadFn: writeHeadMock,
         });
         await changePassword(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/error',
         });
     });
@@ -134,7 +134,7 @@ describe('changePassword', () => {
             if (authResponse === 0) {
                 throw new Error();
             }
-            return Promise.resolve({ AuthenticationResult: {} });
+            return Promise.resolve({ $metadata: {}, AuthenticationResult: {} });
         });
 
         const { req, res } = getMockRequestAndResponse({
@@ -145,7 +145,7 @@ describe('changePassword', () => {
         await changePassword(req, res);
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, USER_ATTRIBUTE, { errors: inputChecks });
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/changePassword',
         });
     });

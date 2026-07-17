@@ -1,7 +1,7 @@
-import { parseCookies } from 'nookies';
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { COOKIES_POLICY_COOKIE } from '../constants';
 import { getCsrfToken } from '../utils';
+import { parseCookiesFromRequest } from '../utils/apiUtils';
 import CsrfForm from '../components/CsrfForm';
 import { NextPageContextWithSession } from '../interfaces';
 import { TwoThirdsLayout } from '../layout/Layout';
@@ -126,7 +126,7 @@ const Cookies = ({ settingsSaved, trackingDefaultValue, csrfToken }: CookiePrefe
 
 export const getServerSideProps = (ctx: NextPageContextWithSession): { props: CookiePreferencesProps } => {
     const csrfToken = getCsrfToken(ctx);
-    const cookies = parseCookies(ctx);
+    const cookies = parseCookiesFromRequest(ctx.req);
 
     const settingsSaved = (ctx.query?.settingsSaved ?? 'false') === 'true';
 

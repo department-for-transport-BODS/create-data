@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render, fireEvent } from '@testing-library/react';
+import { ReactElement } from 'react';
 import { getMockContext, mockSchemOpIdToken } from '../testData/mockData';
 import * as aurora from '../../src/data/auroradb';
 import SearchOperators, {
@@ -11,6 +11,8 @@ import SearchOperators, {
 } from '../../src/pages/searchOperators';
 import { MULTIPLE_OPERATOR_ATTRIBUTE, OPERATOR_ATTRIBUTE } from '../../src/constants/attributes';
 import { ErrorInfo, Operator, OperatorAttribute, OperatorGroup } from '../../src/interfaces';
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 const mockOperators: Operator[] = [
     {
@@ -40,7 +42,7 @@ describe('pages', () => {
         });
 
         it('should render just the search input when the user first visits the page', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <SearchOperators
                     errors={[]}
                     searchText=""
@@ -55,7 +57,7 @@ describe('pages', () => {
         });
 
         it('should render the search input and search results when there is a successful search', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <SearchOperators
                     errors={[]}
                     searchText="blac"
@@ -70,7 +72,7 @@ describe('pages', () => {
         });
 
         it('should render an input error when the user makes an unsucessful search', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <SearchOperators
                     errors={[{ errorMessage: 'Search requires a minimum of three characters', id: 'search-input' }]}
                     searchText=""
@@ -85,7 +87,7 @@ describe('pages', () => {
         });
 
         it('should render a selection error when the user tries to add operators without selecting any search results', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <SearchOperators
                     errors={[]}
                     searchText="blac"
@@ -100,7 +102,7 @@ describe('pages', () => {
         });
 
         it('should render the search input and a list of selected operators when search results have been selected', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <SearchOperators
                     errors={[]}
                     searchText=""
@@ -115,7 +117,7 @@ describe('pages', () => {
         });
 
         it('should render a selection error when the user tries to remove selected operators without making a selection', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <SearchOperators
                     errors={[]}
                     searchText=""
@@ -130,7 +132,7 @@ describe('pages', () => {
         });
 
         it('should render the search input, search results and a list of selected operators when an additional search is made', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <SearchOperators
                     errors={[]}
                     searchText="warri"
@@ -145,7 +147,7 @@ describe('pages', () => {
         });
 
         it('should render the page in edit mode', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <SearchOperators
                     errors={[]}
                     searchText=""
@@ -320,7 +322,7 @@ describe('pages', () => {
                 const setSearchResults = jest.fn();
                 const mocErrors: ErrorInfo[] = [];
                 const operatorGroupName = '';
-                const wrapper = shallow(
+                const wrapper = render(
                     showSelectedOperators(
                         mocSelectedOperators,
                         setSelectedOperators,
@@ -331,8 +333,10 @@ describe('pages', () => {
                         mockSearchResults,
                     ),
                 );
-                wrapper.find('#remove-0').simulate('click');
-                expect(setSelectedOperators).toBeCalledWith([{ nocCode: 'LNUD', name: 'The Blackburn Bus Company' }]);
+                fireEvent.click(wrapper.container.querySelector('#remove-0') as HTMLElement);
+                expect(setSelectedOperators).toHaveBeenCalledWith([
+                    { nocCode: 'LNUD', name: 'The Blackburn Bus Company' },
+                ]);
             });
             it('should remove all operators from selectedOperator list', () => {
                 const setSelectedOperators = jest.fn();
@@ -347,7 +351,7 @@ describe('pages', () => {
                 const mocErrors: ErrorInfo[] = [];
                 const operatorGroupName = '';
                 const setSearchResults = jest.fn();
-                const wrapper = shallow(
+                const wrapper = render(
                     showSelectedOperators(
                         mocSelectedOperators,
                         setSelectedOperators,
@@ -358,8 +362,8 @@ describe('pages', () => {
                         mockSearchResults,
                     ),
                 );
-                wrapper.find('#removeAll').simulate('click');
-                expect(setSelectedOperators).toBeCalledWith([]);
+                fireEvent.click(wrapper.container.querySelector('#removeAll') as HTMLElement);
+                expect(setSelectedOperators).toHaveBeenCalledWith([]);
             });
             it('should add operators to selectedOperator list', () => {
                 const mocksearchText = 'blac';
@@ -373,7 +377,7 @@ describe('pages', () => {
                 ];
                 const setSearchResults = jest.fn();
 
-                const wrapper = shallow(
+                const wrapper = render(
                     showSearchResults(
                         mocksearchText,
                         mockErrors,
@@ -385,9 +389,9 @@ describe('pages', () => {
                     ),
                 );
 
-                wrapper.find('#operator-to-add-0').simulate('click');
-                expect(setSelectedOperators).toBeCalledWith([{ nocCode: 'BLAC', name: 'Blackpool Transport' }]);
-                expect(setSearchResults).toBeCalledWith([{ nocCode: 'LNUD', name: 'The Blackburn Bus Company' }]);
+                fireEvent.click(wrapper.container.querySelector('#operator-to-add-0') as HTMLElement);
+                expect(setSelectedOperators).toHaveBeenCalledWith([{ nocCode: 'BLAC', name: 'Blackpool Transport' }]);
+                expect(setSearchResults).toHaveBeenCalledWith([{ nocCode: 'LNUD', name: 'The Blackburn Bus Company' }]);
             });
         });
 

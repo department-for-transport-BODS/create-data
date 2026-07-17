@@ -1,57 +1,56 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`SwitchDataSource should render the button disabled 1`] = `
-<CsrfForm
-  action="/api/switchDataSource"
-  csrfToken="token"
-  method="post"
->
-  <input
-    name="referer"
-    type="hidden"
-    value="/service"
-  />
-  <input
-    name="attributeVersion"
-    type="hidden"
-    value="baseOperator"
-  />
-  <button
-    className="govuk-button govuk-button--secondary"
-    disabled={true}
-    id="change-data-source"
-    type="submit"
+<DocumentFragment>
+  <form
+    action="/api/switchDataSource?_csrf=token"
+    method="post"
   >
-    Change TransXChange data source to 
-    TNDS
-  </button>
-</CsrfForm>
+    <input
+      name="referer"
+      type="hidden"
+      value="/service"
+    />
+    <input
+      name="attributeVersion"
+      type="hidden"
+      value="baseOperator"
+    />
+    <button
+      class="govuk-button govuk-button--secondary"
+      disabled=""
+      id="change-data-source"
+      type="submit"
+    >
+      Change TransXChange data source to TNDS
+    </button>
+  </form>
+</DocumentFragment>
 `;
 
 exports[`SwitchDataSource should render the button not disabled 1`] = `
-<CsrfForm
-  action="/api/switchDataSource"
-  csrfToken="token"
-  method="post"
->
-  <input
-    name="referer"
-    type="hidden"
-    value="/service"
-  />
-  <input
-    name="attributeVersion"
-    type="hidden"
-    value="baseOperator"
-  />
-  <button
-    className="govuk-button govuk-button--secondary"
-    disabled={false}
-    id="change-data-source"
-    type="submit"
+<DocumentFragment>
+  <form
+    action="/api/switchDataSource?_csrf=token"
+    method="post"
   >
-    Change TransXChange data source to 
-    TNDS
-  </button>
-</CsrfForm>
+    <input
+      name="referer"
+      type="hidden"
+      value="/service"
+    />
+    <input
+      name="attributeVersion"
+      type="hidden"
+      value="baseOperator"
+    />
+    <button
+      class="govuk-button govuk-button--secondary"
+      id="change-data-source"
+      type="submit"
+    >
+      Change TransXChange data source to TNDS
+    </button>
+  </form>
+</DocumentFragment>
 `;

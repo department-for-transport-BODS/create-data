@@ -1,12 +1,16 @@
-import { shallow } from 'enzyme';
-import * as React from 'react';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import { OperatorGroup } from '../../src/interfaces';
 import ViewOperatorGroups from '../../src/pages/viewOperatorGroups';
+
+jest.mock('next/router', () => ({ useRouter: () => ({ pathname: '/viewOperatorGroups' }) }));
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('view operator groups', () => {
         it('should render correctly when no operator groups', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ViewOperatorGroups operatorGroups={[]} csrfToken={''} referer={null} viewOperatorGroupErrors={[]} />,
             );
 
@@ -25,7 +29,7 @@ describe('pages', () => {
                 ],
             };
 
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ViewOperatorGroups
                     operatorGroups={[operatorGroup]}
                     csrfToken={''}

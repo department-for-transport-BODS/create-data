@@ -1,9 +1,9 @@
 import {
     addOtherProductsIfNotPresent,
     addSingleProductIfNotPresent,
+    clearAndTypeById,
     clickElementById,
     clickElementByText,
-    getElementByClass,
     getHomePage,
 } from './helpers';
 import { addSingleMultiOperatorGroup } from './multiOperatorGroups';
@@ -23,6 +23,8 @@ before(() => {
     addTestTimeRestrictions();
     clickElementByText('Fare day end');
     addTestFareDayEnd();
+    // Ensure the fare day end save popup has closed before navigating away
+    cy.get('.popup').should('not.exist');
     clickElementByText('Operator groups');
     addTestOperatorGroups();
 
@@ -30,8 +32,7 @@ before(() => {
     addOtherProductsIfNotPresent();
     cy.log('Global Settings set up for LNUD');
 
-    // Disabling the below, as schemes are currently not fully supported
-    /*
+    // Set up global settings for the scheme operator
     getHomePage('scheme');
     clickElementById('account-link');
     clickElementByText('Passenger types');
@@ -42,34 +43,34 @@ before(() => {
     addTestTimeRestrictions();
     clickElementByText('Fare day end');
     addTestFareDayEnd();
+    // Ensure the fare day end save popup has closed before navigating away
+    cy.get('.popup').should('not.exist');
+    clickElementByText('Operator groups');
+    addTestOperatorGroups();
     clickElementByText('Operator details');
     addTestOperatorDetails();
-    */
     cy.log('Global Settings set up for scheme');
 });
 
-// Disabling the below, as schemes are currently not fully supported
-/*
 const addTestOperatorDetails = (): void => {
-    clickElementById('operatorName').clear().type('Easy A to B');
-    clickElementById('contactNumber').clear().type('01492 451 652');
-    clickElementById('email').clear().type('info@easyab.co.uk');
-    clickElementById('url').clear().type('www.easyab.co.uk');
-    clickElementById('street').clear().type('123 Some Road');
-    clickElementById('town').clear().type('Awesomeville');
-    clickElementById('county').clear().type('Home County');
-    clickElementById('postcode').clear().type('AW23 8LE');
+    clearAndTypeById('operatorName', 'Easy A to B');
+    clearAndTypeById('contactNumber', '01492 451 652');
+    clearAndTypeById('email', 'info@easyab.co.uk');
+    clearAndTypeById('url', 'www.easyab.co.uk');
+    clearAndTypeById('street', '123 Some Road');
+    clearAndTypeById('town', 'Awesomeville');
+    clearAndTypeById('county', 'Home County');
+    clearAndTypeById('postcode', 'AW23 8LE');
     clickElementByText('Save');
 };
-*/
 
 const addTestOperatorGroups = (): void => {
     cy.get(`[data-card-count]`).then((element) => {
         const numberofOperatorGroups = Number(element.attr('data-card-count'));
         cy.log(`There are ${numberofOperatorGroups} operator groups`);
         cy.get(`[operator-groups]`).then((element) => {
-            const operatorGroups = element.attr('operator-groups').toString();
-            const operatorGroupsValue = operatorGroups.split(',');
+            const operatorGroups = element.attr('operator-groups')?.toString();
+            const operatorGroupsValue = operatorGroups?.split(',') ?? [];
             if (!operatorGroupsValue.includes('test')) {
                 addSingleMultiOperatorGroup('test', false, true);
             }
@@ -81,7 +82,7 @@ const addTestOperatorGroups = (): void => {
 };
 
 const addTestFareDayEnd = (): void => {
-    clickElementById('fare-day-end-input').clear().type('2323');
+    clearAndTypeById('fare-day-end-input', '2323');
     clickElementByText('Save');
     clickElementByText('Ok');
 };
@@ -125,73 +126,66 @@ const addTestPassengerTypes = (): void => {
 };
 
 const addTestPurchaseMethods = (): void => {
-    cy.get(`[data-card-count]`).then((element) => {
-        const numberOfPurchaseMethods = Number(element.attr('data-card-count'));
-        cy.log(`There are ${numberOfPurchaseMethods} purchase methods`);
-        if (numberOfPurchaseMethods > 0) {
-            cy.log('There is at least one purchase method');
-            getElementByClass('card')
-                .last()
-                .invoke('attr', 'id')
-                .then((id) => {
-                    if (!id.startsWith('purchase-method-cap-')) {
-                        const cappedPurchaseMethod1 = {
-                            purchaseLocations: ['checkbox-0-on-board'],
-                            paymentMethods: ['checkbox-0-debit-card', 'checkbox-1-credit-card'],
-                            ticketFormats: ['checkbox-0-mobile-app'],
-                            name: 'Test capped onboard',
-                        };
-                        const cappedPurchaseMethod2 = {
-                            purchaseLocations: ['checkbox-0-on-board', 'checkbox-1-mobile-device'],
-                            paymentMethods: ['checkbox-2-mobile-phone'],
-                            ticketFormats: ['checkbox-0-mobile-app'],
-                            name: 'Test capped mobile',
-                        };
+    const purchaseMethods = [
+        {
+            purchaseLocations: ['checkbox-0-on-board'],
+            paymentMethods: ['checkbox-0-cash', 'checkbox-1-debit-card'],
+            ticketFormats: ['checkbox-3-electronic-document'],
+            name: 'Test Onboard',
+        },
+        {
+            purchaseLocations: ['checkbox-2-mobile-device'],
+            paymentMethods: ['checkbox-0-cash', 'checkbox-1-debit-card'],
+            ticketFormats: ['checkbox-3-electronic-document'],
+            name: 'Test Mobile',
+        },
+        {
+            purchaseLocations: ['checkbox-1-online'],
+            paymentMethods: ['checkbox-1-debit-card'],
+            ticketFormats: ['checkbox-3-electronic-document'],
+            name: 'Test Online',
+        },
+    ];
+    const cappedPurchaseMethods = [
+        {
+            purchaseLocations: ['checkbox-0-on-board'],
+            paymentMethods: ['checkbox-0-debit-card', 'checkbox-1-credit-card'],
+            ticketFormats: ['checkbox-0-mobile-app'],
+            name: 'Test capped onboard',
+        },
+        {
+            purchaseLocations: ['checkbox-0-on-board', 'checkbox-1-mobile-device'],
+            paymentMethods: ['checkbox-2-mobile-phone'],
+            ticketFormats: ['checkbox-0-mobile-app'],
+            name: 'Test capped mobile',
+        },
+    ];
 
-                        addPurchaseMethod(cappedPurchaseMethod1, true);
-                        addPurchaseMethod(cappedPurchaseMethod2, true);
-                    }
-                });
-        } else {
-            const purchaseMethod1 = {
-                purchaseLocations: ['checkbox-0-on-board'],
-                paymentMethods: ['checkbox-0-cash', 'checkbox-1-debit-card'],
-                ticketFormats: ['checkbox-3-electronic-document'],
-                name: 'Test Onboard',
-            };
-            const purchaseMethod2 = {
-                purchaseLocations: ['checkbox-2-mobile-device'],
-                paymentMethods: ['checkbox-0-cash', 'checkbox-1-debit-card'],
-                ticketFormats: ['checkbox-3-electronic-document'],
-                name: 'Test Mobile',
-            };
-            const purchaseMethod3 = {
-                purchaseLocations: ['checkbox-1-online'],
-                paymentMethods: ['checkbox-1-debit-card'],
-                ticketFormats: ['checkbox-3-electronic-document'],
-                name: 'Test Online',
-            };
-            cy.log('Add three purchase methods');
-            addPurchaseMethod(purchaseMethod1);
-            addPurchaseMethod(purchaseMethod2);
-            addPurchaseMethod(purchaseMethod3);
+    // These are client-side (Next Link) navigations and the previous settings
+    // page also has [data-card-count]/.card, so explicitly wait until the
+    // purchase methods page itself has rendered (URL + its unique "Add a purchase
+    // method" button) before reading existing names. Then only add the methods
+    // that aren't already present (matched by name) so the setup is idempotent
+    // and can be re-run without failing on duplicates.
+    cy.url().should('include', 'viewPurchaseMethods');
+    cy.contains('a', 'Add a purchase method').should('be.visible');
 
-            const cappedPurchaseMethod1 = {
-                purchaseLocations: ['checkbox-0-on-board'],
-                paymentMethods: ['checkbox-0-debit-card', 'checkbox-1-credit-card'],
-                ticketFormats: ['checkbox-0-mobile-app'],
-                name: 'Test capped onboard',
-            };
-            const cappedPurchaseMethod2 = {
-                purchaseLocations: ['checkbox-0-on-board', 'checkbox-1-mobile-device'],
-                paymentMethods: ['checkbox-2-mobile-phone'],
-                ticketFormats: ['checkbox-0-mobile-app'],
-                name: 'Test capped mobile',
-            };
+    cy.then(() => {
+        const existingNames = Cypress.$('.card h4')
+            .map((_, element) => element.textContent?.trim())
+            .get();
 
-            addPurchaseMethod(cappedPurchaseMethod1, true);
-            addPurchaseMethod(cappedPurchaseMethod2, true);
-        }
+        purchaseMethods.forEach((purchaseMethod) => {
+            if (!existingNames.includes(purchaseMethod.name)) {
+                addPurchaseMethod(purchaseMethod);
+            }
+        });
+
+        cappedPurchaseMethods.forEach((cappedPurchaseMethod) => {
+            if (!existingNames.includes(cappedPurchaseMethod.name)) {
+                addPurchaseMethod(cappedPurchaseMethod, true);
+            }
+        });
     });
 };
 

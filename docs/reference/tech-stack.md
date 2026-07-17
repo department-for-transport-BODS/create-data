@@ -31,12 +31,9 @@
 | Security               | SSL Certification         | AWS ACM                       | https://www.globalsign.com/en/ssl-information-center/what-is-an-ssl-certificate/ |
 | Security               | Secret manager            | AWS Parameter Store           |                                                                                  |
 | Testing                | Automation Testing        | Selenium                      |                                                                                  |
-| Testing                | Automation Test Runner    | Browserstack Automate         |                                                                                  |
 | Infrastructure         | Hosting                   | AWS ECS Fargate               |                                                                                  |
 | Infrastructure         | Load Balancing            | AWS Application Load Balancer |                                                                                  |
 | Infrastructure         | Serverless Compute        | Lambda                        |                                                                                  |
 | Infrastructure         | DNS                       | AWS Route53                   |                                                                                  |
 | Infrastructure         | Log Aggregation           | CloudWatch Logs               |                                                                                  |
-| Infrastructure         | Infrastructure Automation | Serverless Framework          | https://serverless.com/                                                          |
-| Infrastructure         | CICD                      | Circle CI                     | https://circleci.com/                                                            |
 | Production Readiness   | Documentation             | IW Confluence & readme        |                                                                                  |

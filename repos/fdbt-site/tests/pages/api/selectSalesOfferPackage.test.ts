@@ -35,7 +35,7 @@ describe('selectSalesOfferPackage', () => {
 
         await selectSalesOfferPackages(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/selectPurchaseMethods',
         });
     });
@@ -50,7 +50,7 @@ describe('selectSalesOfferPackage', () => {
 
         await selectSalesOfferPackages(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/selectPurchaseMethods',
         });
     });
@@ -77,7 +77,7 @@ describe('selectSalesOfferPackage', () => {
 
         await selectSalesOfferPackages(req, res);
 
-        expect(userData.putUserDataInProductsBucketWithFilePath).toBeCalledWith(
+        expect(userData.putUserDataInProductsBucketWithFilePath).toHaveBeenCalledWith(
             {
                 ...expectedSingleTicket,
                 products: [
@@ -90,7 +90,7 @@ describe('selectSalesOfferPackage', () => {
             'test/path',
         );
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/products/productDetails?productId=2&serviceId=22D',
         });
     });
@@ -140,7 +140,7 @@ describe('selectSalesOfferPackage', () => {
 
         await selectSalesOfferPackages(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, SALES_OFFER_PACKAGES_ATTRIBUTE, [
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, SALES_OFFER_PACKAGES_ATTRIBUTE, [
             {
                 productName: 'Weekly Ticket',
                 salesOfferPackages: [
@@ -182,7 +182,7 @@ describe('selectSalesOfferPackage', () => {
             },
         ]);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/productDateInformation',
         });
         updateSessionAttributeSpy.mockRestore();
@@ -292,7 +292,7 @@ describe('selectSalesOfferPackage', () => {
                 },
             ]);
         });
-        it('returns multipleProducts if multipleProducts is present ', () => {
+        it('returns multipleProducts if multipleProducts is present', () => {
             expect(getProductsByValues(expectedFlatFareTicket as TicketWithIds, undefined, '')).toEqual([
                 {
                     productName: 'Weekly Rider',

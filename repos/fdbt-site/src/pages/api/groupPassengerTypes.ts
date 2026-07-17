@@ -1,4 +1,4 @@
-import { isArray } from 'lodash';
+import isArray from 'lodash/isArray';
 import { NextApiResponse } from 'next';
 import { NextApiRequestWithSession, GroupPassengerTypesCollectionWithErrors } from '../../interfaces';
 import { updateSessionAttribute } from '../../utils/sessions';

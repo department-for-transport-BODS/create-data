@@ -2,6 +2,7 @@ import { IncomingMessage, ServerResponse } from 'http';
 import { NextApiRequest, NextPageContext } from 'next';
 import { DocumentContext } from 'next/document';
 import { ReactElement } from 'react';
+import { Session as ExpressSession } from 'express-session';
 import { DbTimeRestriction, SinglePassengerType } from './dbTypes';
 import {
     CarnetDetails,
@@ -23,7 +24,7 @@ import {
 // Session Attributes and Cookies
 
 export interface Session {
-    session: Express.Session;
+    session: ExpressSession;
 }
 
 export type NextApiRequestWithSession = NextApiRequest & Session;
@@ -303,7 +304,6 @@ export interface S3NetexFile {
     carnet: boolean;
 }
 
-/* eslint-disable camelcase */
 export interface CognitoIdToken {
     sub: string;
     aud: string;

@@ -1,1756 +1,1867 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`product row renders the right amount of rows for a flatFare ticket 1`] = `
-<div>
-  <fieldset
-    className="govuk-fieldset"
-    key="0"
-  >
-    <legend
-      className="govuk-fieldset__legend govuk-visually-hidden"
+<DocumentFragment>
+  <div>
+    <fieldset
+      class="govuk-fieldset"
     >
-      Enter details for product 1
-    </legend>
-    <div
-      className="flex-container"
-    >
-      <div
-        className="govuk-!-margin-left-4 govuk-!-margin-right-2"
+      <legend
+        class="govuk-fieldset__legend govuk-visually-hidden"
       >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "multiple-product-name-0",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
-        >
-          <label
-            className="govuk-label "
-            htmlFor="multiple-product-name-0"
-          >
-            <span
-              className="govuk-visually-hidden"
-            >
-              Product Name - Product 1
-            </span>
-            <span
-              aria-hidden={true}
-            >
-              Product name
-            </span>
-          </label>
-          <span
-            className="govuk-hint "
-            id="product-name-hint-0"
-          >
-            50 characters max
-          </span>
-           
-          <FormElementWrapper
-            addFormGroupError={false}
-            errorClass="govuk-input--error"
-            errorId="multiple-product-name-0"
-            errors={Array []}
-            hideText={true}
-          >
-            <input
-              aria-labelledby="product-name-hint-0"
-              className="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
-              defaultValue=""
-              id="multiple-product-name-0"
-              maxLength={50}
-              name="multipleProductNameInput0"
-              type="text"
-            />
-          </FormElementWrapper>
-        </FormGroupWrapper>
-      </div>
+        Enter details for product 1
+      </legend>
       <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
+        class="flex-container"
       >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "multiple-product-price-0",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
+        <div
+          class="govuk-!-margin-left-4 govuk-!-margin-right-2"
         >
-          <label
-            className="govuk-label "
-            htmlFor="multiple-product-price-0"
-          >
-            <span
-              className="govuk-visually-hidden"
-            >
-              Product Price, in pounds - Product 1
-            </span>
-            <span
-              aria-hidden={true}
-            >
-              Price
-            </span>
-          </label>
-          <span
-            className="govuk-hint "
-            id="product-price-hint-0"
-          >
-            e.g. 2.99
-          </span>
           <div
-            className="govuk-currency-input"
+            class="govuk-form-group "
           >
-            <div
-              className="govuk-currency-input__inner"
+            <label
+              class="govuk-label "
+              for="multiple-product-name-0"
             >
               <span
-                className="govuk-currency-input__inner__unit"
+                class="govuk-visually-hidden"
               >
-                £
+                Product Name - Product 1
               </span>
-              <FormElementWrapper
-                addFormGroupError={false}
-                errorClass="govuk-input--error"
-                errorId="multiple-product-price-0"
-                errors={Array []}
-                hideText={true}
+              <span
+                aria-hidden="true"
               >
-                <input
-                  aria-labelledby="product-price-hint-0"
-                  className="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
-                  data-non-numeric={true}
-                  defaultValue=""
-                  id="multiple-product-price-0"
-                  name="multipleProductPriceInput0"
-                  type="text"
-                />
-              </FormElementWrapper>
+                Product name
+              </span>
+            </label>
+            <span
+              class="govuk-hint "
+              id="product-name-hint-0"
+            >
+              50 characters max
+            </span>
+             
+            <div
+              class=""
+            >
+              <input
+                aria-labelledby="product-name-hint-0"
+                class="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
+                id="multiple-product-name-0"
+                maxlength="50"
+                name="multipleProductNameInput0"
+                type="text"
+                value=""
+              />
             </div>
           </div>
-        </FormGroupWrapper>
-      </div>
-    </div>
-  </fieldset>
-  <fieldset
-    className="govuk-fieldset"
-    key="1"
-  >
-    <legend
-      className="govuk-fieldset__legend govuk-visually-hidden"
-    >
-      Enter details for product 2
-    </legend>
-    <div
-      className="flex-container"
-    >
-      <div
-        className="govuk-!-margin-left-4 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "multiple-product-name-1",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
         >
-          <label
-            className="govuk-label govuk-visually-hidden"
-            htmlFor="multiple-product-name-1"
-          >
-            <span
-              className="govuk-visually-hidden"
-            >
-              Product Name - Product 2
-            </span>
-            <span
-              aria-hidden={true}
-            >
-              Product name
-            </span>
-          </label>
-          <span
-            className="govuk-hint govuk-visually-hidden"
-            id="product-name-hint-1"
-          >
-            50 characters max
-          </span>
-           
-          <FormElementWrapper
-            addFormGroupError={false}
-            errorClass="govuk-input--error"
-            errorId="multiple-product-name-1"
-            errors={Array []}
-            hideText={true}
-          >
-            <input
-              aria-labelledby="product-name-hint-1"
-              className="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
-              defaultValue=""
-              id="multiple-product-name-1"
-              maxLength={50}
-              name="multipleProductNameInput1"
-              type="text"
-            />
-          </FormElementWrapper>
-        </FormGroupWrapper>
-      </div>
-      <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "multiple-product-price-1",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
-        >
-          <label
-            className="govuk-label govuk-visually-hidden"
-            htmlFor="multiple-product-price-1"
-          >
-            <span
-              className="govuk-visually-hidden"
-            >
-              Product Price, in pounds - Product 2
-            </span>
-            <span
-              aria-hidden={true}
-            >
-              Price
-            </span>
-          </label>
-          <span
-            className="govuk-hint govuk-visually-hidden"
-            id="product-price-hint-1"
-          >
-            e.g. 2.99
-          </span>
           <div
-            className="govuk-currency-input"
+            class="govuk-form-group "
           >
-            <div
-              className="govuk-currency-input__inner"
+            <label
+              class="govuk-label "
+              for="multiple-product-price-0"
             >
               <span
-                className="govuk-currency-input__inner__unit"
+                class="govuk-visually-hidden"
               >
-                £
+                Product Price, in pounds - Product 1
               </span>
-              <FormElementWrapper
-                addFormGroupError={false}
-                errorClass="govuk-input--error"
-                errorId="multiple-product-price-1"
-                errors={Array []}
-                hideText={true}
+              <span
+                aria-hidden="true"
               >
-                <input
-                  aria-labelledby="product-price-hint-1"
-                  className="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
-                  data-non-numeric={true}
-                  defaultValue=""
-                  id="multiple-product-price-1"
-                  name="multipleProductPriceInput1"
-                  type="text"
-                />
-              </FormElementWrapper>
+                Price
+              </span>
+            </label>
+            <span
+              class="govuk-hint "
+              id="product-price-hint-0"
+            >
+              e.g. 2.99
+            </span>
+            <div
+              class="govuk-currency-input"
+            >
+              <div
+                class="govuk-currency-input__inner"
+              >
+                <span
+                  class="govuk-currency-input__inner__unit"
+                >
+                  £
+                </span>
+                <div
+                  class=""
+                >
+                  <input
+                    aria-labelledby="product-price-hint-0"
+                    class="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
+                    data-non-numeric="true"
+                    id="multiple-product-price-0"
+                    name="multipleProductPriceInput0"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
             </div>
           </div>
-        </FormGroupWrapper>
+        </div>
       </div>
-    </div>
-  </fieldset>
-  <fieldset
-    className="govuk-fieldset"
-    key="2"
-  >
-    <legend
-      className="govuk-fieldset__legend govuk-visually-hidden"
+    </fieldset>
+    <fieldset
+      class="govuk-fieldset"
     >
-      Enter details for product 3
-    </legend>
-    <div
-      className="flex-container"
-    >
-      <div
-        className="govuk-!-margin-left-4 govuk-!-margin-right-2"
+      <legend
+        class="govuk-fieldset__legend govuk-visually-hidden"
       >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "multiple-product-name-2",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
-        >
-          <label
-            className="govuk-label govuk-visually-hidden"
-            htmlFor="multiple-product-name-2"
-          >
-            <span
-              className="govuk-visually-hidden"
-            >
-              Product Name - Product 3
-            </span>
-            <span
-              aria-hidden={true}
-            >
-              Product name
-            </span>
-          </label>
-          <span
-            className="govuk-hint govuk-visually-hidden"
-            id="product-name-hint-2"
-          >
-            50 characters max
-          </span>
-           
-          <FormElementWrapper
-            addFormGroupError={false}
-            errorClass="govuk-input--error"
-            errorId="multiple-product-name-2"
-            errors={Array []}
-            hideText={true}
-          >
-            <input
-              aria-labelledby="product-name-hint-2"
-              className="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
-              defaultValue=""
-              id="multiple-product-name-2"
-              maxLength={50}
-              name="multipleProductNameInput2"
-              type="text"
-            />
-          </FormElementWrapper>
-        </FormGroupWrapper>
-      </div>
+        Enter details for product 2
+      </legend>
       <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
+        class="flex-container"
       >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "multiple-product-price-2",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
+        <div
+          class="govuk-!-margin-left-4 govuk-!-margin-right-2"
         >
-          <label
-            className="govuk-label govuk-visually-hidden"
-            htmlFor="multiple-product-price-2"
-          >
-            <span
-              className="govuk-visually-hidden"
-            >
-              Product Price, in pounds - Product 3
-            </span>
-            <span
-              aria-hidden={true}
-            >
-              Price
-            </span>
-          </label>
-          <span
-            className="govuk-hint govuk-visually-hidden"
-            id="product-price-hint-2"
-          >
-            e.g. 2.99
-          </span>
           <div
-            className="govuk-currency-input"
+            class="govuk-form-group "
           >
-            <div
-              className="govuk-currency-input__inner"
+            <label
+              class="govuk-label govuk-visually-hidden"
+              for="multiple-product-name-1"
             >
               <span
-                className="govuk-currency-input__inner__unit"
+                class="govuk-visually-hidden"
               >
-                £
+                Product Name - Product 2
               </span>
-              <FormElementWrapper
-                addFormGroupError={false}
-                errorClass="govuk-input--error"
-                errorId="multiple-product-price-2"
-                errors={Array []}
-                hideText={true}
+              <span
+                aria-hidden="true"
               >
-                <input
-                  aria-labelledby="product-price-hint-2"
-                  className="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
-                  data-non-numeric={true}
-                  defaultValue=""
-                  id="multiple-product-price-2"
-                  name="multipleProductPriceInput2"
-                  type="text"
-                />
-              </FormElementWrapper>
+                Product name
+              </span>
+            </label>
+            <span
+              class="govuk-hint govuk-visually-hidden"
+              id="product-name-hint-1"
+            >
+              50 characters max
+            </span>
+             
+            <div
+              class=""
+            >
+              <input
+                aria-labelledby="product-name-hint-1"
+                class="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
+                id="multiple-product-name-1"
+                maxlength="50"
+                name="multipleProductNameInput1"
+                type="text"
+                value=""
+              />
             </div>
           </div>
-        </FormGroupWrapper>
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
+        >
+          <div
+            class="govuk-form-group "
+          >
+            <label
+              class="govuk-label govuk-visually-hidden"
+              for="multiple-product-price-1"
+            >
+              <span
+                class="govuk-visually-hidden"
+              >
+                Product Price, in pounds - Product 2
+              </span>
+              <span
+                aria-hidden="true"
+              >
+                Price
+              </span>
+            </label>
+            <span
+              class="govuk-hint govuk-visually-hidden"
+              id="product-price-hint-1"
+            >
+              e.g. 2.99
+            </span>
+            <div
+              class="govuk-currency-input"
+            >
+              <div
+                class="govuk-currency-input__inner"
+              >
+                <span
+                  class="govuk-currency-input__inner__unit"
+                >
+                  £
+                </span>
+                <div
+                  class=""
+                >
+                  <input
+                    aria-labelledby="product-price-hint-1"
+                    class="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
+                    data-non-numeric="true"
+                    id="multiple-product-price-1"
+                    name="multipleProductPriceInput1"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </fieldset>
-</div>
+    </fieldset>
+    <fieldset
+      class="govuk-fieldset"
+    >
+      <legend
+        class="govuk-fieldset__legend govuk-visually-hidden"
+      >
+        Enter details for product 3
+      </legend>
+      <div
+        class="flex-container"
+      >
+        <div
+          class="govuk-!-margin-left-4 govuk-!-margin-right-2"
+        >
+          <div
+            class="govuk-form-group "
+          >
+            <label
+              class="govuk-label govuk-visually-hidden"
+              for="multiple-product-name-2"
+            >
+              <span
+                class="govuk-visually-hidden"
+              >
+                Product Name - Product 3
+              </span>
+              <span
+                aria-hidden="true"
+              >
+                Product name
+              </span>
+            </label>
+            <span
+              class="govuk-hint govuk-visually-hidden"
+              id="product-name-hint-2"
+            >
+              50 characters max
+            </span>
+             
+            <div
+              class=""
+            >
+              <input
+                aria-labelledby="product-name-hint-2"
+                class="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
+                id="multiple-product-name-2"
+                maxlength="50"
+                name="multipleProductNameInput2"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
+        >
+          <div
+            class="govuk-form-group "
+          >
+            <label
+              class="govuk-label govuk-visually-hidden"
+              for="multiple-product-price-2"
+            >
+              <span
+                class="govuk-visually-hidden"
+              >
+                Product Price, in pounds - Product 3
+              </span>
+              <span
+                aria-hidden="true"
+              >
+                Price
+              </span>
+            </label>
+            <span
+              class="govuk-hint govuk-visually-hidden"
+              id="product-price-hint-2"
+            >
+              e.g. 2.99
+            </span>
+            <div
+              class="govuk-currency-input"
+            >
+              <div
+                class="govuk-currency-input__inner"
+              >
+                <span
+                  class="govuk-currency-input__inner__unit"
+                >
+                  £
+                </span>
+                <div
+                  class=""
+                >
+                  <input
+                    aria-labelledby="product-price-hint-2"
+                    class="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
+                    data-non-numeric="true"
+                    id="multiple-product-price-2"
+                    name="multipleProductPriceInput2"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</DocumentFragment>
 `;
 
 exports[`product row renders the right amount of rows for a flatfare carnet 1`] = `
-<div>
-  <fieldset
-    className="govuk-fieldset"
-    key="0"
-  >
-    <legend
-      className="govuk-fieldset__legend govuk-visually-hidden"
+<DocumentFragment>
+  <div>
+    <fieldset
+      class="govuk-fieldset"
     >
-      Enter details for product 1
-    </legend>
-    <div
-      className="flex-container"
-    >
-      <div
-        className="govuk-!-margin-left-4 govuk-!-margin-right-2"
+      <legend
+        class="govuk-fieldset__legend govuk-visually-hidden"
       >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "multiple-product-name-0",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
-        >
-          <label
-            className="govuk-label "
-            htmlFor="multiple-product-name-0"
-          >
-            <span
-              className="govuk-visually-hidden"
-            >
-              Product Name - Product 1
-            </span>
-            <span
-              aria-hidden={true}
-            >
-              Product name
-            </span>
-          </label>
-          <span
-            className="govuk-hint "
-            id="product-name-hint-0"
-          >
-            50 characters max
-          </span>
-           
-          <FormElementWrapper
-            addFormGroupError={false}
-            errorClass="govuk-input--error"
-            errorId="multiple-product-name-0"
-            errors={Array []}
-            hideText={true}
-          >
-            <input
-              aria-labelledby="product-name-hint-0"
-              className="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
-              defaultValue=""
-              id="multiple-product-name-0"
-              maxLength={50}
-              name="multipleProductNameInput0"
-              type="text"
-            />
-          </FormElementWrapper>
-        </FormGroupWrapper>
-      </div>
+        Enter details for product 1
+      </legend>
       <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
+        class="flex-container"
       >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "multiple-product-price-0",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
+        <div
+          class="govuk-!-margin-left-4 govuk-!-margin-right-2"
         >
-          <label
-            className="govuk-label "
-            htmlFor="multiple-product-price-0"
-          >
-            <span
-              className="govuk-visually-hidden"
-            >
-              Product Price, in pounds - Product 1
-            </span>
-            <span
-              aria-hidden={true}
-            >
-              Price
-            </span>
-          </label>
-          <span
-            className="govuk-hint "
-            id="product-price-hint-0"
-          >
-            e.g. 2.99
-          </span>
           <div
-            className="govuk-currency-input"
+            class="govuk-form-group "
           >
-            <div
-              className="govuk-currency-input__inner"
+            <label
+              class="govuk-label "
+              for="multiple-product-name-0"
             >
               <span
-                className="govuk-currency-input__inner__unit"
+                class="govuk-visually-hidden"
               >
-                £
+                Product Name - Product 1
               </span>
-              <FormElementWrapper
-                addFormGroupError={false}
-                errorClass="govuk-input--error"
-                errorId="multiple-product-price-0"
-                errors={Array []}
-                hideText={true}
+              <span
+                aria-hidden="true"
               >
-                <input
-                  aria-labelledby="product-price-hint-0"
-                  className="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
-                  data-non-numeric={true}
-                  defaultValue=""
-                  id="multiple-product-price-0"
-                  name="multipleProductPriceInput0"
-                  type="text"
-                />
-              </FormElementWrapper>
+                Product name
+              </span>
+            </label>
+            <span
+              class="govuk-hint "
+              id="product-name-hint-0"
+            >
+              50 characters max
+            </span>
+             
+            <div
+              class=""
+            >
+              <input
+                aria-labelledby="product-name-hint-0"
+                class="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
+                id="multiple-product-name-0"
+                maxlength="50"
+                name="multipleProductNameInput0"
+                type="text"
+                value=""
+              />
             </div>
           </div>
-        </FormGroupWrapper>
-      </div>
-      <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "product-details-carnet-quantity",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
         >
-          <label
-            className="govuk-label"
-            htmlFor="product-details-carnet-quantity-0"
-          >
-            <span
-              aria-hidden={true}
-            >
-              Quantity in bundle
-            </span>
-          </label>
-          <span
-            className="govuk-hint"
-            id="product-quantity-hint"
-          >
-            Must be 2 or more
-          </span>
-          <FormElementWrapper
-            addFormGroupError={false}
-            errorClass="govuk-input--error"
-            errorId="product-details-carnet-quantity-0"
-            errors={Array []}
-            hideText={true}
-          >
-            <input
-              aria-describedby="product-quantity-hint"
-              className="govuk-input govuk-input--width-6"
-              data-non-numeric={true}
-              defaultValue=""
-              id="product-details-carnet-quantity-0"
-              name="carnetQuantityInput0"
-              type="text"
-            />
-          </FormElementWrapper>
-        </FormGroupWrapper>
-      </div>
-      <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "product-details-carnet-expiry-quantity",
-              "product-details-carnet-expiry-unit",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
-        >
-          <p
-            className="govuk-label"
-          >
-            Carnet expiry
-          </p>
-          <span
-            className="govuk-hint"
-            id="product-carnet-expiry-hint-0"
-          >
-            e.g. 2 months
-          </span>
-          <ExpirySelector
-            carnet={true}
-            defaultDuration=""
-            errors={Array []}
-            hideFormGroupError={true}
-            hintId="product-carnet-expiry-hint-0"
-            quantityId="product-details-carnet-expiry-quantity-0"
-            quantityName="carnetExpiryDurationInput0"
-            unitId="product-details-carnet-expiry-unit-0"
-            unitName="carnetExpiryUnitInput0"
-          />
-        </FormGroupWrapper>
-      </div>
-    </div>
-  </fieldset>
-  <fieldset
-    className="govuk-fieldset"
-    key="1"
-  >
-    <legend
-      className="govuk-fieldset__legend govuk-visually-hidden"
-    >
-      Enter details for product 2
-    </legend>
-    <div
-      className="flex-container"
-    >
-      <div
-        className="govuk-!-margin-left-4 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "multiple-product-name-1",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
-        >
-          <label
-            className="govuk-label govuk-visually-hidden"
-            htmlFor="multiple-product-name-1"
-          >
-            <span
-              className="govuk-visually-hidden"
-            >
-              Product Name - Product 2
-            </span>
-            <span
-              aria-hidden={true}
-            >
-              Product name
-            </span>
-          </label>
-          <span
-            className="govuk-hint govuk-visually-hidden"
-            id="product-name-hint-1"
-          >
-            50 characters max
-          </span>
-           
-          <FormElementWrapper
-            addFormGroupError={false}
-            errorClass="govuk-input--error"
-            errorId="multiple-product-name-1"
-            errors={Array []}
-            hideText={true}
-          >
-            <input
-              aria-labelledby="product-name-hint-1"
-              className="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
-              defaultValue=""
-              id="multiple-product-name-1"
-              maxLength={50}
-              name="multipleProductNameInput1"
-              type="text"
-            />
-          </FormElementWrapper>
-        </FormGroupWrapper>
-      </div>
-      <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "multiple-product-price-1",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
-        >
-          <label
-            className="govuk-label govuk-visually-hidden"
-            htmlFor="multiple-product-price-1"
-          >
-            <span
-              className="govuk-visually-hidden"
-            >
-              Product Price, in pounds - Product 2
-            </span>
-            <span
-              aria-hidden={true}
-            >
-              Price
-            </span>
-          </label>
-          <span
-            className="govuk-hint govuk-visually-hidden"
-            id="product-price-hint-1"
-          >
-            e.g. 2.99
-          </span>
           <div
-            className="govuk-currency-input"
+            class="govuk-form-group "
           >
-            <div
-              className="govuk-currency-input__inner"
+            <label
+              class="govuk-label "
+              for="multiple-product-price-0"
             >
               <span
-                className="govuk-currency-input__inner__unit"
+                class="govuk-visually-hidden"
               >
-                £
+                Product Price, in pounds - Product 1
               </span>
-              <FormElementWrapper
-                addFormGroupError={false}
-                errorClass="govuk-input--error"
-                errorId="multiple-product-price-1"
-                errors={Array []}
-                hideText={true}
+              <span
+                aria-hidden="true"
               >
-                <input
-                  aria-labelledby="product-price-hint-1"
-                  className="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
-                  data-non-numeric={true}
-                  defaultValue=""
-                  id="multiple-product-price-1"
-                  name="multipleProductPriceInput1"
-                  type="text"
-                />
-              </FormElementWrapper>
+                Price
+              </span>
+            </label>
+            <span
+              class="govuk-hint "
+              id="product-price-hint-0"
+            >
+              e.g. 2.99
+            </span>
+            <div
+              class="govuk-currency-input"
+            >
+              <div
+                class="govuk-currency-input__inner"
+              >
+                <span
+                  class="govuk-currency-input__inner__unit"
+                >
+                  £
+                </span>
+                <div
+                  class=""
+                >
+                  <input
+                    aria-labelledby="product-price-hint-0"
+                    class="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
+                    data-non-numeric="true"
+                    id="multiple-product-price-0"
+                    name="multipleProductPriceInput0"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
             </div>
           </div>
-        </FormGroupWrapper>
-      </div>
-      <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "product-details-carnet-quantity",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
         >
-          <FormElementWrapper
-            addFormGroupError={false}
-            errorClass="govuk-input--error"
-            errorId="product-details-carnet-quantity-1"
-            errors={Array []}
-            hideText={true}
+          <div
+            class="govuk-form-group "
           >
-            <input
-              aria-describedby="product-quantity-hint"
-              className="govuk-input govuk-input--width-6"
-              data-non-numeric={true}
-              defaultValue=""
-              id="product-details-carnet-quantity-1"
-              name="carnetQuantityInput1"
-              type="text"
-            />
-          </FormElementWrapper>
-        </FormGroupWrapper>
-      </div>
-      <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "product-details-carnet-expiry-quantity",
-              "product-details-carnet-expiry-unit",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
+            <label
+              class="govuk-label"
+              for="product-details-carnet-quantity-0"
+            >
+              <span
+                aria-hidden="true"
+              >
+                Quantity in bundle
+              </span>
+            </label>
+            <span
+              class="govuk-hint"
+              id="product-quantity-hint"
+            >
+              Must be 2 or more
+            </span>
+            <div
+              class=""
+            >
+              <input
+                aria-describedby="product-quantity-hint"
+                class="govuk-input govuk-input--width-6"
+                data-non-numeric="true"
+                id="product-details-carnet-quantity-0"
+                name="carnetQuantityInput0"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
         >
-          <ExpirySelector
-            carnet={true}
-            defaultDuration=""
-            errors={Array []}
-            hideFormGroupError={true}
-            hintId="product-carnet-expiry-hint-1"
-            quantityId="product-details-carnet-expiry-quantity-1"
-            quantityName="carnetExpiryDurationInput1"
-            unitId="product-details-carnet-expiry-unit-1"
-            unitName="carnetExpiryUnitInput1"
-          />
-        </FormGroupWrapper>
+          <div
+            class="govuk-form-group "
+          >
+            <p
+              class="govuk-label"
+            >
+              Carnet expiry
+            </p>
+            <span
+              class="govuk-hint"
+              id="product-carnet-expiry-hint-0"
+            >
+              e.g. 2 months
+            </span>
+            <div
+              class="govuk-input__wrapper expiry-selector-wrapper"
+            >
+              <div
+                class=""
+              >
+                <input
+                  aria-labelledby="product-carnet-expiry-hint-0"
+                  class="govuk-input govuk-input--width-3"
+                  id="product-details-carnet-expiry-quantity-0"
+                  name="carnetExpiryDurationInput0"
+                  type="text"
+                  value=""
+                />
+              </div>
+              <div
+                class=""
+              >
+                <select
+                  aria-labelledby="product-carnet-expiry-hint-0"
+                  class="govuk-select expiry-selector-units"
+                  id="product-details-carnet-expiry-unit-0"
+                  name="carnetExpiryUnitInput0"
+                >
+                  <option
+                    disabled=""
+                    selected=""
+                    value=""
+                  >
+                    Select One
+                  </option>
+                  <option
+                    value="hour"
+                  >
+                    Hours
+                  </option>
+                  <option
+                    value="day"
+                  >
+                    Days
+                  </option>
+                  <option
+                    value="week"
+                  >
+                    Weeks
+                  </option>
+                  <option
+                    value="month"
+                  >
+                    Months
+                  </option>
+                  <option
+                    value="year"
+                  >
+                    Years
+                  </option>
+                  <option
+                    value="no expiry"
+                  >
+                    No expiry
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </fieldset>
-</div>
+    </fieldset>
+    <fieldset
+      class="govuk-fieldset"
+    >
+      <legend
+        class="govuk-fieldset__legend govuk-visually-hidden"
+      >
+        Enter details for product 2
+      </legend>
+      <div
+        class="flex-container"
+      >
+        <div
+          class="govuk-!-margin-left-4 govuk-!-margin-right-2"
+        >
+          <div
+            class="govuk-form-group "
+          >
+            <label
+              class="govuk-label govuk-visually-hidden"
+              for="multiple-product-name-1"
+            >
+              <span
+                class="govuk-visually-hidden"
+              >
+                Product Name - Product 2
+              </span>
+              <span
+                aria-hidden="true"
+              >
+                Product name
+              </span>
+            </label>
+            <span
+              class="govuk-hint govuk-visually-hidden"
+              id="product-name-hint-1"
+            >
+              50 characters max
+            </span>
+             
+            <div
+              class=""
+            >
+              <input
+                aria-labelledby="product-name-hint-1"
+                class="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
+                id="multiple-product-name-1"
+                maxlength="50"
+                name="multipleProductNameInput1"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
+        >
+          <div
+            class="govuk-form-group "
+          >
+            <label
+              class="govuk-label govuk-visually-hidden"
+              for="multiple-product-price-1"
+            >
+              <span
+                class="govuk-visually-hidden"
+              >
+                Product Price, in pounds - Product 2
+              </span>
+              <span
+                aria-hidden="true"
+              >
+                Price
+              </span>
+            </label>
+            <span
+              class="govuk-hint govuk-visually-hidden"
+              id="product-price-hint-1"
+            >
+              e.g. 2.99
+            </span>
+            <div
+              class="govuk-currency-input"
+            >
+              <div
+                class="govuk-currency-input__inner"
+              >
+                <span
+                  class="govuk-currency-input__inner__unit"
+                >
+                  £
+                </span>
+                <div
+                  class=""
+                >
+                  <input
+                    aria-labelledby="product-price-hint-1"
+                    class="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
+                    data-non-numeric="true"
+                    id="multiple-product-price-1"
+                    name="multipleProductPriceInput1"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
+        >
+          <div
+            class="govuk-form-group "
+          >
+            <div
+              class=""
+            >
+              <input
+                aria-describedby="product-quantity-hint"
+                class="govuk-input govuk-input--width-6"
+                data-non-numeric="true"
+                id="product-details-carnet-quantity-1"
+                name="carnetQuantityInput1"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
+        >
+          <div
+            class="govuk-form-group "
+          >
+            <div
+              class="govuk-input__wrapper expiry-selector-wrapper"
+            >
+              <div
+                class=""
+              >
+                <input
+                  aria-labelledby="product-carnet-expiry-hint-1"
+                  class="govuk-input govuk-input--width-3"
+                  id="product-details-carnet-expiry-quantity-1"
+                  name="carnetExpiryDurationInput1"
+                  type="text"
+                  value=""
+                />
+              </div>
+              <div
+                class=""
+              >
+                <select
+                  aria-labelledby="product-carnet-expiry-hint-1"
+                  class="govuk-select expiry-selector-units"
+                  id="product-details-carnet-expiry-unit-1"
+                  name="carnetExpiryUnitInput1"
+                >
+                  <option
+                    disabled=""
+                    selected=""
+                    value=""
+                  >
+                    Select One
+                  </option>
+                  <option
+                    value="hour"
+                  >
+                    Hours
+                  </option>
+                  <option
+                    value="day"
+                  >
+                    Days
+                  </option>
+                  <option
+                    value="week"
+                  >
+                    Weeks
+                  </option>
+                  <option
+                    value="month"
+                  >
+                    Months
+                  </option>
+                  <option
+                    value="year"
+                  >
+                    Years
+                  </option>
+                  <option
+                    value="no expiry"
+                  >
+                    No expiry
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</DocumentFragment>
 `;
 
 exports[`product row renders the right amount of rows for a period carnet 1`] = `
-<div>
-  <fieldset
-    className="govuk-fieldset"
-    key="0"
-  >
-    <legend
-      className="govuk-fieldset__legend govuk-visually-hidden"
+<DocumentFragment>
+  <div>
+    <fieldset
+      class="govuk-fieldset"
     >
-      Enter details for product 1
-    </legend>
-    <div
-      className="flex-container"
-    >
-      <div
-        className="govuk-!-margin-left-4 govuk-!-margin-right-2"
+      <legend
+        class="govuk-fieldset__legend govuk-visually-hidden"
       >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "multiple-product-name-0",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
-        >
-          <label
-            className="govuk-label "
-            htmlFor="multiple-product-name-0"
-          >
-            <span
-              className="govuk-visually-hidden"
-            >
-              Product Name - Product 1
-            </span>
-            <span
-              aria-hidden={true}
-            >
-              Product name
-            </span>
-          </label>
-          <span
-            className="govuk-hint "
-            id="product-name-hint-0"
-          >
-            50 characters max
-          </span>
-           
-          <FormElementWrapper
-            addFormGroupError={false}
-            errorClass="govuk-input--error"
-            errorId="multiple-product-name-0"
-            errors={Array []}
-            hideText={true}
-          >
-            <input
-              aria-labelledby="product-name-hint-0"
-              className="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
-              defaultValue=""
-              id="multiple-product-name-0"
-              maxLength={50}
-              name="multipleProductNameInput0"
-              type="text"
-            />
-          </FormElementWrapper>
-        </FormGroupWrapper>
-      </div>
+        Enter details for product 1
+      </legend>
       <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
+        class="flex-container"
       >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "multiple-product-price-0",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
+        <div
+          class="govuk-!-margin-left-4 govuk-!-margin-right-2"
         >
-          <label
-            className="govuk-label "
-            htmlFor="multiple-product-price-0"
-          >
-            <span
-              className="govuk-visually-hidden"
-            >
-              Product Price, in pounds - Product 1
-            </span>
-            <span
-              aria-hidden={true}
-            >
-              Price
-            </span>
-          </label>
-          <span
-            className="govuk-hint "
-            id="product-price-hint-0"
-          >
-            e.g. 2.99
-          </span>
           <div
-            className="govuk-currency-input"
+            class="govuk-form-group "
           >
-            <div
-              className="govuk-currency-input__inner"
+            <label
+              class="govuk-label "
+              for="multiple-product-name-0"
             >
               <span
-                className="govuk-currency-input__inner__unit"
+                class="govuk-visually-hidden"
               >
-                £
+                Product Name - Product 1
               </span>
-              <FormElementWrapper
-                addFormGroupError={false}
-                errorClass="govuk-input--error"
-                errorId="multiple-product-price-0"
-                errors={Array []}
-                hideText={true}
+              <span
+                aria-hidden="true"
               >
-                <input
-                  aria-labelledby="product-price-hint-0"
-                  className="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
-                  data-non-numeric={true}
-                  defaultValue=""
-                  id="multiple-product-price-0"
-                  name="multipleProductPriceInput0"
-                  type="text"
-                />
-              </FormElementWrapper>
+                Product name
+              </span>
+            </label>
+            <span
+              class="govuk-hint "
+              id="product-name-hint-0"
+            >
+              50 characters max
+            </span>
+             
+            <div
+              class=""
+            >
+              <input
+                aria-labelledby="product-name-hint-0"
+                class="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
+                id="multiple-product-name-0"
+                maxlength="50"
+                name="multipleProductNameInput0"
+                type="text"
+                value=""
+              />
             </div>
           </div>
-        </FormGroupWrapper>
-      </div>
-      <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "product-details-period-duration-quantity-0",
-              "product-details-period-duration-unit-0",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
         >
-          <p
-            className="govuk-label "
+          <div
+            class="govuk-form-group "
           >
-            Period duration
-          </p>
-          <span
-            className="govuk-hint "
-            id="product-period-duration-hint-0"
-          >
-            For example, 3 days
-          </span>
-          <ExpirySelector
-            carnet={false}
-            defaultDuration=""
-            errors={Array []}
-            hideFormGroupError={true}
-            hintId="product-period-duration-hint-0"
-            quantityId="product-details-period-duration-quantity-0"
-            quantityName="multipleProductDurationInput0"
-            school={true}
-            unitId="product-details-period-duration-unit-0"
-            unitName="multipleProductDurationUnitsInput0"
-          />
-        </FormGroupWrapper>
-      </div>
-      <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "product-details-carnet-quantity",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
-        >
-          <label
-            className="govuk-label"
-            htmlFor="product-details-carnet-quantity-0"
-          >
-            <span
-              aria-hidden={true}
+            <label
+              class="govuk-label "
+              for="multiple-product-price-0"
             >
-              Quantity in bundle
+              <span
+                class="govuk-visually-hidden"
+              >
+                Product Price, in pounds - Product 1
+              </span>
+              <span
+                aria-hidden="true"
+              >
+                Price
+              </span>
+            </label>
+            <span
+              class="govuk-hint "
+              id="product-price-hint-0"
+            >
+              e.g. 2.99
             </span>
-          </label>
-          <span
-            className="govuk-hint"
-            id="product-quantity-hint"
-          >
-            Must be 2 or more
-          </span>
-          <FormElementWrapper
-            addFormGroupError={false}
-            errorClass="govuk-input--error"
-            errorId="product-details-carnet-quantity-0"
-            errors={Array []}
-            hideText={true}
-          >
-            <input
-              aria-describedby="product-quantity-hint"
-              className="govuk-input govuk-input--width-6"
-              data-non-numeric={true}
-              defaultValue=""
-              id="product-details-carnet-quantity-0"
-              name="carnetQuantityInput0"
-              type="text"
-            />
-          </FormElementWrapper>
-        </FormGroupWrapper>
-      </div>
-      <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "product-details-carnet-expiry-quantity",
-              "product-details-carnet-expiry-unit",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
+            <div
+              class="govuk-currency-input"
+            >
+              <div
+                class="govuk-currency-input__inner"
+              >
+                <span
+                  class="govuk-currency-input__inner__unit"
+                >
+                  £
+                </span>
+                <div
+                  class=""
+                >
+                  <input
+                    aria-labelledby="product-price-hint-0"
+                    class="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
+                    data-non-numeric="true"
+                    id="multiple-product-price-0"
+                    name="multipleProductPriceInput0"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
         >
-          <p
-            className="govuk-label"
+          <div
+            class="govuk-form-group "
           >
-            Carnet expiry
-          </p>
-          <span
-            className="govuk-hint"
-            id="product-carnet-expiry-hint-0"
+            <p
+              class="govuk-label "
+            >
+              Period duration
+            </p>
+            <span
+              class="govuk-hint "
+              id="product-period-duration-hint-0"
+            >
+              For example, 3 days
+            </span>
+            <div
+              class="govuk-input__wrapper expiry-selector-wrapper"
+            >
+              <div
+                class=""
+              >
+                <input
+                  aria-labelledby="product-period-duration-hint-0"
+                  class="govuk-input govuk-input--width-3"
+                  id="product-details-period-duration-quantity-0"
+                  name="multipleProductDurationInput0"
+                  type="text"
+                  value=""
+                />
+              </div>
+              <div
+                class=""
+              >
+                <select
+                  aria-labelledby="product-period-duration-hint-0"
+                  class="govuk-select expiry-selector-units"
+                  id="product-details-period-duration-unit-0"
+                  name="multipleProductDurationUnitsInput0"
+                >
+                  <option
+                    disabled=""
+                    selected=""
+                    value=""
+                  >
+                    Select One
+                  </option>
+                  <option
+                    value="hour"
+                  >
+                    Hours
+                  </option>
+                  <option
+                    value="day"
+                  >
+                    Days
+                  </option>
+                  <option
+                    value="week"
+                  >
+                    Weeks
+                  </option>
+                  <option
+                    value="month"
+                  >
+                    Months
+                  </option>
+                  <option
+                    value="year"
+                  >
+                    Years
+                  </option>
+                  <option
+                    value="term"
+                  >
+                    Terms
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
+        >
+          <div
+            class="govuk-form-group "
           >
-            e.g. 2 months
-          </span>
-          <ExpirySelector
-            carnet={true}
-            defaultDuration=""
-            errors={Array []}
-            hideFormGroupError={true}
-            hintId="product-carnet-expiry-hint-0"
-            quantityId="product-details-carnet-expiry-quantity-0"
-            quantityName="carnetExpiryDurationInput0"
-            unitId="product-details-carnet-expiry-unit-0"
-            unitName="carnetExpiryUnitInput0"
-          />
-        </FormGroupWrapper>
+            <label
+              class="govuk-label"
+              for="product-details-carnet-quantity-0"
+            >
+              <span
+                aria-hidden="true"
+              >
+                Quantity in bundle
+              </span>
+            </label>
+            <span
+              class="govuk-hint"
+              id="product-quantity-hint"
+            >
+              Must be 2 or more
+            </span>
+            <div
+              class=""
+            >
+              <input
+                aria-describedby="product-quantity-hint"
+                class="govuk-input govuk-input--width-6"
+                data-non-numeric="true"
+                id="product-details-carnet-quantity-0"
+                name="carnetQuantityInput0"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
+        >
+          <div
+            class="govuk-form-group "
+          >
+            <p
+              class="govuk-label"
+            >
+              Carnet expiry
+            </p>
+            <span
+              class="govuk-hint"
+              id="product-carnet-expiry-hint-0"
+            >
+              e.g. 2 months
+            </span>
+            <div
+              class="govuk-input__wrapper expiry-selector-wrapper"
+            >
+              <div
+                class=""
+              >
+                <input
+                  aria-labelledby="product-carnet-expiry-hint-0"
+                  class="govuk-input govuk-input--width-3"
+                  id="product-details-carnet-expiry-quantity-0"
+                  name="carnetExpiryDurationInput0"
+                  type="text"
+                  value=""
+                />
+              </div>
+              <div
+                class=""
+              >
+                <select
+                  aria-labelledby="product-carnet-expiry-hint-0"
+                  class="govuk-select expiry-selector-units"
+                  id="product-details-carnet-expiry-unit-0"
+                  name="carnetExpiryUnitInput0"
+                >
+                  <option
+                    disabled=""
+                    selected=""
+                    value=""
+                  >
+                    Select One
+                  </option>
+                  <option
+                    value="hour"
+                  >
+                    Hours
+                  </option>
+                  <option
+                    value="day"
+                  >
+                    Days
+                  </option>
+                  <option
+                    value="week"
+                  >
+                    Weeks
+                  </option>
+                  <option
+                    value="month"
+                  >
+                    Months
+                  </option>
+                  <option
+                    value="year"
+                  >
+                    Years
+                  </option>
+                  <option
+                    value="no expiry"
+                  >
+                    No expiry
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </fieldset>
-</div>
+    </fieldset>
+  </div>
+</DocumentFragment>
 `;
 
 exports[`product row renders the right amount of rows for a period ticket 1`] = `
-<div>
-  <fieldset
-    className="govuk-fieldset"
-    key="0"
-  >
-    <legend
-      className="govuk-fieldset__legend govuk-visually-hidden"
+<DocumentFragment>
+  <div>
+    <fieldset
+      class="govuk-fieldset"
     >
-      Enter details for product 1
-    </legend>
-    <div
-      className="flex-container"
-    >
-      <div
-        className="govuk-!-margin-left-4 govuk-!-margin-right-2"
+      <legend
+        class="govuk-fieldset__legend govuk-visually-hidden"
       >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "multiple-product-name-0",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
-        >
-          <label
-            className="govuk-label "
-            htmlFor="multiple-product-name-0"
-          >
-            <span
-              className="govuk-visually-hidden"
-            >
-              Product Name - Product 1
-            </span>
-            <span
-              aria-hidden={true}
-            >
-              Product name
-            </span>
-          </label>
-          <span
-            className="govuk-hint "
-            id="product-name-hint-0"
-          >
-            50 characters max
-          </span>
-           
-          <FormElementWrapper
-            addFormGroupError={false}
-            errorClass="govuk-input--error"
-            errorId="multiple-product-name-0"
-            errors={Array []}
-            hideText={true}
-          >
-            <input
-              aria-labelledby="product-name-hint-0"
-              className="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
-              defaultValue=""
-              id="multiple-product-name-0"
-              maxLength={50}
-              name="multipleProductNameInput0"
-              type="text"
-            />
-          </FormElementWrapper>
-        </FormGroupWrapper>
-      </div>
+        Enter details for product 1
+      </legend>
       <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
+        class="flex-container"
       >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "multiple-product-price-0",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
+        <div
+          class="govuk-!-margin-left-4 govuk-!-margin-right-2"
         >
-          <label
-            className="govuk-label "
-            htmlFor="multiple-product-price-0"
-          >
-            <span
-              className="govuk-visually-hidden"
-            >
-              Product Price, in pounds - Product 1
-            </span>
-            <span
-              aria-hidden={true}
-            >
-              Price
-            </span>
-          </label>
-          <span
-            className="govuk-hint "
-            id="product-price-hint-0"
-          >
-            e.g. 2.99
-          </span>
           <div
-            className="govuk-currency-input"
+            class="govuk-form-group "
           >
-            <div
-              className="govuk-currency-input__inner"
+            <label
+              class="govuk-label "
+              for="multiple-product-name-0"
             >
               <span
-                className="govuk-currency-input__inner__unit"
+                class="govuk-visually-hidden"
               >
-                £
+                Product Name - Product 1
               </span>
-              <FormElementWrapper
-                addFormGroupError={false}
-                errorClass="govuk-input--error"
-                errorId="multiple-product-price-0"
-                errors={Array []}
-                hideText={true}
+              <span
+                aria-hidden="true"
               >
-                <input
-                  aria-labelledby="product-price-hint-0"
-                  className="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
-                  data-non-numeric={true}
-                  defaultValue=""
-                  id="multiple-product-price-0"
-                  name="multipleProductPriceInput0"
-                  type="text"
-                />
-              </FormElementWrapper>
+                Product name
+              </span>
+            </label>
+            <span
+              class="govuk-hint "
+              id="product-name-hint-0"
+            >
+              50 characters max
+            </span>
+             
+            <div
+              class=""
+            >
+              <input
+                aria-labelledby="product-name-hint-0"
+                class="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
+                id="multiple-product-name-0"
+                maxlength="50"
+                name="multipleProductNameInput0"
+                type="text"
+                value=""
+              />
             </div>
           </div>
-        </FormGroupWrapper>
-      </div>
-      <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "product-details-period-duration-quantity-0",
-              "product-details-period-duration-unit-0",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
         >
-          <p
-            className="govuk-label "
-          >
-            Period duration
-          </p>
-          <span
-            className="govuk-hint "
-            id="product-period-duration-hint-0"
-          >
-            For example, 3 days
-          </span>
-          <ExpirySelector
-            carnet={false}
-            defaultDuration=""
-            errors={Array []}
-            hideFormGroupError={true}
-            hintId="product-period-duration-hint-0"
-            quantityId="product-details-period-duration-quantity-0"
-            quantityName="multipleProductDurationInput0"
-            school={false}
-            unitId="product-details-period-duration-unit-0"
-            unitName="multipleProductDurationUnitsInput0"
-          />
-        </FormGroupWrapper>
-      </div>
-    </div>
-  </fieldset>
-  <fieldset
-    className="govuk-fieldset"
-    key="1"
-  >
-    <legend
-      className="govuk-fieldset__legend govuk-visually-hidden"
-    >
-      Enter details for product 2
-    </legend>
-    <div
-      className="flex-container"
-    >
-      <div
-        className="govuk-!-margin-left-4 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "multiple-product-name-1",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
-        >
-          <label
-            className="govuk-label govuk-visually-hidden"
-            htmlFor="multiple-product-name-1"
-          >
-            <span
-              className="govuk-visually-hidden"
-            >
-              Product Name - Product 2
-            </span>
-            <span
-              aria-hidden={true}
-            >
-              Product name
-            </span>
-          </label>
-          <span
-            className="govuk-hint govuk-visually-hidden"
-            id="product-name-hint-1"
-          >
-            50 characters max
-          </span>
-           
-          <FormElementWrapper
-            addFormGroupError={false}
-            errorClass="govuk-input--error"
-            errorId="multiple-product-name-1"
-            errors={Array []}
-            hideText={true}
-          >
-            <input
-              aria-labelledby="product-name-hint-1"
-              className="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
-              defaultValue=""
-              id="multiple-product-name-1"
-              maxLength={50}
-              name="multipleProductNameInput1"
-              type="text"
-            />
-          </FormElementWrapper>
-        </FormGroupWrapper>
-      </div>
-      <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "multiple-product-price-1",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
-        >
-          <label
-            className="govuk-label govuk-visually-hidden"
-            htmlFor="multiple-product-price-1"
-          >
-            <span
-              className="govuk-visually-hidden"
-            >
-              Product Price, in pounds - Product 2
-            </span>
-            <span
-              aria-hidden={true}
-            >
-              Price
-            </span>
-          </label>
-          <span
-            className="govuk-hint govuk-visually-hidden"
-            id="product-price-hint-1"
-          >
-            e.g. 2.99
-          </span>
           <div
-            className="govuk-currency-input"
+            class="govuk-form-group "
           >
-            <div
-              className="govuk-currency-input__inner"
+            <label
+              class="govuk-label "
+              for="multiple-product-price-0"
             >
               <span
-                className="govuk-currency-input__inner__unit"
+                class="govuk-visually-hidden"
               >
-                £
+                Product Price, in pounds - Product 1
               </span>
-              <FormElementWrapper
-                addFormGroupError={false}
-                errorClass="govuk-input--error"
-                errorId="multiple-product-price-1"
-                errors={Array []}
-                hideText={true}
+              <span
+                aria-hidden="true"
               >
-                <input
-                  aria-labelledby="product-price-hint-1"
-                  className="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
-                  data-non-numeric={true}
-                  defaultValue=""
-                  id="multiple-product-price-1"
-                  name="multipleProductPriceInput1"
-                  type="text"
-                />
-              </FormElementWrapper>
+                Price
+              </span>
+            </label>
+            <span
+              class="govuk-hint "
+              id="product-price-hint-0"
+            >
+              e.g. 2.99
+            </span>
+            <div
+              class="govuk-currency-input"
+            >
+              <div
+                class="govuk-currency-input__inner"
+              >
+                <span
+                  class="govuk-currency-input__inner__unit"
+                >
+                  £
+                </span>
+                <div
+                  class=""
+                >
+                  <input
+                    aria-labelledby="product-price-hint-0"
+                    class="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
+                    data-non-numeric="true"
+                    id="multiple-product-price-0"
+                    name="multipleProductPriceInput0"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
             </div>
           </div>
-        </FormGroupWrapper>
-      </div>
-      <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "product-details-period-duration-quantity-1",
-              "product-details-period-duration-unit-1",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
         >
-          <p
-            className="govuk-label govuk-visually-hidden"
-          >
-            Period duration
-          </p>
-          <span
-            className="govuk-hint govuk-visually-hidden"
-            id="product-period-duration-hint-1"
-          >
-            For example, 3 days
-          </span>
-          <ExpirySelector
-            carnet={false}
-            defaultDuration=""
-            errors={Array []}
-            hideFormGroupError={true}
-            hintId="product-period-duration-hint-1"
-            quantityId="product-details-period-duration-quantity-1"
-            quantityName="multipleProductDurationInput1"
-            school={false}
-            unitId="product-details-period-duration-unit-1"
-            unitName="multipleProductDurationUnitsInput1"
-          />
-        </FormGroupWrapper>
-      </div>
-    </div>
-  </fieldset>
-  <fieldset
-    className="govuk-fieldset"
-    key="2"
-  >
-    <legend
-      className="govuk-fieldset__legend govuk-visually-hidden"
-    >
-      Enter details for product 3
-    </legend>
-    <div
-      className="flex-container"
-    >
-      <div
-        className="govuk-!-margin-left-4 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "multiple-product-name-2",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
-        >
-          <label
-            className="govuk-label govuk-visually-hidden"
-            htmlFor="multiple-product-name-2"
-          >
-            <span
-              className="govuk-visually-hidden"
-            >
-              Product Name - Product 3
-            </span>
-            <span
-              aria-hidden={true}
-            >
-              Product name
-            </span>
-          </label>
-          <span
-            className="govuk-hint govuk-visually-hidden"
-            id="product-name-hint-2"
-          >
-            50 characters max
-          </span>
-           
-          <FormElementWrapper
-            addFormGroupError={false}
-            errorClass="govuk-input--error"
-            errorId="multiple-product-name-2"
-            errors={Array []}
-            hideText={true}
-          >
-            <input
-              aria-labelledby="product-name-hint-2"
-              className="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
-              defaultValue=""
-              id="multiple-product-name-2"
-              maxLength={50}
-              name="multipleProductNameInput2"
-              type="text"
-            />
-          </FormElementWrapper>
-        </FormGroupWrapper>
-      </div>
-      <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "multiple-product-price-2",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
-        >
-          <label
-            className="govuk-label govuk-visually-hidden"
-            htmlFor="multiple-product-price-2"
-          >
-            <span
-              className="govuk-visually-hidden"
-            >
-              Product Price, in pounds - Product 3
-            </span>
-            <span
-              aria-hidden={true}
-            >
-              Price
-            </span>
-          </label>
-          <span
-            className="govuk-hint govuk-visually-hidden"
-            id="product-price-hint-2"
-          >
-            e.g. 2.99
-          </span>
           <div
-            className="govuk-currency-input"
+            class="govuk-form-group "
           >
+            <p
+              class="govuk-label "
+            >
+              Period duration
+            </p>
+            <span
+              class="govuk-hint "
+              id="product-period-duration-hint-0"
+            >
+              For example, 3 days
+            </span>
             <div
-              className="govuk-currency-input__inner"
+              class="govuk-input__wrapper expiry-selector-wrapper"
+            >
+              <div
+                class=""
+              >
+                <input
+                  aria-labelledby="product-period-duration-hint-0"
+                  class="govuk-input govuk-input--width-3"
+                  id="product-details-period-duration-quantity-0"
+                  name="multipleProductDurationInput0"
+                  type="text"
+                  value=""
+                />
+              </div>
+              <div
+                class=""
+              >
+                <select
+                  aria-labelledby="product-period-duration-hint-0"
+                  class="govuk-select expiry-selector-units"
+                  id="product-details-period-duration-unit-0"
+                  name="multipleProductDurationUnitsInput0"
+                >
+                  <option
+                    disabled=""
+                    selected=""
+                    value=""
+                  >
+                    Select One
+                  </option>
+                  <option
+                    value="hour"
+                  >
+                    Hours
+                  </option>
+                  <option
+                    value="day"
+                  >
+                    Days
+                  </option>
+                  <option
+                    value="week"
+                  >
+                    Weeks
+                  </option>
+                  <option
+                    value="month"
+                  >
+                    Months
+                  </option>
+                  <option
+                    value="year"
+                  >
+                    Years
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset
+      class="govuk-fieldset"
+    >
+      <legend
+        class="govuk-fieldset__legend govuk-visually-hidden"
+      >
+        Enter details for product 2
+      </legend>
+      <div
+        class="flex-container"
+      >
+        <div
+          class="govuk-!-margin-left-4 govuk-!-margin-right-2"
+        >
+          <div
+            class="govuk-form-group "
+          >
+            <label
+              class="govuk-label govuk-visually-hidden"
+              for="multiple-product-name-1"
             >
               <span
-                className="govuk-currency-input__inner__unit"
+                class="govuk-visually-hidden"
               >
-                £
+                Product Name - Product 2
               </span>
-              <FormElementWrapper
-                addFormGroupError={false}
-                errorClass="govuk-input--error"
-                errorId="multiple-product-price-2"
-                errors={Array []}
-                hideText={true}
+              <span
+                aria-hidden="true"
               >
-                <input
-                  aria-labelledby="product-price-hint-2"
-                  className="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
-                  data-non-numeric={true}
-                  defaultValue=""
-                  id="multiple-product-price-2"
-                  name="multipleProductPriceInput2"
-                  type="text"
-                />
-              </FormElementWrapper>
+                Product name
+              </span>
+            </label>
+            <span
+              class="govuk-hint govuk-visually-hidden"
+              id="product-name-hint-1"
+            >
+              50 characters max
+            </span>
+             
+            <div
+              class=""
+            >
+              <input
+                aria-labelledby="product-name-hint-1"
+                class="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
+                id="multiple-product-name-1"
+                maxlength="50"
+                name="multipleProductNameInput1"
+                type="text"
+                value=""
+              />
             </div>
           </div>
-        </FormGroupWrapper>
-      </div>
-      <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "product-details-period-duration-quantity-2",
-              "product-details-period-duration-unit-2",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
         >
-          <p
-            className="govuk-label govuk-visually-hidden"
-          >
-            Period duration
-          </p>
-          <span
-            className="govuk-hint govuk-visually-hidden"
-            id="product-period-duration-hint-2"
-          >
-            For example, 3 days
-          </span>
-          <ExpirySelector
-            carnet={false}
-            defaultDuration=""
-            errors={Array []}
-            hideFormGroupError={true}
-            hintId="product-period-duration-hint-2"
-            quantityId="product-details-period-duration-quantity-2"
-            quantityName="multipleProductDurationInput2"
-            school={false}
-            unitId="product-details-period-duration-unit-2"
-            unitName="multipleProductDurationUnitsInput2"
-          />
-        </FormGroupWrapper>
-      </div>
-    </div>
-  </fieldset>
-  <fieldset
-    className="govuk-fieldset"
-    key="3"
-  >
-    <legend
-      className="govuk-fieldset__legend govuk-visually-hidden"
-    >
-      Enter details for product 4
-    </legend>
-    <div
-      className="flex-container"
-    >
-      <div
-        className="govuk-!-margin-left-4 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "multiple-product-name-3",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
-        >
-          <label
-            className="govuk-label govuk-visually-hidden"
-            htmlFor="multiple-product-name-3"
-          >
-            <span
-              className="govuk-visually-hidden"
-            >
-              Product Name - Product 4
-            </span>
-            <span
-              aria-hidden={true}
-            >
-              Product name
-            </span>
-          </label>
-          <span
-            className="govuk-hint govuk-visually-hidden"
-            id="product-name-hint-3"
-          >
-            50 characters max
-          </span>
-           
-          <FormElementWrapper
-            addFormGroupError={false}
-            errorClass="govuk-input--error"
-            errorId="multiple-product-name-3"
-            errors={Array []}
-            hideText={true}
-          >
-            <input
-              aria-labelledby="product-name-hint-3"
-              className="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
-              defaultValue=""
-              id="multiple-product-name-3"
-              maxLength={50}
-              name="multipleProductNameInput3"
-              type="text"
-            />
-          </FormElementWrapper>
-        </FormGroupWrapper>
-      </div>
-      <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "multiple-product-price-3",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
-        >
-          <label
-            className="govuk-label govuk-visually-hidden"
-            htmlFor="multiple-product-price-3"
-          >
-            <span
-              className="govuk-visually-hidden"
-            >
-              Product Price, in pounds - Product 4
-            </span>
-            <span
-              aria-hidden={true}
-            >
-              Price
-            </span>
-          </label>
-          <span
-            className="govuk-hint govuk-visually-hidden"
-            id="product-price-hint-3"
-          >
-            e.g. 2.99
-          </span>
           <div
-            className="govuk-currency-input"
+            class="govuk-form-group "
           >
-            <div
-              className="govuk-currency-input__inner"
+            <label
+              class="govuk-label govuk-visually-hidden"
+              for="multiple-product-price-1"
             >
               <span
-                className="govuk-currency-input__inner__unit"
+                class="govuk-visually-hidden"
               >
-                £
+                Product Price, in pounds - Product 2
               </span>
-              <FormElementWrapper
-                addFormGroupError={false}
-                errorClass="govuk-input--error"
-                errorId="multiple-product-price-3"
-                errors={Array []}
-                hideText={true}
+              <span
+                aria-hidden="true"
               >
-                <input
-                  aria-labelledby="product-price-hint-3"
-                  className="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
-                  data-non-numeric={true}
-                  defaultValue=""
-                  id="multiple-product-price-3"
-                  name="multipleProductPriceInput3"
-                  type="text"
-                />
-              </FormElementWrapper>
+                Price
+              </span>
+            </label>
+            <span
+              class="govuk-hint govuk-visually-hidden"
+              id="product-price-hint-1"
+            >
+              e.g. 2.99
+            </span>
+            <div
+              class="govuk-currency-input"
+            >
+              <div
+                class="govuk-currency-input__inner"
+              >
+                <span
+                  class="govuk-currency-input__inner__unit"
+                >
+                  £
+                </span>
+                <div
+                  class=""
+                >
+                  <input
+                    aria-labelledby="product-price-hint-1"
+                    class="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
+                    data-non-numeric="true"
+                    id="multiple-product-price-1"
+                    name="multipleProductPriceInput1"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
             </div>
           </div>
-        </FormGroupWrapper>
-      </div>
-      <div
-        className="govuk-!-margin-left-2 govuk-!-margin-right-2"
-      >
-        <FormGroupWrapper
-          errorIds={
-            Array [
-              "product-details-period-duration-quantity-3",
-              "product-details-period-duration-unit-3",
-            ]
-          }
-          errors={Array []}
-          hideErrorBar={true}
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
         >
-          <p
-            className="govuk-label govuk-visually-hidden"
+          <div
+            class="govuk-form-group "
           >
-            Period duration
-          </p>
-          <span
-            className="govuk-hint govuk-visually-hidden"
-            id="product-period-duration-hint-3"
-          >
-            For example, 3 days
-          </span>
-          <ExpirySelector
-            carnet={false}
-            defaultDuration=""
-            errors={Array []}
-            hideFormGroupError={true}
-            hintId="product-period-duration-hint-3"
-            quantityId="product-details-period-duration-quantity-3"
-            quantityName="multipleProductDurationInput3"
-            school={false}
-            unitId="product-details-period-duration-unit-3"
-            unitName="multipleProductDurationUnitsInput3"
-          />
-        </FormGroupWrapper>
+            <p
+              class="govuk-label govuk-visually-hidden"
+            >
+              Period duration
+            </p>
+            <span
+              class="govuk-hint govuk-visually-hidden"
+              id="product-period-duration-hint-1"
+            >
+              For example, 3 days
+            </span>
+            <div
+              class="govuk-input__wrapper expiry-selector-wrapper"
+            >
+              <div
+                class=""
+              >
+                <input
+                  aria-labelledby="product-period-duration-hint-1"
+                  class="govuk-input govuk-input--width-3"
+                  id="product-details-period-duration-quantity-1"
+                  name="multipleProductDurationInput1"
+                  type="text"
+                  value=""
+                />
+              </div>
+              <div
+                class=""
+              >
+                <select
+                  aria-labelledby="product-period-duration-hint-1"
+                  class="govuk-select expiry-selector-units"
+                  id="product-details-period-duration-unit-1"
+                  name="multipleProductDurationUnitsInput1"
+                >
+                  <option
+                    disabled=""
+                    selected=""
+                    value=""
+                  >
+                    Select One
+                  </option>
+                  <option
+                    value="hour"
+                  >
+                    Hours
+                  </option>
+                  <option
+                    value="day"
+                  >
+                    Days
+                  </option>
+                  <option
+                    value="week"
+                  >
+                    Weeks
+                  </option>
+                  <option
+                    value="month"
+                  >
+                    Months
+                  </option>
+                  <option
+                    value="year"
+                  >
+                    Years
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </fieldset>
-</div>
+    </fieldset>
+    <fieldset
+      class="govuk-fieldset"
+    >
+      <legend
+        class="govuk-fieldset__legend govuk-visually-hidden"
+      >
+        Enter details for product 3
+      </legend>
+      <div
+        class="flex-container"
+      >
+        <div
+          class="govuk-!-margin-left-4 govuk-!-margin-right-2"
+        >
+          <div
+            class="govuk-form-group "
+          >
+            <label
+              class="govuk-label govuk-visually-hidden"
+              for="multiple-product-name-2"
+            >
+              <span
+                class="govuk-visually-hidden"
+              >
+                Product Name - Product 3
+              </span>
+              <span
+                aria-hidden="true"
+              >
+                Product name
+              </span>
+            </label>
+            <span
+              class="govuk-hint govuk-visually-hidden"
+              id="product-name-hint-2"
+            >
+              50 characters max
+            </span>
+             
+            <div
+              class=""
+            >
+              <input
+                aria-labelledby="product-name-hint-2"
+                class="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
+                id="multiple-product-name-2"
+                maxlength="50"
+                name="multipleProductNameInput2"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
+        >
+          <div
+            class="govuk-form-group "
+          >
+            <label
+              class="govuk-label govuk-visually-hidden"
+              for="multiple-product-price-2"
+            >
+              <span
+                class="govuk-visually-hidden"
+              >
+                Product Price, in pounds - Product 3
+              </span>
+              <span
+                aria-hidden="true"
+              >
+                Price
+              </span>
+            </label>
+            <span
+              class="govuk-hint govuk-visually-hidden"
+              id="product-price-hint-2"
+            >
+              e.g. 2.99
+            </span>
+            <div
+              class="govuk-currency-input"
+            >
+              <div
+                class="govuk-currency-input__inner"
+              >
+                <span
+                  class="govuk-currency-input__inner__unit"
+                >
+                  £
+                </span>
+                <div
+                  class=""
+                >
+                  <input
+                    aria-labelledby="product-price-hint-2"
+                    class="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
+                    data-non-numeric="true"
+                    id="multiple-product-price-2"
+                    name="multipleProductPriceInput2"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
+        >
+          <div
+            class="govuk-form-group "
+          >
+            <p
+              class="govuk-label govuk-visually-hidden"
+            >
+              Period duration
+            </p>
+            <span
+              class="govuk-hint govuk-visually-hidden"
+              id="product-period-duration-hint-2"
+            >
+              For example, 3 days
+            </span>
+            <div
+              class="govuk-input__wrapper expiry-selector-wrapper"
+            >
+              <div
+                class=""
+              >
+                <input
+                  aria-labelledby="product-period-duration-hint-2"
+                  class="govuk-input govuk-input--width-3"
+                  id="product-details-period-duration-quantity-2"
+                  name="multipleProductDurationInput2"
+                  type="text"
+                  value=""
+                />
+              </div>
+              <div
+                class=""
+              >
+                <select
+                  aria-labelledby="product-period-duration-hint-2"
+                  class="govuk-select expiry-selector-units"
+                  id="product-details-period-duration-unit-2"
+                  name="multipleProductDurationUnitsInput2"
+                >
+                  <option
+                    disabled=""
+                    selected=""
+                    value=""
+                  >
+                    Select One
+                  </option>
+                  <option
+                    value="hour"
+                  >
+                    Hours
+                  </option>
+                  <option
+                    value="day"
+                  >
+                    Days
+                  </option>
+                  <option
+                    value="week"
+                  >
+                    Weeks
+                  </option>
+                  <option
+                    value="month"
+                  >
+                    Months
+                  </option>
+                  <option
+                    value="year"
+                  >
+                    Years
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset
+      class="govuk-fieldset"
+    >
+      <legend
+        class="govuk-fieldset__legend govuk-visually-hidden"
+      >
+        Enter details for product 4
+      </legend>
+      <div
+        class="flex-container"
+      >
+        <div
+          class="govuk-!-margin-left-4 govuk-!-margin-right-2"
+        >
+          <div
+            class="govuk-form-group "
+          >
+            <label
+              class="govuk-label govuk-visually-hidden"
+              for="multiple-product-name-3"
+            >
+              <span
+                class="govuk-visually-hidden"
+              >
+                Product Name - Product 4
+              </span>
+              <span
+                aria-hidden="true"
+              >
+                Product name
+              </span>
+            </label>
+            <span
+              class="govuk-hint govuk-visually-hidden"
+              id="product-name-hint-3"
+            >
+              50 characters max
+            </span>
+             
+            <div
+              class=""
+            >
+              <input
+                aria-labelledby="product-name-hint-3"
+                class="govuk-input govuk-input--width-40 govuk-product-name-input__inner__input"
+                id="multiple-product-name-3"
+                maxlength="50"
+                name="multipleProductNameInput3"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
+        >
+          <div
+            class="govuk-form-group "
+          >
+            <label
+              class="govuk-label govuk-visually-hidden"
+              for="multiple-product-price-3"
+            >
+              <span
+                class="govuk-visually-hidden"
+              >
+                Product Price, in pounds - Product 4
+              </span>
+              <span
+                aria-hidden="true"
+              >
+                Price
+              </span>
+            </label>
+            <span
+              class="govuk-hint govuk-visually-hidden"
+              id="product-price-hint-3"
+            >
+              e.g. 2.99
+            </span>
+            <div
+              class="govuk-currency-input"
+            >
+              <div
+                class="govuk-currency-input__inner"
+              >
+                <span
+                  class="govuk-currency-input__inner__unit"
+                >
+                  £
+                </span>
+                <div
+                  class=""
+                >
+                  <input
+                    aria-labelledby="product-price-hint-3"
+                    class="govuk-input govuk-input--width-4 govuk-currency-input__inner__input"
+                    data-non-numeric="true"
+                    id="multiple-product-price-3"
+                    name="multipleProductPriceInput3"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="govuk-!-margin-left-2 govuk-!-margin-right-2"
+        >
+          <div
+            class="govuk-form-group "
+          >
+            <p
+              class="govuk-label govuk-visually-hidden"
+            >
+              Period duration
+            </p>
+            <span
+              class="govuk-hint govuk-visually-hidden"
+              id="product-period-duration-hint-3"
+            >
+              For example, 3 days
+            </span>
+            <div
+              class="govuk-input__wrapper expiry-selector-wrapper"
+            >
+              <div
+                class=""
+              >
+                <input
+                  aria-labelledby="product-period-duration-hint-3"
+                  class="govuk-input govuk-input--width-3"
+                  id="product-details-period-duration-quantity-3"
+                  name="multipleProductDurationInput3"
+                  type="text"
+                  value=""
+                />
+              </div>
+              <div
+                class=""
+              >
+                <select
+                  aria-labelledby="product-period-duration-hint-3"
+                  class="govuk-select expiry-selector-units"
+                  id="product-details-period-duration-unit-3"
+                  name="multipleProductDurationUnitsInput3"
+                >
+                  <option
+                    disabled=""
+                    selected=""
+                    value=""
+                  >
+                    Select One
+                  </option>
+                  <option
+                    value="hour"
+                  >
+                    Hours
+                  </option>
+                  <option
+                    value="day"
+                  >
+                    Days
+                  </option>
+                  <option
+                    value="week"
+                  >
+                    Weeks
+                  </option>
+                  <option
+                    value="month"
+                  >
+                    Months
+                  </option>
+                  <option
+                    value="year"
+                  >
+                    Years
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</DocumentFragment>
 `;

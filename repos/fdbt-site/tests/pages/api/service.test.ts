@@ -18,7 +18,7 @@ describe('service', () => {
             mockWriteHeadFn: writeHeadMock,
         });
         await service(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/service',
         });
     });
@@ -34,7 +34,7 @@ describe('service', () => {
             },
         });
         await service(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/direction',
         });
     });

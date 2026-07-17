@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { NextPageContextWithSession } from '../interfaces';
 import { BaseLayout } from '../layout/Layout';
 import { checkIfMultipleOperators, getCsrfToken } from '../utils';
@@ -69,7 +69,7 @@ const Home = ({
                     <a
                         href={'/products/multiOperatorProductsExternal'}
                         className="govuk-link govuk-!-font-size-19"
-                        id="account-link"
+                        id="multi-operator-fares-link"
                     >
                         {'View and manage multi-operator fares'}
                     </a>
@@ -101,18 +101,18 @@ const Home = ({
                         <br />
                         <br />
                         The Bus Open Data Service deals with queries relating to the use of Bus Open Data.
-                        {showDeleteProductsLink ? (
-                            <p>
-                                <a
-                                    className="govuk-button govuk-button--warning"
-                                    href={`/api/deleteAllProducts?_csrf=${csrfToken}`}
-                                    aria-label="go to the bus open data service"
-                                >
-                                    Clear products
-                                </a>
-                            </p>
-                        ) : null}
                     </p>
+                    {showDeleteProductsLink ? (
+                        <p>
+                            <a
+                                className="govuk-button govuk-button--warning"
+                                href={`/api/deleteAllProducts?_csrf=${csrfToken}`}
+                                aria-label="go to the bus open data service"
+                            >
+                                Clear products
+                            </a>
+                        </p>
+                    ) : null}
                 </div>
             </div>
 
@@ -126,7 +126,7 @@ const Home = ({
     </BaseLayout>
 );
 
-export const getServerSideProps = async (ctx: NextPageContextWithSession): Promise<{}> => {
+export const getServerSideProps = async (ctx: NextPageContextWithSession): Promise<object> => {
     regenerateSession(ctx.req);
     const multipleOperators = checkIfMultipleOperators(ctx);
 

@@ -21,49 +21,61 @@ export const returnValiditySchema = yup
             .mixed()
             .when('validity', {
                 is: 'No',
-                then: yup.string().notRequired(),
+                then: (schema) => schema.notRequired(),
             })
             .when('validity', {
                 is: 'Yes',
-                then: yup
-                    .number()
-                    .typeError(textInputError)
-                    .when('duration', {
-                        is: 'day',
-                        then: yup
-                            .number()
-                            .typeError(textInputError)
-                            .integer(textInputError)
-                            .min(1, textInputError)
-                            .max(365, textInputError),
-                    })
-                    .when('duration', {
-                        is: 'week',
-                        then: yup
-                            .number()
-                            .typeError(textInputError)
-                            .integer(textInputError)
-                            .min(1, textInputError)
-                            .max(1000, textInputError),
-                    })
-                    .when('duration', {
-                        is: 'month',
-                        then: yup
-                            .number()
-                            .typeError(textInputError)
-                            .integer(textInputError)
-                            .min(1, textInputError)
-                            .max(1000, textInputError),
-                    })
-                    .when('duration', {
-                        is: 'year',
-                        then: yup.number().typeError(textInputError).integer(textInputError).min(1, textInputError),
-                    })
-                    .required(textInputError),
+                then: (schema) =>
+                    schema
+                        .when('duration', {
+                            is: 'day',
+                            then: () =>
+                                yup
+                                    .number()
+                                    .typeError(textInputError)
+                                    .integer(textInputError)
+                                    .min(1, textInputError)
+                                    .max(365, textInputError)
+                                    .required(textInputError),
+                        })
+                        .when('duration', {
+                            is: 'week',
+                            then: () =>
+                                yup
+                                    .number()
+                                    .typeError(textInputError)
+                                    .integer(textInputError)
+                                    .min(1, textInputError)
+                                    .max(1000, textInputError)
+                                    .required(textInputError),
+                        })
+                        .when('duration', {
+                            is: 'month',
+                            then: () =>
+                                yup
+                                    .number()
+                                    .typeError(textInputError)
+                                    .integer(textInputError)
+                                    .min(1, textInputError)
+                                    .max(1000, textInputError)
+                                    .required(textInputError),
+                        })
+                        .when('duration', {
+                            is: 'year',
+                            then: () =>
+                                yup
+                                    .number()
+                                    .typeError(textInputError)
+                                    .integer(textInputError)
+                                    .min(1, textInputError)
+                                    .required(textInputError),
+                        })
+                        .required(textInputError),
             }),
         duration: yup.string().when('validity', {
             is: 'Yes',
-            then: yup.string().oneOf(['day', 'week', 'month', 'year'], selectInputError).required(selectInputError),
+            then: (schema) =>
+                schema.oneOf(['day', 'week', 'month', 'year'], selectInputError).required(selectInputError),
         }),
     })
     .required();
@@ -138,7 +150,7 @@ export default async (req: NextApiRequestWithSession, res: NextApiResponse): Pro
         } catch (validationErrors) {
             const validityErrors: yup.ValidationError = validationErrors;
             errors = validityErrors.inner.map((error) => ({
-                id: getErrorIdFromValidityError(error.path),
+                id: getErrorIdFromValidityError(error.path ?? ''),
                 errorMessage: error.message,
                 userInput: String(error.value),
             }));

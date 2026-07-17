@@ -1,5 +1,4 @@
-import Cookies from 'cookies';
-import { decode } from 'jsonwebtoken';
+import { decodeJwt as decode } from 'jose';
 import { NextApiResponse } from 'next';
 import { getAndValidateNoc, getUuidFromSession, unescapeAndDecodeCookie, isSchemeOperator } from './index';
 import { ID_TOKEN_COOKIE, PRODUCTS_DATA_BUCKET_NAME } from '../../constants';
@@ -70,7 +69,6 @@ import { getSessionAttribute, getRequiredSessionAttribute } from '../sessions';
 import { isFareZoneAttributeWithErrors } from '../../pages/csvZoneUpload';
 import { isReturnPeriodValidityWithErrors } from '../../pages/returnValidity';
 import { getFareZones } from './matching';
-import moment from 'moment';
 import {
     TicketWithIds,
     WithIds,
@@ -99,6 +97,7 @@ import {
     SecondaryOperatorFareInfo,
 } from '../../interfaces/matchingJsonTypes';
 import uniq from 'lodash/uniq';
+import dayjs from '../dayjs';
 
 export const isTermTime = (req: NextApiRequestWithSession): boolean => {
     const termTimeAttribute = getSessionAttribute(req, TERM_TIME_ATTRIBUTE);
@@ -205,8 +204,7 @@ export const getBaseTicketAttributes = <T extends TicketType>(
     res: NextApiResponse,
     ticketType: T,
 ): WithBaseIds<BaseTicket<T>> => {
-    const cookies = new Cookies(req, res);
-    const idToken = unescapeAndDecodeCookie(cookies, ID_TOKEN_COOKIE);
+    const idToken = unescapeAndDecodeCookie(req, ID_TOKEN_COOKIE);
 
     const nocCode = getAndValidateNoc(req, res);
     const fareTypeAttribute = getSessionAttribute(req, FARE_TYPE_ATTRIBUTE);
@@ -623,12 +621,8 @@ export const getPointToPointPeriodJson = (
     };
 };
 
-export const getSchemeOperatorTicketJson = (
-    req: NextApiRequestWithSession,
-    res: NextApiResponse,
-): WithBaseIds<BaseSchemeOperatorTicket> => {
-    const cookies = new Cookies(req, res);
-    const idToken = unescapeAndDecodeCookie(cookies, ID_TOKEN_COOKIE);
+export const getSchemeOperatorTicketJson = (req: NextApiRequestWithSession): WithBaseIds<BaseSchemeOperatorTicket> => {
+    const idToken = unescapeAndDecodeCookie(req, ID_TOKEN_COOKIE);
 
     const fareTypeAttribute = getSessionAttribute(req, FARE_TYPE_ATTRIBUTE);
     const passengerTypeAttribute = getSessionAttribute(req, PASSENGER_TYPE_ATTRIBUTE);
@@ -785,7 +779,7 @@ export const insertDataToProductsBucketAndProductsTable = async (
     const filePath = await putUserDataInProductsBucket(userDataJson, uuid, nocCode);
 
     if (!isSchemeOperator(ctx.req, ctx.res)) {
-        const dateTime = moment().toDate();
+        const dateTime = dayjs().toDate();
         const { startDate, endDate } = userDataJson.ticketPeriod;
         const lineId = 'lineId' in userDataJson ? userDataJson.lineId : undefined;
         const multiOperatorExtAdditionalNocs =

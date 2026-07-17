@@ -1,0 +1,8 @@
+[tools]
+awscli = { version = "2", symlink_bins = "true" }
+node   = "18"
+npm    = "10"
+python = "3.8"
+
+[settings]
+python.github_attestations = false

@@ -35,10 +35,10 @@ describe('managePassengerGroup', () => {
             mockWriteHeadFn: writeHeadMock,
         });
         await managePassengerGroup(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/managePassengerGroup',
         });
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GS_PASSENGER_GROUP_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_PASSENGER_GROUP_ATTRIBUTE, {
             errors: [
                 { errorMessage: 'Maximum group size cannot be empty', id: 'max-group-size', userInput: '' },
                 { errorMessage: 'Select at least one passenger type', id: 'passenger-type-0' },
@@ -99,11 +99,11 @@ describe('managePassengerGroup', () => {
 
         await managePassengerGroup(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/managePassengerGroup',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GS_PASSENGER_GROUP_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_PASSENGER_GROUP_ATTRIBUTE, {
             errors: [
                 {
                     errorMessage: 'Maximum group size must be a whole, positive number',
@@ -208,13 +208,13 @@ describe('managePassengerGroup', () => {
 
         await managePassengerGroup(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/viewPassengerTypes',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GS_PASSENGER_GROUP_ATTRIBUTE, undefined);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_PASSENGER_GROUP_ATTRIBUTE, undefined);
 
-        expect(insertGroupPassengerTypeSpy).toBeCalledWith(
+        expect(insertGroupPassengerTypeSpy).toHaveBeenCalledWith(
             'TEST',
             {
                 companions: [
@@ -279,10 +279,10 @@ describe('managePassengerGroup', () => {
             mockWriteHeadFn: writeHeadMock,
         });
         await managePassengerGroup(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/managePassengerGroup',
         });
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GS_PASSENGER_GROUP_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_PASSENGER_GROUP_ATTRIBUTE, {
             errors: [
                 {
                     errorMessage: 'There is already a group with this name. Choose another',
@@ -315,7 +315,7 @@ describe('managePassengerGroup', () => {
         });
     });
 
-    it('should return 302 redirect to /viewPassengerTypes when there have been correct user inputs and the group is saved to the db ', async () => {
+    it('should return 302 redirect to /viewPassengerTypes when there have been correct user inputs and the group is saved to the db', async () => {
         const writeHeadMock = jest.fn();
 
         getGroupPassengerTypesFromGlobalSettingsSpy.mockResolvedValueOnce([]);
@@ -362,13 +362,13 @@ describe('managePassengerGroup', () => {
 
         await managePassengerGroup(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/viewPassengerTypes',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GS_PASSENGER_GROUP_ATTRIBUTE, undefined);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_PASSENGER_GROUP_ATTRIBUTE, undefined);
 
-        expect(insertGroupPassengerTypeSpy).toBeCalledWith(
+        expect(insertGroupPassengerTypeSpy).toHaveBeenCalledWith(
             'TEST',
             {
                 companions: [
@@ -461,13 +461,13 @@ describe('managePassengerGroup', () => {
 
         await managePassengerGroup(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/viewPassengerTypes',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GS_PASSENGER_GROUP_ATTRIBUTE, undefined);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_PASSENGER_GROUP_ATTRIBUTE, undefined);
 
-        expect(updateGroupPassengerTypeSpy).toBeCalledWith('TEST', {
+        expect(updateGroupPassengerTypeSpy).toHaveBeenCalledWith('TEST', {
             groupPassengerType: {
                 companions: [
                     { id: 12, maxNumber: '2', minNumber: '1', name: 'Adult' },
@@ -523,10 +523,10 @@ describe('managePassengerGroup', () => {
             mockWriteHeadFn: writeHeadMock,
         });
         await managePassengerGroup(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/managePassengerGroup?id=2',
         });
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GS_PASSENGER_GROUP_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_PASSENGER_GROUP_ATTRIBUTE, {
             errors: [
                 {
                     errorMessage: 'There is already a group with this name. Choose another',
@@ -547,6 +547,6 @@ describe('managePassengerGroup', () => {
                 name: 'group',
             },
         });
-        expect(updateGroupPassengerTypeSpy).toBeCalledTimes(0);
+        expect(updateGroupPassengerTypeSpy).toHaveBeenCalledTimes(0);
     });
 });

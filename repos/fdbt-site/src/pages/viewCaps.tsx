@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement, useState } from 'react';
+import { FunctionComponent, ReactElement, useState } from 'react';
 import ErrorSummary from '../components/ErrorSummary';
 import { BaseLayout } from '../layout/Layout';
 import SubNavigation from '../layout/SubNavigation';
@@ -23,7 +23,7 @@ interface CapProps {
 
 interface CapCardProps {
     cap: FromDb<Cap>;
-    index: Number;
+    index: number;
     deleteActionHandler: (id: number, name: string) => void;
 }
 

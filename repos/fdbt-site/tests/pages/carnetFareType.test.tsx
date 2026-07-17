@@ -1,11 +1,13 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import CarnetFareType, { getServerSideProps } from '../../src/pages/carnetFareType';
 import { getMockContext, mockSchemOpIdToken } from '../testData/mockData';
 import { getAllServicesByNocCode } from '../../src/data/auroradb';
 import { OPERATOR_ATTRIBUTE, CARNET_FARE_TYPE_ATTRIBUTE } from '../../src/constants/attributes';
 
 jest.mock('../../src/data/auroradb');
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     const writeHeadMock = jest.fn();
@@ -18,12 +20,14 @@ describe('pages', () => {
 
     describe('carnetFareType', () => {
         it('should render correctly', () => {
-            const tree = shallow(<CarnetFareType operatorName="Blackpool Transport" errors={[]} csrfToken="" />);
+            const tree = renderToFragment(
+                <CarnetFareType operatorName="Blackpool Transport" errors={[]} csrfToken="" />,
+            );
             expect(tree).toMatchSnapshot();
         });
 
         it('should render error messaging when errors are passed to the page', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <CarnetFareType operatorName="Blackpool Transport" errors={mockErrors} csrfToken="" />,
             );
             expect(tree).toMatchSnapshot();
@@ -60,7 +64,7 @@ describe('pages', () => {
                     },
                 });
                 getServerSideProps(mockContext);
-                expect(writeHeadMock).toBeCalledWith(302, { Location: '/fareType' });
+                expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/fareType' });
             });
         });
     });

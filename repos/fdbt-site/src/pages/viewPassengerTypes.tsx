@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import ErrorSummary from '../components/ErrorSummary';
 import DeleteConfirmationPopup from '../components/DeleteConfirmationPopup';
 import PassengerTypeCard from '../components/PassengerTypeCard';

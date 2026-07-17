@@ -1,6 +1,7 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { TwoThirdsLayout } from '../layout/Layout';
-import DACimage from '../assets/images/DAC_certification.png';
+
+const DACimage = '/images/DAC_certification.png';
 
 const title = 'Accessibility - Create Fares Data Service';
 const description = 'Accessibility page for the Create Fares Data Service';
@@ -96,7 +97,7 @@ const Accessibility = (): ReactElement => {
     );
 };
 
-export const getServerSideProps = (): {} => {
+export const getServerSideProps = (): object => {
     return { props: {} };
 };
 

@@ -1,20 +1,19 @@
-import { shallow } from 'enzyme';
-import React from 'react';
+import { render } from '@testing-library/react';
 import DateSelector from '../../src/components/DateSelector';
 
 describe('DateSelector', () => {
     it('should render the start DateSelector component empty', () => {
-        const wrapper = shallow(<DateSelector startOrEnd="start" />);
-        expect(wrapper).toMatchSnapshot();
+        const { asFragment } = render(<DateSelector startOrEnd="start" />);
+        expect(asFragment()).toMatchSnapshot();
     });
 
     it('should render the end DateSelector component empty', () => {
-        const wrapper = shallow(<DateSelector startOrEnd="end" />);
-        expect(wrapper).toMatchSnapshot();
+        const { asFragment } = render(<DateSelector startOrEnd="end" />);
+        expect(asFragment()).toMatchSnapshot();
     });
 
     it('should render the DateSelector component with errors', () => {
-        const wrapper = shallow(
+        const { asFragment } = render(
             <DateSelector
                 startOrEnd="start"
                 errors={[{ errorMessage: 'Start date must be a real date', id: 'start-day-input' }]}
@@ -25,11 +24,11 @@ describe('DateSelector', () => {
                 }}
             />,
         );
-        expect(wrapper).toMatchSnapshot();
+        expect(asFragment()).toMatchSnapshot();
     });
 
     it('should render the DateSelector component with valid inputs', () => {
-        const wrapper = shallow(
+        const { asFragment } = render(
             <DateSelector
                 startOrEnd="start"
                 errors={[]}
@@ -40,6 +39,6 @@ describe('DateSelector', () => {
                 }}
             />,
         );
-        expect(wrapper).toMatchSnapshot();
+        expect(asFragment()).toMatchSnapshot();
     });
 });

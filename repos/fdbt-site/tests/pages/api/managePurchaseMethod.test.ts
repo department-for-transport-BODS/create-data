@@ -6,6 +6,7 @@ import * as db from '../../../src/data/auroradb';
 import { FromDb, SalesOfferPackage } from '../../../src/interfaces/matchingJsonTypes';
 
 jest.mock('../../../src/data/auroradb');
+
 const insertSpy = jest.spyOn(db, 'insertSalesOfferPackage');
 const updateSpy = jest.spyOn(db, 'updateSalesOfferPackage');
 const getSpy = jest.spyOn(db, 'getSalesOfferPackagesByNocCode');
@@ -46,7 +47,7 @@ describe('managePurchaseMethod', () => {
 
         await managePurchaseMethod(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/managePurchaseMethod',
         });
     });
@@ -86,7 +87,7 @@ describe('managePurchaseMethod', () => {
             GS_PURCHASE_METHOD_ATTRIBUTE,
             expectedSessionAttributeCall,
         );
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/managePurchaseMethod',
         });
     });
@@ -127,7 +128,7 @@ describe('managePurchaseMethod', () => {
             GS_PURCHASE_METHOD_ATTRIBUTE,
             expectedSessionAttributeCall,
         );
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/managePurchaseMethod',
         });
     });
@@ -168,7 +169,7 @@ describe('managePurchaseMethod', () => {
             GS_PURCHASE_METHOD_ATTRIBUTE,
             expectedSessionAttributeCall,
         );
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/managePurchaseMethod',
         });
     });
@@ -206,7 +207,7 @@ describe('managePurchaseMethod', () => {
             GS_PURCHASE_METHOD_ATTRIBUTE,
             expectedSessionAttributeCall,
         );
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/managePurchaseMethod',
         });
     });
@@ -244,7 +245,7 @@ describe('managePurchaseMethod', () => {
             GS_PURCHASE_METHOD_ATTRIBUTE,
             expectedSessionAttributeCall,
         );
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/managePurchaseMethod',
         });
     });
@@ -285,7 +286,7 @@ describe('managePurchaseMethod', () => {
             GS_PURCHASE_METHOD_ATTRIBUTE,
             expectedSessionAttributeCall,
         );
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/managePurchaseMethod',
         });
     });
@@ -326,7 +327,7 @@ describe('managePurchaseMethod', () => {
             GS_PURCHASE_METHOD_ATTRIBUTE,
             expectedSessionAttributeCall,
         );
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/managePurchaseMethod?isCapped=true&id=99',
         });
     });
@@ -367,7 +368,7 @@ describe('managePurchaseMethod', () => {
             GS_PURCHASE_METHOD_ATTRIBUTE,
             expectedSessionAttributeCall,
         );
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/managePurchaseMethod?isCapped=true&id=99',
         });
     });
@@ -408,7 +409,7 @@ describe('managePurchaseMethod', () => {
             GS_PURCHASE_METHOD_ATTRIBUTE,
             expectedSessionAttributeCall,
         );
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/managePurchaseMethod?isCapped=true&id=99',
         });
     });
@@ -435,10 +436,10 @@ describe('managePurchaseMethod', () => {
 
         await managePurchaseMethod(req, res);
 
-        expect(updateSpy).not.toBeCalled();
-        expect(insertSpy).toBeCalledWith('TEST', expected);
+        expect(updateSpy).not.toHaveBeenCalled();
+        expect(insertSpy).toHaveBeenCalledWith('TEST', expected);
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_PURCHASE_METHOD_ATTRIBUTE, undefined);
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/viewPurchaseMethods',
         });
     });
@@ -464,10 +465,10 @@ describe('managePurchaseMethod', () => {
 
         await managePurchaseMethod(req, res);
 
-        expect(updateSpy).not.toBeCalled();
-        expect(insertSpy).toBeCalledWith('TEST', expected);
+        expect(updateSpy).not.toHaveBeenCalled();
+        expect(insertSpy).toHaveBeenCalledWith('TEST', expected);
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_PURCHASE_METHOD_ATTRIBUTE, undefined);
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/viewPurchaseMethods',
         });
     });
@@ -497,10 +498,10 @@ describe('managePurchaseMethod', () => {
 
         await managePurchaseMethod(req, res);
 
-        expect(insertSpy).not.toBeCalled();
-        expect(updateSpy).toBeCalledWith('TEST', expected);
+        expect(insertSpy).not.toHaveBeenCalled();
+        expect(updateSpy).toHaveBeenCalledWith('TEST', expected);
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_PURCHASE_METHOD_ATTRIBUTE, undefined);
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/viewPurchaseMethods',
         });
     });
@@ -530,10 +531,10 @@ describe('managePurchaseMethod', () => {
 
         await managePurchaseMethod(req, res);
 
-        expect(insertSpy).not.toBeCalled();
-        expect(updateSpy).toBeCalledWith('TEST', expected);
+        expect(insertSpy).not.toHaveBeenCalled();
+        expect(updateSpy).toHaveBeenCalledWith('TEST', expected);
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_PURCHASE_METHOD_ATTRIBUTE, undefined);
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/viewPurchaseMethods',
         });
     });
@@ -545,7 +546,7 @@ describe('managePurchaseMethod', () => {
 
         await managePurchaseMethod(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/managePurchaseMethod?id=77',
         });
     });

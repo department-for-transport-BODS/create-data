@@ -1,5 +1,4 @@
-import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import RadioButtons from '../../src/components/RadioButtons';
 
 describe('FareTypeRadios', () => {
@@ -44,7 +43,7 @@ describe('FareTypeRadios', () => {
     };
 
     it('should render a set of radio buttons the fares provided', () => {
-        const wrapper = shallow(<RadioButtons options={mockFareProps.fares} inputName="helloANDhi" />);
-        expect(wrapper).toMatchSnapshot();
+        const { asFragment } = render(<RadioButtons options={mockFareProps.fares} inputName="helloANDhi" />);
+        expect(asFragment()).toMatchSnapshot();
     });
 });

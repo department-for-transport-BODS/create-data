@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { CapExpiryUnit } from '../interfaces/matchingJsonTypes';
 import CsrfForm from '../components/CsrfForm';
 import ErrorSummary from '../components/ErrorSummary';
@@ -149,7 +149,7 @@ const CreateCaps = ({ errors = [], userInput, csrfToken, editId }: CreateCapsPro
                                                     errorClass="govuk-select--error"
                                                     hideText
                                                 >
-                                                    {/* eslint-disable-next-line jsx-a11y/no-onchange */}
+                                                    {}
                                                     <select
                                                         className="govuk-select govuk-select--width-3 expiry-selector-units"
                                                         name="capDurationUnits"

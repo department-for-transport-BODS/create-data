@@ -1,12 +1,14 @@
-import { shallow } from 'enzyme';
-import React from 'react';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import { CarnetExpiryUnit } from '../../src/interfaces/matchingJsonTypes';
 import EditCarnetProperties from '../../src/pages/editCarnetProperties';
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('editCarnetProperties', () => {
         it('should render editCarnetProperties page correctly', () => {
-            const wrapper = shallow(
+            const wrapper = renderToFragment(
                 <EditCarnetProperties
                     errors={[]}
                     csrfToken=""
@@ -19,7 +21,7 @@ describe('pages', () => {
             expect(wrapper).toMatchSnapshot();
         });
         it('should render editCarnetProperties page correctly with an error', () => {
-            const wrapper = shallow(
+            const wrapper = renderToFragment(
                 <EditCarnetProperties
                     errors={[
                         {

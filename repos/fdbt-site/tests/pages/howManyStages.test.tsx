@@ -1,12 +1,14 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import HowManyStages from '../../src/pages/howManyStages';
 import { ErrorInfo } from '../../src/interfaces';
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('howManyStages', () => {
         it('should render correctly', () => {
-            const tree = shallow(<HowManyStages errors={[]} csrfToken="" />);
+            const tree = renderToFragment(<HowManyStages errors={[]} csrfToken="" />);
             expect(tree).toMatchSnapshot();
         });
 
@@ -17,7 +19,7 @@ describe('pages', () => {
                     errorMessage: 'Choose an option regarding how many fare stages you have',
                 },
             ];
-            const tree = shallow(<HowManyStages errors={mockError} csrfToken="" />);
+            const tree = renderToFragment(<HowManyStages errors={mockError} csrfToken="" />);
             expect(tree).toMatchSnapshot();
         });
     });
