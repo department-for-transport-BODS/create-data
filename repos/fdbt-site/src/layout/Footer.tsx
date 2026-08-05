@@ -59,11 +59,6 @@ const Footer = (): ReactElement => (
                                 Privacy
                             </a>
                         </li>
-                        <li className="govuk-footer__inline-list-item">
-                            <a className="govuk-footer__link" href="/changelog">
-                                Service changelog
-                            </a>
-                        </li>
                     </ul>
                     <p className="govuk-footer__body">
                         Built by the{' '}

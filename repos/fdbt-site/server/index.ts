@@ -36,7 +36,6 @@ const unauthenticatedGetRoutes = [
     '/privacy',
     '/noServices',
     '/robots.txt',
-    '/changelog',
     '/images/*',
 ];
 

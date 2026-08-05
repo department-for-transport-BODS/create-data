@@ -109,21 +109,6 @@ exports[`pages operator should render correctly 1`] = `
             </svg>
           </a>
         </div>
-        <div
-          class="govuk-grid-column-one-thirds"
-        >
-          <h2
-            class="govuk-heading-m"
-          >
-            Public information
-          </h2>
-          <a
-            class="govuk-link govuk-body"
-            href="/changelog"
-          >
-            Service changelog
-          </a>
-        </div>
       </div>
     </main>
     <div>
@@ -280,16 +265,6 @@ exports[`pages operator should render correctly 1`] = `
                 href="/privacy"
               >
                 Privacy
-              </a>
-            </li>
-            <li
-              class="govuk-footer__inline-list-item"
-            >
-              <a
-                class="govuk-footer__link"
-                href="/changelog"
-              >
-                Service changelog
               </a>
             </li>
           </ul>
@@ -459,21 +434,6 @@ exports[`pages operator should render correctly with no multiple operators 1`] =
             </svg>
           </a>
         </div>
-        <div
-          class="govuk-grid-column-one-thirds"
-        >
-          <h2
-            class="govuk-heading-m"
-          >
-            Public information
-          </h2>
-          <a
-            class="govuk-link govuk-body"
-            href="/changelog"
-          >
-            Service changelog
-          </a>
-        </div>
       </div>
     </main>
     <div>
@@ -630,16 +590,6 @@ exports[`pages operator should render correctly with no multiple operators 1`] =
                 href="/privacy"
               >
                 Privacy
-              </a>
-            </li>
-            <li
-              class="govuk-footer__inline-list-item"
-            >
-              <a
-                class="govuk-footer__link"
-                href="/changelog"
-              >
-                Service changelog
               </a>
             </li>
           </ul>
