@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 
 export const GlobalSettingReturnHeader: FunctionComponent = () => (
     <div className="govuk-warning-text govuk-width-container govuk-!-margin-bottom-0">

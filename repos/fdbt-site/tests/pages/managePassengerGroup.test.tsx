@@ -1,11 +1,13 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import ManagePassengerGroup from '../../src/pages/managePassengerGroup';
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('managePassengerGroup', () => {
         it('should render correctly on first opening of page', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ManagePassengerGroup
                     csrfToken={''}
                     errors={[]}
@@ -41,7 +43,7 @@ describe('pages', () => {
         });
 
         it('should render correctly after errors are made and page rerenders', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ManagePassengerGroup
                     csrfToken={''}
                     errors={[
@@ -101,7 +103,7 @@ describe('pages', () => {
         });
 
         it('should render correctly in edit mode', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ManagePassengerGroup
                     csrfToken={''}
                     errors={[]}
@@ -157,7 +159,7 @@ describe('pages', () => {
         });
 
         it('should render correctly in edit mode with errors', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ManagePassengerGroup
                     csrfToken={''}
                     errors={[

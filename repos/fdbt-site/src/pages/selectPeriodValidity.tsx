@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import TwoThirdsLayout from '../layout/Layout';
 import {
     MATCHING_JSON_ATTRIBUTE,
@@ -14,7 +14,7 @@ import RadioConditionalInput from '../components/RadioConditionalInput';
 import { isPeriodExpiry } from '../interfaces/typeGuards';
 import { getFareDayEnd } from '../data/auroradb';
 import BackButton from '../components/BackButton';
-import { PeriodExpiry } from 'src/interfaces/matchingJsonTypes';
+import { PeriodExpiry } from '../interfaces/matchingJsonTypes';
 
 const title = 'Period Validity - Create Fares Data Service';
 const description = 'Period Validity selection page of the Create Fares Data Service';

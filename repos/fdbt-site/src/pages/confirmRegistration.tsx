@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import isArray from 'lodash/isArray';
 import TwoThirdsLayout from '../layout/Layout';
 import { USER_ATTRIBUTE } from '../constants/attributes';

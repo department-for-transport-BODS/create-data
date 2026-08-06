@@ -88,13 +88,7 @@ export interface CapStartInfo {
 export type FromDb<T> = T & { id: number };
 
 export type TicketType =
-    | 'flatFare'
-    | 'period'
-    | 'multiOperator'
-    | 'multiOperatorExt'
-    | 'schoolService'
-    | 'single'
-    | 'return';
+    'flatFare' | 'period' | 'multiOperator' | 'multiOperatorExt' | 'schoolService' | 'single' | 'return';
 
 export type Ticket =
     | PointToPointTicket
@@ -247,9 +241,7 @@ export interface BaseSchemeOperatorTicket extends Omit<BaseTicket, 'nocCode'> {
 }
 
 export type SchemeOperatorTicket =
-    | SchemeOperatorMultiServiceTicket
-    | SchemeOperatorGeoZoneTicket
-    | SchemeOperatorFlatFareTicket;
+    SchemeOperatorMultiServiceTicket | SchemeOperatorGeoZoneTicket | SchemeOperatorFlatFareTicket;
 
 export interface BasePointToPointTicket extends BaseTicket {
     operatorName: string;
@@ -314,14 +306,7 @@ export interface PointToPointPeriodTicket extends Omit<ReturnTicket, 'products' 
 }
 
 export type TimeRestrictionDay =
-    | 'monday'
-    | 'tuesday'
-    | 'wednesday'
-    | 'thursday'
-    | 'friday'
-    | 'saturday'
-    | 'sunday'
-    | 'bankHoliday';
+    'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday' | 'bankHoliday';
 
 export interface FullTimeRestriction {
     day: TimeRestrictionDay;

@@ -22,7 +22,7 @@ describe('feedback', () => {
         });
         await feedback(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/feedback?feedbackSubmitted=true',
         });
     });
@@ -37,7 +37,7 @@ describe('feedback', () => {
         });
         await feedback(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/feedback?feedbackSubmitted=false',
         });
     });

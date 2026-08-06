@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { CapDetails, ErrorInfo } from '../interfaces';
 import ExpirySelector from './ExpirySelector';
 import FormElementWrapper, { FormGroupWrapper } from './FormElementWrapper';

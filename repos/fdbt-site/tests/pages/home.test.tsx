@@ -1,10 +1,11 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import Home, { getServerSideProps } from '../../src/pages/home';
 import { MULTI_MODAL_ATTRIBUTE, OPERATOR_ATTRIBUTE } from '../../src/constants/attributes';
 import * as aurora from '../../src/data/auroradb';
 import { OperatorAttribute } from '../../src/interfaces';
 import { getMockContext } from '../testData/mockData';
+import { getSessionAttribute } from '../../src/utils/sessions';
 
 const multiModalServices = [
     {
@@ -50,6 +51,8 @@ const multiModalServices = [
 
 describe('pages', () => {
     describe('home page', () => {
+        const renderToFragment = (component: ReactElement) => render(component).asFragment();
+
         const checkForServicesSpy = jest.spyOn(aurora, 'getAllServicesByNocCode');
         const getIncompleteMultiOperatorExternalProductsByNocSpy = jest.spyOn(
             aurora,
@@ -57,28 +60,28 @@ describe('pages', () => {
         );
 
         it('should render correctly', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <Home csrfToken="" showDeleteProductsLink multiOperatorFaresRequiringAttentionCount={0} />,
             );
             expect(tree).toMatchSnapshot();
         });
 
         it('should render correctly for prod environment', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <Home csrfToken="" showDeleteProductsLink={false} multiOperatorFaresRequiringAttentionCount={0} />,
             );
             expect(tree).toMatchSnapshot();
         });
 
         it('should render with a information banner if user has one multi-operator product that require their attention', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <Home csrfToken="" showDeleteProductsLink={false} multiOperatorFaresRequiringAttentionCount={1} />,
             );
             expect(tree).toMatchSnapshot();
         });
 
         it('should render with a information banner if user has more than one multi-operator product that require their attention', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <Home csrfToken="" showDeleteProductsLink={false} multiOperatorFaresRequiringAttentionCount={2} />,
             );
             expect(tree).toMatchSnapshot();
@@ -102,8 +105,8 @@ describe('pages', () => {
 
             await getServerSideProps(ctx);
 
-            expect(ctx.req.session[OPERATOR_ATTRIBUTE]).toEqual(operatorData);
-            expect(ctx.req.session[MULTI_MODAL_ATTRIBUTE]).toEqual({ modes: ['ferry', 'coach', 'tram'] });
+            expect(getSessionAttribute(ctx.req, OPERATOR_ATTRIBUTE)).toEqual(operatorData);
+            expect(getSessionAttribute(ctx.req, MULTI_MODAL_ATTRIBUTE)).toEqual({ modes: ['ferry', 'coach', 'tram'] });
         });
 
         it('should not set the multi modal attribute when operator has bods services', async () => {
@@ -139,8 +142,8 @@ describe('pages', () => {
 
             await getServerSideProps(ctx);
 
-            expect(ctx.req.session[OPERATOR_ATTRIBUTE]).toEqual(operatorData);
-            expect(ctx.req.session[MULTI_MODAL_ATTRIBUTE]).toEqual(undefined);
+            expect(getSessionAttribute(ctx.req, OPERATOR_ATTRIBUTE)).toEqual(operatorData);
+            expect(getSessionAttribute(ctx.req, MULTI_MODAL_ATTRIBUTE)).toEqual(undefined);
         });
 
         it('should not set the multi modal attribute when operator has bods and tnds services', async () => {
@@ -189,8 +192,8 @@ describe('pages', () => {
 
             await getServerSideProps(ctx);
 
-            expect(ctx.req.session[OPERATOR_ATTRIBUTE]).toEqual(operatorData);
-            expect(ctx.req.session[MULTI_MODAL_ATTRIBUTE]).toEqual(undefined);
+            expect(getSessionAttribute(ctx.req, OPERATOR_ATTRIBUTE)).toEqual(operatorData);
+            expect(getSessionAttribute(ctx.req, MULTI_MODAL_ATTRIBUTE)).toEqual(undefined);
         });
 
         it('should not set the multi modal attribute when operator has no bods or no tnds services', async () => {
@@ -211,8 +214,8 @@ describe('pages', () => {
 
             await getServerSideProps(ctx);
 
-            expect(ctx.req.session[OPERATOR_ATTRIBUTE]).toEqual(operatorData);
-            expect(ctx.req.session[MULTI_MODAL_ATTRIBUTE]).toEqual(undefined);
+            expect(getSessionAttribute(ctx.req, OPERATOR_ATTRIBUTE)).toEqual(operatorData);
+            expect(getSessionAttribute(ctx.req, MULTI_MODAL_ATTRIBUTE)).toEqual(undefined);
         });
     });
 });

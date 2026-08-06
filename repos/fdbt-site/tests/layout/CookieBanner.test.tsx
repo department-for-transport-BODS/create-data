@@ -1,17 +1,9 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
-import Cookies from 'universal-cookie';
+import { render } from '@testing-library/react';
 import CookieBanner from '../../src/layout/CookieBanner';
 
 describe('CookieBanner', () => {
-    Cookies.prototype.set = jest.fn();
-
-    afterEach(() => {
-        jest.resetAllMocks();
-    });
-
     it('should render correctly', () => {
-        const tree = shallow(<CookieBanner />);
-        expect(tree).toMatchSnapshot();
+        const { asFragment } = render(<CookieBanner />);
+        expect(asFragment()).toMatchSnapshot();
     });
 });

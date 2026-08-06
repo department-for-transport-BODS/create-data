@@ -39,7 +39,7 @@ export default async (req: NextApiRequestWithSession, res: NextApiResponse): Pro
         const ticketType = isTicketRepresentation(ticketRepresentation) ? ticketRepresentation.name : '';
 
         if (isSchemeOperator(req, res)) {
-            const baseSchemeOperatorJson = getSchemeOperatorTicketJson(req, res);
+            const baseSchemeOperatorJson = getSchemeOperatorTicketJson(req);
             userDataJson = await adjustSchemeOperatorJson(req, res, baseSchemeOperatorJson);
         } else if (fareType === 'single') {
             userDataJson = getSingleTicketJson(req, res);

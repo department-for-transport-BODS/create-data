@@ -1366,7 +1366,7 @@ describe('userData', () => {
         });
 
         it('should return a SchemeOperatorTicket object', () => {
-            const { req, res } = getMockRequestAndResponse({
+            const { req } = getMockRequestAndResponse({
                 cookieValues: {
                     idToken: mockSchemOpIdToken,
                 },
@@ -1534,7 +1534,7 @@ describe('userData', () => {
                 },
             });
             batchGetStopsByAtcoCodeSpy.mockImplementation(() => Promise.resolve(zoneStops));
-            const result = getSchemeOperatorTicketJson(req, res);
+            const result = getSchemeOperatorTicketJson(req);
             expect(result).toEqual(expectedSchemeOperatorTicket('multiOperator'));
         });
     });

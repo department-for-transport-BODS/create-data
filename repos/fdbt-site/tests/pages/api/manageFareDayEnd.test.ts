@@ -35,9 +35,9 @@ describe('manageFareDayEnd', () => {
 
         await manageFareDayEnd(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GS_FARE_DAY_END_ATTRIBUTE, attributeValue);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_FARE_DAY_END_ATTRIBUTE, attributeValue);
 
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/manageFareDayEnd' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/manageFareDayEnd' });
     });
 
     it('should upsert fare day end and set saved if valid', async () => {
@@ -56,10 +56,10 @@ describe('manageFareDayEnd', () => {
 
         await manageFareDayEnd(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GS_FARE_DAY_END_ATTRIBUTE, attributeValue);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GS_FARE_DAY_END_ATTRIBUTE, attributeValue);
 
-        expect(upsertFareDayEndSpy).toBeCalledWith('mynoc', '1234');
+        expect(upsertFareDayEndSpy).toHaveBeenCalledWith('mynoc', '1234');
 
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/manageFareDayEnd' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/manageFareDayEnd' });
     });
 });

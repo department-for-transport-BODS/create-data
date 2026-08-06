@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import zxcvbn from 'zxcvbn';
-import Cookies from 'cookies';
-import { ServerResponse } from 'http';
-import { decode } from 'jsonwebtoken';
+import { parseCookie, serialize } from 'cookie';
+import { IncomingMessage, ServerResponse } from 'http';
+import { decodeJwt as decode } from 'jose';
 import { DISABLE_AUTH_COOKIE, ID_TOKEN_COOKIE, REFRESH_TOKEN_COOKIE } from '../../constants';
 import {
     CARNET_FARE_TYPE_ATTRIBUTE,
@@ -26,34 +26,70 @@ import { daysOfWeek } from '../../../src/constants';
 
 const listFormat = new Intl.ListFormat('en');
 
+const getCookieHeader = (req: IncomingMessage): string => {
+    const cookieHeader = req.headers.cookie;
+
+    if (Array.isArray(cookieHeader)) {
+        return cookieHeader.join('; ');
+    }
+
+    return cookieHeader ?? '';
+};
+
+const getCookieValueFromRequest = (req: IncomingMessage, cookieName: string): string | undefined => {
+    return parseCookie(getCookieHeader(req))[cookieName];
+};
+
+export const parseCookiesFromRequest = (req: IncomingMessage): Record<string, string | undefined> =>
+    parseCookie(getCookieHeader(req));
+
+const appendSetCookieHeader = (res: ServerResponse, serialisedCookie: string): void => {
+    const existingSetCookieHeader = res.getHeader('Set-Cookie');
+    const existingCookies = Array.isArray(existingSetCookieHeader)
+        ? existingSetCookieHeader.map((value) => String(value))
+        : existingSetCookieHeader
+          ? [String(existingSetCookieHeader)]
+          : [];
+
+    res.setHeader('Set-Cookie', [...existingCookies, serialisedCookie]);
+};
+
 export const setCookieOnResponseObject = (
     cookieName: string,
     cookieValue: string,
-    req: NextApiRequest,
-    res: NextApiResponse,
+    _req: unknown,
+    res: ServerResponse,
     lifetime?: number,
     httpOnly = true,
 ): void => {
-    const cookies = new Cookies(req, res);
-    // From docs: All cookies are httponly by default, and cookies sent over SSL are secure by
-    // default. An error will be thrown if you try to send secure cookies over an insecure socket.
-    cookies.set(cookieName, cookieValue, {
-        path: '/',
-        sameSite: 'strict',
-        secure: process.env.NODE_ENV !== 'development',
-        maxAge: lifetime,
-        httpOnly,
-    });
+    appendSetCookieHeader(
+        res,
+        serialize(cookieName, cookieValue, {
+            path: '/',
+            sameSite: 'strict',
+            secure: process.env.NODE_ENV !== 'development',
+            maxAge: lifetime,
+            httpOnly,
+        }),
+    );
 };
 
-export const deleteCookieOnResponseObject = (cookieName: string, req: NextApiRequest, res: NextApiResponse): void => {
-    const cookies = new Cookies(req, res);
-
-    cookies.set(cookieName, '', { overwrite: true, maxAge: 0, path: '/' });
+export const deleteCookieOnResponseObject = (cookieName: string, _req: unknown, res: ServerResponse): void => {
+    appendSetCookieHeader(
+        res,
+        serialize(cookieName, '', {
+            expires: new Date(0),
+            maxAge: 0,
+            path: '/',
+            sameSite: 'strict',
+            secure: process.env.NODE_ENV !== 'development',
+            httpOnly: true,
+        }),
+    );
 };
 
-export const unescapeAndDecodeCookie = (cookies: Cookies, cookieToDecode: string): string => {
-    return unescape(decodeURI(cookies.get(cookieToDecode) || ''));
+export const unescapeAndDecodeCookie = (req: NextApiRequest, cookieToDecode: string): string => {
+    return unescape(decodeURI(getCookieValueFromRequest(req, cookieToDecode) || ''));
 };
 
 export const getUuidFromSession = (req: NextApiRequestWithSession): string => {
@@ -132,11 +168,10 @@ export const checkEmailValid = (email: string): boolean => {
 
 export const getAttributeFromIdToken = <T extends keyof CognitoIdToken>(
     req: NextApiRequest,
-    res: NextApiResponse,
+    _res: NextApiResponse,
     attribute: T,
 ): CognitoIdToken[T] | null => {
-    const cookies = new Cookies(req, res);
-    const idToken = cookies.get(ID_TOKEN_COOKIE);
+    const idToken = getCookieValueFromRequest(req, ID_TOKEN_COOKIE);
 
     if (!idToken) {
         return null;
@@ -240,7 +275,7 @@ export const validatePasswordConformsToPolicy = (password: string): string[] => 
         passwordError.push('contain at least one number');
     }
 
-    if (!/[$^*.\[\]{}()?"!@#%&\/\\,><':;|_~`=+-]/.test(password)) {
+    if (!/[$^*.[\]{}()?"!@#%&/\\,><':;|_~`=+-]/.test(password)) {
         passwordError.push('contain at least one special character');
     }
 

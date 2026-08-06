@@ -1,60 +1,58 @@
 on:
   push:
     branches:
-    - '**'
-    - '!develop'
-    - '!master'
+      - "**"
+      - "!develop"
+      - "!master"
     paths:
-    - repos/fdbt-site/**
+      - repos/fdbt-site/**
   workflow_dispatch:
 
-name: 'fdbt-site'
+name: "fdbt-site"
 
 defaults:
   run:
     working-directory: ./repos/fdbt-site
-    
 
 jobs:
-
   fdbt-site:
-    name: 'fdbt-site'
+    name: "fdbt-site"
     runs-on: ubuntu-latest
     env:
       WORKSPACE: none
-    
+
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # 6.0.3
 
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
+      - name: Set up Python 3.8
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # 6.2.0
+        with:
+          python-version: 3.8
 
-    - name: Use Node.js 
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18.x
-    
-    - name: build
-      run: |
-        echo "Starting build"
-        npm ci
-        echo " ci finished"
-        npm run build
+      - name: Use Node.js
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # 6.4.0
+        with:
+          node-version: 24.x
 
-    - name: test
-      run: |
-        echo "Running tests"
-        npm run test:ci
+      - name: build
+        run: |
+          echo "Starting build"
+          npm ci
+          echo " ci finished"
+          npm run build
 
-    - name: lint
-      run: |
-        echo "Linting"
-        npm run lint
+      - name: test
+        run: |
+          echo "Running tests"
+          npm run test:ci
 
-    - name: compile-typescript
-      run: |
-        echo "Compiling typescript for site"
-        ./node_modules/.bin/tsc && ./node_modules/.bin/tsc --project tsconfig.server.json
+      - name: lint
+        run: |
+          echo "Linting"
+          npm run lint
+
+      - name: compile-typescript
+        run: |
+          echo "Compiling typescript for site"
+          ./node_modules/.bin/tsc && ./node_modules/.bin/tsc --project tsconfig.server.json

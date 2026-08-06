@@ -3,7 +3,7 @@ import { MATCHING_JSON_ATTRIBUTE, MATCHING_JSON_META_DATA_ATTRIBUTE } from '../.
 import * as userData from '../../../src/utils/apiUtils/userData';
 import editCarnetProperties, { validateDuration } from '../../../src/pages/api/editCarnetProperties';
 import { CarnetExpiryUnit } from '../../../src/interfaces/matchingJsonTypes';
-import { ErrorInfo } from 'src/interfaces';
+import { ErrorInfo } from '../../../src/interfaces';
 
 describe('editCarnetProperties tests', () => {
     let writeHeadMock: jest.Mock;
@@ -37,7 +37,7 @@ describe('editCarnetProperties tests', () => {
         });
         await editCarnetProperties(req, res);
 
-        expect(userData.putUserDataInProductsBucketWithFilePath).toBeCalledWith(
+        expect(userData.putUserDataInProductsBucketWithFilePath).toHaveBeenCalledWith(
             {
                 ...expectedCarnetReturnTicket,
                 products: [
@@ -50,7 +50,7 @@ describe('editCarnetProperties tests', () => {
             'test/path',
         );
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/products/productDetails?productId=2',
         });
     });

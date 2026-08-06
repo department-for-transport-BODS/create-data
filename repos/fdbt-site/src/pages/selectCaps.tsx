@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { FullColumnLayout } from '../layout/Layout';
 import ErrorSummary from '../components/ErrorSummary';
 import { Cap, ErrorInfo, NextPageContextWithSession } from '../interfaces';

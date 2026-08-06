@@ -1,4 +1,4 @@
-import { clickElementByText, getElementByName } from './helpers';
+import { clearAndTypeByName, clickElementByText, getElementByName } from './helpers';
 
 const testData = {
     operatorName: 'Test Operator',
@@ -12,14 +12,14 @@ const testData = {
 };
 
 export const enterOperatorDetails = (): void => {
-    getElementByName('operatorName').clear().type(testData.operatorName);
-    getElementByName('contactNumber').clear().type(testData.contactNumber);
-    getElementByName('email').clear().type(testData.email);
-    getElementByName('url').clear().type(testData.url);
-    getElementByName('street').clear().type(testData.street);
-    getElementByName('town').clear().type(testData.town);
-    getElementByName('county').clear().type(testData.county);
-    getElementByName('postcode').clear().type(testData.postcode);
+    clearAndTypeByName('operatorName', testData.operatorName);
+    clearAndTypeByName('contactNumber', testData.contactNumber);
+    clearAndTypeByName('email', testData.email);
+    clearAndTypeByName('url', testData.url);
+    clearAndTypeByName('street', testData.street);
+    clearAndTypeByName('town', testData.town);
+    clearAndTypeByName('county', testData.county);
+    clearAndTypeByName('postcode', testData.postcode);
 
     clickElementByText('Save');
 

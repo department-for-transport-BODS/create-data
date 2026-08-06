@@ -1,6 +1,5 @@
-import React, { ReactElement, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { isArray, upperFirst } from 'lodash';
-import moment from 'moment';
 import {
     SALES_OFFER_PACKAGES_ATTRIBUTE,
     PRODUCT_DATE_ATTRIBUTE,
@@ -23,6 +22,7 @@ import { ticketFormatsList } from './managePurchaseMethod';
 import { GetServerSidePropsResult } from 'next';
 import { SalesOfferPackage } from '../interfaces/matchingJsonTypes';
 import { getCapByNocAndId, getCaps } from '../../src/data/auroradb';
+import dayjs from '../utils/dayjs';
 
 const title = 'Sales Confirmation - Create Fares Data Service';
 const description = 'Sales Confirmation page of the Create Fares Data Service';
@@ -89,8 +89,8 @@ export const buildSalesConfirmationElements = (
         });
     }
 
-    const startDate = moment(startDateIn).format('DD-MM-YYYY');
-    const endDate = endDateIn && moment(endDateIn).format('DD-MM-YYYY');
+    const startDate = dayjs(startDateIn).format('DD-MM-YYYY');
+    const endDate = endDateIn && dayjs(endDateIn).format('DD-MM-YYYY');
 
     confirmationElements.push(
         {

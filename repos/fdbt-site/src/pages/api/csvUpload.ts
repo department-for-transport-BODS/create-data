@@ -18,7 +18,7 @@ import { getFareZones } from '../../../src/utils/apiUtils/matching';
 import { MatchingFareZones } from '../../../src/interfaces/matchingInterface';
 import { putUserDataInProductsBucketWithFilePath } from '../../../src/utils/apiUtils/userData';
 import { updateProductFareTriangleModifiedByNocCodeAndId } from '../../data/auroradb';
-import moment from 'moment';
+import dayjs from '../../utils/dayjs';
 import { WithIds, SingleTicket, ReturnTicket } from '../../interfaces/matchingJsonTypes';
 
 const errorId = 'csv-upload';
@@ -261,14 +261,14 @@ export default async (req: NextApiRequestWithSession, res: NextApiResponse): Pro
             return;
         }
 
-        const { poundsOrPence } = fields;
+        const poundsOrPence = Array.isArray(fields.poundsOrPence) ? fields.poundsOrPence[0] : fields.poundsOrPence;
 
         const { fileContents, fileError } = await processFileUpload(formData, 'csv-upload');
 
         if (fileError) {
             const errors: ErrorInfo[] = [{ id: errorId, errorMessage: fileError }];
 
-            setCsvUploadAttributeAndRedirect(req, res, errors, fields.poundsOrPence as string);
+            setCsvUploadAttributeAndRedirect(req, res, errors, poundsOrPence);
 
             return;
         }
@@ -281,9 +281,7 @@ export default async (req: NextApiRequestWithSession, res: NextApiResponse): Pro
             }
 
             const ticket = getSessionAttribute(req, MATCHING_JSON_ATTRIBUTE) as
-                | WithIds<SingleTicket>
-                | WithIds<ReturnTicket>
-                | undefined;
+                WithIds<SingleTicket> | WithIds<ReturnTicket> | undefined;
 
             const matchingJsonMetaData = getSessionAttribute(req, MATCHING_JSON_META_DATA_ATTRIBUTE);
 
@@ -308,7 +306,7 @@ export default async (req: NextApiRequestWithSession, res: NextApiResponse): Pro
 
                 // check to see if we had errors
                 if (errors.length > 0) {
-                    setCsvUploadAttributeAndRedirect(req, res, errors, fields.poundsOrPence as string);
+                    setCsvUploadAttributeAndRedirect(req, res, errors, poundsOrPence);
                     return;
                 }
 
@@ -344,7 +342,7 @@ export default async (req: NextApiRequestWithSession, res: NextApiResponse): Pro
 
                 // overriding the existing object
                 await putUserDataInProductsBucketWithFilePath(ticket, matchingJsonMetaData.matchingJsonLink);
-                const fareTriangleModified = moment().utc().toDate();
+                const fareTriangleModified = dayjs.utc().toDate();
                 const productId = Number(matchingJsonMetaData.productId);
                 // updating fareTriangleModified in products table
                 await updateProductFareTriangleModifiedByNocCodeAndId(productId, noc, fareTriangleModified);

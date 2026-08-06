@@ -1,2323 +1,2191 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Price Entry Page should render correctly 1`] = `
-<FullColumnLayout
-  description="Price Entry page of the Create Fares Data Service"
-  title="Price Entry - Create Fares Data Service"
->
-  <CsrfForm
-    action="/api/priceEntry"
-    csrfToken=""
-    method="post"
+<DocumentFragment>
+  <div
+    class="govuk-phase-banner app-phase-banner app-width-container"
   >
-    <ErrorSummary
-      errors={Array []}
-    />
-    <div
-      className="govuk-form-group "
+    <p
+      class="govuk-phase-banner__content"
     >
-      <fieldset
-        aria-describedby="price-entry-page-heading"
-        className="govuk-fieldset"
+      <strong
+        class="govuk-tag govuk-phase-banner__content__tag"
       >
-        <legend
-          className="govuk-fieldset__legend govuk-fieldset__legend--l"
-        >
-          <h1
-            className="govuk-fieldset__heading"
-            id="price-entry-page-heading"
-          >
-            Enter the prices for all fare stages in pence
-          </h1>
-        </legend>
-      </fieldset>
+        Beta
+      </strong>
       <span
-        className="govuk-hint"
-        id="price-entry-hint"
+        class="govuk-phase-banner__text"
       >
-        For example, £2.40 would be 240
+        This is a new service. Help us improve it and 
+        <a
+          class="govuk-link"
+          href="/feedback"
+          id="feedback-link"
+        >
+          give your feedback (opens in new tab)
+        </a>
+        .
       </span>
+    </p>
+  </div>
+  <div
+    class="govuk-width-container"
+  >
+    <main
+      class="govuk-main-wrapper"
+      id="main-content"
+    >
       <div
-        className="fare-triangle-container"
+        class="govuk-grid-row"
       >
         <div
-          className="fare-triangle"
+          class="govuk-grid-column-full"
         >
-          <div
-            className="fare-triangle-row"
-            id="row-0"
-            key="Briggate"
+          <form
+            action="/api/priceEntry?_csrf="
+            method="post"
           >
-            <span
-              aria-hidden="true"
-              className="govuk-heading-s fare-triangle-label-left"
-            >
-              <span />
-            </span>
             <div
-              className="govuk-heading-s fare-triangle-label-right"
+              class="govuk-form-group "
             >
-              Briggate
-            </div>
-          </div>
-          <div
-            className="fare-triangle-row"
-            id="row-1"
-            key="Chapeltown"
-          >
-            <span
-              aria-hidden="true"
-              className="govuk-heading-s fare-triangle-label-left"
-            >
-              <span>
-                Chapeltown
+              <fieldset
+                aria-describedby="price-entry-page-heading"
+                class="govuk-fieldset"
+              >
+                <legend
+                  class="govuk-fieldset__legend govuk-fieldset__legend--l"
+                >
+                  <h1
+                    class="govuk-fieldset__heading"
+                    id="price-entry-page-heading"
+                  >
+                    Enter the prices for all fare stages in pence
+                  </h1>
+                </legend>
+              </fieldset>
+              <span
+                class="govuk-hint"
+                id="price-entry-hint"
+              >
+                For example, £2.40 would be 240
               </span>
-            </span>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Chapeltown-Briggate"
-                name="Chapeltown-Briggate"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Chapeltown-Briggate"
-            >
-              Input price from 
-              Briggate
-               to 
-              Chapeltown
-               in pence
-            </label>
-            <div
-              className="govuk-heading-s fare-triangle-label-right"
-            >
-              Chapeltown
+              <div
+                class="fare-triangle-container"
+              >
+                <div
+                  class="fare-triangle"
+                >
+                  <div
+                    class="fare-triangle-row"
+                    id="row-0"
+                  >
+                    <span
+                      aria-hidden="true"
+                      class="govuk-heading-s fare-triangle-label-left"
+                    >
+                      <span />
+                    </span>
+                    <div
+                      class="govuk-heading-s fare-triangle-label-right"
+                    >
+                      Briggate
+                    </div>
+                  </div>
+                  <div
+                    class="fare-triangle-row"
+                    id="row-1"
+                  >
+                    <span
+                      aria-hidden="true"
+                      class="govuk-heading-s fare-triangle-label-left"
+                    >
+                      <span>
+                        Chapeltown
+                      </span>
+                    </span>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Chapeltown-Briggate"
+                        name="Chapeltown-Briggate"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Chapeltown-Briggate"
+                    >
+                      Input price from Briggate to Chapeltown in pence
+                    </label>
+                    <div
+                      class="govuk-heading-s fare-triangle-label-right"
+                    >
+                      Chapeltown
+                    </div>
+                  </div>
+                  <div
+                    class="fare-triangle-row"
+                    id="row-2"
+                  >
+                    <span
+                      aria-hidden="true"
+                      class="govuk-heading-s fare-triangle-label-left"
+                    >
+                      <span>
+                        Chapel Allerton
+                      </span>
+                    </span>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="ChapelAllerton-Briggate"
+                        name="Chapel Allerton-Briggate"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="ChapelAllerton-Briggate"
+                    >
+                      Input price from Briggate to Chapel Allerton in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="ChapelAllerton-Chapeltown"
+                        name="Chapel Allerton-Chapeltown"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="ChapelAllerton-Chapeltown"
+                    >
+                      Input price from Chapeltown to Chapel Allerton in pence
+                    </label>
+                    <div
+                      class="govuk-heading-s fare-triangle-label-right"
+                    >
+                      Chapel Allerton
+                    </div>
+                  </div>
+                  <div
+                    class="fare-triangle-row"
+                    id="row-3"
+                  >
+                    <span
+                      aria-hidden="true"
+                      class="govuk-heading-s fare-triangle-label-left"
+                    >
+                      <span>
+                        Moortown
+                      </span>
+                    </span>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Moortown-Briggate"
+                        name="Moortown-Briggate"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Moortown-Briggate"
+                    >
+                      Input price from Briggate to Moortown in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Moortown-Chapeltown"
+                        name="Moortown-Chapeltown"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Moortown-Chapeltown"
+                    >
+                      Input price from Chapeltown to Moortown in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Moortown-ChapelAllerton"
+                        name="Moortown-Chapel Allerton"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Moortown-ChapelAllerton"
+                    >
+                      Input price from Chapel Allerton to Moortown in pence
+                    </label>
+                    <div
+                      class="govuk-heading-s fare-triangle-label-right"
+                    >
+                      Moortown
+                    </div>
+                  </div>
+                  <div
+                    class="fare-triangle-row"
+                    id="row-4"
+                  >
+                    <span
+                      aria-hidden="true"
+                      class="govuk-heading-s fare-triangle-label-left"
+                    >
+                      <span>
+                        Harrogate Road
+                      </span>
+                    </span>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="HarrogateRoad-Briggate"
+                        name="Harrogate Road-Briggate"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="HarrogateRoad-Briggate"
+                    >
+                      Input price from Briggate to Harrogate Road in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="HarrogateRoad-Chapeltown"
+                        name="Harrogate Road-Chapeltown"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="HarrogateRoad-Chapeltown"
+                    >
+                      Input price from Chapeltown to Harrogate Road in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="HarrogateRoad-ChapelAllerton"
+                        name="Harrogate Road-Chapel Allerton"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="HarrogateRoad-ChapelAllerton"
+                    >
+                      Input price from Chapel Allerton to Harrogate Road in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="HarrogateRoad-Moortown"
+                        name="Harrogate Road-Moortown"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="HarrogateRoad-Moortown"
+                    >
+                      Input price from Moortown to Harrogate Road in pence
+                    </label>
+                    <div
+                      class="govuk-heading-s fare-triangle-label-right"
+                    >
+                      Harrogate Road
+                    </div>
+                  </div>
+                  <div
+                    class="fare-triangle-row"
+                    id="row-5"
+                  >
+                    <span
+                      aria-hidden="true"
+                      class="govuk-heading-s fare-triangle-label-left"
+                    >
+                      <span>
+                        Harehills
+                      </span>
+                    </span>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Harehills-Briggate"
+                        name="Harehills-Briggate"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Harehills-Briggate"
+                    >
+                      Input price from Briggate to Harehills in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Harehills-Chapeltown"
+                        name="Harehills-Chapeltown"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Harehills-Chapeltown"
+                    >
+                      Input price from Chapeltown to Harehills in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Harehills-ChapelAllerton"
+                        name="Harehills-Chapel Allerton"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Harehills-ChapelAllerton"
+                    >
+                      Input price from Chapel Allerton to Harehills in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Harehills-Moortown"
+                        name="Harehills-Moortown"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Harehills-Moortown"
+                    >
+                      Input price from Moortown to Harehills in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Harehills-HarrogateRoad"
+                        name="Harehills-Harrogate Road"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Harehills-HarrogateRoad"
+                    >
+                      Input price from Harrogate Road to Harehills in pence
+                    </label>
+                    <div
+                      class="govuk-heading-s fare-triangle-label-right"
+                    >
+                      Harehills
+                    </div>
+                  </div>
+                  <div
+                    class="fare-triangle-row"
+                    id="row-6"
+                  >
+                    <span
+                      aria-hidden="true"
+                      class="govuk-heading-s fare-triangle-label-left"
+                    >
+                      <span>
+                        Gipton
+                      </span>
+                    </span>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Gipton-Briggate"
+                        name="Gipton-Briggate"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Gipton-Briggate"
+                    >
+                      Input price from Briggate to Gipton in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Gipton-Chapeltown"
+                        name="Gipton-Chapeltown"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Gipton-Chapeltown"
+                    >
+                      Input price from Chapeltown to Gipton in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Gipton-ChapelAllerton"
+                        name="Gipton-Chapel Allerton"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Gipton-ChapelAllerton"
+                    >
+                      Input price from Chapel Allerton to Gipton in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Gipton-Moortown"
+                        name="Gipton-Moortown"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Gipton-Moortown"
+                    >
+                      Input price from Moortown to Gipton in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Gipton-HarrogateRoad"
+                        name="Gipton-Harrogate Road"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Gipton-HarrogateRoad"
+                    >
+                      Input price from Harrogate Road to Gipton in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Gipton-Harehills"
+                        name="Gipton-Harehills"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Gipton-Harehills"
+                    >
+                      Input price from Harehills to Gipton in pence
+                    </label>
+                    <div
+                      class="govuk-heading-s fare-triangle-label-right"
+                    >
+                      Gipton
+                    </div>
+                  </div>
+                  <div
+                    class="fare-triangle-row"
+                    id="row-7"
+                  >
+                    <span
+                      aria-hidden="true"
+                      class="govuk-heading-s fare-triangle-label-left"
+                    >
+                      <span>
+                        Armley
+                      </span>
+                    </span>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Armley-Briggate"
+                        name="Armley-Briggate"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Armley-Briggate"
+                    >
+                      Input price from Briggate to Armley in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Armley-Chapeltown"
+                        name="Armley-Chapeltown"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Armley-Chapeltown"
+                    >
+                      Input price from Chapeltown to Armley in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Armley-ChapelAllerton"
+                        name="Armley-Chapel Allerton"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Armley-ChapelAllerton"
+                    >
+                      Input price from Chapel Allerton to Armley in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Armley-Moortown"
+                        name="Armley-Moortown"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Armley-Moortown"
+                    >
+                      Input price from Moortown to Armley in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Armley-HarrogateRoad"
+                        name="Armley-Harrogate Road"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Armley-HarrogateRoad"
+                    >
+                      Input price from Harrogate Road to Armley in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Armley-Harehills"
+                        name="Armley-Harehills"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Armley-Harehills"
+                    >
+                      Input price from Harehills to Armley in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Armley-Gipton"
+                        name="Armley-Gipton"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Armley-Gipton"
+                    >
+                      Input price from Gipton to Armley in pence
+                    </label>
+                    <div
+                      class="govuk-heading-s fare-triangle-label-right"
+                    >
+                      Armley
+                    </div>
+                  </div>
+                  <div
+                    class="fare-triangle-row"
+                    id="row-8"
+                  >
+                    <span
+                      aria-hidden="true"
+                      class="govuk-heading-s fare-triangle-label-left"
+                    >
+                      <span>
+                        Stanningley
+                      </span>
+                    </span>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Stanningley-Briggate"
+                        name="Stanningley-Briggate"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Stanningley-Briggate"
+                    >
+                      Input price from Briggate to Stanningley in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Stanningley-Chapeltown"
+                        name="Stanningley-Chapeltown"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Stanningley-Chapeltown"
+                    >
+                      Input price from Chapeltown to Stanningley in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Stanningley-ChapelAllerton"
+                        name="Stanningley-Chapel Allerton"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Stanningley-ChapelAllerton"
+                    >
+                      Input price from Chapel Allerton to Stanningley in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Stanningley-Moortown"
+                        name="Stanningley-Moortown"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Stanningley-Moortown"
+                    >
+                      Input price from Moortown to Stanningley in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Stanningley-HarrogateRoad"
+                        name="Stanningley-Harrogate Road"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Stanningley-HarrogateRoad"
+                    >
+                      Input price from Harrogate Road to Stanningley in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Stanningley-Harehills"
+                        name="Stanningley-Harehills"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Stanningley-Harehills"
+                    >
+                      Input price from Harehills to Stanningley in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Stanningley-Gipton"
+                        name="Stanningley-Gipton"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Stanningley-Gipton"
+                    >
+                      Input price from Gipton to Stanningley in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Stanningley-Armley"
+                        name="Stanningley-Armley"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Stanningley-Armley"
+                    >
+                      Input price from Armley to Stanningley in pence
+                    </label>
+                    <div
+                      class="govuk-heading-s fare-triangle-label-right"
+                    >
+                      Stanningley
+                    </div>
+                  </div>
+                  <div
+                    class="fare-triangle-row"
+                    id="row-9"
+                  >
+                    <span
+                      aria-hidden="true"
+                      class="govuk-heading-s fare-triangle-label-left"
+                    >
+                      <span>
+                        Pudsey
+                      </span>
+                    </span>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Pudsey-Briggate"
+                        name="Pudsey-Briggate"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Pudsey-Briggate"
+                    >
+                      Input price from Briggate to Pudsey in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Pudsey-Chapeltown"
+                        name="Pudsey-Chapeltown"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Pudsey-Chapeltown"
+                    >
+                      Input price from Chapeltown to Pudsey in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Pudsey-ChapelAllerton"
+                        name="Pudsey-Chapel Allerton"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Pudsey-ChapelAllerton"
+                    >
+                      Input price from Chapel Allerton to Pudsey in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Pudsey-Moortown"
+                        name="Pudsey-Moortown"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Pudsey-Moortown"
+                    >
+                      Input price from Moortown to Pudsey in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Pudsey-HarrogateRoad"
+                        name="Pudsey-Harrogate Road"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Pudsey-HarrogateRoad"
+                    >
+                      Input price from Harrogate Road to Pudsey in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Pudsey-Harehills"
+                        name="Pudsey-Harehills"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Pudsey-Harehills"
+                    >
+                      Input price from Harehills to Pudsey in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Pudsey-Gipton"
+                        name="Pudsey-Gipton"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Pudsey-Gipton"
+                    >
+                      Input price from Gipton to Pudsey in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Pudsey-Armley"
+                        name="Pudsey-Armley"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Pudsey-Armley"
+                    >
+                      Input price from Armley to Pudsey in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Pudsey-Stanningley"
+                        name="Pudsey-Stanningley"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Pudsey-Stanningley"
+                    >
+                      Input price from Stanningley to Pudsey in pence
+                    </label>
+                    <div
+                      class="govuk-heading-s fare-triangle-label-right"
+                    >
+                      Pudsey
+                    </div>
+                  </div>
+                  <div
+                    class="fare-triangle-row"
+                    id="row-10"
+                  >
+                    <span
+                      aria-hidden="true"
+                      class="govuk-heading-s fare-triangle-label-left"
+                    >
+                      <span>
+                        Seacroft
+                      </span>
+                    </span>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Seacroft-Briggate"
+                        name="Seacroft-Briggate"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Seacroft-Briggate"
+                    >
+                      Input price from Briggate to Seacroft in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Seacroft-Chapeltown"
+                        name="Seacroft-Chapeltown"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Seacroft-Chapeltown"
+                    >
+                      Input price from Chapeltown to Seacroft in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Seacroft-ChapelAllerton"
+                        name="Seacroft-Chapel Allerton"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Seacroft-ChapelAllerton"
+                    >
+                      Input price from Chapel Allerton to Seacroft in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Seacroft-Moortown"
+                        name="Seacroft-Moortown"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Seacroft-Moortown"
+                    >
+                      Input price from Moortown to Seacroft in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Seacroft-HarrogateRoad"
+                        name="Seacroft-Harrogate Road"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Seacroft-HarrogateRoad"
+                    >
+                      Input price from Harrogate Road to Seacroft in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Seacroft-Harehills"
+                        name="Seacroft-Harehills"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Seacroft-Harehills"
+                    >
+                      Input price from Harehills to Seacroft in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Seacroft-Gipton"
+                        name="Seacroft-Gipton"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Seacroft-Gipton"
+                    >
+                      Input price from Gipton to Seacroft in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Seacroft-Armley"
+                        name="Seacroft-Armley"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Seacroft-Armley"
+                    >
+                      Input price from Armley to Seacroft in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Seacroft-Stanningley"
+                        name="Seacroft-Stanningley"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Seacroft-Stanningley"
+                    >
+                      Input price from Stanningley to Seacroft in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Seacroft-Pudsey"
+                        name="Seacroft-Pudsey"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Seacroft-Pudsey"
+                    >
+                      Input price from Pudsey to Seacroft in pence
+                    </label>
+                    <div
+                      class="govuk-heading-s fare-triangle-label-right"
+                    >
+                      Seacroft
+                    </div>
+                  </div>
+                  <div
+                    class="fare-triangle-row"
+                    id="row-11"
+                  >
+                    <span
+                      aria-hidden="true"
+                      class="govuk-heading-s fare-triangle-label-left"
+                    >
+                      <span>
+                        Rothwell
+                      </span>
+                    </span>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Rothwell-Briggate"
+                        name="Rothwell-Briggate"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Rothwell-Briggate"
+                    >
+                      Input price from Briggate to Rothwell in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Rothwell-Chapeltown"
+                        name="Rothwell-Chapeltown"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Rothwell-Chapeltown"
+                    >
+                      Input price from Chapeltown to Rothwell in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Rothwell-ChapelAllerton"
+                        name="Rothwell-Chapel Allerton"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Rothwell-ChapelAllerton"
+                    >
+                      Input price from Chapel Allerton to Rothwell in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Rothwell-Moortown"
+                        name="Rothwell-Moortown"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Rothwell-Moortown"
+                    >
+                      Input price from Moortown to Rothwell in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Rothwell-HarrogateRoad"
+                        name="Rothwell-Harrogate Road"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Rothwell-HarrogateRoad"
+                    >
+                      Input price from Harrogate Road to Rothwell in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Rothwell-Harehills"
+                        name="Rothwell-Harehills"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Rothwell-Harehills"
+                    >
+                      Input price from Harehills to Rothwell in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Rothwell-Gipton"
+                        name="Rothwell-Gipton"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Rothwell-Gipton"
+                    >
+                      Input price from Gipton to Rothwell in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Rothwell-Armley"
+                        name="Rothwell-Armley"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Rothwell-Armley"
+                    >
+                      Input price from Armley to Rothwell in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Rothwell-Stanningley"
+                        name="Rothwell-Stanningley"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Rothwell-Stanningley"
+                    >
+                      Input price from Stanningley to Rothwell in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Rothwell-Pudsey"
+                        name="Rothwell-Pudsey"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Rothwell-Pudsey"
+                    >
+                      Input price from Pudsey to Rothwell in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Rothwell-Seacroft"
+                        name="Rothwell-Seacroft"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Rothwell-Seacroft"
+                    >
+                      Input price from Seacroft to Rothwell in pence
+                    </label>
+                    <div
+                      class="govuk-heading-s fare-triangle-label-right"
+                    >
+                      Rothwell
+                    </div>
+                  </div>
+                  <div
+                    class="fare-triangle-row"
+                    id="row-12"
+                  >
+                    <span
+                      aria-hidden="true"
+                      class="govuk-heading-s fare-triangle-label-left"
+                    >
+                      <span>
+                        Dewsbury
+                      </span>
+                    </span>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Dewsbury-Briggate"
+                        name="Dewsbury-Briggate"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Dewsbury-Briggate"
+                    >
+                      Input price from Briggate to Dewsbury in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Dewsbury-Chapeltown"
+                        name="Dewsbury-Chapeltown"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Dewsbury-Chapeltown"
+                    >
+                      Input price from Chapeltown to Dewsbury in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Dewsbury-ChapelAllerton"
+                        name="Dewsbury-Chapel Allerton"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Dewsbury-ChapelAllerton"
+                    >
+                      Input price from Chapel Allerton to Dewsbury in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Dewsbury-Moortown"
+                        name="Dewsbury-Moortown"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Dewsbury-Moortown"
+                    >
+                      Input price from Moortown to Dewsbury in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Dewsbury-HarrogateRoad"
+                        name="Dewsbury-Harrogate Road"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Dewsbury-HarrogateRoad"
+                    >
+                      Input price from Harrogate Road to Dewsbury in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Dewsbury-Harehills"
+                        name="Dewsbury-Harehills"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Dewsbury-Harehills"
+                    >
+                      Input price from Harehills to Dewsbury in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Dewsbury-Gipton"
+                        name="Dewsbury-Gipton"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Dewsbury-Gipton"
+                    >
+                      Input price from Gipton to Dewsbury in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Dewsbury-Armley"
+                        name="Dewsbury-Armley"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Dewsbury-Armley"
+                    >
+                      Input price from Armley to Dewsbury in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Dewsbury-Stanningley"
+                        name="Dewsbury-Stanningley"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Dewsbury-Stanningley"
+                    >
+                      Input price from Stanningley to Dewsbury in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Dewsbury-Pudsey"
+                        name="Dewsbury-Pudsey"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Dewsbury-Pudsey"
+                    >
+                      Input price from Pudsey to Dewsbury in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Dewsbury-Seacroft"
+                        name="Dewsbury-Seacroft"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Dewsbury-Seacroft"
+                    >
+                      Input price from Seacroft to Dewsbury in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-white"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Dewsbury-Rothwell"
+                        name="Dewsbury-Rothwell"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Dewsbury-Rothwell"
+                    >
+                      Input price from Rothwell to Dewsbury in pence
+                    </label>
+                    <div
+                      class="govuk-heading-s fare-triangle-label-right"
+                    >
+                      Dewsbury
+                    </div>
+                  </div>
+                  <div
+                    class="fare-triangle-row"
+                    id="row-13"
+                  >
+                    <span
+                      aria-hidden="true"
+                      class="govuk-heading-s fare-triangle-label-left"
+                    >
+                      <span>
+                        Wakefield
+                      </span>
+                    </span>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Wakefield-Briggate"
+                        name="Wakefield-Briggate"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Wakefield-Briggate"
+                    >
+                      Input price from Briggate to Wakefield in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Wakefield-Chapeltown"
+                        name="Wakefield-Chapeltown"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Wakefield-Chapeltown"
+                    >
+                      Input price from Chapeltown to Wakefield in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Wakefield-ChapelAllerton"
+                        name="Wakefield-Chapel Allerton"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Wakefield-ChapelAllerton"
+                    >
+                      Input price from Chapel Allerton to Wakefield in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Wakefield-Moortown"
+                        name="Wakefield-Moortown"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Wakefield-Moortown"
+                    >
+                      Input price from Moortown to Wakefield in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Wakefield-HarrogateRoad"
+                        name="Wakefield-Harrogate Road"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Wakefield-HarrogateRoad"
+                    >
+                      Input price from Harrogate Road to Wakefield in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Wakefield-Harehills"
+                        name="Wakefield-Harehills"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Wakefield-Harehills"
+                    >
+                      Input price from Harehills to Wakefield in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Wakefield-Gipton"
+                        name="Wakefield-Gipton"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Wakefield-Gipton"
+                    >
+                      Input price from Gipton to Wakefield in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Wakefield-Armley"
+                        name="Wakefield-Armley"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Wakefield-Armley"
+                    >
+                      Input price from Armley to Wakefield in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Wakefield-Stanningley"
+                        name="Wakefield-Stanningley"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Wakefield-Stanningley"
+                    >
+                      Input price from Stanningley to Wakefield in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Wakefield-Pudsey"
+                        name="Wakefield-Pudsey"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Wakefield-Pudsey"
+                    >
+                      Input price from Pudsey to Wakefield in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Wakefield-Seacroft"
+                        name="Wakefield-Seacroft"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Wakefield-Seacroft"
+                    >
+                      Input price from Seacroft to Wakefield in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Wakefield-Rothwell"
+                        name="Wakefield-Rothwell"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Wakefield-Rothwell"
+                    >
+                      Input price from Rothwell to Wakefield in pence
+                    </label>
+                    <span
+                      class="fare-triangle-input fare-triangle-input-light-grey"
+                    >
+                      <input
+                        aria-describedby="price-entry-hint"
+                        class="govuk-input govuk-input--width-4"
+                        id="Wakefield-Dewsbury"
+                        name="Wakefield-Dewsbury"
+                        type="text"
+                        value=""
+                      />
+                    </span>
+                    <label
+                      class="govuk-visually-hidden"
+                      for="Wakefield-Dewsbury"
+                    >
+                      Input price from Dewsbury to Wakefield in pence
+                    </label>
+                    <div
+                      class="govuk-heading-s fare-triangle-label-right"
+                    >
+                      Wakefield
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-          <div
-            className="fare-triangle-row"
-            id="row-2"
-            key="Chapel Allerton"
+            <input
+              class="govuk-button"
+              id="continue-button"
+              type="submit"
+              value="Continue"
+            />
+          </form>
+        </div>
+      </div>
+    </main>
+    <div>
+      <h2
+        class="govuk-heading-s"
+      >
+        Help and Support
+      </h2>
+      <p
+        class="govuk-body"
+      >
+        If you are having problems, please contact the Create Fares Data Service via this link: 
+        <a
+          class="govuk-link govuk-!-font-size-19"
+          href="/contact"
+        >
+          Contact us
+        </a>
+      </p>
+    </div>
+  </div>
+  <footer
+    class="govuk-footer"
+    role="contentinfo"
+  >
+    <div
+      class="govuk-width-container"
+    >
+      <svg
+        class="govuk-footer__crown"
+        fill="currentcolor"
+        focusable="false"
+        height="30"
+        role="presentation"
+        viewBox="0 0 64 60"
+        width="32"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g>
+          <circle
+            cx="20"
+            cy="17.6"
+            r="3.7"
+          />
+          <circle
+            cx="10.2"
+            cy="23.5"
+            r="3.7"
+          />
+          <circle
+            cx="3.7"
+            cy="33.2"
+            r="3.7"
+          />
+          <circle
+            cx="31.7"
+            cy="30.6"
+            r="3.7"
+          />
+          <circle
+            cx="43.3"
+            cy="17.6"
+            r="3.7"
+          />
+          <circle
+            cx="53.2"
+            cy="23.5"
+            r="3.7"
+          />
+          <circle
+            cx="59.7"
+            cy="33.2"
+            r="3.7"
+          />
+          <circle
+            cx="31.7"
+            cy="30.6"
+            r="3.7"
+          />
+          <path
+            d="M33.1,9.8c.2-.1.3-.3.5-.5l4.6,2.4v-6.8l-4.6,1.5c-.1-.2-.3-.3-.5-.5l1.9-5.9h-6.7l1.9,5.9c-.2.1-.3.3-.5.5l-4.6-1.5v6.8l4.6-2.4c.1.2.3.3.5.5l-2.6,8c-.9,2.8,1.2,5.7,4.1,5.7h0c3,0,5.1-2.9,4.1-5.7l-2.6-8ZM37,37.9s-3.4,3.8-4.1,6.1c2.2,0,4.2-.5,6.4-2.8l-.7,8.5c-2-2.8-4.4-4.1-5.7-3.8.1,3.1.5,6.7,5.8,7.2,3.7.3,6.7-1.5,7-3.8.4-2.6-2-4.3-3.7-1.6-1.4-4.5,2.4-6.1,4.9-3.2-1.9-4.5-1.8-7.7,2.4-10.9,3,4,2.6,7.3-1.2,11.1,2.4-1.3,6.2,0,4,4.6-1.2-2.8-3.7-2.2-4.2.2-.3,1.7.7,3.7,3,4.2,1.9.3,4.7-.9,7-5.9-1.3,0-2.4.7-3.9,1.7l2.4-8c.6,2.3,1.4,3.7,2.2,4.5.6-1.6.5-2.8,0-5.3l5,1.8c-2.6,3.6-5.2,8.7-7.3,17.5-7.4-1.1-15.7-1.7-24.5-1.7h0c-8.8,0-17.1.6-24.5,1.7-2.1-8.9-4.7-13.9-7.3-17.5l5-1.8c-.5,2.5-.6,3.7,0,5.3.8-.8,1.6-2.3,2.2-4.5l2.4,8c-1.5-1-2.6-1.7-3.9-1.7,2.3,5,5.2,6.2,7,5.9,2.3-.4,3.3-2.4,3-4.2-.5-2.4-3-3.1-4.2-.2-2.2-4.6,1.6-6,4-4.6-3.7-3.7-4.2-7.1-1.2-11.1,4.2,3.2,4.3,6.4,2.4,10.9,2.5-2.8,6.3-1.3,4.9,3.2-1.8-2.7-4.1-1-3.7,1.6.3,2.3,3.3,4.1,7,3.8,5.4-.5,5.7-4.2,5.8-7.2-1.3-.2-3.7,1-5.7,3.8l-.7-8.5c2.2,2.3,4.2,2.7,6.4,2.8-.7-2.3-4.1-6.1-4.1-6.1h10.6,0Z"
+          />
+        </g>
+      </svg>
+      <div
+        class="govuk-footer__meta"
+      >
+        <div
+          class="govuk-footer__meta-item govuk-footer__meta-item--grow"
+        >
+          <h2
+            class="govuk-visually-hidden"
           >
-            <span
-              aria-hidden="true"
-              className="govuk-heading-s fare-triangle-label-left"
-            >
-              <span>
-                Chapel Allerton
-              </span>
-            </span>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="ChapelAllerton-Briggate"
-                name="Chapel Allerton-Briggate"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="ChapelAllerton-Briggate"
-            >
-              Input price from 
-              Briggate
-               to 
-              Chapel Allerton
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="ChapelAllerton-Chapeltown"
-                name="Chapel Allerton-Chapeltown"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="ChapelAllerton-Chapeltown"
-            >
-              Input price from 
-              Chapeltown
-               to 
-              Chapel Allerton
-               in pence
-            </label>
-            <div
-              className="govuk-heading-s fare-triangle-label-right"
-            >
-              Chapel Allerton
-            </div>
-          </div>
-          <div
-            className="fare-triangle-row"
-            id="row-3"
-            key="Moortown"
+            Support links
+          </h2>
+          <ul
+            class="govuk-footer__inline-list"
           >
-            <span
-              aria-hidden="true"
-              className="govuk-heading-s fare-triangle-label-left"
+            <li
+              class="govuk-footer__inline-list-item"
             >
-              <span>
-                Moortown
-              </span>
-            </span>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
+              <a
+                class="govuk-footer__link"
+                href="/contact"
+              >
+                Help
+              </a>
+            </li>
+            <li
+              class="govuk-footer__inline-list-item"
             >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Moortown-Briggate"
-                name="Moortown-Briggate"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Moortown-Briggate"
+              <a
+                class="govuk-footer__link"
+                href="/cookies"
+              >
+                Cookies
+              </a>
+            </li>
+            <li
+              class="govuk-footer__inline-list-item"
             >
-              Input price from 
-              Briggate
-               to 
-              Moortown
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
+              <a
+                class="govuk-footer__link"
+                href="/contact"
+              >
+                Contact
+              </a>
+            </li>
+            <li
+              class="govuk-footer__inline-list-item"
             >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Moortown-Chapeltown"
-                name="Moortown-Chapeltown"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Moortown-Chapeltown"
+              <a
+                class="govuk-footer__link"
+                href="/accessibility"
+              >
+                Accessibility
+              </a>
+            </li>
+            <li
+              class="govuk-footer__inline-list-item"
             >
-              Input price from 
-              Chapeltown
-               to 
-              Moortown
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
+              <a
+                class="govuk-footer__link"
+                href="https://www.gov.uk/help/terms-conditions"
+              >
+                Terms and conditions
+              </a>
+            </li>
+            <li
+              class="govuk-footer__inline-list-item"
             >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Moortown-ChapelAllerton"
-                name="Moortown-Chapel Allerton"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Moortown-ChapelAllerton"
-            >
-              Input price from 
-              Chapel Allerton
-               to 
-              Moortown
-               in pence
-            </label>
-            <div
-              className="govuk-heading-s fare-triangle-label-right"
-            >
-              Moortown
-            </div>
-          </div>
-          <div
-            className="fare-triangle-row"
-            id="row-4"
-            key="Harrogate Road"
+              <a
+                class="govuk-footer__link"
+                href="/privacy"
+              >
+                Privacy
+              </a>
+            </li>
+          </ul>
+          <p
+            class="govuk-footer__body"
           >
-            <span
-              aria-hidden="true"
-              className="govuk-heading-s fare-triangle-label-left"
+            Built by the 
+            <a
+              class="govuk-footer__link"
+              href="https://www.gov.uk/government/organisations/department-for-transport"
+              rel="noreferrer"
+              target="_blank"
             >
-              <span>
-                Harrogate Road
-              </span>
-            </span>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="HarrogateRoad-Briggate"
-                name="Harrogate Road-Briggate"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="HarrogateRoad-Briggate"
-            >
-              Input price from 
-              Briggate
-               to 
-              Harrogate Road
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="HarrogateRoad-Chapeltown"
-                name="Harrogate Road-Chapeltown"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="HarrogateRoad-Chapeltown"
-            >
-              Input price from 
-              Chapeltown
-               to 
-              Harrogate Road
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="HarrogateRoad-ChapelAllerton"
-                name="Harrogate Road-Chapel Allerton"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="HarrogateRoad-ChapelAllerton"
-            >
-              Input price from 
-              Chapel Allerton
-               to 
-              Harrogate Road
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="HarrogateRoad-Moortown"
-                name="Harrogate Road-Moortown"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="HarrogateRoad-Moortown"
-            >
-              Input price from 
-              Moortown
-               to 
-              Harrogate Road
-               in pence
-            </label>
-            <div
-              className="govuk-heading-s fare-triangle-label-right"
-            >
-              Harrogate Road
-            </div>
-          </div>
-          <div
-            className="fare-triangle-row"
-            id="row-5"
-            key="Harehills"
+              Department for Transport
+            </a>
+          </p>
+          <svg
+            aria-hidden="true"
+            class="govuk-footer__licence-logo"
+            focusable="false"
+            height="17"
+            viewBox="0 0 483.2 195.7"
+            width="41"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <span
-              aria-hidden="true"
-              className="govuk-heading-s fare-triangle-label-left"
-            >
-              <span>
-                Harehills
-              </span>
-            </span>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Harehills-Briggate"
-                name="Harehills-Briggate"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Harehills-Briggate"
-            >
-              Input price from 
-              Briggate
-               to 
-              Harehills
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Harehills-Chapeltown"
-                name="Harehills-Chapeltown"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Harehills-Chapeltown"
-            >
-              Input price from 
-              Chapeltown
-               to 
-              Harehills
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Harehills-ChapelAllerton"
-                name="Harehills-Chapel Allerton"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Harehills-ChapelAllerton"
-            >
-              Input price from 
-              Chapel Allerton
-               to 
-              Harehills
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Harehills-Moortown"
-                name="Harehills-Moortown"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Harehills-Moortown"
-            >
-              Input price from 
-              Moortown
-               to 
-              Harehills
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Harehills-HarrogateRoad"
-                name="Harehills-Harrogate Road"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Harehills-HarrogateRoad"
-            >
-              Input price from 
-              Harrogate Road
-               to 
-              Harehills
-               in pence
-            </label>
-            <div
-              className="govuk-heading-s fare-triangle-label-right"
-            >
-              Harehills
-            </div>
-          </div>
-          <div
-            className="fare-triangle-row"
-            id="row-6"
-            key="Gipton"
+            <path
+              d="M421.5 142.8V.1l-50.7 32.3v161.1h112.4v-50.7zm-122.3-9.6A47.12 47.12 0 0 1 221 97.8c0-26 21.1-47.1 47.1-47.1 16.7 0 31.4 8.7 39.7 21.8l42.7-27.2A97.63 97.63 0 0 0 268.1 0c-36.5 0-68.3 20.1-85.1 49.7A98 98 0 0 0 97.8 0C43.9 0 0 43.9 0 97.8s43.9 97.8 97.8 97.8c36.5 0 68.3-20.1 85.1-49.7a97.76 97.76 0 0 0 149.6 25.4l19.4 22.2h3v-87.8h-80l24.3 27.5zM97.8 145c-26 0-47.1-21.1-47.1-47.1s21.1-47.1 47.1-47.1 47.2 21 47.2 47S123.8 145 97.8 145"
+              fill="currentColor"
+            />
+          </svg>
+          <span
+            class="govuk-footer__licence-description"
           >
-            <span
-              aria-hidden="true"
-              className="govuk-heading-s fare-triangle-label-left"
+            All content is available under the 
+            <a
+              class="govuk-footer__link"
+              href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+              rel="license"
             >
-              <span>
-                Gipton
-              </span>
-            </span>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Gipton-Briggate"
-                name="Gipton-Briggate"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Gipton-Briggate"
-            >
-              Input price from 
-              Briggate
-               to 
-              Gipton
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Gipton-Chapeltown"
-                name="Gipton-Chapeltown"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Gipton-Chapeltown"
-            >
-              Input price from 
-              Chapeltown
-               to 
-              Gipton
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Gipton-ChapelAllerton"
-                name="Gipton-Chapel Allerton"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Gipton-ChapelAllerton"
-            >
-              Input price from 
-              Chapel Allerton
-               to 
-              Gipton
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Gipton-Moortown"
-                name="Gipton-Moortown"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Gipton-Moortown"
-            >
-              Input price from 
-              Moortown
-               to 
-              Gipton
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Gipton-HarrogateRoad"
-                name="Gipton-Harrogate Road"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Gipton-HarrogateRoad"
-            >
-              Input price from 
-              Harrogate Road
-               to 
-              Gipton
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Gipton-Harehills"
-                name="Gipton-Harehills"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Gipton-Harehills"
-            >
-              Input price from 
-              Harehills
-               to 
-              Gipton
-               in pence
-            </label>
-            <div
-              className="govuk-heading-s fare-triangle-label-right"
-            >
-              Gipton
-            </div>
-          </div>
-          <div
-            className="fare-triangle-row"
-            id="row-7"
-            key="Armley"
+              Open Government Licence v3.0
+            </a>
+            , except where otherwise stated
+          </span>
+        </div>
+        <div
+          class="govuk-footer__meta-item"
+        >
+          <a
+            class="govuk-footer__link govuk-footer__copyright-logo"
+            href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/"
           >
-            <span
-              aria-hidden="true"
-              className="govuk-heading-s fare-triangle-label-left"
-            >
-              <span>
-                Armley
-              </span>
-            </span>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Armley-Briggate"
-                name="Armley-Briggate"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Armley-Briggate"
-            >
-              Input price from 
-              Briggate
-               to 
-              Armley
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Armley-Chapeltown"
-                name="Armley-Chapeltown"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Armley-Chapeltown"
-            >
-              Input price from 
-              Chapeltown
-               to 
-              Armley
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Armley-ChapelAllerton"
-                name="Armley-Chapel Allerton"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Armley-ChapelAllerton"
-            >
-              Input price from 
-              Chapel Allerton
-               to 
-              Armley
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Armley-Moortown"
-                name="Armley-Moortown"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Armley-Moortown"
-            >
-              Input price from 
-              Moortown
-               to 
-              Armley
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Armley-HarrogateRoad"
-                name="Armley-Harrogate Road"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Armley-HarrogateRoad"
-            >
-              Input price from 
-              Harrogate Road
-               to 
-              Armley
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Armley-Harehills"
-                name="Armley-Harehills"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Armley-Harehills"
-            >
-              Input price from 
-              Harehills
-               to 
-              Armley
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Armley-Gipton"
-                name="Armley-Gipton"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Armley-Gipton"
-            >
-              Input price from 
-              Gipton
-               to 
-              Armley
-               in pence
-            </label>
-            <div
-              className="govuk-heading-s fare-triangle-label-right"
-            >
-              Armley
-            </div>
-          </div>
-          <div
-            className="fare-triangle-row"
-            id="row-8"
-            key="Stanningley"
-          >
-            <span
-              aria-hidden="true"
-              className="govuk-heading-s fare-triangle-label-left"
-            >
-              <span>
-                Stanningley
-              </span>
-            </span>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Stanningley-Briggate"
-                name="Stanningley-Briggate"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Stanningley-Briggate"
-            >
-              Input price from 
-              Briggate
-               to 
-              Stanningley
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Stanningley-Chapeltown"
-                name="Stanningley-Chapeltown"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Stanningley-Chapeltown"
-            >
-              Input price from 
-              Chapeltown
-               to 
-              Stanningley
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Stanningley-ChapelAllerton"
-                name="Stanningley-Chapel Allerton"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Stanningley-ChapelAllerton"
-            >
-              Input price from 
-              Chapel Allerton
-               to 
-              Stanningley
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Stanningley-Moortown"
-                name="Stanningley-Moortown"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Stanningley-Moortown"
-            >
-              Input price from 
-              Moortown
-               to 
-              Stanningley
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Stanningley-HarrogateRoad"
-                name="Stanningley-Harrogate Road"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Stanningley-HarrogateRoad"
-            >
-              Input price from 
-              Harrogate Road
-               to 
-              Stanningley
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Stanningley-Harehills"
-                name="Stanningley-Harehills"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Stanningley-Harehills"
-            >
-              Input price from 
-              Harehills
-               to 
-              Stanningley
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Stanningley-Gipton"
-                name="Stanningley-Gipton"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Stanningley-Gipton"
-            >
-              Input price from 
-              Gipton
-               to 
-              Stanningley
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Stanningley-Armley"
-                name="Stanningley-Armley"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Stanningley-Armley"
-            >
-              Input price from 
-              Armley
-               to 
-              Stanningley
-               in pence
-            </label>
-            <div
-              className="govuk-heading-s fare-triangle-label-right"
-            >
-              Stanningley
-            </div>
-          </div>
-          <div
-            className="fare-triangle-row"
-            id="row-9"
-            key="Pudsey"
-          >
-            <span
-              aria-hidden="true"
-              className="govuk-heading-s fare-triangle-label-left"
-            >
-              <span>
-                Pudsey
-              </span>
-            </span>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Pudsey-Briggate"
-                name="Pudsey-Briggate"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Pudsey-Briggate"
-            >
-              Input price from 
-              Briggate
-               to 
-              Pudsey
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Pudsey-Chapeltown"
-                name="Pudsey-Chapeltown"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Pudsey-Chapeltown"
-            >
-              Input price from 
-              Chapeltown
-               to 
-              Pudsey
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Pudsey-ChapelAllerton"
-                name="Pudsey-Chapel Allerton"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Pudsey-ChapelAllerton"
-            >
-              Input price from 
-              Chapel Allerton
-               to 
-              Pudsey
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Pudsey-Moortown"
-                name="Pudsey-Moortown"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Pudsey-Moortown"
-            >
-              Input price from 
-              Moortown
-               to 
-              Pudsey
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Pudsey-HarrogateRoad"
-                name="Pudsey-Harrogate Road"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Pudsey-HarrogateRoad"
-            >
-              Input price from 
-              Harrogate Road
-               to 
-              Pudsey
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Pudsey-Harehills"
-                name="Pudsey-Harehills"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Pudsey-Harehills"
-            >
-              Input price from 
-              Harehills
-               to 
-              Pudsey
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Pudsey-Gipton"
-                name="Pudsey-Gipton"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Pudsey-Gipton"
-            >
-              Input price from 
-              Gipton
-               to 
-              Pudsey
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Pudsey-Armley"
-                name="Pudsey-Armley"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Pudsey-Armley"
-            >
-              Input price from 
-              Armley
-               to 
-              Pudsey
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Pudsey-Stanningley"
-                name="Pudsey-Stanningley"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Pudsey-Stanningley"
-            >
-              Input price from 
-              Stanningley
-               to 
-              Pudsey
-               in pence
-            </label>
-            <div
-              className="govuk-heading-s fare-triangle-label-right"
-            >
-              Pudsey
-            </div>
-          </div>
-          <div
-            className="fare-triangle-row"
-            id="row-10"
-            key="Seacroft"
-          >
-            <span
-              aria-hidden="true"
-              className="govuk-heading-s fare-triangle-label-left"
-            >
-              <span>
-                Seacroft
-              </span>
-            </span>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Seacroft-Briggate"
-                name="Seacroft-Briggate"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Seacroft-Briggate"
-            >
-              Input price from 
-              Briggate
-               to 
-              Seacroft
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Seacroft-Chapeltown"
-                name="Seacroft-Chapeltown"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Seacroft-Chapeltown"
-            >
-              Input price from 
-              Chapeltown
-               to 
-              Seacroft
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Seacroft-ChapelAllerton"
-                name="Seacroft-Chapel Allerton"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Seacroft-ChapelAllerton"
-            >
-              Input price from 
-              Chapel Allerton
-               to 
-              Seacroft
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Seacroft-Moortown"
-                name="Seacroft-Moortown"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Seacroft-Moortown"
-            >
-              Input price from 
-              Moortown
-               to 
-              Seacroft
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Seacroft-HarrogateRoad"
-                name="Seacroft-Harrogate Road"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Seacroft-HarrogateRoad"
-            >
-              Input price from 
-              Harrogate Road
-               to 
-              Seacroft
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Seacroft-Harehills"
-                name="Seacroft-Harehills"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Seacroft-Harehills"
-            >
-              Input price from 
-              Harehills
-               to 
-              Seacroft
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Seacroft-Gipton"
-                name="Seacroft-Gipton"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Seacroft-Gipton"
-            >
-              Input price from 
-              Gipton
-               to 
-              Seacroft
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Seacroft-Armley"
-                name="Seacroft-Armley"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Seacroft-Armley"
-            >
-              Input price from 
-              Armley
-               to 
-              Seacroft
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Seacroft-Stanningley"
-                name="Seacroft-Stanningley"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Seacroft-Stanningley"
-            >
-              Input price from 
-              Stanningley
-               to 
-              Seacroft
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Seacroft-Pudsey"
-                name="Seacroft-Pudsey"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Seacroft-Pudsey"
-            >
-              Input price from 
-              Pudsey
-               to 
-              Seacroft
-               in pence
-            </label>
-            <div
-              className="govuk-heading-s fare-triangle-label-right"
-            >
-              Seacroft
-            </div>
-          </div>
-          <div
-            className="fare-triangle-row"
-            id="row-11"
-            key="Rothwell"
-          >
-            <span
-              aria-hidden="true"
-              className="govuk-heading-s fare-triangle-label-left"
-            >
-              <span>
-                Rothwell
-              </span>
-            </span>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Rothwell-Briggate"
-                name="Rothwell-Briggate"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Rothwell-Briggate"
-            >
-              Input price from 
-              Briggate
-               to 
-              Rothwell
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Rothwell-Chapeltown"
-                name="Rothwell-Chapeltown"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Rothwell-Chapeltown"
-            >
-              Input price from 
-              Chapeltown
-               to 
-              Rothwell
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Rothwell-ChapelAllerton"
-                name="Rothwell-Chapel Allerton"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Rothwell-ChapelAllerton"
-            >
-              Input price from 
-              Chapel Allerton
-               to 
-              Rothwell
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Rothwell-Moortown"
-                name="Rothwell-Moortown"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Rothwell-Moortown"
-            >
-              Input price from 
-              Moortown
-               to 
-              Rothwell
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Rothwell-HarrogateRoad"
-                name="Rothwell-Harrogate Road"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Rothwell-HarrogateRoad"
-            >
-              Input price from 
-              Harrogate Road
-               to 
-              Rothwell
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Rothwell-Harehills"
-                name="Rothwell-Harehills"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Rothwell-Harehills"
-            >
-              Input price from 
-              Harehills
-               to 
-              Rothwell
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Rothwell-Gipton"
-                name="Rothwell-Gipton"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Rothwell-Gipton"
-            >
-              Input price from 
-              Gipton
-               to 
-              Rothwell
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Rothwell-Armley"
-                name="Rothwell-Armley"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Rothwell-Armley"
-            >
-              Input price from 
-              Armley
-               to 
-              Rothwell
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Rothwell-Stanningley"
-                name="Rothwell-Stanningley"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Rothwell-Stanningley"
-            >
-              Input price from 
-              Stanningley
-               to 
-              Rothwell
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Rothwell-Pudsey"
-                name="Rothwell-Pudsey"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Rothwell-Pudsey"
-            >
-              Input price from 
-              Pudsey
-               to 
-              Rothwell
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Rothwell-Seacroft"
-                name="Rothwell-Seacroft"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Rothwell-Seacroft"
-            >
-              Input price from 
-              Seacroft
-               to 
-              Rothwell
-               in pence
-            </label>
-            <div
-              className="govuk-heading-s fare-triangle-label-right"
-            >
-              Rothwell
-            </div>
-          </div>
-          <div
-            className="fare-triangle-row"
-            id="row-12"
-            key="Dewsbury"
-          >
-            <span
-              aria-hidden="true"
-              className="govuk-heading-s fare-triangle-label-left"
-            >
-              <span>
-                Dewsbury
-              </span>
-            </span>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Dewsbury-Briggate"
-                name="Dewsbury-Briggate"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Dewsbury-Briggate"
-            >
-              Input price from 
-              Briggate
-               to 
-              Dewsbury
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Dewsbury-Chapeltown"
-                name="Dewsbury-Chapeltown"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Dewsbury-Chapeltown"
-            >
-              Input price from 
-              Chapeltown
-               to 
-              Dewsbury
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Dewsbury-ChapelAllerton"
-                name="Dewsbury-Chapel Allerton"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Dewsbury-ChapelAllerton"
-            >
-              Input price from 
-              Chapel Allerton
-               to 
-              Dewsbury
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Dewsbury-Moortown"
-                name="Dewsbury-Moortown"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Dewsbury-Moortown"
-            >
-              Input price from 
-              Moortown
-               to 
-              Dewsbury
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Dewsbury-HarrogateRoad"
-                name="Dewsbury-Harrogate Road"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Dewsbury-HarrogateRoad"
-            >
-              Input price from 
-              Harrogate Road
-               to 
-              Dewsbury
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Dewsbury-Harehills"
-                name="Dewsbury-Harehills"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Dewsbury-Harehills"
-            >
-              Input price from 
-              Harehills
-               to 
-              Dewsbury
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Dewsbury-Gipton"
-                name="Dewsbury-Gipton"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Dewsbury-Gipton"
-            >
-              Input price from 
-              Gipton
-               to 
-              Dewsbury
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Dewsbury-Armley"
-                name="Dewsbury-Armley"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Dewsbury-Armley"
-            >
-              Input price from 
-              Armley
-               to 
-              Dewsbury
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Dewsbury-Stanningley"
-                name="Dewsbury-Stanningley"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Dewsbury-Stanningley"
-            >
-              Input price from 
-              Stanningley
-               to 
-              Dewsbury
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Dewsbury-Pudsey"
-                name="Dewsbury-Pudsey"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Dewsbury-Pudsey"
-            >
-              Input price from 
-              Pudsey
-               to 
-              Dewsbury
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Dewsbury-Seacroft"
-                name="Dewsbury-Seacroft"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Dewsbury-Seacroft"
-            >
-              Input price from 
-              Seacroft
-               to 
-              Dewsbury
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-white"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Dewsbury-Rothwell"
-                name="Dewsbury-Rothwell"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Dewsbury-Rothwell"
-            >
-              Input price from 
-              Rothwell
-               to 
-              Dewsbury
-               in pence
-            </label>
-            <div
-              className="govuk-heading-s fare-triangle-label-right"
-            >
-              Dewsbury
-            </div>
-          </div>
-          <div
-            className="fare-triangle-row"
-            id="row-13"
-            key="Wakefield"
-          >
-            <span
-              aria-hidden="true"
-              className="govuk-heading-s fare-triangle-label-left"
-            >
-              <span>
-                Wakefield
-              </span>
-            </span>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Wakefield-Briggate"
-                name="Wakefield-Briggate"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Wakefield-Briggate"
-            >
-              Input price from 
-              Briggate
-               to 
-              Wakefield
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Wakefield-Chapeltown"
-                name="Wakefield-Chapeltown"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Wakefield-Chapeltown"
-            >
-              Input price from 
-              Chapeltown
-               to 
-              Wakefield
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Wakefield-ChapelAllerton"
-                name="Wakefield-Chapel Allerton"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Wakefield-ChapelAllerton"
-            >
-              Input price from 
-              Chapel Allerton
-               to 
-              Wakefield
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Wakefield-Moortown"
-                name="Wakefield-Moortown"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Wakefield-Moortown"
-            >
-              Input price from 
-              Moortown
-               to 
-              Wakefield
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Wakefield-HarrogateRoad"
-                name="Wakefield-Harrogate Road"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Wakefield-HarrogateRoad"
-            >
-              Input price from 
-              Harrogate Road
-               to 
-              Wakefield
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Wakefield-Harehills"
-                name="Wakefield-Harehills"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Wakefield-Harehills"
-            >
-              Input price from 
-              Harehills
-               to 
-              Wakefield
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Wakefield-Gipton"
-                name="Wakefield-Gipton"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Wakefield-Gipton"
-            >
-              Input price from 
-              Gipton
-               to 
-              Wakefield
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Wakefield-Armley"
-                name="Wakefield-Armley"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Wakefield-Armley"
-            >
-              Input price from 
-              Armley
-               to 
-              Wakefield
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Wakefield-Stanningley"
-                name="Wakefield-Stanningley"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Wakefield-Stanningley"
-            >
-              Input price from 
-              Stanningley
-               to 
-              Wakefield
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Wakefield-Pudsey"
-                name="Wakefield-Pudsey"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Wakefield-Pudsey"
-            >
-              Input price from 
-              Pudsey
-               to 
-              Wakefield
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Wakefield-Seacroft"
-                name="Wakefield-Seacroft"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Wakefield-Seacroft"
-            >
-              Input price from 
-              Seacroft
-               to 
-              Wakefield
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Wakefield-Rothwell"
-                name="Wakefield-Rothwell"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Wakefield-Rothwell"
-            >
-              Input price from 
-              Rothwell
-               to 
-              Wakefield
-               in pence
-            </label>
-            <span
-              className="fare-triangle-input fare-triangle-input-light-grey"
-            >
-              <input
-                aria-describedby="price-entry-hint"
-                className="govuk-input govuk-input--width-4"
-                defaultValue=""
-                id="Wakefield-Dewsbury"
-                name="Wakefield-Dewsbury"
-                type="text"
-              />
-            </span>
-            <label
-              className="govuk-visually-hidden"
-              htmlFor="Wakefield-Dewsbury"
-            >
-              Input price from 
-              Dewsbury
-               to 
-              Wakefield
-               in pence
-            </label>
-            <div
-              className="govuk-heading-s fare-triangle-label-right"
-            >
-              Wakefield
-            </div>
-          </div>
+            © Crown copyright
+          </a>
         </div>
       </div>
     </div>
-    <input
-      className="govuk-button"
-      id="continue-button"
-      type="submit"
-      value="Continue"
-    />
-  </CsrfForm>
-</FullColumnLayout>
+  </footer>
+</DocumentFragment>
 `;

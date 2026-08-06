@@ -136,7 +136,7 @@ const Exports = ({ csrf, operatorHasProducts }: GlobalSettingsProps): ReactEleme
 
     const exports: Export[] | undefined = data?.exports;
 
-    const exportInProgress: Export | undefined = !!exports
+    const exportInProgress: Export | undefined = exports
         ? exports.find((exportDetails) => !exportDetails.signedUrl && !exportDetails.exportFailed)
         : undefined;
 

@@ -37,7 +37,7 @@ interface EditStagesProps {
     csrfToken: string;
     stops: Stop[];
     backHref: string;
-    selectedFareStages: {};
+    selectedFareStages: Record<string, string>;
     warning: boolean;
     showBackButtton: boolean;
     direction: string;
@@ -280,7 +280,7 @@ const EditFareStageMatching = ({
                                                     {item.naptanCode}
                                                 </td>
                                                 <td className="govuk-table__cell stage-cell">
-                                                    {/* eslint-disable-next-line jsx-a11y/no-onchange */}
+                                                    {}
                                                     <select
                                                         className="govuk-select farestage-select"
                                                         id={`option-${item.index}`}
@@ -329,9 +329,7 @@ export const getServerSideProps = async (
 ): Promise<{ props: EditStagesProps } | void> => {
     const csrfToken = getCsrfToken(ctx);
     const ticket = getSessionAttribute(ctx.req, MATCHING_JSON_ATTRIBUTE) as
-        | WithIds<SingleTicket>
-        | WithIds<ReturnTicket>
-        | undefined;
+        WithIds<SingleTicket> | WithIds<ReturnTicket> | undefined;
 
     const matchingJsonMetaData = getSessionAttribute(ctx.req, MATCHING_JSON_META_DATA_ATTRIBUTE);
     const editFareStageMatchingAttribute = getSessionAttribute(ctx.req, EDIT_FARE_STAGE_MATCHING_ATTRIBUTE);
@@ -342,7 +340,7 @@ export const getServerSideProps = async (
     }
 
     const nocCode = getAndValidateNoc(ctx);
-    const dataSource = !!getSessionAttribute(ctx.req, MULTI_MODAL_ATTRIBUTE) ? 'tnds' : 'bods';
+    const dataSource = getSessionAttribute(ctx.req, MULTI_MODAL_ATTRIBUTE) ? 'tnds' : 'bods';
     const serviceId = matchingJsonMetaData.serviceId;
     const service = await getServiceByIdAndDataSource(nocCode, Number(serviceId), dataSource);
     const lineName = service.lineName;

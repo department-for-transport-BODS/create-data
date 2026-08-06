@@ -1,26 +1,28 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import { mockDataOperatorGroup } from '../testData/mockData';
 import ReuseOperatorGroup from '../../src/pages/reuseOperatorGroup';
 
-jest.mock('../../src/data/auroradb');
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('reuseOperatorGroup', () => {
         it('should render correctly', () => {
-            const tree = shallow(<ReuseOperatorGroup errors={[]} csrfToken="" operatorGroups={[]} backHref="" />);
+            const tree = renderToFragment(
+                <ReuseOperatorGroup errors={[]} csrfToken="" operatorGroups={[]} backHref="" />,
+            );
             expect(tree).toMatchSnapshot();
         });
 
         it('should render coorectly when one operator group is specified', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ReuseOperatorGroup errors={[]} csrfToken="" operatorGroups={[mockDataOperatorGroup]} backHref="" />,
             );
             expect(tree).toMatchSnapshot();
         });
 
         it('should render errors when user does not select a radio button', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ReuseOperatorGroup
                     errors={[
                         {

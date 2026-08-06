@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import { getMockContext } from '../testData/mockData';
 import PriceEntry, { getServerSideProps } from '../../src/pages/priceEntry';
 import { STAGE_NAMES_ATTRIBUTE } from '../../src/constants/attributes';
@@ -21,9 +21,11 @@ const mockFareStages: string[] = [
     'Wakefield',
 ];
 
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
+
 describe('Price Entry Page', () => {
     it('should render correctly', () => {
-        const tree = shallow(<PriceEntry stageNamesArray={mockFareStages} csrfToken="" />);
+        const tree = renderToFragment(<PriceEntry stageNamesArray={mockFareStages} csrfToken="" />);
         expect(tree).toMatchSnapshot();
     });
 
@@ -34,7 +36,7 @@ describe('Price Entry Page', () => {
             },
         });
 
-        expect(() => getServerSideProps(ctx)).toThrowError('Necessary stage names not found to show price entry page');
+        expect(() => getServerSideProps(ctx)).toThrow('Necessary stage names not found to show price entry page');
     });
 
     it('throws error if no stage names can be found', () => {
@@ -44,12 +46,12 @@ describe('Price Entry Page', () => {
             },
         });
 
-        expect(() => getServerSideProps(ctx)).toThrowError('Necessary stage names not found to show price entry page');
+        expect(() => getServerSideProps(ctx)).toThrow('Necessary stage names not found to show price entry page');
     });
 
     it('does not throw an error if stage names can be found', () => {
         const ctx = getMockContext();
 
-        expect(() => getServerSideProps(ctx)).not.toThrowError();
+        expect(() => getServerSideProps(ctx)).not.toThrow();
     });
 });

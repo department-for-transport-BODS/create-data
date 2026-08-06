@@ -19,7 +19,7 @@ describe('salesOfferPackages', () => {
 
         salesOfferPackages(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/salesOfferPackages',
         });
     });
@@ -40,7 +40,7 @@ describe('salesOfferPackages', () => {
         salesOfferPackages(req, res);
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, SOP_INFO_ATTRIBUTE, expectedSessionAttributeCall);
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/salesOfferPackages',
         });
     });
@@ -61,7 +61,7 @@ describe('salesOfferPackages', () => {
         salesOfferPackages(req, res);
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, SOP_INFO_ATTRIBUTE, expectedSessionAttributeCall);
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/salesOfferPackages',
         });
     });
@@ -82,7 +82,7 @@ describe('salesOfferPackages', () => {
         salesOfferPackages(req, res);
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, SOP_INFO_ATTRIBUTE, expectedSessionAttributeCall);
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/salesOfferPackages',
         });
     });
@@ -104,7 +104,7 @@ describe('salesOfferPackages', () => {
         salesOfferPackages(req, res);
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, SOP_INFO_ATTRIBUTE, expectedSessionAttributeCall);
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/salesOfferPackages',
         });
     });
@@ -126,7 +126,7 @@ describe('salesOfferPackages', () => {
         salesOfferPackages(req, res);
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, SOP_INFO_ATTRIBUTE, expectedSessionAttributeCall);
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/describeSalesOfferPackage',
         });
     });

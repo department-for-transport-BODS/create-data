@@ -7,31 +7,20 @@
         "runCypress": "cypress run -b $BROWSER",
         "lint": "eslint . --ext .ts",
         "lint:fix": "eslint --fix . --ext .ts",
-        "runBrowserstack": "browserstack-cypress run --sync --no-wrap",
         "postshrinkwrap": "npm install --no-package-lock --no-audit --no-fund --no-progress --silent && npx prettier --write ./package-lock.json"
     },
-    "resolutions": {
-        "json-schema": ">=0.4.0",
-        "got": "11.8.5"
-    },
     "devDependencies": {
-        "@cypress/webpack-preprocessor": "^5.7.0",
-        "@types/bluebird": "^3.5.33",
-        "@types/webpack": "^5.28.0",
-        "@types/webpack-dev-server": "^4.7.2",
-        "@typescript-eslint/eslint-plugin": "^6.7.2",
-        "@typescript-eslint/parser": "^6.7.2",
-        "browserstack-cypress-cli": "^1.25.3",
-        "cypress": "13.3.0",
-        "cypress-file-upload": "^5.0.5",
-        "eslint": "^8.49.0",
-        "eslint-config-airbnb": "^19.0.4",
-        "eslint-config-prettier": "^9.0.0",
-        "eslint-plugin-cypress": "^2.11.3",
-        "eslint-plugin-import": "^2.23.4",
-        "eslint-plugin-prettier": "^5.0.0",
-        "ts-loader": "^8.1.0",
-        "typescript": "4.5.4",
-        "webpack": "^5.9.1"
+        "@types/bluebird": "^3.5.42",
+        "cypress": "15.18.1",
+        "cypress-file-upload": "^5.0.8",
+        "eslint": "^10.6.0",
+        "eslint-config-prettier": "^10.1.8",
+        "eslint-plugin-cypress": "^6.4.2",
+        "eslint-plugin-prettier": "^5.5.6",
+        "typescript": "6.0.3",
+        "typescript-eslint": "^8.63.0"
+    },
+    "allowScripts": {
+        "cypress@15.18.1": true
     }
 }

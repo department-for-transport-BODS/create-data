@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { MATCHING_ATTRIBUTE } from '../constants/attributes';
 import { BasicService, NextPageContextWithSession, UserFareStages } from '../interfaces';
 import MatchingBase from '../components/MatchingBase';

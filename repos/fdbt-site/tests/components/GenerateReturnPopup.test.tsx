@@ -1,15 +1,14 @@
-import { shallow } from 'enzyme';
-import React from 'react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import GenerateReturnPopup from '../../src/components/GenerateReturnPopup';
 
 describe('GenerateReturnPopup', () => {
     it('should render the GenerateReturnPopup', () => {
         const cancelActionHandler = jest.fn();
-        const wrapper = shallow(<GenerateReturnPopup cancelActionHandler={cancelActionHandler} isOpen={true} />);
-        expect(wrapper).toMatchSnapshot();
+        const { asFragment } = render(<GenerateReturnPopup cancelActionHandler={cancelActionHandler} isOpen={true} />);
+        expect(asFragment()).toMatchSnapshot();
 
         expect(cancelActionHandler).not.toHaveBeenCalled();
-        wrapper.find('button').simulate('click');
+        fireEvent.click(screen.getByRole('button', { name: 'Close' }));
         expect(cancelActionHandler).toHaveBeenCalled();
     });
 });

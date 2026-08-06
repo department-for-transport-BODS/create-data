@@ -1,11 +1,11 @@
-import { startCase } from 'lodash';
+import startCase from 'lodash/startCase';
 import { NextApiResponse } from 'next';
 import {
     MATCHING_JSON_ATTRIBUTE,
     MATCHING_JSON_META_DATA_ATTRIBUTE,
     PRICING_PER_DISTANCE_ATTRIBUTE,
 } from '../../constants/attributes';
-import { getFareTypeFromFromAttributes, redirectTo } from '../../utils/apiUtils';
+import { getFareTypeFromFromAttributes, redirectTo, redirectToError } from '../../utils/apiUtils';
 import { checkProductOrCapNameIsValid, isCurrency } from '../../utils/apiUtils/validator';
 import { getSessionAttribute, updateSessionAttribute } from '../../utils/sessions';
 import { DistanceBand, DistancePricingData, ErrorInfo, NextApiRequestWithSession } from '../../interfaces';
@@ -114,72 +114,77 @@ export const validateInput = (
 };
 
 export default async (req: NextApiRequestWithSession, res: NextApiResponse): Promise<void> => {
-    const pricePerDistances: DistanceBand[] = [];
-    let i = 0;
-    let errors: ErrorInfo[] = [];
-    const { productName, minimumPrice, maximumPrice } = req.body;
+    try {
+        const pricePerDistances: DistanceBand[] = [];
+        let i = 0;
+        let errors: ErrorInfo[] = [];
+        const { productName, minimumPrice, maximumPrice } = req.body;
 
-    while (req.body[`pricePerKm${i}`] !== undefined) {
-        const distanceFrom = req.body[`distanceFrom${i}`];
-        const distanceTo = req.body[`distanceTo${i}`];
-        const pricePerKm = req.body[`pricePerKm${i}`];
-        const distancePricing = {
-            distanceFrom,
-            distanceTo,
-            pricePerKm,
+        while (req.body[`pricePerKm${i}`] !== undefined) {
+            const distanceFrom = req.body[`distanceFrom${i}`];
+            const distanceTo = req.body[`distanceTo${i}`];
+            const pricePerKm = req.body[`pricePerKm${i}`];
+            const distancePricing = {
+                distanceFrom,
+                distanceTo,
+                pricePerKm,
+            };
+            pricePerDistances.push(distancePricing);
+            i += 1;
+        }
+        pricePerDistances[0] = { ...pricePerDistances[0], distanceFrom: '0' };
+        pricePerDistances[i - 1] = { ...pricePerDistances[i - 1], distanceTo: 'Max' };
+        errors = validateInput(pricePerDistances, i - 1, minimumPrice, maximumPrice, productName);
+        const distancePricing: DistancePricingData = {
+            maximumPrice,
+            minimumPrice,
+            distanceBands: pricePerDistances,
+            productName: productName,
         };
-        pricePerDistances.push(distancePricing);
-        i += 1;
-    }
-    pricePerDistances[0] = { ...pricePerDistances[0], distanceFrom: '0' };
-    pricePerDistances[i - 1] = { ...pricePerDistances[i - 1], distanceTo: 'Max' };
-    errors = validateInput(pricePerDistances, i - 1, minimumPrice, maximumPrice, productName);
-    const distancePricing: DistancePricingData = {
-        maximumPrice,
-        minimumPrice,
-        distanceBands: pricePerDistances,
-        productName: productName,
-    };
-    if (errors.length > 0) {
-        updateSessionAttribute(req, PRICING_PER_DISTANCE_ATTRIBUTE, {
-            errors,
-            ...distancePricing,
-        });
-        redirectTo(res, '/definePricingPerDistance');
+        if (errors.length > 0) {
+            updateSessionAttribute(req, PRICING_PER_DISTANCE_ATTRIBUTE, {
+                errors,
+                ...distancePricing,
+            });
+            redirectTo(res, '/definePricingPerDistance');
+            return;
+        }
+
+        const ticket = getSessionAttribute(req, MATCHING_JSON_ATTRIBUTE);
+        const matchingJsonMetaData = getSessionAttribute(req, MATCHING_JSON_META_DATA_ATTRIBUTE);
+
+        // edit mode
+        if (ticket && matchingJsonMetaData) {
+            const product = ticket.products[0];
+            const updatedProduct = { ...product, pricingByDistance: distancePricing };
+
+            const updatedTicket: WithIds<Ticket> = {
+                ...ticket,
+                products: [updatedProduct],
+            };
+
+            // put the now updated matching json into s3
+            await putUserDataInProductsBucketWithFilePath(updatedTicket, matchingJsonMetaData.matchingJsonLink);
+            updateSessionAttribute(req, PRICING_PER_DISTANCE_ATTRIBUTE, undefined);
+            redirectTo(
+                res,
+                `/products/productDetails?productId=${matchingJsonMetaData.productId}${
+                    matchingJsonMetaData.serviceId ? `&serviceId=${matchingJsonMetaData?.serviceId}` : ''
+                }`,
+            );
+            return;
+        }
+
+        updateSessionAttribute(req, PRICING_PER_DISTANCE_ATTRIBUTE, distancePricing);
+        const fareType = getFareTypeFromFromAttributes(req);
+        if (fareType === 'flatFare') {
+            redirectTo(res, '/ticketConfirmation');
+            return;
+        }
+        redirectTo(res, '/additionalPricingStructures');
         return;
+    } catch (error) {
+        const message = 'There was a problem entering the pricing by distance information:';
+        redirectToError(res, message, 'api.pricingPerDistance', error);
     }
-
-    const ticket = getSessionAttribute(req, MATCHING_JSON_ATTRIBUTE);
-    const matchingJsonMetaData = getSessionAttribute(req, MATCHING_JSON_META_DATA_ATTRIBUTE);
-
-    // edit mode
-    if (ticket && matchingJsonMetaData) {
-        const product = ticket.products[0];
-        const updatedProduct = { ...product, pricingByDistance: distancePricing };
-
-        const updatedTicket: WithIds<Ticket> = {
-            ...ticket,
-            products: [updatedProduct],
-        };
-
-        // put the now updated matching json into s3
-        await putUserDataInProductsBucketWithFilePath(updatedTicket, matchingJsonMetaData.matchingJsonLink);
-        updateSessionAttribute(req, PRICING_PER_DISTANCE_ATTRIBUTE, undefined);
-        redirectTo(
-            res,
-            `/products/productDetails?productId=${matchingJsonMetaData.productId}${
-                matchingJsonMetaData.serviceId ? `&serviceId=${matchingJsonMetaData?.serviceId}` : ''
-            }`,
-        );
-        return;
-    }
-
-    updateSessionAttribute(req, PRICING_PER_DISTANCE_ATTRIBUTE, distancePricing);
-    const fareType = getFareTypeFromFromAttributes(req);
-    if (fareType === 'flatFare') {
-        redirectTo(res, '/ticketConfirmation');
-        return;
-    }
-    redirectTo(res, '/additionalPricingStructures');
-    return;
 };

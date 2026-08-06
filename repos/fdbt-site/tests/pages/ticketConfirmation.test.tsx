@@ -1,5 +1,5 @@
-import { shallow } from 'enzyme';
-import * as React from 'react';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import { ExpiryUnit, PointToPointPeriodProduct, Product } from '../../src/interfaces/matchingJsonTypes';
 import {
     CARNET_PRODUCT_DETAILS_ATTRIBUTE,
@@ -35,6 +35,9 @@ import TicketConfirmation, {
 } from '../../src/pages/ticketConfirmation';
 
 import { getMockContext, mockMatchingFaresZones, service, userFareStages } from '../testData/mockData';
+import { getSessionAttribute } from '../../src/utils/sessions';
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     const confirmationElementStructure: ConfirmationElement = {
@@ -238,7 +241,8 @@ describe('pages', () => {
                         },
                     },
                 });
-                const numberOfElementsDueToProducts = ctx.req.session[MULTIPLE_PRODUCT_ATTRIBUTE].products.length;
+                const numberOfElementsDueToProducts =
+                    getSessionAttribute(ctx.req, MULTIPLE_PRODUCT_ATTRIBUTE)?.products?.length ?? 0;
                 const totalExpectedLength = 3 + numberOfElementsDueToProducts;
                 const confirmationElements = buildPeriodOrMultiOpTicketConfirmationElements(ctx);
                 expect(confirmationElements).toContainEqual(confirmationElementStructure);
@@ -353,7 +357,8 @@ describe('pages', () => {
                         [FARE_TYPE_ATTRIBUTE]: { fareType: 'multiOperator' },
                     },
                 });
-                const numberOfElementsDueToProducts = ctx.req.session[MULTIPLE_PRODUCT_ATTRIBUTE].products.length;
+                const numberOfElementsDueToProducts =
+                    getSessionAttribute(ctx.req, MULTIPLE_PRODUCT_ATTRIBUTE)?.products?.length ?? 0;
                 const numberOfElementsDueToAdditionalOperators = mockAdditionalOperators.length;
                 const totalExpectedLength =
                     5 + numberOfElementsDueToProducts + numberOfElementsDueToAdditionalOperators;
@@ -425,7 +430,7 @@ describe('pages', () => {
                         [SCHOOL_FARE_TYPE_ATTRIBUTE]: { schoolFareType: 'not a real fare type' },
                     },
                 });
-                expect(() => buildSchoolTicketConfirmationElements(ctx)).toThrowError(
+                expect(() => buildSchoolTicketConfirmationElements(ctx)).toThrow(
                     'Could not extract schoolFareType from the schoolFareTypeAttribute.',
                 );
             });
@@ -512,7 +517,7 @@ describe('pages', () => {
 
             it('should throw an error when the fare type is not an expected type', () => {
                 const ctx = getMockContext();
-                expect(() => buildTicketConfirmationElements('not a real fare type', ctx)).toThrowError(
+                expect(() => buildTicketConfirmationElements('not a real fare type', ctx)).toThrow(
                     'Did not receive an expected fareType.',
                 );
             });
@@ -574,12 +579,12 @@ describe('pages', () => {
                         [FARE_TYPE_ATTRIBUTE]: { fareType: 'not a real fare type' },
                     },
                 });
-                expect(() => getServerSideProps(ctx)).toThrowError('Did not receive an expected fareType');
+                expect(() => getServerSideProps(ctx)).toThrow('Did not receive an expected fareType');
             });
         });
 
         it('should render correctly for single tickets', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <TicketConfirmation
                     confirmationElements={[
                         { name: 'Service', content: 'X01', href: 'service' },
@@ -601,7 +606,7 @@ describe('pages', () => {
         });
 
         it('should render correctly for return tickets', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <TicketConfirmation
                     confirmationElements={[
                         { name: 'Service', content: 'X01', href: 'service' },
@@ -628,7 +633,7 @@ describe('pages', () => {
         });
 
         it('should render correctly for period and multiOperator tickets', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <TicketConfirmation
                     confirmationElements={[
                         { name: 'Services', content: '12A, 6, 101', href: 'serviceList' },
@@ -655,7 +660,7 @@ describe('pages', () => {
         });
 
         it('should render correctly for flat fare tickets', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <TicketConfirmation
                     confirmationElements={[
                         { name: 'Services', content: '12A, 6, 101', href: 'serviceList' },

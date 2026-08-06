@@ -1,4 +1,4 @@
-import Cookies, { CookieSetOptions } from 'universal-cookie';
+import Cookies from 'js-cookie';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { COOKIES_POLICY_COOKIE, COOKIE_PREFERENCES_COOKIE, oneYearInSeconds } from '../constants';
 
@@ -54,8 +54,7 @@ const CookieBanner = (): ReactElement | null => {
     const [hideBanner, setHideBanner] = useState(true);
 
     useEffect(() => {
-        const cookies = new Cookies();
-        const cookiePreferences = cookies.get(COOKIE_PREFERENCES_COOKIE);
+        const cookiePreferences = Cookies.get(COOKIE_PREFERENCES_COOKIE);
 
         if (!cookiePreferences || cookiePreferences === 'false') {
             setHideBanner(false);
@@ -63,18 +62,15 @@ const CookieBanner = (): ReactElement | null => {
     });
 
     const handleAcceptAllClick = (): void => {
-        const cookies = new Cookies();
-        const cookieOptions: CookieSetOptions = {
-            maxAge: oneYearInSeconds,
+        const cookieOptions: Cookies.CookieAttributes = {
+            expires: oneYearInSeconds / 86400,
             sameSite: 'strict',
             secure: process.env.NODE_ENV !== 'development',
             path: '/',
         };
 
-        cookies.set(COOKIE_PREFERENCES_COOKIE, 'true', { ...cookieOptions });
-        cookies.set(COOKIES_POLICY_COOKIE, JSON.stringify({ essential: true, usage: true }), {
-            ...cookieOptions,
-        });
+        Cookies.set(COOKIE_PREFERENCES_COOKIE, 'true', cookieOptions);
+        Cookies.set(COOKIES_POLICY_COOKIE, JSON.stringify({ essential: true, usage: true }), cookieOptions);
 
         setCookiesAccepted(true);
     };

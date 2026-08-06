@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { MISSING_STOPS_ATTRIBUTE } from '../constants/attributes';
 import { NextPageContextWithSession } from '../interfaces';
 import TwoThirdsLayout from '../layout/Layout';
@@ -53,7 +53,7 @@ const MissingStops = ({ missingStops }: NoServicesProps): ReactElement => (
     </TwoThirdsLayout>
 );
 
-export const getServerSideProps = (ctx: NextPageContextWithSession): {} => {
+export const getServerSideProps = (ctx: NextPageContextWithSession): object => {
     const missingStops = getSessionAttribute(ctx.req, MISSING_STOPS_ATTRIBUTE);
 
     if (!missingStops && ctx.res) {

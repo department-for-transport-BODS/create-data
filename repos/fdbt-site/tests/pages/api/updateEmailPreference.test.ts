@@ -21,7 +21,7 @@ describe('updateEmailPreference', () => {
 
         await updateUserAttribute(req, res);
         expect(updateUserAttributesSpy).not.toHaveBeenCalled();
-        expect(redirectToSpy).toBeCalledWith(res, '/home');
+        expect(redirectToSpy).toHaveBeenCalledWith(res, '/home');
         expect(updateSessionAttributeSpy).not.toHaveBeenCalled();
     });
 
@@ -35,7 +35,7 @@ describe('updateEmailPreference', () => {
 
             await updateUserAttribute(req, res);
             expect(updateUserAttributesSpy).not.toHaveBeenCalled();
-            expect(redirectToSpy).toBeCalledWith(res, '/account');
+            expect(redirectToSpy).toHaveBeenCalledWith(res, '/account');
             expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, ACCOUNT_PAGE_ERROR, [
                 {
                     id: 'radio-multi-op-email-pref',
@@ -58,10 +58,10 @@ describe('updateEmailPreference', () => {
 
             await updateUserAttribute(req, res);
             expect(updateUserAttributesSpy).toHaveBeenCalled();
-            expect(updateUserAttributesSpy).toBeCalledWith('test@example.com', [
+            expect(updateUserAttributesSpy).toHaveBeenCalledWith('test@example.com', [
                 { Name: 'custom:multiOpEmailEnabled', Value: body },
             ]);
-            expect(redirectToSpy).toBeCalledWith(res, '/home');
+            expect(redirectToSpy).toHaveBeenCalledWith(res, '/home');
             expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, ACCOUNT_PAGE_ERROR, undefined);
         },
     );

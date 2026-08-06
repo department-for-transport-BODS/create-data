@@ -1,11 +1,13 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import DefinePricingPerDistance from '../../src/pages/definePricingPerDistance';
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('DefinePricingPerDistance', () => {
         it('should render correctly', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <DefinePricingPerDistance
                     errors={[]}
                     csrfToken=""
@@ -34,7 +36,7 @@ describe('pages', () => {
         });
 
         it('should render correctly in edit mode', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <DefinePricingPerDistance
                     errors={[]}
                     csrfToken=""
@@ -63,7 +65,7 @@ describe('pages', () => {
         });
 
         it('should render error messaging when errors are passed', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <DefinePricingPerDistance
                     errors={[
                         {

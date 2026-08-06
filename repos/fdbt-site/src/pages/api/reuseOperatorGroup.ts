@@ -13,7 +13,7 @@ import {
 import { NextApiRequestWithSession, TicketRepresentationAttribute, FareType } from '../../interfaces';
 import { updateSessionAttribute, getSessionAttribute } from '../../utils/sessions';
 import { putUserDataInProductsBucketWithFilePath } from '../../utils/apiUtils/userData';
-import { AdditionalOperator } from 'src/interfaces/matchingJsonTypes';
+import { AdditionalOperator } from '../../interfaces/matchingJsonTypes';
 
 export default async (req: NextApiRequestWithSession, res: NextApiResponse): Promise<void> => {
     try {
@@ -32,7 +32,7 @@ export default async (req: NextApiRequestWithSession, res: NextApiResponse): Pro
 
         const ticket = getSessionAttribute(req, MATCHING_JSON_ATTRIBUTE);
         const matchingJsonMetaData = getSessionAttribute(req, MATCHING_JSON_META_DATA_ATTRIBUTE);
-        const { fareType } = getSessionAttribute(req, FARE_TYPE_ATTRIBUTE) as FareType;
+        const fareType = (getSessionAttribute(req, FARE_TYPE_ATTRIBUTE) as FareType | undefined)?.fareType;
 
         if (multipleOperators) {
             if (fareType === 'multiOperatorExt') {

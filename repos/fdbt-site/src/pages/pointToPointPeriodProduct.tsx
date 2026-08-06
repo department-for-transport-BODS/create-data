@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import upperFirst from 'lodash/upperFirst';
 import ExpirySelector from '../components/ExpirySelector';
 import TwoThirdsLayout from '../layout/Layout';

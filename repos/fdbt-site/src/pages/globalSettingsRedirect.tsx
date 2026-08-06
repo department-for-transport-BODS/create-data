@@ -6,7 +6,7 @@ import { redirectTo } from '../utils/apiUtils';
 
 const GlobalSettingsRedirect: FunctionComponent = () => null;
 
-export const getServerSideProps = (ctx: NextPageContextWithSession): {} => {
+export const getServerSideProps = (ctx: NextPageContextWithSession): object => {
     const referer = getSessionAttribute(ctx.req, GS_REFERER);
     if (!referer || !ctx.res) {
         throw new Error('referer or context was not set');

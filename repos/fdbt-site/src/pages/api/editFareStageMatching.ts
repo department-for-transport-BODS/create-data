@@ -33,9 +33,7 @@ const getSelectedFareStages = (matchingFareZones: MatchingFareZonesData[]): { [k
 export default async (req: NextApiRequestWithSession, res: NextApiResponse): Promise<void> => {
     try {
         const ticket = getSessionAttribute(req, MATCHING_JSON_ATTRIBUTE) as
-            | WithIds<SingleTicket>
-            | WithIds<ReturnTicket>
-            | undefined;
+            WithIds<SingleTicket> | WithIds<ReturnTicket> | undefined;
         const ticketMetaData = getSessionAttribute(req, MATCHING_JSON_META_DATA_ATTRIBUTE);
         const { overrideWarning } = req.body;
         const directionAttribute = getSessionAttribute(req, DIRECTION_ATTRIBUTE);
@@ -51,7 +49,7 @@ export default async (req: NextApiRequestWithSession, res: NextApiResponse): Pro
 
         const userFareStages = getFareStagesFromTicket(ticket);
 
-        if (isAnyFareStageUnassigned(userFareStages, matchingFareZones) && matchingFareZones !== {}) {
+        if (isAnyFareStageUnassigned(userFareStages, matchingFareZones)) {
             const errors: ErrorInfo[] = [
                 {
                     errorMessage: 'One or more fare stages have not been assigned, assign each fare stage to a stop',

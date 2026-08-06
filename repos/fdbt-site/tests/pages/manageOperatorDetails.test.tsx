@@ -1,6 +1,12 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import ManageOperatorDetails from '../../src/pages/manageOperatorDetails';
+
+jest.mock('next/router', () => ({
+    useRouter: () => ({ pathname: '/manageOperatorDetails' }),
+}));
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('manage operator details', () => {
@@ -16,7 +22,7 @@ describe('pages', () => {
         };
 
         it('should render correctly', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ManageOperatorDetails
                     csrfToken={''}
                     errors={[]}
@@ -39,7 +45,7 @@ describe('pages', () => {
                 { id: 'contactNumber', errorMessage: 'At least one of contact number, email or URL are required' },
             ];
 
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ManageOperatorDetails
                     csrfToken={''}
                     errors={errors}
@@ -53,7 +59,7 @@ describe('pages', () => {
         });
 
         it('should render popup if saved', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ManageOperatorDetails
                     csrfToken={''}
                     errors={[]}

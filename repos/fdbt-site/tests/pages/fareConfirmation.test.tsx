@@ -1,11 +1,13 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import FareConfirmation, { buildFareConfirmationElements } from '../../src/pages/fareConfirmation';
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('fareConfirmation', () => {
         it('should render correctly for non school single tickets', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <FareConfirmation
                     fareType="single"
                     carnet={false}
@@ -43,7 +45,7 @@ describe('pages', () => {
         });
 
         it('should render correctly for a carnet ticket', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <FareConfirmation
                     fareType="single"
                     carnet
@@ -81,7 +83,7 @@ describe('pages', () => {
         });
 
         it('should render correctly for a ticket with a premade time restriction', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <FareConfirmation
                     fareType="single"
                     carnet={false}
@@ -119,7 +121,7 @@ describe('pages', () => {
         });
 
         it('should render correctly for group tickets', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <FareConfirmation
                     fareType="single"
                     carnet={false}
@@ -175,7 +177,7 @@ describe('pages', () => {
         });
 
         it('should render correctly for school tickets', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <FareConfirmation
                     fareType="schoolService"
                     carnet={false}

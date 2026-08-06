@@ -1,5 +1,5 @@
-import MockReq from 'mock-req';
 import { NextPageContext } from 'next';
+import { IncomingMessage } from 'http';
 import {
     sentenceCaseString,
     getHost,
@@ -22,24 +22,24 @@ describe('index', () => {
     describe('getHost', () => {
         it('should return http when host is localhost', () => {
             const expected = 'http://localhost';
-            const req = new MockReq({
+            const req = {
                 headers: {
                     host: 'localhost',
                     origin: 'localhost',
                 },
-            });
+            } as unknown as IncomingMessage;
             const result = getHost(req);
             expect(result).toEqual(expected);
         });
 
         it('should return https when host not localhost', () => {
             const expected = 'https://a.com';
-            const req = new MockReq({
+            const req = {
                 headers: {
                     host: 'a.com',
                     origin: 'https://a.com',
                 },
-            });
+            } as unknown as IncomingMessage;
             const result = getHost(req);
             expect(result).toEqual(expected);
         });

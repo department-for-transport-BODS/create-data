@@ -18,7 +18,7 @@ const InfoPopup = ({ title, text, okActionHandler, isOpen }: PopUpProps): ReactE
                     {text}
                 </span>
 
-                <button className="govuk-button" onClick={okActionHandler}>
+                <button className="govuk-button" type="button" onClick={okActionHandler}>
                     Ok
                 </button>
             </div>

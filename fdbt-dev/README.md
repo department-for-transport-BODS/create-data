@@ -40,27 +40,16 @@ export FDBT_USER_POOL_ID={COGNITO_USER_POOL_ID}
 export FDBT_USER_POOL_CLIENT_ID={COGNITO_USER_POOL_CLIENT_ID}
 ```
 
-Install node dependencies:
+Install dependencies from the fdbt-dev folder:
 
 ```bash
-cd ${FDBT_ROOT}/repos/fdbt-netex-output && npm i
-cd ${FDBT_ROOT}/repos/fdbt-netex-output/src/netex-validator && npm i
-cd ${FDBT_ROOT}/repos/fdbt-site && npm i
-```
-
-Install python dependencies:
-
-```bash
-pip3 install \
--r ${FDBT_ROOT}/repos/fdbt-reference-data-service/src/retrievers/requirements.txt \
--r ${FDBT_ROOT}/repos/fdbt-reference-data-service/src/uploaders/requirements.txt \
--r ${FDBT_ROOT}/repos/fdbt-netex-output/src/netex-validator/requirements.txt
+mise -C ${FDBT_ROOT}/fdbt-dev run install
 ```
 
 The site and infrastructure can then be brought up by simply running:
 
 ```bash
-make
+mise -C ${FDBT_ROOT}/fdbt-dev run dev
 ```
 
 This will start the following:

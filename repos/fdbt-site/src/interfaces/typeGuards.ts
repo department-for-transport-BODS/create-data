@@ -117,30 +117,21 @@ export const isFareStage = (
 
 export const isSalesOfferPackageWithErrors = (
     salesOfferPackageInfo:
-        | SelectSalesOfferPackageWithError
-        | SalesOfferPackage[]
-        | ProductWithSalesOfferPackages[]
-        | undefined,
+        SelectSalesOfferPackageWithError | SalesOfferPackage[] | ProductWithSalesOfferPackages[] | undefined,
 ): salesOfferPackageInfo is SelectSalesOfferPackageWithError =>
     salesOfferPackageInfo !== undefined &&
     (salesOfferPackageInfo as SelectSalesOfferPackageWithError).errors !== undefined;
 
 export const isProductWithSalesOfferPackages = (
     salesOfferPackageInfo:
-        | SelectSalesOfferPackageWithError
-        | SalesOfferPackage[]
-        | ProductWithSalesOfferPackages[]
-        | undefined,
+        SelectSalesOfferPackageWithError | SalesOfferPackage[] | ProductWithSalesOfferPackages[] | undefined,
 ): salesOfferPackageInfo is ProductWithSalesOfferPackages[] =>
     salesOfferPackageInfo !== undefined &&
     (salesOfferPackageInfo as ProductWithSalesOfferPackages[])[0].productName !== undefined;
 
 export const isSalesOfferPackages = (
     salesOfferPackageInfo:
-        | SelectSalesOfferPackageWithError
-        | SalesOfferPackage[]
-        | ProductWithSalesOfferPackages[]
-        | undefined,
+        SelectSalesOfferPackageWithError | SalesOfferPackage[] | ProductWithSalesOfferPackages[] | undefined,
 ): salesOfferPackageInfo is SalesOfferPackage[] =>
     salesOfferPackageInfo !== undefined &&
     (salesOfferPackageInfo as SalesOfferPackage[])[0].ticketFormats !== undefined;

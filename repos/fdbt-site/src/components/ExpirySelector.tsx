@@ -1,5 +1,5 @@
 import upperFirst from 'lodash/upperFirst';
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { ErrorInfo } from '../interfaces';
 import { ExpiryUnit, CarnetExpiryUnit, CapExpiryUnit } from '../interfaces/matchingJsonTypes';
 import FormElementWrapper from './FormElementWrapper';

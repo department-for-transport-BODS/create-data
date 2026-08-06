@@ -12,6 +12,10 @@
 
 `/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
 
+## Install Mise
+
+See the mise [docs](https://mise.jdx.dev/getting-started.html) to install it
+
 ## Install/Upgrade Python
 
 It is recommended to use `pyenv` to manage versions of python easily, see [https://github.com/pyenv/pyenv](https://github.com/pyenv/pyenv) for installation instructions, unless otherwise stated Python 3.7 has been used for development of the service.
@@ -28,7 +32,7 @@ It is recommended to use `pyenv` to manage versions of python easily, see [https
 
 ## Install Node.js
 
-`asdf` should be used to manage versions of node, see [https://asdf-vm.com/](https://asdf-vm.com/) for installation instructions.
+`mise` should be used to manage versions of node, see [https://mise.jdx.dev/](https://mise.jdx.dev/) for installation instructions.
 
 Unless otherwise stated node 18 has been used for development of the service.
 

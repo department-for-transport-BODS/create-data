@@ -1,8 +1,6 @@
-import Cookies from 'cookies';
-import jwksClient from 'jwks-rsa';
-import { verify, sign, decode, VerifyOptions, JwtHeader, SigningKeyCallback } from 'jsonwebtoken';
+import { decodeJwt, SignJWT, jwtVerify, createRemoteJWKSet, JWTVerifyOptions } from 'jose';
+import { JWTExpired } from 'jose/errors';
 import { Request, Response, NextFunction, Express } from 'express';
-import { NextApiRequest, NextApiResponse } from 'next';
 import {
     ID_TOKEN_COOKIE,
     REFRESH_TOKEN_COOKIE,
@@ -15,35 +13,11 @@ import { OPERATOR_ATTRIBUTE } from '../../src/constants/attributes';
 import { CognitoIdToken, CookiePolicy } from '../../src/interfaces';
 import { globalSignOut, initiateRefreshAuth } from '../../src/data/cognito';
 import logger from '../../src/utils/logger';
-
-type Req = NextApiRequest | Request;
-type Res = NextApiResponse | Response;
-
-export const deleteCookieOnResponseObject = (cookieName: string, req: Req, res: Res): void => {
-    const cookies = new Cookies(req, res);
-
-    cookies.set(cookieName, '', { overwrite: true, maxAge: 0, path: '/' });
-};
-
-const setCookieOnResponseObject = (
-    cookieName: string,
-    cookieValue: string,
-    req: Req,
-    res: Res,
-    lifetime?: number,
-    httpOnly = true,
-): void => {
-    const cookies = new Cookies(req, res);
-    // From docs: All cookies are httponly by default, and cookies sent over SSL are secure by
-    // default. An error will be thrown if you try to send secure cookies over an insecure socket.
-    cookies.set(cookieName, cookieValue, {
-        path: '/',
-        sameSite: 'strict',
-        secure: process.env.NODE_ENV !== 'development',
-        maxAge: lifetime,
-        httpOnly,
-    });
-};
+import {
+    setCookieOnResponseObject,
+    deleteCookieOnResponseObject,
+    parseCookiesFromRequest,
+} from '../../src/utils/apiUtils';
 
 const signOutUser = async (username: string | null, req: Request, res: Response): Promise<void> => {
     if (username) {
@@ -61,34 +35,22 @@ const signOutUser = async (username: string | null, req: Request, res: Response)
 
 const cognitoUri = `https://cognito-idp.eu-west-2.amazonaws.com/${process.env.FDBT_USER_POOL_ID}`;
 
-const jwks = jwksClient({
-    cache: true,
-    rateLimit: true,
-    jwksRequestsPerMinute: 5,
-    jwksUri: `${cognitoUri}/.well-known/jwks.json`,
-});
+const JWKS = createRemoteJWKSet(new URL(`${cognitoUri}/.well-known/jwks.json`));
 
-const getKey = (header: JwtHeader, callback: SigningKeyCallback): void => {
-    jwks.getSigningKey(header.kid ?? '', (err, key) => {
-        const signingKey = key?.getPublicKey();
-        callback(err ?? null, signingKey);
-    });
-};
-
-const verifyOptions: VerifyOptions = {
+const verifyOptions: JWTVerifyOptions = {
     audience: process.env.FDBT_USER_POOL_CLIENT_ID,
     issuer: cognitoUri,
     algorithms: ['RS256'],
 };
 
 export const setDisableAuthParameters = (server: Express): void => {
-    server.use((req, res, next) => {
+    server.use(async (req, res, next) => {
         const isDevelopment = process.env.NODE_ENV === 'development';
         const disableAuthQuery = req.query.disableAuth as string;
+        const parsedCookies = parseCookiesFromRequest(req);
 
         if ((isDevelopment || process.env.ALLOW_DISABLE_AUTH === '1') && disableAuthQuery) {
-            const cookies = new Cookies(req, res);
-            const disableAuthCookie = cookies.get(DISABLE_AUTH_COOKIE);
+            const disableAuthCookie = parsedCookies[DISABLE_AUTH_COOKIE];
 
             if (!disableAuthCookie || disableAuthCookie === 'false') {
                 const cookiePolicy: CookiePolicy = { essential: true, usage: true };
@@ -105,16 +67,15 @@ export const setDisableAuthParameters = (server: Express): void => {
                 setCookieOnResponseObject(DISABLE_AUTH_COOKIE, 'true', req, res);
 
                 if (disableAuthQuery === 'scheme') {
-                    const jwtToken = sign(
-                        {
-                            'custom:noc': 'TESTSE',
-                            'custom:schemeOperator': 'Test Scheme Op',
-                            'custom:schemeRegionCode': 'SE',
-                            'custom:multiOpEmailEnabled': false,
-                            email: 'test@example.com',
-                        },
-                        'test',
-                    );
+                    const jwtToken = await new SignJWT({
+                        'custom:noc': 'TESTSE',
+                        'custom:schemeOperator': 'Test Scheme Op',
+                        'custom:schemeRegionCode': 'SE',
+                        'custom:multiOpEmailEnabled': false,
+                        email: 'test@example.com',
+                    })
+                        .setProtectedHeader({ alg: 'HS256' })
+                        .sign(new TextEncoder().encode('test'));
 
                     setCookieOnResponseObject(ID_TOKEN_COOKIE, jwtToken, req, res);
                     if (req?.session) {
@@ -126,14 +87,13 @@ export const setDisableAuthParameters = (server: Express): void => {
                     }
                 } else {
                     const nocs: string[] = disableAuthQuery.split('_');
-                    const jwtToken = sign(
-                        {
-                            'custom:noc': nocs.join('|'),
-                            'custom:multiOpEmailEnabled': false,
-                            email: 'test@example.com',
-                        },
-                        'test',
-                    );
+                    const jwtToken = await new SignJWT({
+                        'custom:noc': nocs.join('|'),
+                        'custom:multiOpEmailEnabled': false,
+                        email: 'test@example.com',
+                    })
+                        .setProtectedHeader({ alg: 'HS256' })
+                        .sign(new TextEncoder().encode('test'));
 
                     setCookieOnResponseObject(ID_TOKEN_COOKIE, jwtToken, req, res);
 
@@ -166,8 +126,8 @@ export default (req: Request, res: Response, next: NextFunction): void => {
             });
     };
 
-    const cookies = new Cookies(req, res);
-    const disableAuthCookie = cookies.get(DISABLE_AUTH_COOKIE);
+    const parsedCookies = parseCookiesFromRequest(req);
+    const disableAuthCookie = parsedCookies[DISABLE_AUTH_COOKIE];
 
     if (
         (process.env.NODE_ENV === 'development' || process.env.ALLOW_DISABLE_AUTH === '1') &&
@@ -177,20 +137,23 @@ export default (req: Request, res: Response, next: NextFunction): void => {
         return;
     }
 
-    const idToken = cookies.get(ID_TOKEN_COOKIE) ?? null;
+    const idToken = parsedCookies[ID_TOKEN_COOKIE] ?? null;
 
     if (!idToken) {
         res.redirect('/login');
         return;
     }
 
-    verify(idToken, getKey, verifyOptions, (err) => {
-        if (err) {
-            const decodedToken = decode(idToken) as CognitoIdToken;
+    jwtVerify(idToken, JWKS, verifyOptions)
+        .then(() => {
+            next();
+        })
+        .catch((err) => {
+            const decodedToken = decodeJwt(idToken) as CognitoIdToken;
             const username = decodedToken?.['cognito:username'] ?? null;
 
-            if (err.name === 'TokenExpiredError') {
-                const refreshToken = cookies.get(REFRESH_TOKEN_COOKIE) ?? null;
+            if (err instanceof JWTExpired) {
+                const refreshToken = parsedCookies[REFRESH_TOKEN_COOKIE] ?? null;
 
                 if (refreshToken) {
                     logger.info('', {
@@ -233,8 +196,5 @@ export default (req: Request, res: Response, next: NextFunction): void => {
             logoutAndRedirect(username);
 
             return;
-        }
-
-        next();
-    });
+        });
 };

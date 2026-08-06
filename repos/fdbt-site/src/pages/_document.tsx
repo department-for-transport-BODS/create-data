@@ -1,10 +1,10 @@
 import Document, { Html, Head, Main, NextScript, DocumentInitialProps } from 'next/document';
-import React, { ReactElement } from 'react';
-import { parseCookies } from 'nookies';
+import { ReactElement } from 'react';
 import Header from '../layout/Header';
 import { COOKIES_POLICY_COOKIE, COOKIE_PREFERENCES_COOKIE, ID_TOKEN_COOKIE } from '../constants';
 import { DocumentContextWithSession, ResponseWithLocals } from '../interfaces';
 import { getCsrfToken, checkIfMultipleOperators } from '../utils';
+import { parseCookiesFromRequest } from '../utils/apiUtils';
 import { CookieBannerMessage } from '../layout/CookieBanner';
 import { getSessionAttribute } from '../utils/sessions';
 import { OPERATOR_ATTRIBUTE } from '../constants/attributes';
@@ -32,7 +32,7 @@ class MyDocument extends Document<DocumentProps> {
 
         const url = ctx.req?.url ?? '';
 
-        const cookies = parseCookies(ctx);
+        const cookies = parseCookiesFromRequest(ctx.req);
         const idTokenCookie = cookies[ID_TOKEN_COOKIE];
 
         const cookiePreferencesSet = cookies[COOKIE_PREFERENCES_COOKIE]
@@ -71,7 +71,7 @@ class MyDocument extends Document<DocumentProps> {
                             />
                             <script
                                 nonce={this.props.nonce}
-                                // eslint-disable-next-line react/no-danger
+
                                 dangerouslySetInnerHTML={{
                                     __html: `window['ga-disable-UA-173062045-1'] = ${!this.props.allowTracking};
                                         window.dataLayer = window.dataLayer || [];

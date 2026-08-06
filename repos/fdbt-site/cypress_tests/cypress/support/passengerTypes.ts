@@ -1,10 +1,11 @@
 import {
+    clearAndTypeById,
+    clearAndTypeByName,
     clickElementById,
     clickElementByText,
     getElementByClass,
     getElementByDataTestId,
     getElementById,
-    getElementByName,
 } from './helpers';
 
 interface PassengerType {
@@ -18,14 +19,18 @@ interface PassengerType {
 export const enterPassengerTypeDetails = ({ type, minAge, maxAge, documents, name }: PassengerType): void => {
     clickElementById(type);
 
-    minAge && getElementByName('ageRangeMin').clear().type(minAge.toString());
-    maxAge && getElementByName('ageRangeMax').clear().type(maxAge.toString());
+    if (minAge) {
+        clearAndTypeByName('ageRangeMin', minAge.toString());
+    }
+    if (maxAge) {
+        clearAndTypeByName('ageRangeMax', maxAge.toString());
+    }
 
     documents?.forEach((doc) => {
         clickElementById(doc);
     });
 
-    getElementByName('name').clear().type(name);
+    clearAndTypeByName('name', name);
 };
 
 export const addSinglePassengerType = (passengerType: PassengerType): void => {
@@ -36,26 +41,31 @@ export const addSinglePassengerType = (passengerType: PassengerType): void => {
 
 export const addGroupPassengerType = (groupName: string): void => {
     clickElementByText('Add a passenger group');
-    getElementById('max-group-size').clear().type('6');
+    clearAndTypeById('max-group-size', '6');
     clickElementById('passenger-type-0');
     clickElementById('passenger-type-1');
-    getElementByDataTestId('maximum-passengers').eq(0).clear().type('4');
+    getElementByDataTestId('maximum-passengers').eq(0).clear();
+    getElementByDataTestId('maximum-passengers').eq(0).type('4');
 
-    getElementByDataTestId('maximum-passengers').eq(1).clear().type('3');
-    getElementByDataTestId('minimum-passengers').eq(1).clear().type('2');
+    getElementByDataTestId('maximum-passengers').eq(1).clear();
+    getElementByDataTestId('maximum-passengers').eq(1).type('3');
+    getElementByDataTestId('minimum-passengers').eq(1).clear();
+    getElementByDataTestId('minimum-passengers').eq(1).type('2');
 
-    getElementByName('passengerGroupName').clear().type(groupName);
+    clearAndTypeByName('passengerGroupName', groupName);
 
     clickElementByText('Add passenger group');
 };
 
 const editGroupPassengerType = () => {
-    getElementById('max-group-size').clear().type('9');
+    clearAndTypeById('max-group-size', '9');
     getElementById('passenger-type-1').click();
-    getElementByDataTestId('minimum-passengers').eq(0).clear().type('8');
-    getElementByDataTestId('maximum-passengers').eq(0).clear().type('9');
+    getElementByDataTestId('minimum-passengers').eq(0).clear();
+    getElementByDataTestId('minimum-passengers').eq(0).type('8');
+    getElementByDataTestId('maximum-passengers').eq(0).clear();
+    getElementByDataTestId('maximum-passengers').eq(0).type('9');
 
-    getElementByName('passengerGroupName').clear().type('my edited group');
+    clearAndTypeByName('passengerGroupName', 'my edited group');
 
     cy.contains('Update passenger group').click();
 };

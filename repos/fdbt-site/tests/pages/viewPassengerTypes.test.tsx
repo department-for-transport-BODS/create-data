@@ -1,12 +1,16 @@
-import { shallow } from 'enzyme';
-import * as React from 'react';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import { SinglePassengerType } from '../../src/interfaces/dbTypes';
 import ViewPassengerTypes from '../../src/pages/viewPassengerTypes';
+
+jest.mock('next/router', () => ({ useRouter: () => ({ pathname: '/viewPassengerTypes' }) }));
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('view passenger types', () => {
         it('should render correctly when no individual or group passenger types', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ViewPassengerTypes
                     singlePassengerTypes={[]}
                     groupPassengerTypes={[]}
@@ -32,7 +36,7 @@ describe('pages', () => {
                 },
             };
 
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ViewPassengerTypes
                     singlePassengerTypes={[passengerType]}
                     groupPassengerTypes={[]}
@@ -58,7 +62,7 @@ describe('pages', () => {
                 },
             };
 
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ViewPassengerTypes
                     singlePassengerTypes={[passengerType]}
                     groupPassengerTypes={[]}
@@ -103,7 +107,7 @@ describe('pages', () => {
                 id: 0,
             };
 
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ViewPassengerTypes
                     singlePassengerTypes={[]}
                     groupPassengerTypes={[passengerTypeGroup]}
@@ -158,7 +162,7 @@ describe('pages', () => {
                 },
             ];
 
-            const tree = shallow(
+            const tree = renderToFragment(
                 <ViewPassengerTypes
                     singlePassengerTypes={passengerTypes}
                     groupPassengerTypes={passengerTypeGroups}

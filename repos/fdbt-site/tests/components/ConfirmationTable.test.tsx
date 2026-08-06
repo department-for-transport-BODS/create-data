@@ -1,10 +1,9 @@
-import { shallow } from 'enzyme';
-import React from 'react';
+import { render } from '@testing-library/react';
 import ConfirmationTable from '../../src/components/ConfirmationTable';
 
 describe('ConfirmationTable', () => {
     it('should render the table with options', () => {
-        const wrapper = shallow(
+        const { asFragment } = render(
             <ConfirmationTable
                 header="Snapshot test things"
                 confirmationElements={[
@@ -13,6 +12,6 @@ describe('ConfirmationTable', () => {
                 ]}
             />,
         );
-        expect(wrapper).toMatchSnapshot();
+        expect(asFragment()).toMatchSnapshot();
     });
 });

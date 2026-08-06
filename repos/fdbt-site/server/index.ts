@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import express, { Request, Response, Express, NextFunction } from 'express';
 import nextjs from 'next';
 import requireAuth, { setDisableAuthParameters } from './middleware/authentication';
@@ -37,7 +36,7 @@ const unauthenticatedGetRoutes = [
     '/privacy',
     '/noServices',
     '/robots.txt',
-    '/changelog',
+    '/images/*',
 ];
 
 const unauthenticatedPostRoutes = [
@@ -60,13 +59,15 @@ const setStaticRoutes = (server: Express): void => {
         }),
     );
 
-    server.use(
-        '/_next/static',
-        express.static(`${rootPath}/.next/static`, {
-            maxAge: '365d',
-            immutable: true,
-        }),
-    );
+    if (process.env.NODE_ENV !== 'development') {
+        server.use(
+            '/_next/static',
+            express.static(`${rootPath}/.next/static`, {
+                maxAge: '365d',
+                immutable: true,
+            }),
+        );
+    }
 
     server.use(
         '/scripts',
@@ -87,8 +88,17 @@ void (async (): Promise<void> => {
         setupLogging(server);
         setStaticRoutes(server);
         setSecurityHeaders(server);
+
+        // Next.js/Turbopack serves some internal files (e.g. _clientMiddlewareManifest.js)
+        // with application/json content-type. Remove nosniff for _next routes so the
+        // browser doesn't block them under strict MIME type checking.
+        server.use('/_next', (_req: Request, res: Response, next: NextFunction) => {
+            res.removeHeader('X-Content-Type-Options');
+            next();
+        });
+
         setupCsrfProtection(server);
-        setupSessions(server);
+        await setupSessions(server);
         setDisableAuthParameters(server);
 
         unauthenticatedGetRoutes.forEach((route) => {
@@ -117,7 +127,9 @@ void (async (): Promise<void> => {
         server.get('/definePricingPerDistance', requireAuth, (req, res) => {
             if (process.env.STAGE !== 'dev') {
                 redirectTo(res, '/error');
+                return;
             }
+            res.locals.csrfToken = req.csrfToken();
             return handle(req, res);
         });
 

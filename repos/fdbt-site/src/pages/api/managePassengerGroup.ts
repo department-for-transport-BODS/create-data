@@ -1,6 +1,6 @@
-import { updateGroupPassengerType } from '../../data/auroradb';
-import { isArray } from 'lodash';
+import isArray from 'lodash/isArray';
 import { NextApiResponse } from 'next';
+import { updateGroupPassengerType } from '../../data/auroradb';
 import { GS_PASSENGER_GROUP_ATTRIBUTE } from '../../constants/attributes';
 import { getGroupPassengerTypesFromGlobalSettings, insertGroupPassengerType } from '../../data/auroradb';
 import { ErrorInfo, NextApiRequestWithSession } from '../../interfaces';
@@ -27,8 +27,8 @@ export const formatRequestBody = (req: NextApiRequestWithSession): GroupPassenge
     const passengerTypeIds: string[] = !req.body.passengerTypes
         ? []
         : isArray(req.body.passengerTypes)
-        ? req.body.passengerTypes
-        : [req.body.passengerTypes];
+          ? req.body.passengerTypes
+          : [req.body.passengerTypes];
 
     const companions: CompanionReference[] = passengerTypeIds.map((passengerTypeId) => {
         const name = req.body[`passengerType${passengerTypeId}`];

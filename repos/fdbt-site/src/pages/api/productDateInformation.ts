@@ -1,6 +1,6 @@
 import { NextApiResponse } from 'next';
 import * as yup from 'yup';
-import moment from 'moment';
+import dayjs from '../../utils/dayjs';
 import { getSessionAttribute, updateSessionAttribute } from '../../utils/sessions';
 import {
     MATCHING_JSON_ATTRIBUTE,
@@ -74,7 +74,9 @@ export default async (req: NextApiRequestWithSession, res: NextApiResponse): Pro
         }
 
         if (!isEndDateEmpty) {
-            endDate = moment.utc([endDateYear, endDateMonth - 1, endDateDay, 23, 59, 59]);
+            endDate = dayjs.utc(
+                new Date(Date.UTC(Number(endDateYear), Number(endDateMonth) - 1, Number(endDateDay), 23, 59, 59)),
+            );
 
             const endDateDayHasInvalidCharacters = invalidCharactersArePresent(endDateDay);
 
@@ -111,7 +113,9 @@ export default async (req: NextApiRequestWithSession, res: NextApiResponse): Pro
             }
         }
 
-        const startDate = moment.utc([startDateYear, startDateMonth - 1, startDateDay]);
+        const startDate = dayjs.utc(
+            new Date(Date.UTC(Number(startDateYear), Number(startDateMonth) - 1, Number(startDateDay))),
+        );
 
         if (!startDate.isValid()) {
             errors.push({ errorMessage: 'Start date must be a real date', id: 'start-day-input' });
@@ -136,7 +140,10 @@ export default async (req: NextApiRequestWithSession, res: NextApiResponse): Pro
 
         if (startDate && endDate) {
             try {
-                await combinedDateSchema.validate({ startDate, endDate }, { abortEarly: false });
+                await combinedDateSchema.validate(
+                    { startDate: startDate.toDate(), endDate: endDate?.toDate() },
+                    { abortEarly: false },
+                );
             } catch (validationErrors) {
                 const validityErrors: yup.ValidationError = validationErrors;
                 errors = validityErrors.inner.map((error) => ({

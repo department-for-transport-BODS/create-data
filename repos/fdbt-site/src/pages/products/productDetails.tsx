@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import {
     convertDateFormat,
     fareTypeIsAllowedToAddACap,
@@ -39,7 +39,7 @@ import GenerateReturnPopup from '../../components/GenerateReturnPopup';
 import { Stop, TicketWithIds } from '../../interfaces/matchingJsonTypes';
 import { isGeoZoneTicket } from '../../../src/interfaces/typeGuards';
 import { fareTypes, STAGE } from '../../constants';
-import { MyFaresProduct } from 'src/interfaces/dbTypes';
+import { MyFaresProduct } from '../../interfaces/dbTypes';
 import logger from '../../utils/logger';
 
 const title = 'Product Details - Create Fares Data Service';
@@ -494,9 +494,8 @@ const createProductDetails = async (
                 const additionalNocMatchingJsonLink = getAdditionalNocMatchingJsonLink(matchingJsonLink, additionalNoc);
 
                 try {
-                    const secondaryOperatorFareInfo = await getProductsSecondaryOperatorInfo(
-                        additionalNocMatchingJsonLink,
-                    );
+                    const secondaryOperatorFareInfo =
+                        await getProductsSecondaryOperatorInfo(additionalNocMatchingJsonLink);
 
                     if ('stops' in secondaryOperatorFareInfo) {
                         stopsCount = secondaryOperatorFareInfo.stops.length;
@@ -506,7 +505,7 @@ const createProductDetails = async (
                         exemptedServices = secondaryOperatorFareInfo.exemptedServices.map(({ lineName }) => lineName);
                     }
                 } catch (error) {
-                    logger.warn(`Couldn't get additional operator info for noc: ${additionalNoc}`);
+                    logger.warn(`Couldn't get additional operator info for noc: ${additionalNoc}`, error.stack);
                 }
 
                 productDetailsElements.push({
@@ -544,9 +543,8 @@ const createProductDetails = async (
                 );
 
                 try {
-                    const secondaryOperatorFareInfo = await getProductsSecondaryOperatorInfo(
-                        additionalNocMatchingJsonLink,
-                    );
+                    const secondaryOperatorFareInfo =
+                        await getProductsSecondaryOperatorInfo(additionalNocMatchingJsonLink);
 
                     if ('selectedServices' in secondaryOperatorFareInfo) {
                         selectedServices = secondaryOperatorFareInfo.selectedServices.map(({ lineName }) => lineName);
@@ -558,7 +556,10 @@ const createProductDetails = async (
                         );
                     }
                 } catch (error) {
-                    logger.warn(`Couldn't get additional operator info for noc: ${additionalOperator.nocCode}`);
+                    logger.warn(
+                        `Couldn't get additional operator info for noc: ${additionalOperator.nocCode}`,
+                        error.stack,
+                    );
                 }
 
                 productDetailsElements.push({
@@ -569,8 +570,8 @@ const createProductDetails = async (
                         additionalOperator.nocCode === yourNoc
                             ? '/serviceList'
                             : isOwnProduct
-                            ? `/serviceList?editAdditionalOperator=${additionalOperator.nocCode}`
-                            : '',
+                              ? `/serviceList?editAdditionalOperator=${additionalOperator.nocCode}`
+                              : '',
                 });
                 productDetailsElements.push({
                     id: 'exempt-stops',
@@ -580,8 +581,8 @@ const createProductDetails = async (
                         additionalOperator.nocCode === yourNoc
                             ? '/serviceList'
                             : isOwnProduct
-                            ? `/serviceList?editAdditionalOperator=${additionalOperator.nocCode}`
-                            : '',
+                              ? `/serviceList?editAdditionalOperator=${additionalOperator.nocCode}`
+                              : '',
                 });
             } else {
                 productDetailsElements.push({
@@ -737,8 +738,8 @@ const createProductDetails = async (
         'productName' in product
             ? product.productName
             : isSchoolTicket
-            ? `${passengerTypeName} - ${fareTypes[ticket.type]} (school)`
-            : `${passengerTypeName} - ${fareTypes[ticket.type]}`;
+              ? `${passengerTypeName} - ${fareTypes[ticket.type]} (school)`
+              : `${passengerTypeName} - ${fareTypes[ticket.type]}`;
 
     return {
         productDetailsElements,
@@ -789,7 +790,7 @@ export const getServerSideProps = async (ctx: NextPageContextWithSession): Promi
         matchingJsonLink,
     });
 
-    const dataSource = !!getSessionAttribute(ctx.req, MULTI_MODAL_ATTRIBUTE) ? 'tnds' : 'bods';
+    const dataSource = getSessionAttribute(ctx.req, MULTI_MODAL_ATTRIBUTE) ? 'tnds' : 'bods';
 
     const productDetails = await createProductDetails(
         ticket,
@@ -808,10 +809,10 @@ export const getServerSideProps = async (ctx: NextPageContextWithSession): Promi
     const backHref = serviceId
         ? `/products/pointToPointProducts?serviceId=${serviceId}`
         : ticket.type === 'multiOperator'
-        ? '/products/multiOperatorProducts'
-        : ticket.type === 'multiOperatorExt'
-        ? '/products/multiOperatorProductsExternal'
-        : '/products/otherProducts';
+          ? '/products/multiOperatorProducts'
+          : ticket.type === 'multiOperatorExt'
+            ? '/products/multiOperatorProductsExternal'
+            : '/products/otherProducts';
 
     const lineId =
         typeof serviceId === 'string'

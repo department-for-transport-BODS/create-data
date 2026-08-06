@@ -1,7 +1,13 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import GlobalSettings from '../../src/pages/globalSettings';
 import { GlobalSettingsCounts } from '../../src/interfaces';
+
+jest.mock('next/router', () => ({
+    useRouter: () => ({ pathname: '/globalSettings' }),
+}));
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('globalSettings', () => {
@@ -15,7 +21,9 @@ describe('pages', () => {
                 operatorDetailsSet: true,
                 operatorGroupsCount: 2,
             };
-            const tree = shallow(<GlobalSettings globalSettingsCounts={globalSettingsCounts} referer="hello" />);
+            const tree = renderToFragment(
+                <GlobalSettings globalSettingsCounts={globalSettingsCounts} referer="hello" />,
+            );
             expect(tree).toMatchSnapshot();
         });
     });

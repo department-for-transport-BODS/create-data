@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Cookies from 'cookies';
 import { expectedFlatFareGeoZoneTicketWithExemptions, getMockRequestAndResponse } from '../../testData/mockData';
 import * as csvZoneUpload from '../../../src/pages/api/csvZoneUpload';
 import * as fileUpload from '../../../src/utils/apiUtils/fileUpload';
@@ -16,10 +15,10 @@ import {
     MATCHING_JSON_META_DATA_ATTRIBUTE,
 } from '../../../src/constants/attributes';
 import * as userData from '../../../src/utils/apiUtils/userData';
-import { FileJSON } from 'formidable';
+
+jest.mock('../../../src/data/auroradb');
 
 const putDataInS3Spy = jest.spyOn(s3, 'putDataInS3');
-jest.mock('../../../src/data/auroradb');
 jest.spyOn(userData, 'putUserDataInProductsBucketWithFilePath');
 
 describe('csvZoneUpload', () => {
@@ -34,7 +33,6 @@ describe('csvZoneUpload', () => {
 
     beforeEach(() => {
         jest.resetAllMocks();
-        Cookies.prototype.set = jest.fn();
     });
 
     it.each([
@@ -47,16 +45,18 @@ describe('csvZoneUpload', () => {
     ])(
         'should put the unprocessed data in S3 as a csv and the processed data in S3 as json',
         async (csv, expectedUnprocessed, expectedProcessed) => {
-            const file = {
-                'csv-upload': {
-                    size: 999,
-                    path: 'string',
-                    name: 'string',
-                    type: 'text/csv',
-                    toJSON(): FileJSON {
-                        return '' as unknown as FileJSON;
+            const file: any = {
+                'csv-upload': [
+                    {
+                        size: 999,
+                        filepath: 'string',
+                        originalFilename: 'string',
+                        mimetype: 'text/csv',
+                        toJSON(): any {
+                            return '';
+                        },
                     },
-                },
+                ],
             };
 
             jest.spyOn(fileUpload, 'getFormData')
@@ -84,16 +84,18 @@ describe('csvZoneUpload', () => {
     );
 
     it('should return 302 redirect to /multipleProducts when valid a valid file is processed and put in S3', async () => {
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): FileJSON {
-                    return '' as unknown as FileJSON;
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         jest.spyOn(fileUpload, 'getFormData')
@@ -109,23 +111,25 @@ describe('csvZoneUpload', () => {
 
         await csvZoneUpload.default(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/multipleProducts',
         });
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, FARE_ZONE_ATTRIBUTE, 'Town Centre');
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, FARE_ZONE_ATTRIBUTE, 'Town Centre');
     });
 
     it('should return 302 redirect to /multipleProducts when valid a service is exempted and valid file is processed and put in S3', async () => {
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): FileJSON {
-                    return '' as unknown as FileJSON;
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         jest.spyOn(fileUpload, 'getFormData')
@@ -172,11 +176,11 @@ describe('csvZoneUpload', () => {
 
         await csvZoneUpload.default(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/multipleProducts',
         });
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, FARE_ZONE_ATTRIBUTE, 'Town Centre');
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, SERVICE_LIST_EXEMPTION_ATTRIBUTE, selectedServices);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, FARE_ZONE_ATTRIBUTE, 'Town Centre');
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, SERVICE_LIST_EXEMPTION_ATTRIBUTE, selectedServices);
     });
     it('should update exemptions, zoneName and stops when in edit mode and redirect to product details page', async () => {
         const { req, res } = getMockRequestAndResponse({
@@ -242,16 +246,18 @@ describe('csvZoneUpload', () => {
             ],
         };
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         jest.spyOn(fileUpload, 'getFormData')
@@ -273,9 +279,12 @@ describe('csvZoneUpload', () => {
 
         await csvZoneUpload.default(req, res);
 
-        expect(userData.putUserDataInProductsBucketWithFilePath).toBeCalledWith(updatedTicket, 'matchingJsonLink');
+        expect(userData.putUserDataInProductsBucketWithFilePath).toHaveBeenCalledWith(
+            updatedTicket,
+            'matchingJsonLink',
+        );
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/products/productDetails?productId=1',
         });
     });
@@ -291,16 +300,18 @@ describe('csvZoneUpload', () => {
             },
         }).req;
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): FileJSON {
-                    return '' as unknown as FileJSON;
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         jest.spyOn(fileUpload, 'getFormData')
@@ -316,23 +327,25 @@ describe('csvZoneUpload', () => {
 
         await csvZoneUpload.default(multiOperatorReq, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/reuseOperatorGroup',
         });
-        expect(updateSessionAttributeSpy).toBeCalledWith(multiOperatorReq, FARE_ZONE_ATTRIBUTE, 'Town Centre');
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(multiOperatorReq, FARE_ZONE_ATTRIBUTE, 'Town Centre');
     });
 
     it('should redirect to /error when an error is thrown in the default', async () => {
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): FileJSON {
-                    return '' as unknown as FileJSON;
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
         const auroradbError = 'Could not fetch data from auroradb in test';
 
@@ -350,22 +363,24 @@ describe('csvZoneUpload', () => {
 
         await csvZoneUpload.default(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/error',
         });
     });
 
     it('should redirect to /csvZoneUpload when an user selected yes in exempt service but not selected any service', async () => {
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): FileJSON {
-                    return '' as unknown as FileJSON;
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         jest.spyOn(fileUpload, 'getFormData')
@@ -381,27 +396,29 @@ describe('csvZoneUpload', () => {
 
         await csvZoneUpload.default(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, SERVICE_LIST_EXEMPTION_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, SERVICE_LIST_EXEMPTION_ATTRIBUTE, {
             errors: [{ errorMessage: 'Choose at least one service from the options', id: 'checkbox-0' }],
         });
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/csvZoneUpload',
         });
     });
 
     describe('fileIsValid', () => {
         it('should return 302 redirect to /csvZoneUpload when an empty file is attached', async () => {
-            const file = {
-                'csv-upload': {
-                    size: 999,
-                    path: 'string',
-                    name: 'string',
-                    type: 'text/csv',
-                    toJSON(): FileJSON {
-                        return '' as unknown as FileJSON;
+            const file: any = {
+                'csv-upload': [
+                    {
+                        size: 999,
+                        filepath: 'string',
+                        originalFilename: 'string',
+                        mimetype: 'text/csv',
+                        toJSON(): any {
+                            return '';
+                        },
                     },
-                },
+                ],
             };
 
             jest.spyOn(fileUpload, 'getFormData')
@@ -417,11 +434,11 @@ describe('csvZoneUpload', () => {
 
             await csvZoneUpload.default(req, res);
 
-            expect(writeHeadMock).toBeCalledWith(302, {
+            expect(writeHeadMock).toHaveBeenCalledWith(302, {
                 Location: '/csvZoneUpload',
             });
 
-            expect(updateSessionAttributeSpy).toBeCalledWith(req, FARE_ZONE_ATTRIBUTE, {
+            expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, FARE_ZONE_ATTRIBUTE, {
                 errors: [
                     {
                         errorMessage: 'Select a CSV file to upload',
@@ -432,16 +449,18 @@ describe('csvZoneUpload', () => {
         });
 
         it('should return 302 redirect to /csvZoneUpload with an error message when file is too big', async () => {
-            const file = {
-                'csv-upload': {
-                    size: 6000000,
-                    path: 'string',
-                    name: 'string',
-                    type: 'text/csv',
-                    toJSON(): FileJSON {
-                        return '' as unknown as FileJSON;
+            const file: any = {
+                'csv-upload': [
+                    {
+                        size: 6000000,
+                        filepath: 'string',
+                        originalFilename: 'string',
+                        mimetype: 'text/csv',
+                        toJSON(): any {
+                            return '';
+                        },
                     },
-                },
+                ],
             };
 
             jest.spyOn(fileUpload, 'getFormData')
@@ -457,11 +476,11 @@ describe('csvZoneUpload', () => {
 
             await csvZoneUpload.default(req, res);
 
-            expect(writeHeadMock).toBeCalledWith(302, {
+            expect(writeHeadMock).toHaveBeenCalledWith(302, {
                 Location: '/csvZoneUpload',
             });
 
-            expect(updateSessionAttributeSpy).toBeCalledWith(req, FARE_ZONE_ATTRIBUTE, {
+            expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, FARE_ZONE_ATTRIBUTE, {
                 errors: [
                     {
                         errorMessage: 'The selected file must be smaller than 5MB',
@@ -472,16 +491,18 @@ describe('csvZoneUpload', () => {
         });
 
         it('should return 302 redirect to /csvZoneUpload with an error message when file is not an allowed type', async () => {
-            const file = {
-                'csv-upload': {
-                    size: 999,
-                    path: 'string',
-                    name: 'string',
-                    type: 'text/pdf',
-                    toJSON(): FileJSON {
-                        return '' as unknown as FileJSON;
+            const file: any = {
+                'csv-upload': [
+                    {
+                        size: 999,
+                        filepath: 'string',
+                        originalFilename: 'string',
+                        mimetype: 'text/pdf',
+                        toJSON(): any {
+                            return '';
+                        },
                     },
-                },
+                ],
             };
 
             jest.spyOn(fileUpload, 'getFormData')
@@ -497,11 +518,11 @@ describe('csvZoneUpload', () => {
 
             await csvZoneUpload.default(req, res);
 
-            expect(writeHeadMock).toBeCalledWith(302, {
+            expect(writeHeadMock).toHaveBeenCalledWith(302, {
                 Location: '/csvZoneUpload',
             });
 
-            expect(updateSessionAttributeSpy).toBeCalledWith(req, FARE_ZONE_ATTRIBUTE, {
+            expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, FARE_ZONE_ATTRIBUTE, {
                 errors: [
                     {
                         errorMessage: 'The selected file must be a .csv or .xlsx',
@@ -514,16 +535,18 @@ describe('csvZoneUpload', () => {
         it('should return 302 redirect to /csvZoneUpload with an error message when file contains a virus', async () => {
             process.env.ENABLE_VIRUS_SCAN = '1';
 
-            const file = {
-                'csv-upload': {
-                    size: 999,
-                    path: 'string',
-                    name: 'string',
-                    type: 'text/pdf',
-                    toJSON(): FileJSON {
-                        return '' as unknown as FileJSON;
+            const file: any = {
+                'csv-upload': [
+                    {
+                        size: 999,
+                        filepath: 'string',
+                        originalFilename: 'string',
+                        mimetype: 'text/pdf',
+                        toJSON(): any {
+                            return '';
+                        },
                     },
-                },
+                ],
             };
 
             jest.spyOn(fileUpload, 'getFormData')
@@ -539,11 +562,11 @@ describe('csvZoneUpload', () => {
 
             await csvZoneUpload.default(req, res);
 
-            expect(writeHeadMock).toBeCalledWith(302, {
+            expect(writeHeadMock).toHaveBeenCalledWith(302, {
                 Location: '/csvZoneUpload',
             });
 
-            expect(updateSessionAttributeSpy).toBeCalledWith(req, FARE_ZONE_ATTRIBUTE, {
+            expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, FARE_ZONE_ATTRIBUTE, {
                 errors: [
                     {
                         errorMessage: 'The selected file contains a virus',

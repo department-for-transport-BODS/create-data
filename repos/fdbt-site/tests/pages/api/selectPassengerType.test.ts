@@ -67,10 +67,10 @@ describe('selectPassengerType', () => {
         });
         await selectPassengerType(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/selectPassengerType',
         });
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, PASSENGER_TYPE_ATTRIBUTE, pageErrorMessage);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, PASSENGER_TYPE_ATTRIBUTE, pageErrorMessage);
     });
 
     it('should return 302 redirect to /selectPassengerType when the passenger selected is not for the logged in users NOC and add errors to session', async () => {
@@ -86,10 +86,10 @@ describe('selectPassengerType', () => {
         });
         await selectPassengerType(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/selectPassengerType',
         });
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, PASSENGER_TYPE_ATTRIBUTE, pageErrorMessage);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, PASSENGER_TYPE_ATTRIBUTE, pageErrorMessage);
     });
 
     it('should return 302 redirect to /defineTimeRestrictions when the passenger selected is a group and the selected group information added to session', async () => {
@@ -137,19 +137,19 @@ describe('selectPassengerType', () => {
         });
         await selectPassengerType(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/selectTimeRestrictions',
         });
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, PASSENGER_TYPE_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, PASSENGER_TYPE_ATTRIBUTE, {
             passengerType: GROUP_PASSENGER_TYPE,
             id: 3,
         });
-        expect(updateSessionAttributeSpy).toBeCalledWith(
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(
             req,
             GROUP_PASSENGER_INFO_ATTRIBUTE,
             fullGroup.groupPassengerType.companions,
         );
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, GROUP_SIZE_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GROUP_SIZE_ATTRIBUTE, {
             maxGroupSize: groupDbResult.groupPassengerType.maxGroupSize,
         });
     });
@@ -167,11 +167,11 @@ describe('selectPassengerType', () => {
         });
         await selectPassengerType(req, res);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/selectTimeRestrictions',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, PASSENGER_TYPE_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, PASSENGER_TYPE_ATTRIBUTE, {
             passengerType: 'adult',
             id: 3,
         });
@@ -199,12 +199,12 @@ describe('selectPassengerType', () => {
         });
         await selectPassengerType(req, res);
 
-        expect(userData.putUserDataInProductsBucketWithFilePath).toBeCalledWith(
+        expect(userData.putUserDataInProductsBucketWithFilePath).toHaveBeenCalledWith(
             { ...expectedSingleTicket, passengerType: { id: 3 } },
             'test/path',
         );
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/products/productDetails?productId=2&serviceId=22D',
         });
     });

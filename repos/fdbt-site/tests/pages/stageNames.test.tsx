@@ -1,8 +1,10 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import { InputCheck } from '../../src/interfaces';
 import StageNames, { renderInputFields, getServerSideProps } from '../../src/pages/stageNames';
 import { getMockContext } from '../testData/mockData';
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('renderInputFields', () => {
@@ -30,7 +32,7 @@ describe('pages', () => {
         it('should render correctly when a user first visits the page', () => {
             const mockNumberOfFareStages = 6;
             const mockInputChecks: InputCheck[] = [];
-            const tree = shallow(
+            const tree = renderToFragment(
                 <StageNames
                     numberOfFareStages={mockNumberOfFareStages}
                     inputChecks={mockInputChecks}
@@ -51,7 +53,7 @@ describe('pages', () => {
                 { error: '', input: '', id: 'fare-stage-name-4' },
                 { error: '', input: '', id: 'fare-stage-name-5' },
             ];
-            const tree = shallow(
+            const tree = renderToFragment(
                 <StageNames
                     numberOfFareStages={mockNumberOfFareStages}
                     inputChecks={mockInputChecks}
@@ -70,7 +72,7 @@ describe('pages', () => {
                 { error: 'Enter a name for this fare stage', input: '', id: 'fare-stage-name-3' },
                 { error: 'Enter a name for this fare stage', input: '', id: 'fare-stage-name-4' },
             ];
-            const tree = shallow(
+            const tree = renderToFragment(
                 <StageNames
                     numberOfFareStages={mockNumberOfFareStages}
                     inputChecks={mockinputChecks}
@@ -82,7 +84,7 @@ describe('pages', () => {
             expect(tree).toMatchSnapshot();
         });
 
-        it('displays a number of input fields which matches the number of fare stages in the fareStagesCookie ', () => {
+        it('displays a number of input fields which matches the number of fare stages in the fareStagesCookie', () => {
             const ctx = getMockContext();
             const result = getServerSideProps(ctx);
             expect(result).toEqual({

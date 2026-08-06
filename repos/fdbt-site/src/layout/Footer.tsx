@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 
 const Footer = (): ReactElement => (
     <footer className="govuk-footer" role="contentinfo">
@@ -57,11 +57,6 @@ const Footer = (): ReactElement => (
                         <li className="govuk-footer__inline-list-item">
                             <a className="govuk-footer__link" href="/privacy">
                                 Privacy
-                            </a>
-                        </li>
-                        <li className="govuk-footer__inline-list-item">
-                            <a className="govuk-footer__link" href="/changelog">
-                                Service changelog
                             </a>
                         </li>
                     </ul>

@@ -1,48 +1,32 @@
 {
-  "compilerOptions": {
-    "target": "ES2021",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "ESNext"
-    ],
-    "allowJs": false,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "useUnknownInCatchVariables": false,
-    "outDir": ".build",
-    "rootDir": "./",
-    "jsx": "preserve",
-    "sourceMap": true,
-    "baseUrl": ".",
-    "incremental": true
-  },
-  "include": [
-    "server",
-    "src",
-    "tests",
-    "next-env.d.ts",
-    ".jest/setupEnzyme.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "node_modules",
-    "./node_modules/*",
-    "../../node_modules/*"
-  ],
-  "baseUrl": ".",
-  "paths": {
-    "@/*": ["./src/*"]
-  }
+    "compilerOptions": {
+        "target": "ES2022",
+        "lib": ["dom", "dom.iterable", "ESNext"],
+        "allowJs": false,
+        "skipLibCheck": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "noEmit": true,
+        "esModuleInterop": true,
+        "module": "esnext",
+        "moduleResolution": "bundler",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "useUnknownInCatchVariables": false,
+        "outDir": ".build",
+        "rootDir": "./",
+        "jsx": "react-jsx",
+        "sourceMap": true,
+        "types": ["node", "jest"],
+        "incremental": true
+    },
+    "include": ["server", "src", "tests", ".jest/**/*.ts", "next-env.d.ts", "next.config.ts"],
+    "exclude": ["node_modules", "node_modules", "./node_modules/*", "../../node_modules/*"],
+    "paths": {
+        "@/*": ["./src/*"]
+    }
 }

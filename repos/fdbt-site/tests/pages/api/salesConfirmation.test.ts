@@ -44,7 +44,7 @@ describe('salesConfirmation', () => {
 
         await salesConfirmation(req, res);
 
-        expect(getSchemeOperatorTicketJsonSpy).toBeCalledWith(req, res);
+        expect(getSchemeOperatorTicketJsonSpy).toHaveBeenCalledWith(req);
     });
 
     it('gets single json for a single ticket', async () => {
@@ -57,7 +57,7 @@ describe('salesConfirmation', () => {
 
         await salesConfirmation(req, res);
 
-        expect(getSingleTicketJsonSpy).toBeCalledWith(req, res);
+        expect(getSingleTicketJsonSpy).toHaveBeenCalledWith(req, res);
     });
 
     it('gets return json for a return ticket', async () => {
@@ -70,7 +70,7 @@ describe('salesConfirmation', () => {
 
         await salesConfirmation(req, res);
 
-        expect(getReturnTicketJsonSpy).toBeCalledWith(req, res);
+        expect(getReturnTicketJsonSpy).toHaveBeenCalledWith(req, res);
     });
 
     it('gets geoZone json for a period geoZone ticket', async () => {
@@ -86,7 +86,7 @@ describe('salesConfirmation', () => {
 
         await salesConfirmation(req, res);
 
-        expect(getGeoZoneTicketJsonSpy).toBeCalledWith(req, res);
+        expect(getGeoZoneTicketJsonSpy).toHaveBeenCalledWith(req, res);
     });
 
     it('gets geoZone json for a multi operator geoZone ticket', async () => {
@@ -102,7 +102,7 @@ describe('salesConfirmation', () => {
 
         await salesConfirmation(req, res);
 
-        expect(getGeoZoneTicketJsonSpy).toBeCalledWith(req, res);
+        expect(getGeoZoneTicketJsonSpy).toHaveBeenCalledWith(req, res);
     });
 
     it('gets geoZone json for a multi operator flat fare geoZone ticket', async () => {
@@ -118,7 +118,7 @@ describe('salesConfirmation', () => {
 
         await salesConfirmation(req, res);
 
-        expect(getGeoZoneTicketJsonSpy).toBeCalledWith(req, res);
+        expect(getGeoZoneTicketJsonSpy).toHaveBeenCalledWith(req, res);
     });
 
     it('gets multiService json for a period multiService ticket', async () => {
@@ -134,7 +134,7 @@ describe('salesConfirmation', () => {
 
         await salesConfirmation(req, res);
 
-        expect(getMultipleServicesTicketJsonSpy).toBeCalledWith(req, res);
+        expect(getMultipleServicesTicketJsonSpy).toHaveBeenCalledWith(req, res);
     });
 
     it('gets multiService json for a multi operator multiService ticket', async () => {
@@ -150,7 +150,7 @@ describe('salesConfirmation', () => {
 
         await salesConfirmation(req, res);
 
-        expect(getMultipleServicesTicketJsonSpy).toBeCalledWith(req, res);
+        expect(getMultipleServicesTicketJsonSpy).toHaveBeenCalledWith(req, res);
     });
 
     it('gets multiService json for a multi operator flat fare ticket with set of services', async () => {
@@ -166,7 +166,7 @@ describe('salesConfirmation', () => {
 
         await salesConfirmation(req, res);
 
-        expect(getMultipleServicesTicketJsonSpy).toBeCalledWith(req, res);
+        expect(getMultipleServicesTicketJsonSpy).toHaveBeenCalledWith(req, res);
     });
 
     it('gets flatFare json for a flatFare multiple services ticket', async () => {
@@ -182,7 +182,7 @@ describe('salesConfirmation', () => {
 
         await salesConfirmation(req, res);
 
-        expect(getMultipleServicesTicketJsonSpy).toBeCalledWith(req, res);
+        expect(getMultipleServicesTicketJsonSpy).toHaveBeenCalledWith(req, res);
     });
 
     it('gets flatFare json for a flatFare geoZone ticket', async () => {
@@ -198,7 +198,7 @@ describe('salesConfirmation', () => {
 
         await salesConfirmation(req, res);
 
-        expect(getGeoZoneTicketJsonSpy).toBeCalledWith(req, res);
+        expect(getGeoZoneTicketJsonSpy).toHaveBeenCalledWith(req, res);
     });
 
     it('gets geoZone json for a multi operator external geoZone ticket', async () => {
@@ -214,7 +214,7 @@ describe('salesConfirmation', () => {
 
         await salesConfirmation(req, res);
 
-        expect(getGeoZoneTicketJsonSpy).toBeCalledWith(req, res);
+        expect(getGeoZoneTicketJsonSpy).toHaveBeenCalledWith(req, res);
     });
 
     it('gets geoZone json for a multi operator external flat fare geoZone ticket', async () => {
@@ -230,7 +230,7 @@ describe('salesConfirmation', () => {
 
         await salesConfirmation(req, res);
 
-        expect(getGeoZoneTicketJsonSpy).toBeCalledWith(req, res);
+        expect(getGeoZoneTicketJsonSpy).toHaveBeenCalledWith(req, res);
     });
 
     it('creates a group definition for a group ticket with one product and adds to user json object', async () => {
@@ -257,7 +257,7 @@ describe('salesConfirmation', () => {
 
         await salesConfirmation(req, res);
 
-        expect(insertDataToProductsBucketAndProductsTableSpy).toBeCalledWith(
+        expect(insertDataToProductsBucketAndProductsTableSpy).toHaveBeenCalledWith(
             expectedSingleTicket,
             'TEST',
             '1e0459b3-082e-4e70-89db-96e8ae173e10',
@@ -283,7 +283,7 @@ describe('salesConfirmation', () => {
         });
 
         await salesConfirmation(req, res);
-        expect(redirectToSpy).toBeCalledWith(res, '/productCreated?isMultiOperatorExternal=true');
+        expect(redirectToSpy).toHaveBeenCalledWith(res, '/productCreated?isMultiOperatorExternal=true');
     });
 
     it('creates multiple matching jsons for a matching json with multiple products, and adds them individually to the products table and bucket', async () => {
@@ -307,7 +307,7 @@ describe('salesConfirmation', () => {
         expect(splitUserDataJsonByProductsSpy.mock.results[0].value[1]).toEqual(mockDataSplitOutProducts[1]);
         expect(splitUserDataJsonByProductsSpy.mock.results[0].value[2]).toEqual(mockDataSplitOutProducts[2]);
 
-        expect(insertDataToProductsBucketAndProductsTableSpy).toBeCalledTimes(3);
-        expect(redirectToSpy).toBeCalledWith(res, '/productCreated');
+        expect(insertDataToProductsBucketAndProductsTableSpy).toHaveBeenCalledTimes(3);
+        expect(redirectToSpy).toHaveBeenCalledWith(res, '/productCreated');
     });
 });

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { TwoThirdsLayout } from '../layout/Layout';
 
 const title = 'Privacy - Create Fares Data Service';
@@ -162,7 +162,7 @@ const Privacy = (): ReactElement => {
     );
 };
 
-export const getServerSideProps = (): {} => {
+export const getServerSideProps = (): object => {
     return { props: {} };
 };
 

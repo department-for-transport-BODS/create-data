@@ -1,3 +1,4 @@
+import difference from 'lodash/difference';
 import { NextApiResponse } from 'next';
 import { dateIsOverThirtyMinutesAgo, getAndValidateNoc, redirectToError } from '../../utils/apiUtils';
 import { NextApiRequestWithSession } from '../../interfaces';
@@ -11,7 +12,6 @@ import {
 } from '../../data/s3';
 import { MATCHING_DATA_BUCKET_NAME, NETEX_BUCKET_NAME } from '../../constants';
 import logger from '../../utils/logger';
-import { difference } from 'lodash';
 
 export interface Export {
     name: string;

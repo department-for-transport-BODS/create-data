@@ -1,10 +1,9 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import Footer from '../../src/layout/Footer';
 
 describe('Footer', () => {
     it('should render correctly', () => {
-        const tree = shallow(<Footer />);
-        expect(tree).toMatchSnapshot();
+        const { asFragment } = render(<Footer />);
+        expect(asFragment()).toMatchSnapshot();
     });
 });

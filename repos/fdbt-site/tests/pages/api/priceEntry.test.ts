@@ -65,7 +65,7 @@ describe('priceEntry', () => {
             jest.clearAllMocks();
         });
 
-        const cases: {}[] = [
+        const cases: object[] = [
             [{}, { Location: '/error' }],
             [{ 'Crawley-Acomb Lane': '0' }, { Location: '/outboundMatching' }],
             [{ 'Crawley-Acomb Lane': '100' }, { Location: '/outboundMatching' }],
@@ -88,7 +88,7 @@ describe('priceEntry', () => {
                 },
             });
             await priceEntry(req, res);
-            expect(writeHeadMock).toBeCalledWith(302, expectedLocation);
+            expect(writeHeadMock).toHaveBeenCalledWith(302, expectedLocation);
         });
     });
 });

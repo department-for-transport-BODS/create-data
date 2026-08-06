@@ -1,11 +1,13 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import AdditionalPricingStructures from '../../src/pages/additionalPricingStructures';
+
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('pages', () => {
     describe('additionalPricingStructures', () => {
         it('should render correctly', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <AdditionalPricingStructures
                     errors={[]}
                     csrfToken=""
@@ -20,7 +22,7 @@ describe('pages', () => {
         });
 
         it('should render error messaging when errors are passed', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <AdditionalPricingStructures
                     errors={[
                         {

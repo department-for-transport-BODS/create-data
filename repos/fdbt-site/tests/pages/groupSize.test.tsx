@@ -1,19 +1,21 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import GroupSize, { getServerSideProps, GroupSizeProps } from '../../src/pages/groupSize';
 import { getMockContext } from '../testData/mockData';
 import { GroupTicketAttributeWithErrors } from '../../src/interfaces';
 import { GROUP_SIZE_ATTRIBUTE } from '../../src/constants/attributes';
 
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
+
 describe('pages', () => {
     describe('groupSize', () => {
         it('should render correctly', () => {
-            const tree = shallow(<GroupSize groupTicketInfo={{ maxGroupSize: '' }} csrfToken="" />);
+            const tree = renderToFragment(<GroupSize groupTicketInfo={{ maxGroupSize: '' }} csrfToken="" />);
             expect(tree).toMatchSnapshot();
         });
 
         it('should render error messaging when errors are passed', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <GroupSize
                     groupTicketInfo={{
                         maxGroupSize: 'not a number',

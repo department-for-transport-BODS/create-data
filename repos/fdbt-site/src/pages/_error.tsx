@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { NextPageContext } from 'next';
 import TwoThirdsLayout from '../layout/Layout';
 import { FEEDBACK_LINK } from '../constants';
@@ -47,7 +47,7 @@ const Error = ({ statusCode }: ErrorProps): ReactElement => (
     </TwoThirdsLayout>
 );
 
-export const getStaticProps = (ctx: NextPageContext): {} => {
+export const getStaticProps = (ctx: NextPageContext): object => {
     return { props: { statusCode: ctx.res?.statusCode ?? 500 } };
 };
 

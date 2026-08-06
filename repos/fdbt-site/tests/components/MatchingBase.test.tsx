@@ -1,5 +1,4 @@
-import { shallow, ShallowWrapper } from 'enzyme';
-import React from 'react';
+import { fireEvent, render } from '@testing-library/react';
 import MatchingBase, {
     getDefaultStopItems,
     StopItem,
@@ -32,7 +31,7 @@ describe('MatchingBase', () => {
                 atcoCode: expect.any(String),
                 naptanCode: expect.any(String),
                 stopData: expect.any(String),
-                dropdownValue: expect.stringContaining('' || 'Acomb Green Lane' || 'Holl Bank/Beech Ave'),
+                dropdownValue: expect.stringContaining('Acomb Green Lane'),
                 dropdownOptions: expect.any(Array),
             };
             const defaultStopItems = getDefaultStopItems(userFareStages, zoneStops, selectedFareStages);
@@ -42,11 +41,11 @@ describe('MatchingBase', () => {
         describe('renderResetAndAutoPopulateButtons', () => {
             it('should render the reset and auto populate buttons on the page', () => {
                 const mockFn = jest.fn();
-                const wrapper = shallow(renderResetAndAutoPopulateButtons(mockFn, mockFn, 'bottom'));
-                expect(wrapper).toMatchSnapshot();
+                const { asFragment } = render(renderResetAndAutoPopulateButtons(mockFn, mockFn, 'bottom'));
+                expect(asFragment()).toMatchSnapshot();
             });
             it('should render with warning', () => {
-                const wrapper = shallow(
+                const { asFragment } = render(
                     <MatchingBase
                         userFareStages={userFareStages}
                         stops={zoneStops}
@@ -60,11 +59,11 @@ describe('MatchingBase', () => {
                         dataSource="bods"
                     />,
                 );
-                expect(wrapper).toMatchSnapshot();
+                expect(asFragment()).toMatchSnapshot();
             });
 
             it('should render with error', () => {
-                const wrapper = shallow(
+                const { asFragment } = render(
                     <MatchingBase
                         userFareStages={userFareStages}
                         stops={zoneStops}
@@ -78,85 +77,73 @@ describe('MatchingBase', () => {
                         dataSource="bods"
                     />,
                 );
-                expect(wrapper).toMatchSnapshot();
+                expect(asFragment()).toMatchSnapshot();
             });
         });
     });
 
     describe('javascript functionality', () => {
-        const mockSetState = jest.fn();
-        jest.mock('react', () => ({ useState: (initialState: unknown): unknown => [initialState, mockSetState] }));
-        const mockMouseEvent = { preventDefault: jest.fn() } as unknown as React.MouseEvent;
-
-        afterEach(() => {
-            jest.clearAllMocks();
-        });
-
         describe('dropdownSelection', () => {
-            const wrapper = shallow(
-                <MatchingBase
-                    userFareStages={userFareStages}
-                    stops={zoneStops}
-                    service={service}
-                    warning={false}
-                    error=""
-                    selectedFareStages={[]}
-                    csrfToken=""
-                    // eslint-disable-next-line react/jsx-props-no-spreading
-                    {...baseProps}
-                    unusedStage={false}
-                    dataSource="bods"
-                />,
-            );
-
             it('should update the state such that the dropdown that has been clicked has its value updated to the selected value', () => {
+                const { container } = render(
+                    <MatchingBase
+                        userFareStages={userFareStages}
+                        stops={zoneStops}
+                        service={service}
+                        warning={false}
+                        error=""
+                        selectedFareStages={[]}
+                        csrfToken=""
+
+                        {...baseProps}
+                        unusedStage={false}
+                        dataSource="bods"
+                    />,
+                );
+
                 const mockDropdownInfo = {
                     index: 5,
                     value: 'Acomb Green Lane',
                 };
-                (wrapper.find(`#option-${mockDropdownInfo.index}`).prop('onChange') as Function)({
-                    target: {
-                        value: mockDropdownInfo.value,
-                    },
+                fireEvent.change(container.querySelector(`#option-${mockDropdownInfo.index}`) as HTMLSelectElement, {
+                    target: { value: mockDropdownInfo.value },
                 });
-                expect(wrapper.find(`#option-${mockDropdownInfo.index}`).prop('value')).toEqual(mockDropdownInfo.value);
+                expect(
+                    (container.querySelector(`#option-${mockDropdownInfo.index}`) as HTMLSelectElement).value,
+                ).toEqual(mockDropdownInfo.value);
             });
         });
 
         describe('resetButtonClick', () => {
-            const wrapper = shallow(
-                <MatchingBase
-                    userFareStages={userFareStages}
-                    stops={zoneStops}
-                    service={service}
-                    warning={false}
-                    error=""
-                    selectedFareStages={selectedFareStages}
-                    csrfToken=""
-                    // eslint-disable-next-line react/jsx-props-no-spreading
-                    {...baseProps}
-                    unusedStage={false}
-                    dataSource="bods"
-                />,
-            );
-
             it('should update the state such that each dropdown on the page has its value reset to an empty string', () => {
-                const dropdownValues = wrapper.find('select').map((item) => item.prop('value'));
-                expect(dropdownValues).toContainEqual(
-                    expect.stringMatching('' || 'Acomb Green Lane' || 'Holl Bank/Beech Ave'),
+                const { container } = render(
+                    <MatchingBase
+                        userFareStages={userFareStages}
+                        stops={zoneStops}
+                        service={service}
+                        warning={false}
+                        error=""
+                        selectedFareStages={selectedFareStages}
+                        csrfToken=""
+
+                        {...baseProps}
+                        unusedStage={false}
+                        dataSource="bods"
+                    />,
                 );
-                (wrapper.find('#bottom-reset-all-fare-stages-button').prop('onClick') as Function)(mockMouseEvent);
-                wrapper.find('select').forEach((item) => {
-                    expect(item.prop('value')).toEqual('');
+
+                const dropdownValues = Array.from(container.querySelectorAll('select')).map((item) => item.value);
+                expect(dropdownValues).toContainEqual(expect.stringMatching('Acomb Green Lane'));
+                fireEvent.click(container.querySelector('#bottom-reset-all-fare-stages-button') as HTMLButtonElement);
+                container.querySelectorAll('select').forEach((item) => {
+                    expect(item.value).toEqual('');
                 });
             });
         });
 
         describe('autoPopulateButtonClick', () => {
-            let matchingBaseWrapper: ShallowWrapper;
-
-            beforeEach(() => {
-                matchingBaseWrapper = shallow(
+            it('should update the state such that each dropdown below the one selected has its value updated to the selected value', () => {
+                const { container } = render(
                     <MatchingBase
                         userFareStages={userFareStages}
                         stops={zoneStops}
@@ -165,36 +152,44 @@ describe('MatchingBase', () => {
                         warning={false}
                         selectedFareStages={[]}
                         csrfToken=""
-                        // eslint-disable-next-line react/jsx-props-no-spreading
+
                         {...baseProps}
                         unusedStage={false}
                         dataSource="bods"
                     />,
                 );
-            });
 
-            it('should update the state such that each dropdown below the one selected has its value updated to the selected value', () => {
                 const optionIndex = 5;
-                (matchingBaseWrapper.find(`#option-${optionIndex}`).prop('onChange') as Function)({
-                    target: {
-                        value: 'Acomb Green Lane',
-                    },
+                fireEvent.change(container.querySelector(`#option-${optionIndex}`) as HTMLSelectElement, {
+                    target: { value: 'Acomb Green Lane' },
                 });
-                (matchingBaseWrapper.find('#bottom-auto-populate-fares-stages-button').prop('onClick') as Function)(
-                    mockMouseEvent,
+                fireEvent.click(
+                    container.querySelector('#bottom-auto-populate-fares-stages-button') as HTMLButtonElement,
                 );
-                matchingBaseWrapper.update();
-                matchingBaseWrapper.find('select').forEach((item) => {
-                    const itemIndex = Number(item.prop('id')?.split('-')[1]);
-                    if (itemIndex < optionIndex) {
-                        expect(item.prop('value')).toEqual('');
-                    } else if (itemIndex >= optionIndex) {
-                        expect(item.prop('value')).toEqual('Acomb Green Lane');
-                    }
+                container.querySelectorAll('select').forEach((item) => {
+                    const itemIndex = Number(item.id.split('-')[1]);
+                    const expectedValue = itemIndex < optionIndex ? '' : 'Acomb Green Lane';
+                    expect(item.value).toEqual(expectedValue);
                 });
             });
 
             it('should update the state such that the dropdowns below the selected values have their value updated correctly for >1 selections', () => {
+                const { container } = render(
+                    <MatchingBase
+                        userFareStages={userFareStages}
+                        stops={zoneStops}
+                        service={service}
+                        error=""
+                        warning={false}
+                        selectedFareStages={[]}
+                        csrfToken=""
+
+                        {...baseProps}
+                        unusedStage={false}
+                        dataSource="bods"
+                    />,
+                );
+
                 const mockDropdownInfo = [
                     {
                         index: 5,
@@ -206,27 +201,24 @@ describe('MatchingBase', () => {
                     },
                 ];
                 mockDropdownInfo.forEach((selection) => {
-                    (matchingBaseWrapper.find(`#option-${selection.index}`).prop('onChange') as Function)({
-                        target: {
-                            value: selection.value,
-                        },
+                    fireEvent.change(container.querySelector(`#option-${selection.index}`) as HTMLSelectElement, {
+                        target: { value: selection.value },
                     });
                 });
-                (matchingBaseWrapper.find('#bottom-auto-populate-fares-stages-button').prop('onClick') as Function)(
-                    mockMouseEvent,
+                fireEvent.click(
+                    container.querySelector('#bottom-auto-populate-fares-stages-button') as HTMLButtonElement,
                 );
-                matchingBaseWrapper.update();
-                matchingBaseWrapper.find('select').forEach((item) => {
+                container.querySelectorAll('select').forEach((item) => {
                     const firstSelectionIndex = mockDropdownInfo[0].index;
                     const secondSelectionIndex = mockDropdownInfo[1].index;
-                    const itemIndex = Number(item.prop('id')?.split('-')[1]);
-                    if (itemIndex < firstSelectionIndex) {
-                        expect(item.prop('value')).toEqual('');
-                    } else if (itemIndex >= firstSelectionIndex && itemIndex < secondSelectionIndex) {
-                        expect(item.prop('value')).toEqual('Acomb Green Lane');
-                    } else if (itemIndex > secondSelectionIndex) {
-                        expect(item.prop('value')).toEqual('Holl Bank/Beech Ave');
+                    const itemIndex = Number(item.id.split('-')[1]);
+                    let expectedValue = '';
+                    if (itemIndex >= firstSelectionIndex && itemIndex < secondSelectionIndex) {
+                        expectedValue = 'Acomb Green Lane';
+                    } else if (itemIndex >= secondSelectionIndex) {
+                        expectedValue = 'Holl Bank/Beech Ave';
                     }
+                    expect(item.value).toEqual(expectedValue);
                 });
             });
         });

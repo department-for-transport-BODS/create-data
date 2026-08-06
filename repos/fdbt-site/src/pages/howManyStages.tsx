@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import TwoThirdsLayout from '../layout/Layout';
 import { ErrorInfo, NextPageContextWithSession } from '../interfaces';
 import { NUMBER_OF_STAGES_ATTRIBUTE } from '../constants/attributes';

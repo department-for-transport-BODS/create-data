@@ -1,13 +1,15 @@
-import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import StageNamesConfirmation, {
     buildFareStageNamesConfirmationElements,
 } from '../../src/pages/stageNamesConfirmation';
 
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
+
 describe('pages', () => {
     describe('stageNamesConfirmation', () => {
         it('should render correctly', () => {
-            const tree = shallow(
+            const tree = renderToFragment(
                 <StageNamesConfirmation fareStageNames={['leeds', 'manchester', 'bolton']} csrfToken="" />,
             );
             expect(tree).toMatchSnapshot();

@@ -119,7 +119,7 @@ describe('multiOperatorServiceList tests', () => {
             session: {},
         });
         await getMultiOperatorServiceList(req, res);
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, MULTIPLE_OPERATORS_SERVICES_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, MULTIPLE_OPERATORS_SERVICES_ATTRIBUTE, {
             multiOperatorInfo: [
                 {
                     nocCode: 'BLAC',
@@ -153,7 +153,7 @@ describe('multiOperatorServiceList tests', () => {
                 },
             ],
         });
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/multiOperatorServiceList',
         });
     });
@@ -172,7 +172,7 @@ describe('multiOperatorServiceList tests', () => {
             session: {},
         });
         await getMultiOperatorServiceList(req, res);
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, MULTIPLE_OPERATORS_SERVICES_ATTRIBUTE, [
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, MULTIPLE_OPERATORS_SERVICES_ATTRIBUTE, [
             {
                 nocCode: 'BLAC',
                 selectedServices: [
@@ -198,7 +198,7 @@ describe('multiOperatorServiceList tests', () => {
                 ],
             },
         ]);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/multipleProducts',
         });
     });

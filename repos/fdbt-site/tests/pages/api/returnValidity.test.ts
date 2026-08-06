@@ -94,8 +94,12 @@ describe('returnValidity', () => {
             mockWriteHeadFn: writeHeadMock,
         });
         await returnValidity(req, res);
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, RETURN_VALIDITY_ATTRIBUTE, mockPassengerTypeDetails);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(
+            req,
+            RETURN_VALIDITY_ATTRIBUTE,
+            mockPassengerTypeDetails,
+        );
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/ticketConfirmation',
         });
     });
@@ -109,11 +113,11 @@ describe('returnValidity', () => {
             mockWriteHeadFn: writeHeadMock,
         });
         await returnValidity(req, res);
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, RETURN_VALIDITY_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, RETURN_VALIDITY_ATTRIBUTE, {
             amount: '1',
             typeOfDuration: 'day',
         });
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/ticketConfirmation',
         });
     });
@@ -136,12 +140,12 @@ describe('returnValidity', () => {
             mockWriteHeadFn: writeHeadMock,
         });
         await returnValidity(req, res);
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, RETURN_VALIDITY_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, RETURN_VALIDITY_ATTRIBUTE, {
             amount: mockReturnValidityDetails.amount,
             typeOfDuration: mockReturnValidityDetails.duration,
             errors: mockErrors,
         });
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/returnValidity',
         });
     });
@@ -165,15 +169,15 @@ describe('returnValidity', () => {
             },
         });
         await returnValidity(req, res);
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, RETURN_VALIDITY_ATTRIBUTE, undefined);
-        expect(userData.putUserDataInProductsBucketWithFilePath).toBeCalledWith(
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, RETURN_VALIDITY_ATTRIBUTE, undefined);
+        expect(userData.putUserDataInProductsBucketWithFilePath).toHaveBeenCalledWith(
             {
                 ...expectedPeriodMultipleServicesTicketWithMultipleProducts,
                 returnPeriodValidity: { amount: '200', typeOfDuration: 'week' },
             },
             'test/path',
         );
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/products/productDetails?productId=2&serviceId=22D',
         });
     });
@@ -195,15 +199,15 @@ describe('returnValidity', () => {
             },
         });
         await returnValidity(req, res);
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, RETURN_VALIDITY_ATTRIBUTE, undefined);
-        expect(userData.putUserDataInProductsBucketWithFilePath).toBeCalledWith(
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, RETURN_VALIDITY_ATTRIBUTE, undefined);
+        expect(userData.putUserDataInProductsBucketWithFilePath).toHaveBeenCalledWith(
             {
                 ...expectedPeriodMultipleServicesTicketWithMultipleProducts,
                 returnPeriodValidity: undefined,
             },
             'test/path',
         );
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/products/productDetails?productId=2&serviceId=22D',
         });
     });

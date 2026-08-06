@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { FullGroupPassengerType, SinglePassengerType } from '../interfaces/dbTypes';
 import { getProofDocumentsString, sentenceCaseString } from '../utils';
 

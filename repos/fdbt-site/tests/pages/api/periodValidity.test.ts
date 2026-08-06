@@ -38,9 +38,9 @@ describe('periodValidity', () => {
 
         await periodValidity(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, PERIOD_EXPIRY_ATTRIBUTE, mockProductInfo);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, PERIOD_EXPIRY_ATTRIBUTE, mockProductInfo);
 
-        expect(writeHeadMock).toBeCalledWith(302, { Location: '/ticketConfirmation' });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, { Location: '/ticketConfirmation' });
     });
 
     it('correctly generates product info, and then redirects to /productDetails if update in edit mode', async () => {
@@ -59,9 +59,9 @@ describe('periodValidity', () => {
 
         await periodValidity(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, PERIOD_EXPIRY_ATTRIBUTE, undefined);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, PERIOD_EXPIRY_ATTRIBUTE, undefined);
 
-        expect(userData.putUserDataInProductsBucketWithFilePath).toBeCalledWith(
+        expect(userData.putUserDataInProductsBucketWithFilePath).toHaveBeenCalledWith(
             {
                 ...expectedPeriodGeoZoneTicketWithMultipleProducts,
                 products: [
@@ -75,7 +75,7 @@ describe('periodValidity', () => {
             'test/path',
         );
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/products/productDetails?productId=2',
         });
     });
@@ -92,7 +92,7 @@ describe('periodValidity', () => {
 
         await periodValidity(req, res);
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, PERIOD_EXPIRY_ATTRIBUTE, mockProductInfo);
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, PERIOD_EXPIRY_ATTRIBUTE, mockProductInfo);
     });
 
     it('correctly generates period expiry error info, updates the PERIOD_EXPIRY_ATTRIBUTE and then redirects to periodValidity page when there is no period validity info', async () => {
@@ -111,7 +111,7 @@ describe('periodValidity', () => {
         await periodValidity(req, res);
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, PERIOD_EXPIRY_ATTRIBUTE, errors);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/periodValidity',
         });
     });
@@ -138,7 +138,7 @@ describe('periodValidity', () => {
 
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, PERIOD_EXPIRY_ATTRIBUTE, errors);
 
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/selectPeriodValidity',
         });
     });

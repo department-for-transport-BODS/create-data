@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import CsrfForm from '../components/CsrfForm';
 import ErrorSummary from '../components/ErrorSummary';
@@ -132,6 +132,7 @@ export const getServerSideProps = async (ctx: NextPageContextWithSession): Promi
     updateSessionAttribute(ctx.req, GS_REFERER, undefined);
     const csrfToken = getCsrfToken(ctx);
     const schemeOp = isSchemeOperator(ctx);
+
     const nocCode = getAndValidateNoc(ctx);
 
     const operatorAttribute = getSessionAttribute(ctx.req, OPERATOR_ATTRIBUTE);

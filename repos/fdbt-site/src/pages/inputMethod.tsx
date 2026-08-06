@@ -1,11 +1,7 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { BaseLayout } from '../layout/Layout';
 import { ErrorInfo, NextPageContextWithSession } from '../interfaces';
 import { INPUT_METHOD_ATTRIBUTE } from '../constants/attributes';
-import FaresTriangleExampleCsv from '../assets/files/Fares-Triangle-Example.csv';
-import HowToUploadFaresTriangle from '../assets/files/How-to-Upload-a-Fares-Triangle.pdf';
-import guidanceDocImage from '../assets/images/Guidance-doc-front-page.png';
-import csvImage from '../assets/images/csv.png';
 import ErrorSummary from '../components/ErrorSummary';
 import FormElementWrapper from '../components/FormElementWrapper';
 import CsrfForm from '../components/CsrfForm';
@@ -15,6 +11,11 @@ import { getCsrfToken } from '../utils';
 import FileAttachment from '../components/FileAttachment';
 import AccessibilityDetails from '../components/AccessibilityDetails';
 import { SUPPORT_EMAIL_ADDRESS } from '../constants';
+
+const guidanceDocImage = '/images/Guidance-doc-front-page.png';
+const csvImage = '/images/csv.png';
+const FaresTriangleExampleCsv = '/files/Fares-Triangle-Example.csv';
+const HowToUploadFaresTriangle = '/files/How-to-Upload-a-Fares-Triangle.pdf';
 
 const title = 'Input Method - Create Fares Data Service';
 const description = 'Input Method selection page of the Create Fares Data Service';

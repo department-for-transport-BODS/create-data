@@ -5,7 +5,7 @@ import { ErrorInfo, NextApiRequestWithSession } from '../../interfaces';
 import { getProductsMatchingJson } from '../../data/s3';
 import { updateSessionAttribute } from '../../utils/sessions';
 import { VIEW_CAP_ERRORS } from '../../constants/attributes';
-import { TicketWithIds } from 'src/interfaces/matchingJsonTypes';
+import { TicketWithIds } from '../../interfaces/matchingJsonTypes';
 
 export default async (req: NextApiRequestWithSession, res: NextApiResponse): Promise<void> => {
     try {

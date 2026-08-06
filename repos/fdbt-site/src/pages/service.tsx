@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import upperFirst from 'lodash/upperFirst';
 import { ErrorInfo, ServiceType, NextPageContextWithSession, TxcSourceAttribute } from '../interfaces';
 import FormElementWrapper from '../components/FormElementWrapper';
@@ -78,8 +78,8 @@ const Service = ({
                                 error.length > 0 && error[0].userInput
                                     ? error[0].userInput
                                     : warning && warning.length > 0
-                                    ? warning[0].userInput
-                                    : undefined
+                                      ? warning[0].userInput
+                                      : undefined
                             }
                         >
                             <option value="" disabled>

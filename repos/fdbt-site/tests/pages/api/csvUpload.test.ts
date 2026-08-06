@@ -24,6 +24,7 @@ import * as auroradb from '../../../src/data/auroradb';
 import { ReturnTicket, SingleTicket, WithIds } from '../../../src/interfaces/matchingJsonTypes';
 
 jest.mock('../../../src/data/auroradb');
+
 jest.spyOn(s3, 'putDataInS3');
 jest.spyOn(userData, 'putUserDataInProductsBucketWithFilePath');
 
@@ -51,16 +52,18 @@ describe('csvUpload', () => {
             uuid: {},
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -68,7 +71,7 @@ describe('csvUpload', () => {
             files: file,
             fileContents: csvData.testCsvDuplicateFareStages,
             fields: {
-                poundsOrPence: 'pence',
+                poundsOrPence: ['pence'],
             },
         });
 
@@ -76,11 +79,11 @@ describe('csvUpload', () => {
 
         await csvUpload.default(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/csvUpload',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, CSV_UPLOAD_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, CSV_UPLOAD_ATTRIBUTE, {
             errors: mockError,
             poundsOrPence: 'pence',
         });
@@ -95,16 +98,18 @@ describe('csvUpload', () => {
             uuid: {},
         });
 
-        const file = {
-            'csv-upload': {
-                size: 2,
-                path: 'string',
-                name: 'string',
-                type: 'string',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 2,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'string',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -112,7 +117,7 @@ describe('csvUpload', () => {
             files: file,
             fileContents: '',
             fields: {
-                poundsOrPence: 'pence',
+                poundsOrPence: ['pence'],
             },
         });
 
@@ -120,16 +125,19 @@ describe('csvUpload', () => {
 
         await csvUpload.default(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/csvUpload',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, CSV_UPLOAD_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, CSV_UPLOAD_ATTRIBUTE, {
             errors: mockError,
             poundsOrPence: 'pence',
         });
 
-        expect(loggerSpy).toBeCalledWith('', { context: 'api.utils.processFileUpload', message: 'no file attached' });
+        expect(loggerSpy).toHaveBeenCalledWith('', {
+            context: 'api.utils.processFileUpload',
+            message: 'no file attached',
+        });
     });
 
     it('should return 302 redirect to /csvUpload with an error message when a the attached file is too large', async () => {
@@ -143,16 +151,18 @@ describe('csvUpload', () => {
             uuid: {},
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999999999999999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999999999999999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -168,16 +178,16 @@ describe('csvUpload', () => {
 
         await csvUpload.default(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/csvUpload',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, CSV_UPLOAD_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, CSV_UPLOAD_ATTRIBUTE, {
             errors: mockError,
             poundsOrPence: 'pence',
         });
 
-        expect(loggerSpy).toBeCalledWith('', {
+        expect(loggerSpy).toHaveBeenCalledWith('', {
             context: 'api.utils.validateFile',
             maxSize: 5242880,
             message: 'file is too large',
@@ -196,16 +206,18 @@ describe('csvUpload', () => {
             uuid: {},
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/pdf',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/pdf',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -221,16 +233,16 @@ describe('csvUpload', () => {
 
         await csvUpload.default(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/csvUpload',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, CSV_UPLOAD_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, CSV_UPLOAD_ATTRIBUTE, {
             errors: mockError,
             poundsOrPence: 'pence',
         });
 
-        expect(loggerSpy).toBeCalledWith('', {
+        expect(loggerSpy).toHaveBeenCalledWith('', {
             context: 'api.utils.validateFile',
             message: 'file not of allowed type',
             type: 'text/pdf',
@@ -244,16 +256,18 @@ describe('csvUpload', () => {
             uuid: {},
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -269,9 +283,9 @@ describe('csvUpload', () => {
 
         await csvUpload.default(req, res);
 
-        expect(s3.putDataInS3).toBeCalledWith(csvData.unprocessedObject.Body, expect.any(String), false);
+        expect(s3.putDataInS3).toHaveBeenCalledWith(csvData.unprocessedObject.Body, expect.any(String), false);
 
-        expect(s3.putDataInS3).toBeCalledWith(csvData.processedObject.Body, expect.any(String), true);
+        expect(s3.putDataInS3).toHaveBeenCalledWith(csvData.processedObject.Body, expect.any(String), true);
     });
 
     it('should correctly generate data with empty cells and spaces and upload it to S3', async () => {
@@ -281,16 +295,18 @@ describe('csvUpload', () => {
             uuid: {},
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -306,9 +322,17 @@ describe('csvUpload', () => {
 
         await csvUpload.default(req, res);
 
-        expect(s3.putDataInS3).toBeCalledWith(csvData.unprocessedObjectWithEmptyCells.Body, expect.any(String), false);
+        expect(s3.putDataInS3).toHaveBeenCalledWith(
+            csvData.unprocessedObjectWithEmptyCells.Body,
+            expect.any(String),
+            false,
+        );
 
-        expect(s3.putDataInS3).toBeCalledWith(csvData.processedObjectWithEmptyCells.Body, expect.any(String), true);
+        expect(s3.putDataInS3).toHaveBeenCalledWith(
+            csvData.processedObjectWithEmptyCells.Body,
+            expect.any(String),
+            true,
+        );
     });
 
     it('should correctly generate data with decimal prices when pounds is selected', async () => {
@@ -318,16 +342,18 @@ describe('csvUpload', () => {
             uuid: {},
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -343,13 +369,13 @@ describe('csvUpload', () => {
 
         await csvUpload.default(req, res);
 
-        expect(s3.putDataInS3).toBeCalledWith(
+        expect(s3.putDataInS3).toHaveBeenCalledWith(
             csvData.unprocessedObjectWithDecimalPrices.Body,
             expect.any(String),
             false,
         );
 
-        expect(s3.putDataInS3).toBeCalledWith(csvData.processedObject.Body, expect.any(String), true);
+        expect(s3.putDataInS3).toHaveBeenCalledWith(csvData.processedObject.Body, expect.any(String), true);
     });
 
     it('should return 302 redirect to /outboundMatching when the happy path is used (ticketer format)', async () => {
@@ -365,16 +391,18 @@ describe('csvUpload', () => {
             },
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -390,11 +418,11 @@ describe('csvUpload', () => {
 
         await csvUpload.default(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/outboundMatching',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, CSV_UPLOAD_ATTRIBUTE, { errors: [] });
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, CSV_UPLOAD_ATTRIBUTE, { errors: [] });
     });
 
     it('should return 302 redirect to /outboundMatching when the happy path is used (non-ticketer format)', async () => {
@@ -410,16 +438,18 @@ describe('csvUpload', () => {
             },
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -435,11 +465,11 @@ describe('csvUpload', () => {
 
         await csvUpload.default(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/outboundMatching',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, CSV_UPLOAD_ATTRIBUTE, { errors: [] });
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, CSV_UPLOAD_ATTRIBUTE, { errors: [] });
     });
 
     it('should throw an error if the fares triangle data has non-numerical prices', async () => {
@@ -453,16 +483,18 @@ describe('csvUpload', () => {
             uuid: {},
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -478,11 +510,11 @@ describe('csvUpload', () => {
 
         await csvUpload.default(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/csvUpload',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, CSV_UPLOAD_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, CSV_UPLOAD_ATTRIBUTE, {
             errors: mockError,
             poundsOrPence: 'pounds',
         });
@@ -502,16 +534,18 @@ describe('csvUpload', () => {
             uuid: {},
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -527,11 +561,11 @@ describe('csvUpload', () => {
 
         await csvUpload.default(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/csvUpload',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, CSV_UPLOAD_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, CSV_UPLOAD_ATTRIBUTE, {
             errors: mockError,
             poundsOrPence: 'pence',
         });
@@ -544,16 +578,18 @@ describe('csvUpload', () => {
             uuid: {},
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -569,11 +605,11 @@ describe('csvUpload', () => {
 
         await csvUpload.default(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/matching',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, CSV_UPLOAD_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, CSV_UPLOAD_ATTRIBUTE, {
             errors: [],
         });
     });
@@ -592,16 +628,18 @@ describe('csvUpload', () => {
             uuid: {},
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -617,11 +655,11 @@ describe('csvUpload', () => {
 
         await csvUpload.default(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/csvUpload',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, CSV_UPLOAD_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, CSV_UPLOAD_ATTRIBUTE, {
             errors: mockError,
             poundsOrPence: 'pence',
         });
@@ -641,16 +679,18 @@ describe('csvUpload', () => {
             uuid: {},
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -666,11 +706,11 @@ describe('csvUpload', () => {
 
         await csvUpload.default(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/csvUpload',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, CSV_UPLOAD_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, CSV_UPLOAD_ATTRIBUTE, {
             errors: mockError,
             poundsOrPence: 'pence',
         });
@@ -683,16 +723,18 @@ describe('csvUpload', () => {
             uuid: {},
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -708,11 +750,11 @@ describe('csvUpload', () => {
 
         await csvUpload.default(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/matching',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, CSV_UPLOAD_ATTRIBUTE, { errors: [] });
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, CSV_UPLOAD_ATTRIBUTE, { errors: [] });
     });
 
     it('should return 302 redirect to /csvUpload with an error message if the file contains a virus', async () => {
@@ -726,16 +768,18 @@ describe('csvUpload', () => {
             uuid: {},
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -751,11 +795,11 @@ describe('csvUpload', () => {
 
         await csvUpload.default(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/csvUpload',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, CSV_UPLOAD_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, CSV_UPLOAD_ATTRIBUTE, {
             errors: mockError,
             poundsOrPence: 'pence',
         });
@@ -781,16 +825,18 @@ describe('csvUpload', () => {
             },
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -806,11 +852,11 @@ describe('csvUpload', () => {
 
         await csvUpload.default(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/csvUpload',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, CSV_UPLOAD_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, CSV_UPLOAD_ATTRIBUTE, {
             errors: mockError,
             poundsOrPence: 'pounds',
         });
@@ -835,16 +881,18 @@ describe('csvUpload', () => {
             },
         });
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -860,11 +908,11 @@ describe('csvUpload', () => {
 
         await csvUpload.default(req, res);
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/csvUpload',
         });
 
-        expect(updateSessionAttributeSpy).toBeCalledWith(req, CSV_UPLOAD_ATTRIBUTE, {
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, CSV_UPLOAD_ATTRIBUTE, {
             errors: mockError,
             poundsOrPence: 'pounds',
         });
@@ -1052,16 +1100,18 @@ describe('csvUpload', () => {
             uuid: '1e0459b3-082e-4e70-89db-96e8ae173e10',
         };
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -1077,12 +1127,12 @@ describe('csvUpload', () => {
 
         await csvUpload.default(req, res);
 
-        expect(userData.putUserDataInProductsBucketWithFilePath).toBeCalledWith(
+        expect(userData.putUserDataInProductsBucketWithFilePath).toHaveBeenCalledWith(
             updatedSingleTicket,
             'matchingJsonLink',
         );
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/products/productDetails?productId=1&serviceId=2',
         });
     });
@@ -1302,16 +1352,18 @@ describe('csvUpload', () => {
             },
         };
 
-        const file = {
-            'csv-upload': {
-                size: 999,
-                path: 'string',
-                name: 'string',
-                type: 'text/csv',
-                toJSON(): any {
-                    return '';
+        const file: any = {
+            'csv-upload': [
+                {
+                    size: 999,
+                    filepath: 'string',
+                    originalFilename: 'string',
+                    mimetype: 'text/csv',
+                    toJSON(): any {
+                        return '';
+                    },
                 },
-            },
+            ],
         };
 
         getFormDataSpy.mockImplementation().mockResolvedValue({
@@ -1327,12 +1379,12 @@ describe('csvUpload', () => {
 
         await csvUpload.default(req, res);
 
-        expect(userData.putUserDataInProductsBucketWithFilePath).toBeCalledWith(
+        expect(userData.putUserDataInProductsBucketWithFilePath).toHaveBeenCalledWith(
             updatedReturnTicket,
             'matchingJsonLink',
         );
 
-        expect(res.writeHead).toBeCalledWith(302, {
+        expect(res.writeHead).toHaveBeenCalledWith(302, {
             Location: '/products/productDetails?productId=1&serviceId=2',
         });
     });

@@ -1,16 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
-import { shallow, ShallowWrapper } from 'enzyme';
+import { render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import * as auroradb from '../../src/data/auroradb';
 import * as s3 from '../../src/data/s3';
 import { mockRawService, userFareStages, zoneStops, service, selectedFareStages } from '../testData/mockData';
 import OutboundMatching from '../../src/pages/outboundMatching';
 
-jest.mock('../../src/data/auroradb.ts');
-jest.mock('../../src/data/s3.ts');
+const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 describe('OutboundMatching Page', () => {
-    let wrapper: ShallowWrapper;
+    let wrapper: DocumentFragment;
     let getServiceByNocCodeLineNameAndDataSourceSpy = jest.spyOn(auroradb, 'getServiceByIdAndDataSource');
     let batchGetStopsByAtcoCodeSpy = jest.spyOn(auroradb, 'batchGetStopsByAtcoCode');
     let getUserFareStagesSpy = jest.spyOn(s3, 'getUserFareStages');
@@ -24,7 +22,7 @@ describe('OutboundMatching Page', () => {
         batchGetStopsByAtcoCodeSpy.mockImplementation(() => Promise.resolve([]));
         getUserFareStagesSpy.mockImplementation(() => Promise.resolve(userFareStages));
 
-        wrapper = shallow(
+        wrapper = renderToFragment(
             <OutboundMatching
                 userFareStages={userFareStages}
                 stops={zoneStops}
@@ -47,7 +45,7 @@ describe('OutboundMatching Page', () => {
     });
 
     it('should render correctly with tnds data source', () => {
-        wrapper = shallow(
+        wrapper = renderToFragment(
             <OutboundMatching
                 userFareStages={userFareStages}
                 stops={zoneStops}
@@ -64,7 +62,7 @@ describe('OutboundMatching Page', () => {
     });
 
     it('should render with warning', () => {
-        wrapper = shallow(
+        wrapper = renderToFragment(
             <OutboundMatching
                 userFareStages={userFareStages}
                 stops={zoneStops}
@@ -81,7 +79,7 @@ describe('OutboundMatching Page', () => {
     });
 
     it('should render with error', () => {
-        wrapper = shallow(
+        wrapper = renderToFragment(
             <OutboundMatching
                 userFareStages={userFareStages}
                 stops={zoneStops}

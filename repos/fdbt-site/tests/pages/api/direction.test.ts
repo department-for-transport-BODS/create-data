@@ -17,7 +17,7 @@ describe('direction', () => {
         });
         jest.spyOn(apiUtils, 'setCookieOnResponseObject');
         direction(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/direction',
         });
     });
@@ -30,7 +30,7 @@ describe('direction', () => {
         });
         jest.spyOn(apiUtils, 'setCookieOnResponseObject');
         direction(req, res);
-        expect(writeHeadMock).toBeCalledWith(302, {
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/inputMethod',
         });
     });

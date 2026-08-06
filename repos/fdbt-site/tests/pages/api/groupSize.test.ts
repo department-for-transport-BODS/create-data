@@ -42,7 +42,7 @@ describe('groupSize', () => {
         };
         await groupSize(req, res);
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GROUP_SIZE_ATTRIBUTE, groupTicketInfoWithErrors);
-        expect(res.writeHead).toBeCalledWith(302, { Location: '/groupSize' });
+        expect(res.writeHead).toHaveBeenCalledWith(302, { Location: '/groupSize' });
     });
 
     it('should update the GROUP_SIZE_ATTRIBUTE and redirect to /groupPassengerTypes when there are validation errors', async () => {
@@ -52,6 +52,6 @@ describe('groupSize', () => {
         };
         await groupSize(req, res);
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, GROUP_SIZE_ATTRIBUTE, groupTicketInfo);
-        expect(res.writeHead).toBeCalledWith(302, { Location: '/groupPassengerTypes' });
+        expect(res.writeHead).toHaveBeenCalledWith(302, { Location: '/groupPassengerTypes' });
     });
 });

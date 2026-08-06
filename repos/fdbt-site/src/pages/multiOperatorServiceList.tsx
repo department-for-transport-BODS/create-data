@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/interactive-supports-focus */
 import React, { Dispatch, ReactElement, SetStateAction, useState } from 'react';
 import BackButton from '../components/BackButton';
 import CsrfForm from '../components/CsrfForm';
@@ -357,7 +356,7 @@ const MultiOperatorsServiceList = ({
                             <div>
                                 {operators.map((operator, index) => {
                                     const { nocCode, selectedServices } = operator;
-                                    const elements: JSX.Element[] = selectedServices.map((service, index2) => {
+                                    const elements: ReactElement[] = selectedServices.map((service, index2) => {
                                         const { lineName, lineId, serviceCode, serviceDescription, startDate } =
                                             service;
 
@@ -497,11 +496,9 @@ export const getServerSideProps = async (
         // we need to enrich the service using
         // the services we get back from the database
         multiOperatorData = multiOperatorData.map((operator) => {
-            const matchingOperator: AdditionalOperator | undefined =
-                // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-                (multiOperatorServicesAttribute as MultiOperatorInfoWithErrors).multiOperatorInfo.find(
-                    (op: AdditionalOperator) => op.nocCode === operator.nocCode,
-                );
+            const matchingOperator: AdditionalOperator | undefined = (
+                multiOperatorServicesAttribute as MultiOperatorInfoWithErrors
+            ).multiOperatorInfo.find((op: AdditionalOperator) => op.nocCode === operator.nocCode);
             if (!matchingOperator) {
                 return operator;
             }

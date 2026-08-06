@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import upperFirst from 'lodash/upperFirst';
 import { ErrorInfo, NextPageContextWithSession, ServiceType } from '../interfaces';
 import FormElementWrapper from '../components/FormElementWrapper';

@@ -34,7 +34,6 @@ export default async (req: NextApiRequestWithSession, res: NextApiResponse): Pro
         );
         const productNames = ticketsWithOperatorGroup
             .map((ticket) =>
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-return
                 ticket.products[0]
                     ? 'productName' in ticket.products[0]
                         ? ticket.products[0].productName
