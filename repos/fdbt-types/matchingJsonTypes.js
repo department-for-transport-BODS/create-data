@@ -17,4 +17,5 @@ var ExpiryUnit;
     ExpiryUnit["WEEK"] = "week";
     ExpiryUnit["MONTH"] = "month";
     ExpiryUnit["YEAR"] = "year";
+    ExpiryUnit["TERM"] = "term";
 })(ExpiryUnit = exports.ExpiryUnit || (exports.ExpiryUnit = {}));

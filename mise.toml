@@ -1,7 +1,7 @@
 [tools]
 awscli = { version = "2", symlink_bins = "true" }
-node   = "18"
-npm    = "10"
+node   = "24"
+npm    = "12"
 python = "3.8"
 
 [settings]
