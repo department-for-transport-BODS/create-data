@@ -33,7 +33,7 @@ Resources:
     Properties:
       FunctionName: !Sub security-headers-edge-lambda-${Stage}
       Role: !GetAtt SecurityHeadersEdgeLambdaRole.Arn
-      Runtime: nodejs18.x
+      Runtime: nodejs24.x
       Handler: index.handler
       Timeout: 5
       Code:

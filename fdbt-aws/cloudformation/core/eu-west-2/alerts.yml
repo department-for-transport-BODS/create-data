@@ -47,7 +47,7 @@ Resources:
       FunctionName: slack-alert
       Handler: slackAlerts.handler
       Role: !GetAtt SlackLambdaRole.Arn
-      Runtime: nodejs18.x
+      Runtime: nodejs24.x
 
   SnsLambdaPermission:
     Type: AWS::Lambda::Permission
