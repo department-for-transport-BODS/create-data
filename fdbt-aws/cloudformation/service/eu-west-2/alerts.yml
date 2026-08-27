@@ -32,7 +32,7 @@ Resources:
       Handler: slackAlerts.handler
       Role:
         Fn::ImportValue: !Sub ${Stage}:SlackLambdaRoleArn
-      Runtime: nodejs24.x
+      Runtime: nodejs18.x
 
   SnsLambdaPermission:
     Type: AWS::Lambda::Permission
