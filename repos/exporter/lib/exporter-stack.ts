@@ -2,6 +2,7 @@ import { App, Stack, StackProps } from 'aws-cdk-lib';
 import { Fn, Duration } from 'aws-cdk-lib';
 import {
     aws_s3 as s3,
+    aws_lambda as coreLambda,
     aws_lambda_nodejs as lambda,
     aws_iam as iam,
     aws_ec2 as ec2,
@@ -70,6 +71,7 @@ export class ExporterStack extends Stack {
     ) {
         const atcoCodeCheckerFunction = new lambda.NodejsFunction(this, `atco-code-checker-${this.stage}`, {
             functionName: `atco-code-checker-${this.stage}`,
+            runtime: coreLambda.Runtime.NODEJS_24_X,
             entry: './lib/atcoCheckerHandler.ts',
             environment: {
                 PRODUCTS_BUCKET: this.productsBucket.bucketName,
@@ -107,6 +109,7 @@ export class ExporterStack extends Stack {
     ) {
         const exporterFunction = new lambda.NodejsFunction(this, `exporter-${this.stage}`, {
             functionName: `exporter-${this.stage}`,
+            runtime: coreLambda.Runtime.NODEJS_24_X,
             entry: './lib/handler.ts',
             environment: {
                 PRODUCTS_BUCKET: this.productsBucket.bucketName,
@@ -139,6 +142,7 @@ export class ExporterStack extends Stack {
         const netexBucket = s3.Bucket.fromBucketName(this, 'netex-bucket', `fdbt-netex-data-${this.stage}`);
         const zipperFunction = new lambda.NodejsFunction(this, `zipper-${this.stage}`, {
             functionName: `zipper-${this.stage}`,
+            runtime: coreLambda.Runtime.NODEJS_24_X,
             entry: './lib/zipperHandler.ts',
             environment: {
                 NETEX_BUCKET: netexBucket.bucketName,
@@ -162,6 +166,7 @@ export class ExporterStack extends Stack {
     private addBastionTerminatorLambda() {
         const bastionTerminatorFunction = new lambda.NodejsFunction(this, `bastion-terminator-${this.stage}`, {
             functionName: `bastion-terminator-${this.stage}`,
+            runtime: coreLambda.Runtime.NODEJS_24_X,
             entry: './lib/bastionTerminator.ts',
             bundling: {
                 sourceMap: true,
@@ -190,6 +195,7 @@ export class ExporterStack extends Stack {
     ) {
         const tableRenameFunction = new lambda.NodejsFunction(this, `table-rename-${this.stage}`, {
             functionName: `table-rename-${this.stage}`,
+            runtime: coreLambda.Runtime.NODEJS_24_X,
             entry: './lib/referenceData/tableRenameHandler.ts',
             environment: {
                 RDS_HOST: Fn.importValue(`${this.stage}:RdsClusterInternalEndpoint`),
