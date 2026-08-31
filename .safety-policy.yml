@@ -1,10 +1,7 @@
 security:
   ignore-cvss-severity-below: 0
   ignore-cvss-unknown-severity: false
-  ignore-vulnerabilities:
-    94243:
-      reason: "etree-only usage, not exposed to iterparse or ETCompatXMLParser"
-      expires: "2027-05-29"
+  ignore-vulnerabilities: {}
   continue-on-vulnerability-error: false
 
 
