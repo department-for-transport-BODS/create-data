@@ -1,17 +1,18 @@
 import { clickElementById, getElementByClass, getElementById, getHomePage } from './helpers';
 
 export const deleteAllCards = (): void => {
-    cy.get(`[data-card-count]`).then((element) => {
-        const length = Number(element.attr('data-card-count'));
+    cy.get('body').then(($body) => {
+        const length = Number($body.find('[data-card-count]').attr('data-card-count'));
 
-        // In reverse so we delete groups first before the individuals
         for (let i = length - 1; i >= 0; i--) {
             getElementByClass('card').eq(i).contains('Delete').click();
             getElementById('popup-delete-button').click();
         }
     });
 
-    getElementByClass('card').should('not.exist');
+    cy.get('body').should(($body) => {
+        expect($body.find('.card')).to.have.length(0);
+    });
 };
 
 export const startGlobalSettings = (): void => {

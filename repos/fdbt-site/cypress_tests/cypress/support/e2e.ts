@@ -5,34 +5,19 @@ import {
     clickElementById,
     clickElementByText,
     getHomePage,
+    getTestDataName,
+    reloadOnServiceError,
 } from './helpers';
 import { addSingleMultiOperatorGroup } from './multiOperatorGroups';
 import { enterPassengerTypeDetails, addGroupPassengerType } from './passengerTypes';
 import { addPurchaseMethod } from './purchaseMethods';
 import { addTimeRestriction } from './timeRestrictions';
 
-before(() => {
-    cy.log('index.ts was run');
-    getHomePage();
-    clickElementById('account-link');
-    clickElementByText('Passenger types');
-    addTestPassengerTypes();
-    clickElementByText('Purchase methods');
-    addTestPurchaseMethods();
-    clickElementByText('Time restrictions');
-    addTestTimeRestrictions();
-    clickElementByText('Fare day end');
-    addTestFareDayEnd();
-    // Ensure the fare day end save popup has closed before navigating away
-    cy.get('.popup').should('not.exist');
-    clickElementByText('Operator groups');
-    addTestOperatorGroups();
+const isPreprod = Cypress.env('preprod');
+const isSchemeSpec = Cypress.spec.relative.endsWith('scheme.cy.ts');
+const skipsNormalBootstrap = isPreprod && (Cypress.spec.relative.includes('globalSettings/') || isSchemeSpec);
 
-    addSingleProductIfNotPresent();
-    addOtherProductsIfNotPresent();
-    cy.log('Global Settings set up for LNUD');
-
-    // Set up global settings for the scheme operator
+const setUpSchemeGlobalSettings = (): void => {
     getHomePage('scheme');
     clickElementById('account-link');
     clickElementByText('Passenger types');
@@ -50,7 +35,41 @@ before(() => {
     clickElementByText('Operator details');
     addTestOperatorDetails();
     cy.log('Global Settings set up for scheme');
-});
+};
+
+if (isPreprod && isSchemeSpec) {
+    // The scheme operator needs its own settings and operator details, otherwise the
+    // fare type page redirects to /manageOperatorDetails before any journey can start.
+    before(() => {
+        setUpSchemeGlobalSettings();
+    });
+}
+
+if (!skipsNormalBootstrap) {
+    before(() => {
+        cy.log('index.ts was run');
+        getHomePage();
+        clickElementById('account-link');
+        clickElementByText('Passenger types');
+        addTestPassengerTypes();
+        clickElementByText('Purchase methods');
+        addTestPurchaseMethods();
+        clickElementByText('Time restrictions');
+        addTestTimeRestrictions();
+        clickElementByText('Fare day end');
+        addTestFareDayEnd();
+        // Ensure the fare day end save popup has closed before navigating away
+        cy.get('.popup').should('not.exist');
+        clickElementByText('Operator groups');
+        addTestOperatorGroups();
+
+        addSingleProductIfNotPresent();
+        addOtherProductsIfNotPresent();
+        cy.log('Global Settings set up for LNUD');
+
+        setUpSchemeGlobalSettings();
+    });
+}
 
 const addTestOperatorDetails = (): void => {
     clearAndTypeById('operatorName', 'Easy A to B');
@@ -65,17 +84,20 @@ const addTestOperatorDetails = (): void => {
 };
 
 const addTestOperatorGroups = (): void => {
+    reloadOnServiceError();
     cy.get(`[data-card-count]`).then((element) => {
         const numberofOperatorGroups = Number(element.attr('data-card-count'));
         cy.log(`There are ${numberofOperatorGroups} operator groups`);
         cy.get(`[operator-groups]`).then((element) => {
             const operatorGroups = element.attr('operator-groups')?.toString();
             const operatorGroupsValue = operatorGroups?.split(',') ?? [];
-            if (!operatorGroupsValue.includes('test')) {
-                addSingleMultiOperatorGroup('test', false, true);
+            const testGroupName = getTestDataName('test');
+            const testGroupTwoName = getTestDataName('test2');
+            if (!operatorGroupsValue.includes(testGroupName)) {
+                addSingleMultiOperatorGroup(testGroupName, false, true);
             }
-            if (!operatorGroupsValue.includes('test2')) {
-                addSingleMultiOperatorGroup('test2', false, false);
+            if (!operatorGroupsValue.includes(testGroupTwoName)) {
+                addSingleMultiOperatorGroup(testGroupTwoName, false, false);
             }
         });
     });
@@ -97,16 +119,16 @@ const addTestPassengerTypes = (): void => {
             const passengerType1 = {
                 type: 'child',
                 maxAge: 18,
-                name: 'Small People',
+                name: getTestDataName('Small People'),
             };
             const passengerType2 = {
                 type: 'student',
                 documents: ['student_card'],
-                name: 'Test Students',
+                name: getTestDataName('Test Students'),
             };
             const passengerType3 = {
                 type: 'adult',
-                name: 'Big People',
+                name: getTestDataName('Big People'),
             };
             cy.log('Add three Individuals, one Groups');
             clickElementByText('Add a passenger type');
@@ -120,7 +142,7 @@ const addTestPassengerTypes = (): void => {
             clickElementByText('Add a passenger type');
             enterPassengerTypeDetails(passengerType3);
             clickElementByText('Add passenger type');
-            addGroupPassengerType('Test Group');
+            addGroupPassengerType(getTestDataName('Test Group'));
         }
     });
 };
@@ -131,19 +153,19 @@ const addTestPurchaseMethods = (): void => {
             purchaseLocations: ['checkbox-0-on-board'],
             paymentMethods: ['checkbox-0-cash', 'checkbox-1-debit-card'],
             ticketFormats: ['checkbox-3-electronic-document'],
-            name: 'Test Onboard',
+            name: getTestDataName('Test Onboard'),
         },
         {
             purchaseLocations: ['checkbox-2-mobile-device'],
             paymentMethods: ['checkbox-0-cash', 'checkbox-1-debit-card'],
             ticketFormats: ['checkbox-3-electronic-document'],
-            name: 'Test Mobile',
+            name: getTestDataName('Test Mobile'),
         },
         {
             purchaseLocations: ['checkbox-1-online'],
             paymentMethods: ['checkbox-1-debit-card'],
             ticketFormats: ['checkbox-3-electronic-document'],
-            name: 'Test Online',
+            name: getTestDataName('Test Online'),
         },
     ];
     const cappedPurchaseMethods = [
@@ -151,13 +173,13 @@ const addTestPurchaseMethods = (): void => {
             purchaseLocations: ['checkbox-0-on-board'],
             paymentMethods: ['checkbox-0-debit-card', 'checkbox-1-credit-card'],
             ticketFormats: ['checkbox-0-mobile-app'],
-            name: 'Test capped onboard',
+            name: getTestDataName('Test capped onboard'),
         },
         {
             purchaseLocations: ['checkbox-0-on-board', 'checkbox-1-mobile-device'],
             paymentMethods: ['checkbox-2-mobile-phone'],
             ticketFormats: ['checkbox-0-mobile-app'],
-            name: 'Test capped mobile',
+            name: getTestDataName('Test capped mobile'),
         },
     ];
 
@@ -204,15 +226,15 @@ export const addTestTimeRestrictions = (): void => {
                     'time-restriction-day-3',
                     'time-restriction-day-4',
                 ],
-                name: 'Test Weekdays',
+                name: getTestDataName('Test Weekdays'),
             };
             const timeRestriction2 = {
                 days: ['time-restriction-day-5', 'time-restriction-day-6'],
-                name: 'Test Weekends',
+                name: getTestDataName('Test Weekends'),
             };
             const timeRestriction3 = {
                 days: ['time-restriction-day-6', 'time-restriction-day-7'],
-                name: 'Test Bank Holidays',
+                name: getTestDataName('Test Bank Holidays'),
             };
             cy.log('Add three time restrictions');
             addTimeRestriction(timeRestriction1);

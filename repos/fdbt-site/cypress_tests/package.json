@@ -5,6 +5,10 @@
     "scripts": {
         "openCypress": "cypress open --config watchForFileChanges=false",
         "runCypress": "cypress run -b $BROWSER",
+        "runCypress:preprod": "cypress run --config-file cypress.preprod.config.ts -b $BROWSER",
+        "runCypress:preprod:report": "rm -rf results/mochawesome results/preprod-report.html results/preprod-report.json && cypress run --config-file cypress.preprod.config.ts -b $BROWSER --reporter mochawesome --reporter-options reportDir=results/mochawesome,overwrite=false,html=false,json=true; npm run report:build && npm run report:open",
+        "report:build": "mochawesome-merge results/mochawesome/*.json > results/preprod-report.json && marge results/preprod-report.json -f preprod-report -o results --inline",
+        "report:open": "open -a 'Google Chrome' results/preprod-report.html",
         "lint": "eslint . --ext .ts",
         "lint:fix": "eslint --fix . --ext .ts",
         "postshrinkwrap": "npm install --no-package-lock --no-audit --no-fund --no-progress --silent && npx prettier --write ./package-lock.json"
@@ -17,6 +21,9 @@
         "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-cypress": "^6.4.2",
         "eslint-plugin-prettier": "^5.5.6",
+        "mochawesome": "^8.0.1",
+        "mochawesome-merge": "^5.1.1",
+        "mochawesome-report-generator": "^6.3.2",
         "typescript": "6.0.3",
         "typescript-eslint": "^8.63.0"
     },
