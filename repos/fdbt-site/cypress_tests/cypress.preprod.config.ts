@@ -2,8 +2,13 @@ import { defineConfig } from 'cypress';
 
 export default defineConfig({
     allowCypressEnv: true,
+    env: {
+        preprod: true,
+    },
     e2e: {
-        baseUrl: 'http://localhost:5555',
+        baseUrl: 'https://preprod.dft-cfd.com',
+        specPattern: 'cypress/e2e/preprod/**/*.cy.ts',
+        supportFile: 'cypress/support/preprod.ts',
     },
     defaultCommandTimeout: 30000,
     numTestsKeptInMemory: 0,

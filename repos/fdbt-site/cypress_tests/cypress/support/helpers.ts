@@ -50,7 +50,43 @@ export const clearAndTypeByName = (name: string, text: string): void => {
 
 export const getRandomNumber = (min: number, max: number): number => Cypress._.random(min, max);
 
+export const getTestDataName = (name: string): string => (Cypress.env('preprod') ? `Preprod Cypress ${name}` : name);
+
+// Deployed environments occasionally return the generic error page on a page load, and a
+// failure inside a `before all` hook is never retried, so reload before reading the page.
+export const reloadOnServiceError = (): void => {
+    for (let attempt = 0; attempt < 2; attempt += 1) {
+        cy.get('body', { timeout: 30000 }).then(($body) => {
+            if ($body.text().includes('Sorry, there is a problem with the service')) {
+                cy.reload();
+            }
+        });
+    }
+};
+
+const loginToPreprod = (isScheme: boolean): void => {
+    const email = Cypress.env(isScheme ? 'PREPROD_SCHEME_EMAIL' : 'PREPROD_EMAIL') as string | undefined;
+    const password = Cypress.env(isScheme ? 'PREPROD_SCHEME_PASSWORD' : 'PREPROD_PASSWORD') as string | undefined;
+
+    if (!email || !password) {
+        const prefix = isScheme ? 'CYPRESS_PREPROD_SCHEME' : 'CYPRESS_PREPROD';
+        throw new Error(`${prefix}_EMAIL and ${prefix}_PASSWORD must be set to run preprod tests.`);
+    }
+
+    cy.clearCookies();
+    cy.visit('/login');
+    getElementById('email').type(email);
+    getElementById('password').type(password, { log: false });
+    clickElementById('sign-in-button');
+    cy.location('pathname', { timeout: 30000 }).should('eq', '/home');
+};
+
 export const getHomePage = (noc = 'LNUD'): void => {
+    if (Cypress.env('preprod')) {
+        loginToPreprod(noc === 'scheme');
+        return;
+    }
+
     cy.clearCookies();
     cy.visit(`?disableAuth=${noc}`);
 };
@@ -166,7 +202,7 @@ export const randomlySelectMultiServices = (): void => {
     switch (randomSelector) {
         case 1:
             cy.log('Select All button clicked');
-            clickElementById('select-all-button');
+            selectAllServices();
             break;
         case 2:
             cy.log('Few checkbox are selected');
@@ -186,6 +222,14 @@ export const randomlySelectMultiServices = (): void => {
         default:
             throwInvalidRandomSelectorError();
     }
+
+    // Every branch toggles rather than selects, so when services are already checked
+    // (editing an existing product) they can all end up cleared, which the form rejects.
+    cy.get('.govuk-checkboxes__input').then(($checkboxes) => {
+        if (![...$checkboxes].some((checkbox) => (checkbox as HTMLInputElement).checked)) {
+            cy.wrap($checkboxes).first().check();
+        }
+    });
 };
 
 export const completeUserDetailsPage = (group: boolean, maxGroupNumber: string, passengerType: string): void => {
@@ -482,7 +526,7 @@ export const randomlyDecideTermRestrictions = (): void => {
 export const clickAllCheckboxes = (): string[] => {
     const input: string[] = [];
     getElementByClass('govuk-checkboxes__input').each((checkbox, index) => {
-        cy.wrap(checkbox).check();
+        cy.wrap(checkbox).check({ force: true });
         const name = checkbox.attr('name');
         input[index] = name?.split('#')[0] ?? '';
         cy.wrap(input).as('input');
@@ -518,7 +562,7 @@ export const clickSomeCheckboxes = (): void => {
     getElementByClass('govuk-checkboxes__input').each((checkbox, index, checkboxes) => {
         const numberOfCheckboxes = checkboxes.length;
         if (numberOfCheckboxes === 1 || index !== numberOfCheckboxes - 1) {
-            cy.wrap(checkbox).check();
+            cy.wrap(checkbox).check({ force: true });
             const name = checkbox.attr('name');
             input[index] = name?.split('#')[0] ?? '';
             cy.wrap(input).as('input');
@@ -529,7 +573,7 @@ export const clickSomeCheckboxes = (): void => {
 export const clickFirstCheckboxIfMultiple = (): void => {
     getElementByClass('govuk-checkboxes__input').each((checkbox, index, checkboxes) => {
         if (checkboxes.length > 1 && index === 0) {
-            cy.wrap(checkbox).uncheck();
+            cy.wrap(checkbox).uncheck({ force: true });
         }
     });
 };
@@ -570,11 +614,22 @@ export const completeSalesOfferPackagesForMultipleProducts = (
     }
 };
 
+// The select all button is a toggle whose label starts as "Unselect All Services" when the
+// product already had every service, so a single click can clear the list instead of filling it.
+const selectAllServices = (): void => {
+    clickElementById('select-all-button');
+    cy.get('.govuk-checkboxes__input').then(($checkboxes) => {
+        if (![...$checkboxes].some((checkbox) => (checkbox as HTMLInputElement).checked)) {
+            clickElementById('select-all-button');
+        }
+    });
+};
+
 export const randomlyChooseAndSelectServices = (): void => {
     // to unselect all boxes when editing
     cy.get('.govuk-checkboxes__input').each((checkbox) => {
         if (checkbox.prop('checked')) {
-            cy.wrap(checkbox).uncheck();
+            cy.wrap(checkbox).uncheck({ force: true });
         }
     });
 
@@ -582,7 +637,7 @@ export const randomlyChooseAndSelectServices = (): void => {
     switch (randomSelector) {
         case 1: {
             cy.log('Click Select All button and continue');
-            clickElementById('select-all-button');
+            selectAllServices();
             getAllCheckboxesData();
             break;
         }
@@ -598,7 +653,7 @@ export const randomlyChooseAndSelectServices = (): void => {
         }
         case 4: {
             cy.log('Click Select All button and then click first checkbox to deselect, then continue');
-            clickElementById('select-all-button');
+            selectAllServices();
             getAllButFirstCheckbox();
             clickFirstCheckboxIfMultiple();
             break;
@@ -646,7 +701,9 @@ export const isFinished = (): void => {
 };
 
 export const uploadFile = (elementId: string, fileName: string): void => {
-    getElementById(elementId).attachFile(fileName);
+    const preprodFileName = fileName.replace(/\.csv$/, '.preprod.csv');
+    const fixture = Cypress.env('preprod') && fileName.startsWith('fareZone') ? preprodFileName : fileName;
+    getElementById(elementId).attachFile(fixture);
 };
 
 export const completeMultipleProducts = (
@@ -686,11 +743,8 @@ export const clickRandomElementInTable = (tableName: string, elementId: string):
 };
 
 export const completeOperatorSearch = (): void => {
-    // Select the operator group named exactly 'test' (not 'test2') on the reuseOperatorGroup page
-    cy.contains('h4', /^test$/)
-        .parents('.card')
-        .find('.govuk-radios__input')
-        .click();
+    const operatorGroupName = getTestDataName('test');
+    cy.contains('h4', operatorGroupName).parents('.card').find('.govuk-radios__input').click();
 
     continueButtonClick();
 };
@@ -752,7 +806,7 @@ export const addOtherProductsIfNotPresent = (): void => {
             defineUserTypeAndTimeRestrictions();
             clickElementById('radio-option-multipleServices');
             continueButtonClick();
-            completeFlatFarePages('Flat Fare Test Product', false);
+            completeFlatFarePages(getTestDataName('Flat Fare Test Product'), false);
             completeSalesPages();
             isFinished();
             cy.log('Flat fare product set up');
@@ -762,7 +816,7 @@ export const addOtherProductsIfNotPresent = (): void => {
         clickElementByText('Other products');
         getElementByClass('govuk-table__row').each(($row) => {
             const rowText = $row.text();
-            if (rowText.includes('Flat Fare Exemptions Test Product')) {
+            if (rowText.includes(getTestDataName('Flat Fare Exemptions Test Product'))) {
                 flatFareWithExemptions = true;
                 cy.wrap(flatFareWithExemptions).as('flatFareWithExemptions');
             }
@@ -786,7 +840,7 @@ export const addOtherProductsIfNotPresent = (): void => {
             defineUserTypeAndTimeRestrictions();
             clickElementById('radio-option-geoZone');
             continueButtonClick();
-            completeFlatFarePages('Flat Fare Exemptions Test Product', false, false, true, false);
+            completeFlatFarePages(getTestDataName('Flat Fare Exemptions Test Product'), false, false, true, false);
             completeSalesPages();
             isFinished();
             cy.log('Flat fare with exemptions product set up');
@@ -852,7 +906,11 @@ export const retryRouteChoiceOnReturnProductError = (): void => {
     cy.get('main').then(($main) => {
         if ($main.text().includes('this service only operates in one direction')) {
             cy.log('Service only operates in one direction, continuing as a circular service');
-            continueButtonClick();
+            if (Cypress.env('preprod')) {
+                clickElementById('continue-button');
+            } else {
+                continueButtonClick();
+            }
         }
     });
 };
