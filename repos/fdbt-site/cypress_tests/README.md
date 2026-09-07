@@ -48,7 +48,20 @@ The specs in `cypress/e2e/preprod` are a copy of the local specs, run against `h
 
 ### Credentials
 
-Two accounts are needed, because the scheme journeys require a scheme operator and the rest require a normal operator. Export them in the terminal you run the tests from:
+Two accounts are needed, because the scheme journeys require a scheme operator and the rest require a normal operator. Fill in the real credentials in `cypress/env/preprod/users.yaml`:
+
+```yaml
+operator:
+    email: '<operator email>'
+    password: '<operator password>'
+scheme:
+    email: '<scheme operator email>'
+    password: '<scheme operator password>'
+```
+
+`users.yaml` is gitignored and must never be committed. `scheme.cy.ts` and `carnet/scheme.cy.ts` use the scheme account, every other spec uses the operator account.
+
+Alternatively, the credentials can still be supplied via environment variables, which take precedence over `users.yaml`:
 
 ```bash
 export CYPRESS_PREPROD_EMAIL='<operator email>'
@@ -57,8 +70,6 @@ read -s "CYPRESS_PREPROD_PASSWORD?Operator password: "; export CYPRESS_PREPROD_P
 export CYPRESS_PREPROD_SCHEME_EMAIL='<scheme operator email>'
 read -s "CYPRESS_PREPROD_SCHEME_PASSWORD?Scheme password: "; export CYPRESS_PREPROD_SCHEME_PASSWORD
 ```
-
-`scheme.cy.ts` and `carnet/scheme.cy.ts` use the scheme account, every other spec uses the operator account.
 
 ### Running
 
@@ -95,3 +106,4 @@ Everything below is guarded by `Cypress.env('preprod')`, so local runs are unaff
 -   Flat fare priced by distance - the option is only rendered when the deployed app has `STAGE=dev`.
 -   The four global settings lifecycle specs - they delete all passenger types, purchase methods, time restrictions and operator groups, which preprod rejects while products depend on them.
 
+BROWSER=chrome npm run runCypress:preprod
