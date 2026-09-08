@@ -2,10 +2,10 @@ import {
     addOtherProductsIfNotPresent,
     addSingleProductIfNotPresent,
     clearAndTypeById,
-    clickElementById,
     clickElementByText,
     getHomePage,
     getTestDataName,
+    openAccountSettings,
     reloadOnServiceError,
 } from './helpers';
 import { addSingleMultiOperatorGroup } from './multiOperatorGroups';
@@ -19,7 +19,7 @@ const skipsNormalBootstrap = isPreprod && (Cypress.spec.relative.includes('globa
 
 const setUpSchemeGlobalSettings = (): void => {
     getHomePage('scheme');
-    clickElementById('account-link');
+    openAccountSettings();
     clickElementByText('Passenger types');
     addTestPassengerTypes();
     clickElementByText('Purchase methods');
@@ -49,7 +49,7 @@ if (!skipsNormalBootstrap) {
     before(() => {
         cy.log('index.ts was run');
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Passenger types');
         addTestPassengerTypes();
         clickElementByText('Purchase methods');

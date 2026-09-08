@@ -875,7 +875,7 @@ export const addSingleProductIfNotPresent = (): void => {
     const hasProduct: string[] = [];
     cy.wrap(hasProduct).as('hasProduct');
     getHomePage();
-    clickElementById('account-link');
+    openAccountSettings();
     clickElementByText('Services');
     cy.get(`[id^="active-products-"]`).each(($element) => {
         if (parseInt($element.text()) > 0) {

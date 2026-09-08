@@ -1,4 +1,4 @@
-import { clickElementById, getElementByClass, getElementById, getHomePage } from './helpers';
+import { getElementByClass, getElementById, getHomePage, openAccountSettings } from './helpers';
 
 export const deleteAllCards = (): void => {
     cy.get('body').then(($body) => {
@@ -18,5 +18,5 @@ export const deleteAllCards = (): void => {
 export const startGlobalSettings = (): void => {
     getHomePage('GS');
 
-    clickElementById('account-link');
+    openAccountSettings();
 };
