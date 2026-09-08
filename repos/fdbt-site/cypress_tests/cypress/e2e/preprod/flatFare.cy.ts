@@ -1,4 +1,4 @@
-import { clickElementById, continueButtonClick, isFinished } from '../../support/helpers';
+import { continueButtonClick, isFinished, selectProductScope } from '../../support/helpers';
 import {
     completeFlatFarePages,
     completeSalesPages,
@@ -10,7 +10,7 @@ describe('The flat fare faretype product journey', () => {
     it('completes successfully for multi service', () => {
         selectFareType('flatFare', false);
         defineUserTypeAndTimeRestrictions();
-        clickElementById('radio-option-multipleServices');
+        selectProductScope('multipleServices');
         continueButtonClick();
         completeFlatFarePages('Flat Fare Test Product', false);
         completeSalesPages();
@@ -20,7 +20,7 @@ describe('The flat fare faretype product journey', () => {
     it('completes successfully for geo zone', () => {
         selectFareType('flatFare', false);
         defineUserTypeAndTimeRestrictions();
-        clickElementById('radio-option-geoZone');
+        selectProductScope('geoZone');
         continueButtonClick();
         completeFlatFarePages('geo zone flat fare', false, false, true);
         completeSalesPages();
@@ -30,7 +30,7 @@ describe('The flat fare faretype product journey', () => {
     it.skip('completes successfully for pricing by distance', () => {
         selectFareType('flatFare', false);
         defineUserTypeAndTimeRestrictions();
-        clickElementById('radio-option-multipleServicesPricedByDistance');
+        selectProductScope('multipleServicesPricedByDistance');
         continueButtonClick();
         completeFlatFarePages('Flat Fare Test Product', false, false, false, true);
         completeSalesPages();

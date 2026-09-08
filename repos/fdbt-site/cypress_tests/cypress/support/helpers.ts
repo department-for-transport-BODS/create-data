@@ -36,6 +36,11 @@ export const clickElementById = (id: string): Cypress.Chainable<JQuery> => {
 };
 export const clickElementByText = (text: string): Cypress.Chainable<JQuery> => getElementByText(text).click();
 
+export const openAccountSettings = (): Cypress.Chainable<JQuery> => clickElementById('account-link');
+
+export const selectProductScope = (scope: string): Cypress.Chainable<JQuery> =>
+    clickElementById(`radio-option-${scope}`);
+
 export const clearAndTypeById = (id: string, text: string): void => {
     getElementById(id).click();
     getElementById(id).clear();

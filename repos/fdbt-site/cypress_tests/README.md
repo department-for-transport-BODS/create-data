@@ -91,7 +91,7 @@ BROWSER=chrome npx cypress run --config-file cypress.preprod.config.ts -b chrome
 BROWSER=chrome npm run runCypress:preprod:report
 ```
 
-This runs the suite, writes a mochawesome report to `results/preprod-report.html` and opens it in Chrome. The report is produced even when tests fail. Use `npm run report:build` and `npm run report:open` to rebuild or reopen it without re-running the tests.
+This runs the suite and writes a mochawesome report to `results/preprod-report.html`. The report is produced even when tests fail. Use `npm run report:build` to rebuild it without re-running the tests, then open the printed path in a browser.
 
 ### Preprod specific behaviour
 

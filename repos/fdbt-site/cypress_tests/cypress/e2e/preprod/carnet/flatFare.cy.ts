@@ -1,4 +1,4 @@
-import { clickElementById, continueButtonClick, isFinished } from '../../../support/helpers';
+import { continueButtonClick, isFinished, selectProductScope } from '../../../support/helpers';
 import {
     completeFlatFareCarnet,
     completeFlatFarePages,
@@ -19,7 +19,7 @@ describe('The flat fare carnet product journey', () => {
     it('completes successfully for geoZone', () => {
         selectCarnetFareType('flatFare');
         defineUserTypeAndTimeRestrictions();
-        clickElementById('radio-option-geoZone');
+        selectProductScope('geoZone');
         continueButtonClick();
         completeFlatFarePages('Flat fare carnet 1', false, true, true);
         completeSalesPages(1);

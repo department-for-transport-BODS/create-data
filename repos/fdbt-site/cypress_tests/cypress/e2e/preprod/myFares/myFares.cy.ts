@@ -2,12 +2,12 @@ import {
     addMultiOperatorProductIfNotPresent,
     addOtherProductsIfNotPresent,
     addSingleProductIfNotPresent,
-    clickElementById,
     clickElementByText,
     clickRandomElementInTable,
     getElementByClass,
     getElementById,
     getHomePage,
+    openAccountSettings,
 } from '../../../support/helpers';
 import {
     deleteMultiOperatorProduct,
@@ -42,31 +42,31 @@ describe('The my fares point to point products pages', () => {
     });
     it("allows the user to edit a point to point product's passenger type", () => {
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Services');
         editPassengerTypePointToPointPage();
     });
     it("allows the user to edit a point to point product's start date", () => {
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Services');
         editStartDatePointToPointPage();
     });
     it("allows the user to edit a point to point product's end date", () => {
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Services');
         editEndDatePointToPointPage();
     });
     it("allows the user to edit a point to point product's time restriction", () => {
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Services');
         editTimeRestrictionPointToPointPage();
     });
     it("allows the user to edit a point to point product's fare triangle", () => {
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Services');
         editFareTrianglePointToPointPage();
         getElementById('fare-triangle')
@@ -80,13 +80,13 @@ describe('The my fares point to point products pages', () => {
     });
     it("allows the user to edit a point to point product's name", () => {
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Services');
         editProductNamePointToPointPage();
     });
     it("allows the user to edit a point to point product's purchase method", () => {
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Services');
         editPurchaseMethodPointToPointPage();
     });
@@ -98,53 +98,53 @@ describe('The my fares products pages', () => {
     });
     it("allows the user to edit a product's services", () => {
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Other products');
         getElementByClass('govuk-table__body').contains('[class=govuk-table__row]', 'Flat fare').find('td a').click();
         editServicesOtherProductsPage();
     });
     it("allows the user to edit a product's passenger type", () => {
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Other products');
         editPassengerTypeOtherProductsPage();
     });
     it("allows the user to edit a product's start date", () => {
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Other products');
         clickRandomElementInTable('govuk-table__body', 'product-link');
         editStartDate();
     });
     it("allows the user to edit a product's end date", () => {
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Other products');
         editEndDateOtherProductsPage();
     });
     it("allows the user to edit a product's purchase method", () => {
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Other products');
         editPurchaseMethodOtherProductsPage();
     });
     it("allows the user to edit a product's time restriction", () => {
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Other products');
         getElementByClass('govuk-table__body').contains('[class=govuk-table__row]', 'Flat fare').find('td a').click();
         editTimeRestriction();
     });
     it("allows the user to edit a product's period duration", () => {
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Other products');
         getElementByClass('govuk-table__body').contains('[class=govuk-table__row]', 'Period').find('td a').click();
         editProductDuration();
     });
     it("allows the user to edit a product's carnet product quantity", () => {
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Other products');
         getElementByClass('govuk-table__body')
             .contains('[class=govuk-table__row]', 'Flat fare carnet')
@@ -154,7 +154,7 @@ describe('The my fares products pages', () => {
     });
     it("allows the user to edit a product's carnet product expiry", () => {
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Other products');
         getElementByClass('govuk-table__body')
             .contains('[class=govuk-table__row]', 'Flat fare carnet')
@@ -164,21 +164,21 @@ describe('The my fares products pages', () => {
     });
     it("allows the user to edit a product's name", () => {
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Other products');
         clickRandomElementInTable('govuk-table__body', 'product-link');
         editProductName();
     });
     it("allows the user to edit a product's validity", () => {
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Other products');
         getElementByClass('govuk-table__body').contains('[class=govuk-table__row]', 'Period').find('td a').click();
         editProductExpiry();
     });
     it("allows the user to edit a product's zone name", () => {
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Other products');
         getElementByClass('govuk-table__body')
             .contains('[class=govuk-table__row]', 'Flat Fare Exemptions Test Product')
@@ -189,7 +189,7 @@ describe('The my fares products pages', () => {
     });
     it("allows the user to edit a product's exempted services", () => {
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Other products');
         getElementByClass('govuk-table__body')
             .contains('[class=govuk-table__row]', 'Flat Fare Exemptions Test Product')
@@ -199,7 +199,7 @@ describe('The my fares products pages', () => {
     });
     it("allows the user to edit a product's stops", () => {
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Other products');
         getElementByClass('govuk-table__body')
             .contains('[class=govuk-table__row]', 'Flat Fare Exemptions Test Product')
@@ -216,45 +216,45 @@ describe('my fares multi-operator products (internal) pages', () => {
     });
     it("allows the user to edit a multi-operator product's passenger type", () => {
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Multi-operator products (internal)');
         editPassengerTypeOtherProductsPage();
     });
 
     it("allows the user to edit a multi-operator product's time restriction", () => {
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Multi-operator products (internal)');
         editTimeRestrictionMultiOperatorProductsPage();
     });
     it("allows the user to edit a multi-operator product's purchase method", () => {
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Multi-operator products (internal)');
         editPurchaseMethodOtherProductsPage();
     });
     it("allows the user to edit a multi-operator product's start date", () => {
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Multi-operator products (internal)');
         clickRandomElementInTable('govuk-table__body', 'product-link');
         editStartDate();
     });
     it("allows the user to edit a multi-operator product's end date", () => {
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Multi-operator products (internal)');
         editEndDateOtherProductsPage();
     });
     it('allows the user to edit multi-operator groups for geozone multi-operator tickets', () => {
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Multi-operator products (internal)');
         editOperatorGroupMultiOperatorProductsPage();
     });
     it('allows the user to delete the multi-operator product', () => {
         getHomePage();
-        clickElementById('account-link');
+        openAccountSettings();
         clickElementByText('Multi-operator products (internal)');
         deleteMultiOperatorProduct();
     });
