@@ -1,0 +1,6 @@
+node_modules/
+results/
+cypress/screenshots/
+cypress/videos/
+cypress/downloads/
+cypress/env/**/users.yaml

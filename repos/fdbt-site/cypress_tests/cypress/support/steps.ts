@@ -28,6 +28,7 @@ import {
     completeMultiServicePages,
     getElementByClass,
     completePricingPerDistancePage,
+    getTestDataName,
 } from './helpers';
 
 const stringify = (item: unknown) => JSON.stringify(item).replace(/"/g, '');
@@ -195,14 +196,34 @@ const completeMatchingPage = (): void => {
         if (!url.toLowerCase().includes('matching')) {
             return;
         }
-        for (let i = 0; i < 4; i += 1) {
-            cy.get(`[id=option-${i}]`)
-                .find('option')
-                .then(($elm) => {
-                    $elm.get(i + 1).setAttribute('selected', 'selected');
-                })
-                .parent()
-                .trigger('change');
+        if (Cypress.env('preprod')) {
+            cy.get('select[id^="option-"]')
+                .first()
+                .find('option:not([disabled])')
+                .then(($options) => {
+                    const fareStages = [...$options]
+                        .map((option) => (option as HTMLOptionElement).value)
+                        .filter((value) => value !== 'notApplicable');
+
+                    cy.get('select[id^="option-"]').should('have.length.at.least', fareStages.length);
+                    fareStages.forEach((fareStage, index) => {
+                        cy.get('select[id^="option-"]').eq(index).select(fareStage);
+                    });
+                });
+            clickElementById('top-auto-populate-fares-stages-button');
+            cy.get('select[id^="option-"]').should(($selects) => {
+                expect([...$selects].every((select) => !!(select as HTMLSelectElement).value)).to.equal(true);
+            });
+        } else {
+            for (let i = 0; i < 4; i += 1) {
+                cy.get(`[id=option-${i}]`)
+                    .find('option')
+                    .then(($options) => {
+                        $options.get(i + 1).setAttribute('selected', 'selected');
+                    })
+                    .parent()
+                    .trigger('change');
+            }
         }
         submitButtonClick();
     });
@@ -616,7 +637,7 @@ export const editPurchaseMethod = (isOtherProduct?: boolean): void => {
     clickElementById('purchase-methods-link');
     cy.get('.govuk-checkboxes__input').each((checkbox) => {
         if (checkbox.prop('checked')) {
-            cy.wrap(checkbox).uncheck();
+            cy.wrap(checkbox).uncheck({ force: true });
         }
     });
     randomlyDeterminePurchaseType(isOtherProduct);
@@ -669,7 +690,8 @@ export const editFareTrianglePointToPointPage = (): void => {
 export const editFareZone = (): void => {
     getElementById('zone').then((element) => {
         cy.wrap(element.text()).as('oldZone');
-        if (element.text() === 'Test Town Centre') {
+        const originalZoneName = Cypress.env('preprod') ? 'Haymarket Bus Station' : 'Test Town Centre';
+        if (element.text() === originalZoneName) {
             clickElementById('zone-link');
             uploadFile('csv-upload', 'fareZoneEdited.csv');
         } else {
@@ -739,11 +761,7 @@ export const deleteMultiOperatorProduct = (): void => {
 
 const editOperatorGroup = (): void => {
     clickElementById('multi-operator-group-link');
-    // Select the operator group named exactly 'test2' on the reuseOperatorGroup page
-    cy.contains('h4', /^test2$/)
-        .parents('.card')
-        .find('.govuk-radios__input')
-        .click();
+    cy.contains('h4', getTestDataName('test2')).parents('.card').find('.govuk-radios__input').click();
     continueButtonClick();
     getElementById('multi-operator-group').should('have.text', 'NWBT');
 };

@@ -1,4 +1,4 @@
-import { clearAndTypeByName, clickElementById, clickElementByText, getElementByClass } from './helpers';
+import { clearAndTypeByName, clickElementById, clickElementByText } from './helpers';
 
 interface PurchaseMethod {
     purchaseLocations: string[];
@@ -25,37 +25,42 @@ export const addPurchaseMethod = (purchaseMethod: PurchaseMethod, isCapped = fal
     clickElementByText('Add purchase method');
 };
 
-export const createEditPurchaseMethod = (isCapped = false): void => {
+export const createEditPurchaseMethod = (
+    nameOrIsCapped: string | boolean = 'Onboard',
+    editedName = 'Online',
+    capped = false,
+): void => {
+    const isCapped = typeof nameOrIsCapped === 'boolean' ? nameOrIsCapped : capped;
+    const name = typeof nameOrIsCapped === 'string' ? nameOrIsCapped : 'Onboard';
     const purchaseMethod = {
         purchaseLocations: ['checkbox-0-on-board'],
         paymentMethods: isCapped
             ? ['checkbox-0-debit-card', 'checkbox-1-credit-card']
             : ['checkbox-0-cash', 'checkbox-1-debit-card'],
         ticketFormats: isCapped ? ['checkbox-0-mobile-app'] : ['checkbox-3-electronic-document'],
-        name: 'Onboard',
+        name,
     };
 
     addPurchaseMethod(purchaseMethod, isCapped);
 
     // Click on edit and back button
-    getElementByClass('card').eq(0).contains('Edit').click();
+    cy.contains('.card', purchaseMethod.name).contains('Edit').click();
     clickElementByText('Back');
 
-    const purchaseMethodCard = getElementByClass('card').eq(0);
-    purchaseMethodCard.should('include.text', purchaseMethod.name);
-    purchaseMethodCard.should('include.text', 'Purchase locations: On board');
+    cy.contains('.card', purchaseMethod.name).should('include.text', purchaseMethod.name);
+    cy.contains('.card', purchaseMethod.name).should('include.text', 'Purchase locations: On board');
     if (isCapped) {
-        purchaseMethodCard.should('include.text', 'Payment methods: Debit card, Credit card');
+        cy.contains('.card', purchaseMethod.name).should('include.text', 'Payment methods: Debit card, Credit card');
     } else {
-        purchaseMethodCard.should('include.text', 'Payment methods: Cash, Debit card');
+        cy.contains('.card', purchaseMethod.name).should('include.text', 'Payment methods: Cash, Debit card');
     }
     if (isCapped) {
-        purchaseMethodCard.should('include.text', 'Ticket formats: Mobile app');
+        cy.contains('.card', purchaseMethod.name).should('include.text', 'Ticket formats: Mobile app');
     } else {
-        purchaseMethodCard.should('include.text', 'Ticket formats: Digital');
+        cy.contains('.card', purchaseMethod.name).should('include.text', 'Ticket formats: Digital');
     }
 
-    purchaseMethodCard.contains('Edit').click();
+    cy.contains('.card', purchaseMethod.name).contains('Edit').click();
 
     const editedPurchaseMethod = {
         purchaseLocations: isCapped
@@ -63,28 +68,36 @@ export const createEditPurchaseMethod = (isCapped = false): void => {
             : ['checkbox-0-on-board', 'checkbox-1-online'],
         paymentMethods: isCapped ? ['checkbox-2-mobile-phone'] : ['checkbox-2-credit-card'],
         ticketFormats: isCapped ? ['checkbox-1-smart-card'] : ['checkbox-0-paper-ticket'],
-        name: 'Online',
+        name: editedName,
     };
 
     enterPurchaseMethodDetails(editedPurchaseMethod);
 
     cy.contains('Update purchase method').click();
 
-    const editedCard = getElementByClass('card').eq(0);
-    editedCard.should('include.text', editedPurchaseMethod.name);
+    cy.contains('.card', editedPurchaseMethod.name).should('include.text', editedPurchaseMethod.name);
     if (isCapped) {
-        editedCard.should('include.text', 'Purchase locations: Mobile device');
+        cy.contains('.card', editedPurchaseMethod.name).should('include.text', 'Purchase locations: Mobile device');
     } else {
-        editedCard.should('include.text', 'Purchase locations: Online');
+        cy.contains('.card', editedPurchaseMethod.name).should('include.text', 'Purchase locations: Online');
     }
     if (isCapped) {
-        editedCard.should('include.text', 'Payment methods: Debit card, Credit card, Mobile phone');
+        cy.contains('.card', editedPurchaseMethod.name).should(
+            'include.text',
+            'Payment methods: Debit card, Credit card, Mobile phone',
+        );
     } else {
-        editedCard.should('include.text', 'Payment methods: Cash, Debit card, Credit card');
+        cy.contains('.card', editedPurchaseMethod.name).should(
+            'include.text',
+            'Payment methods: Cash, Debit card, Credit card',
+        );
     }
     if (isCapped) {
-        editedCard.should('include.text', 'Ticket formats: Mobile app, Smart card');
+        cy.contains('.card', editedPurchaseMethod.name).should(
+            'include.text',
+            'Ticket formats: Mobile app, Smart card',
+        );
     } else {
-        editedCard.should('include.text', 'Ticket formats: Paper ticket, Digital');
+        cy.contains('.card', editedPurchaseMethod.name).should('include.text', 'Ticket formats: Paper ticket, Digital');
     }
 };

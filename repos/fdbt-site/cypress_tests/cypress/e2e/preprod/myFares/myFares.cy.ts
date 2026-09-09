@@ -8,7 +8,7 @@ import {
     getElementById,
     getHomePage,
     openAccountSettings,
-} from '../../support/helpers';
+} from '../../../support/helpers';
 import {
     deleteMultiOperatorProduct,
     editCarnetExpiry,
@@ -34,7 +34,7 @@ import {
     editTimeRestriction,
     editTimeRestrictionMultiOperatorProductsPage,
     editTimeRestrictionPointToPointPage,
-} from '../../support/steps';
+} from '../../../support/steps';
 
 describe('The my fares point to point products pages', () => {
     before(() => {
