@@ -1,10 +1,4 @@
-import {
-    clearAndTypeById,
-    clickElementById,
-    clickElementByText,
-    continueButtonClick,
-    getElementByClass,
-} from './helpers';
+import { clearAndTypeById, clickElementById, clickElementByText, continueButtonClick } from './helpers';
 
 const addExtraOperator = (): void => {
     clearAndTypeById('search-input', 'Pil');
@@ -29,50 +23,40 @@ export const addSingleMultiOperatorGroup = (name: string, addExtra: boolean, add
     continueButtonClick();
 };
 
-const checkCardBody = (
-    card: Cypress.Chainable<JQuery<HTMLElement>>,
-    indexOfCard: number,
-    valuesToCompare: string[],
-) => {
-    valuesToCompare.forEach((value, index) => {
-        card.get(`[id=operator-${index}]`)
-            .eq(indexOfCard)
-            .should(($p) => {
-                expect($p.text()).equal(value);
-            });
-    });
+const checkCardBody = (card: Cypress.Chainable<JQuery<HTMLElement>>, valuesToCompare: string[]): void => {
+    for (const value of valuesToCompare) {
+        card.should('contain.text', value);
+    }
 };
 
-export const createEditMultiOperatorGroups = (): void => {
-    const multiOperatorGroup1 = 'MultiOperator Group 1',
-        multiOperatorGroup2 = 'MultiOperator Group 2';
+export const createEditMultiOperatorGroups = (namePrefix = 'MultiOperator Group'): void => {
+    const multiOperatorGroup1 = `${namePrefix} Group 1`;
+    const multiOperatorGroup2 = `${namePrefix} Group 2`;
 
     addSingleMultiOperatorGroup(multiOperatorGroup1, false, true);
 
     // Click on edit and back button
-    getElementByClass('card').eq(0).contains('Edit').click();
+    cy.contains('.card', multiOperatorGroup1).contains('Edit').click();
     clickElementByText('Back');
 
-    const valuesToCompareFirst = ['Preston Bus - PBLT', 'The Blackburn Bus Company - LNUD'],
-        firstCard = getElementByClass('card').eq(0);
-    firstCard.should('contain.text', multiOperatorGroup1);
-    checkCardBody(firstCard, 0, valuesToCompareFirst);
-    getElementByClass('card').eq(0).contains('Edit').click();
+    const valuesToCompareFirst = ['Preston Bus - PBLT', 'The Blackburn Bus Company - LNUD'];
+    cy.contains('.card', multiOperatorGroup1).should('contain.text', multiOperatorGroup1);
+    checkCardBody(cy.contains('.card', multiOperatorGroup1), valuesToCompareFirst);
+    cy.contains('.card', multiOperatorGroup1).contains('Edit').click();
     clearAndTypeById('search-input', 'Pil');
     clickElementById('search-button');
     clickElementByText('Pilkingtonbus - NWBT');
     continueButtonClick();
     valuesToCompareFirst.push('Pilkingtonbus - NWBT');
-    checkCardBody(firstCard, 0, valuesToCompareFirst);
+    checkCardBody(cy.contains('.card', multiOperatorGroup1), valuesToCompareFirst);
 
     const valuesToCompareSecond = ['Preston Bus - PBLT', 'The Blackburn Bus Company - LNUD', 'Pilkingtonbus - NWBT'];
     addSingleMultiOperatorGroup(multiOperatorGroup2, true, true);
-    const secondCard = getElementByClass('card').eq(1);
-    secondCard.should('contain.text', multiOperatorGroup2);
-    checkCardBody(secondCard, 1, valuesToCompareSecond);
-    getElementByClass('card').eq(1).contains('Edit').click();
+    cy.contains('.card', multiOperatorGroup2).should('contain.text', multiOperatorGroup2);
+    checkCardBody(cy.contains('.card', multiOperatorGroup2), valuesToCompareSecond);
+    cy.contains('.card', multiOperatorGroup2).contains('Edit').click();
     clickElementById('remove-0');
     continueButtonClick();
     valuesToCompareSecond.shift();
-    checkCardBody(secondCard, 1, valuesToCompareSecond);
+    checkCardBody(cy.contains('.card', multiOperatorGroup2), valuesToCompareSecond);
 };

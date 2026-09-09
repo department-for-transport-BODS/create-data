@@ -1,12 +1,4 @@
-import {
-    clearAndTypeById,
-    clearAndTypeByName,
-    clickElementById,
-    clickElementByText,
-    getElementByClass,
-    getElementByDataTestId,
-    getElementById,
-} from './helpers';
+import { clearAndTypeById, clearAndTypeByName, clickElementById, clickElementByText } from './helpers';
 
 interface PassengerType {
     type: string;
@@ -39,70 +31,74 @@ export const addSinglePassengerType = (passengerType: PassengerType): void => {
     cy.contains('Add passenger type').click();
 };
 
-export const addGroupPassengerType = (groupName: string): void => {
+const setPassengerGroupInput = (passengerName: string, inputName: string, value: string): void => {
+    cy.contains('label', passengerName).parent().parent().find(`[data-test-id="${inputName}"]`).clear();
+    cy.contains('label', passengerName).parent().parent().find(`[data-test-id="${inputName}"]`).type(value);
+};
+
+export const addGroupPassengerType = (groupName: string, passengerNames = ['senior', 'adult']): void => {
     clickElementByText('Add a passenger group');
     clearAndTypeById('max-group-size', '6');
-    clickElementById('passenger-type-0');
-    clickElementById('passenger-type-1');
-    getElementByDataTestId('maximum-passengers').eq(0).clear();
-    getElementByDataTestId('maximum-passengers').eq(0).type('4');
-
-    getElementByDataTestId('maximum-passengers').eq(1).clear();
-    getElementByDataTestId('maximum-passengers').eq(1).type('3');
-    getElementByDataTestId('minimum-passengers').eq(1).clear();
-    getElementByDataTestId('minimum-passengers').eq(1).type('2');
+    for (const passengerName of passengerNames) {
+        cy.contains('label', passengerName, { matchCase: false })
+            .invoke('attr', 'for')
+            .then((inputId) => {
+                cy.get(`#${inputId}`).check();
+            });
+    }
+    setPassengerGroupInput(passengerNames[0], 'maximum-passengers', '4');
+    setPassengerGroupInput(passengerNames[1], 'maximum-passengers', '3');
+    setPassengerGroupInput(passengerNames[1], 'minimum-passengers', '2');
 
     clearAndTypeByName('passengerGroupName', groupName);
 
     clickElementByText('Add passenger group');
 };
 
-const editGroupPassengerType = () => {
+const editGroupPassengerType = (editedGroupName: string, seniorName: string): void => {
     clearAndTypeById('max-group-size', '9');
-    getElementById('passenger-type-1').click();
-    getElementByDataTestId('minimum-passengers').eq(0).clear();
-    getElementByDataTestId('minimum-passengers').eq(0).type('8');
-    getElementByDataTestId('maximum-passengers').eq(0).clear();
-    getElementByDataTestId('maximum-passengers').eq(0).type('9');
+    setPassengerGroupInput(seniorName, 'minimum-passengers', '8');
+    setPassengerGroupInput(seniorName, 'maximum-passengers', '9');
 
-    clearAndTypeByName('passengerGroupName', 'my edited group');
+    clearAndTypeByName('passengerGroupName', editedGroupName);
 
     cy.contains('Update passenger group').click();
 };
 
-export const createEditSinglePassengerTypes = (): void => {
+export const createEditSinglePassengerTypes = (namePrefix = 'my'): void => {
     const passengerType1 = {
         type: 'senior',
         minAge: 55,
         maxAge: 99,
         documents: ['membership_card', 'identity_document'],
-        name: 'my Seniors',
+        name: `${namePrefix} Seniors`,
     };
     const passengerType2 = {
         type: 'adult',
-        name: 'Adults',
+        name: `${namePrefix} Adults`,
     };
 
     addSinglePassengerType(passengerType1);
     addSinglePassengerType(passengerType2);
 
     // Click on edit and back button
-    getElementByClass('card').eq(0).contains('Edit').click();
+    cy.contains('.card', passengerType1.name).contains('Edit').click();
     clickElementByText('Back');
 
-    const firstCard = getElementByClass('card').eq(0);
-    firstCard.should('include.text', passengerType1.name);
-    firstCard.should('include.text', 'Proof document(s): Membership card, Identity document');
+    cy.contains('.card', passengerType1.name).should('include.text', passengerType1.name);
+    cy.contains('.card', passengerType1.name).should(
+        'include.text',
+        'Proof document(s): Membership card, Identity document',
+    );
 
-    const secondCard = getElementByClass('card').eq(1);
-    secondCard.should('include.text', passengerType2.name);
-    secondCard.should('include.text', 'Proof document(s): N/A');
+    cy.contains('.card', passengerType2.name).should('include.text', passengerType2.name);
+    cy.contains('.card', passengerType2.name).should('include.text', 'Proof document(s): N/A');
 
-    secondCard.contains('Edit').click();
+    cy.contains('.card', passengerType2.name).contains('Edit').click();
 
     const editedPassengerType = {
         type: 'child',
-        name: 'other child',
+        name: `${namePrefix} Child`,
         maxAge: 18,
         documents: ['student_card'],
     };
@@ -110,26 +106,28 @@ export const createEditSinglePassengerTypes = (): void => {
     enterPassengerTypeDetails(editedPassengerType);
     cy.contains('Update passenger type').click();
 
-    const editedCard = getElementByClass('card').eq(1);
-    editedCard.should('include.text', editedPassengerType.name);
-    editedCard.should('include.text', 'Proof document(s): Student card');
+    cy.contains('.card', editedPassengerType.name).should('include.text', editedPassengerType.name);
+    cy.contains('.card', editedPassengerType.name).should('include.text', 'Proof document(s): Student card');
 };
 
-export const createEditGroupPassengerTypes = (): void => {
-    addGroupPassengerType('my group');
+export const createEditGroupPassengerTypes = (
+    groupName = 'my group',
+    editedGroupName = 'my edited group',
+    seniorName = 'my Seniors',
+    childName = 'other child',
+): void => {
+    addGroupPassengerType(groupName, [seniorName, childName]);
 
-    const group = getElementByClass('card').eq(2);
-    group.should('include.text', 'my group');
-    group.should('include.text', 'Max size: 6');
-    group.should('include.text', 'my Seniors: Min: 0 - Max: 4');
-    group.should('include.text', 'other child: Min: 2 - Max: 3');
+    cy.contains('.card', groupName).should('include.text', groupName);
+    cy.contains('.card', groupName).should('include.text', 'Max size: 6');
+    cy.contains('.card', groupName).should('include.text', `${seniorName}: Min: 0 - Max: 4`);
+    cy.contains('.card', groupName).should('include.text', `${childName}: Min: 2 - Max: 3`);
 
-    group.contains('Edit').click();
-    editGroupPassengerType();
+    cy.contains('.card', groupName).contains('Edit').click();
+    editGroupPassengerType(editedGroupName, seniorName);
 
-    const editedGroup = getElementByClass('card').eq(2);
-    editedGroup.should('include.text', 'my edited');
-    editedGroup.should('include.text', 'Max size: 9');
-    editedGroup.should('include.text', 'my Seniors: Min: 8 - Max: 9');
-    editedGroup.should('not.include.text', 'other child:');
+    cy.contains('.card', editedGroupName).should('include.text', editedGroupName);
+    cy.contains('.card', editedGroupName).should('include.text', 'Max size: 9');
+    cy.contains('.card', editedGroupName).should('include.text', `${seniorName}: Min: 8 - Max: 9`);
+    cy.contains('.card', editedGroupName).should('include.text', `${childName}:`);
 };

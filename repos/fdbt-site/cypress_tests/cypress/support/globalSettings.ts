@@ -15,6 +15,14 @@ export const deleteAllCards = (): void => {
     });
 };
 
+export const deleteCardByName = (name: string): void => {
+    cy.contains('.card', name).within(() => {
+        cy.contains('Delete').click();
+    });
+    getElementById('popup-delete-button').click();
+    cy.contains('.card', name).should('not.exist');
+};
+
 export const startGlobalSettings = (): void => {
     getHomePage('GS');
 

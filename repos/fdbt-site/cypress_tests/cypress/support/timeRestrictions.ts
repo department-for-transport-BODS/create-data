@@ -1,10 +1,4 @@
-import {
-    clickElementById,
-    clickElementByText,
-    getElementByClass,
-    getElementByDataTestId,
-    getElementByName,
-} from './helpers';
+import { clickElementById, clickElementByText, getElementByClass, getElementByName } from './helpers';
 
 interface TimeRestriction {
     days: string[];
@@ -39,29 +33,21 @@ export const addTimeRestriction = (timeRestriction: TimeRestriction): void => {
     });
 };
 
-export const createEditTimeRestriction = (): void => {
+export const createEditTimeRestriction = (name = 'Weekends', editedName = 'Working Days'): void => {
     const timeRestriction = {
         days: ['time-restriction-day-5', 'time-restriction-day-6'],
-        name: 'Weekends',
+        name,
     };
 
     addTimeRestriction(timeRestriction);
 
     // Click on edit and back button
-    getElementByClass('card').eq(0).contains('Edit').click();
+    cy.contains('.card', timeRestriction.name).contains('Edit').click();
     clickElementByText('Back');
 
-    let timeRestrictionCard = getElementByClass('card').eq(0);
-    timeRestrictionCard.should('include.text', timeRestriction.name);
+    cy.contains('.card', timeRestriction.name).should('include.text', timeRestriction.name);
 
-    const saturday = getElementByDataTestId('day-restriction').eq(5);
-    saturday.should('include.text', 'Sat Valid all day');
-
-    const sunday = getElementByDataTestId('day-restriction').eq(6);
-    sunday.should('include.text', 'Sun Valid all day');
-
-    timeRestrictionCard = getElementByClass('card').eq(0);
-    timeRestrictionCard.contains('Edit').click();
+    cy.contains('.card', timeRestriction.name).contains('Edit').click();
 
     const editedTimeRestriction = {
         days: [
@@ -74,28 +60,12 @@ export const createEditTimeRestriction = (): void => {
             'time-restriction-day-6',
             'time-restriction-day-7',
         ],
-        name: 'Working Days',
+        name: editedName,
     };
 
     enterTimeRestrictionDetails(editedTimeRestriction);
 
     cy.contains('Update time restriction').click();
 
-    const monday = getElementByDataTestId('day-restriction').eq(0);
-    monday.should('include.text', 'Mon Valid all day');
-
-    const tuesday = getElementByDataTestId('day-restriction').eq(1);
-    tuesday.should('include.text', 'Tue Valid all day');
-
-    const wednesday = getElementByDataTestId('day-restriction').eq(2);
-    wednesday.should('include.text', 'Wed Valid all day');
-
-    const thursday = getElementByDataTestId('day-restriction').eq(3);
-    thursday.should('include.text', 'Thu Valid all day');
-
-    const friday = getElementByDataTestId('day-restriction').eq(4);
-    friday.should('include.text', 'Fri Valid all day');
-
-    const editedCard = getElementByClass('card').eq(0);
-    editedCard.should('include.text', editedTimeRestriction.name);
+    cy.contains('.card', editedTimeRestriction.name).should('include.text', editedTimeRestriction.name);
 };

@@ -1,7 +1,8 @@
-import { deleteAllCards, startGlobalSettings } from '../../../support/globalSettings';
+import { deleteCardByName, startGlobalSettings } from '../../../support/globalSettings';
 import { createEditMultiOperatorGroups } from '../../../support/multiOperatorGroups';
+import { getTestDataName } from '../../../support/helpers';
 
-describe.skip('multi operator groups', () => {
+describe('multi operator groups', () => {
     it('creates edits and deletes multi operator groups', () => {
         startGlobalSettings();
 
@@ -10,11 +11,11 @@ describe.skip('multi operator groups', () => {
 
         cy.contains('Operator groups').click();
 
-        // start with clean environment
-        deleteAllCards();
+        const namePrefix = getTestDataName(`GS ${Date.now().toString(36)}`);
 
-        createEditMultiOperatorGroups();
+        createEditMultiOperatorGroups(namePrefix);
 
-        deleteAllCards();
+        deleteCardByName(`${namePrefix} Group 1`);
+        deleteCardByName(`${namePrefix} Group 2`);
     });
 });

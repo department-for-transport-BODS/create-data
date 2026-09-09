@@ -211,17 +211,25 @@ export const randomlySelectMultiServices = (): void => {
             break;
         case 2:
             cy.log('Few checkbox are selected');
-            cy.get('.govuk-checkboxes__item').each((checkbox, index, checkboxes) => {
-                const numberOfCheckboxes = checkboxes.length;
-                if (numberOfCheckboxes === 1 || index !== numberOfCheckboxes - 1) {
-                    cy.wrap(checkbox).click();
+            cy.get('body').then(($body) => {
+                if ($body.find('.govuk-checkboxes__item').length > 0) {
+                    cy.get('.govuk-checkboxes__item').each((checkbox, index, checkboxes) => {
+                        const numberOfCheckboxes = checkboxes.length;
+                        if (numberOfCheckboxes === 1 || index !== numberOfCheckboxes - 1) {
+                            cy.wrap(checkbox).click();
+                        }
+                    });
                 }
             });
             break;
         case 3:
             cy.log('All checkbox are selected');
-            cy.get('.govuk-checkboxes__item').each((checkbox) => {
-                cy.wrap(checkbox).click();
+            cy.get('body').then(($body) => {
+                if ($body.find('.govuk-checkboxes__item').length > 0) {
+                    cy.get('.govuk-checkboxes__item').each((checkbox) => {
+                        cy.wrap(checkbox).click();
+                    });
+                }
             });
             break;
         default:
@@ -230,8 +238,11 @@ export const randomlySelectMultiServices = (): void => {
 
     // Every branch toggles rather than selects, so when services are already checked
     // (editing an existing product) they can all end up cleared, which the form rejects.
-    cy.get('.govuk-checkboxes__input').then(($checkboxes) => {
-        if (![...$checkboxes].some((checkbox) => (checkbox as HTMLInputElement).checked)) {
+    cy.get('body').then(($body) => {
+        const $checkboxes = $body.find('.govuk-checkboxes__input');
+        if ($checkboxes.length === 0) {
+            cy.contains('All services have been added').should('be.visible');
+        } else if (![...$checkboxes].some((checkbox) => Cypress.$(checkbox).is(':checked'))) {
             cy.wrap($checkboxes).first().check();
         }
     });
@@ -541,20 +552,33 @@ export const clickAllCheckboxes = (): string[] => {
 
 export const getAllCheckboxesData = (): void => {
     const input: string[] = [];
-    getElementByClass('govuk-checkboxes__input').each((checkbox, index) => {
-        cy.wrap(checkbox);
-        const name = checkbox.attr('name');
-        input[index] = name?.split('#')[0] ?? '';
-        cy.wrap(input).as('input');
+    cy.get('body').then(($body) => {
+        if ($body.find('.govuk-checkboxes__input').length === 0) {
+            cy.wrap(input).as('input');
+            return;
+        }
+
+        getElementByClass('govuk-checkboxes__input').each((checkbox, index) => {
+            const name = checkbox.attr('name');
+            input[index] = name?.split('#')[0] ?? '';
+            cy.wrap(input).as('input');
+        });
     });
 };
 
 export const getAllButFirstCheckbox = (): void => {
     const input: string[] = [];
-    getElementByClass('govuk-checkboxes__input').each((checkbox, index) => {
-        const name = checkbox.attr('name');
-        input[index] = name?.split('#')[0] || '';
-        cy.wrap(input).as('input');
+    cy.get('body').then(($body) => {
+        if ($body.find('.govuk-checkboxes__input').length === 0) {
+            cy.wrap(input).as('input');
+            return;
+        }
+
+        getElementByClass('govuk-checkboxes__input').each((checkbox, index) => {
+            const name = checkbox.attr('name');
+            input[index] = name?.split('#')[0] || '';
+            cy.wrap(input).as('input');
+        });
     });
     cy.get('@input').then((input) => {
         const newInputWithoutFirstItem = JSON.stringify(input).split(',').slice(1);
@@ -622,11 +646,23 @@ export const completeSalesOfferPackagesForMultipleProducts = (
 // The select all button is a toggle whose label starts as "Unselect All Services" when the
 // product already had every service, so a single click can clear the list instead of filling it.
 const selectAllServices = (): void => {
-    clickElementById('select-all-button');
-    cy.get('.govuk-checkboxes__input').then(($checkboxes) => {
-        if (![...$checkboxes].some((checkbox) => (checkbox as HTMLInputElement).checked)) {
+    cy.get('body').then(($body) => {
+        if ($body.find('#select-all-button').length > 0) {
             clickElementById('select-all-button');
         }
+    });
+    cy.get('body').then(($body) => {
+        const button = $body.find('#select-all-button');
+        if (button.length === 0) {
+            cy.contains('All services have been added').should('be.visible');
+            return;
+        }
+
+        const buttonText = button.val()?.toString() || button.text();
+        if (buttonText === 'Select All Services') {
+            clickElementById('select-all-button');
+        }
+        cy.get('#select-all-button').should('have.value', 'Unselect All Services');
     });
 };
 
