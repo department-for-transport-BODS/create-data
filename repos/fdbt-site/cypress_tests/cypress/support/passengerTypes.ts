@@ -32,21 +32,34 @@ export const addSinglePassengerType = (passengerType: PassengerType): void => {
 };
 
 const setPassengerGroupInput = (passengerName: string, inputName: string, value: string): void => {
-    cy.contains('label', passengerName).parent().parent().find(`[data-test-id="${inputName}"]`).clear();
-    cy.contains('label', passengerName).parent().parent().find(`[data-test-id="${inputName}"]`).type(value);
+    cy.contains('label', passengerName, { matchCase: false })
+        .parent()
+        .parent()
+        .find(`[data-test-id="${inputName}"]`)
+        .clear();
+    cy.contains('label', passengerName, { matchCase: false })
+        .parent()
+        .parent()
+        .find(`[data-test-id="${inputName}"]`)
+        .type(value);
 };
 
 export const addGroupPassengerType = (groupName: string, passengerNames = ['senior', 'adult']): void => {
     clickElementByText('Add a passenger group');
     clearAndTypeById('max-group-size', '6');
-    for (const passengerName of passengerNames) {
-        cy.contains('label', passengerName, { matchCase: false })
-            .invoke('attr', 'for')
-            .then((inputId) => {
-                cy.get(`#${inputId}`).check();
-            });
-    }
+
+    cy.contains('label', passengerNames[0], { matchCase: false })
+        .invoke('attr', 'for')
+        .then((inputId) => {
+            cy.get(`#${inputId}`).check();
+        });
     setPassengerGroupInput(passengerNames[0], 'maximum-passengers', '4');
+
+    cy.contains('label', passengerNames[1], { matchCase: false })
+        .invoke('attr', 'for')
+        .then((inputId) => {
+            cy.get(`#${inputId}`).check();
+        });
     setPassengerGroupInput(passengerNames[1], 'maximum-passengers', '3');
     setPassengerGroupInput(passengerNames[1], 'minimum-passengers', '2');
 
@@ -114,7 +127,7 @@ export const createEditGroupPassengerTypes = (
     groupName = 'my group',
     editedGroupName = 'my edited group',
     seniorName = 'my Seniors',
-    childName = 'other child',
+    childName = 'my Child',
 ): void => {
     addGroupPassengerType(groupName, [seniorName, childName]);
 

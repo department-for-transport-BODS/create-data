@@ -4,6 +4,7 @@ export default defineConfig({
     allowCypressEnv: true,
     e2e: {
         baseUrl: 'http://localhost:5555',
+        excludeSpecPattern: 'cypress/e2e/preprod/**/*.cy.ts',
     },
     defaultCommandTimeout: 30000,
     numTestsKeptInMemory: 0,
