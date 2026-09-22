@@ -1,4 +1,8 @@
 import {
+    AdminCreateUserCommand,
+    AdminCreateUserCommandInput,
+    AdminDeleteUserCommand,
+    AdminDeleteUserCommandInput,
     AdminGetUserCommand,
     AdminGetUserCommandInput,
     AdminInitiateAuthCommand,
@@ -17,6 +21,9 @@ import {
     ConfirmForgotPasswordCommandInput,
     ForgotPasswordCommand,
     ForgotPasswordCommandInput,
+    ListUsersCommand,
+    ListUsersCommandInput,
+    UserType,
 } from '@aws-sdk/client-cognito-identity-provider';
 import crypto from 'crypto';
 import logger from '../utils/logger';
@@ -253,5 +260,127 @@ export const getUserAttribute = async (username: string, attribute: string): Pro
         return filteredAttribute?.Value ?? null;
     } catch (error) {
         throw new Error(`Failed to get user attribute (${attribute}): ${error.stack}`);
+    }
+};
+
+export interface AdminUser {
+    username: string;
+    email: string;
+    nocs: string;
+    status: string | undefined;
+}
+
+const toAdminUser = (user: UserType): AdminUser => ({
+    username: user.Username ?? '',
+    email: user.Attributes?.find((attr) => attr.Name === 'email')?.Value ?? '',
+    nocs: user.Attributes?.find((attr) => attr.Name === 'custom:noc')?.Value ?? '',
+    status: user.UserStatus,
+});
+
+export const listUsers = async (): Promise<AdminUser[]> => {
+    logger.info('', {
+        context: 'data.cognito',
+        message: 'listing users in pool',
+    });
+
+    const users: UserType[] = [];
+
+    const getUsersWithPaginationToken = async (paginationToken: string | undefined): Promise<void> => {
+        const params: ListUsersCommandInput = {
+            UserPoolId: userPoolId,
+            PaginationToken: paginationToken,
+        };
+
+        try {
+            const response = await cognito.send(new ListUsersCommand(params));
+
+            if (response.Users) {
+                users.push(...response.Users);
+            }
+
+            if (response.PaginationToken) {
+                await getUsersWithPaginationToken(response.PaginationToken);
+            }
+        } catch (error) {
+            throw new Error(`Failed to list users: ${error.stack}`);
+        }
+    };
+
+    await getUsersWithPaginationToken(undefined);
+
+    return users.map(toAdminUser);
+};
+
+export const getAdminUser = async (username: string): Promise<AdminUser | null> => {
+    logger.info('', {
+        context: 'data.cognito',
+        message: 'retrieving user for admin',
+    });
+
+    const params: AdminGetUserCommandInput = {
+        UserPoolId: userPoolId,
+        Username: username,
+    };
+
+    try {
+        const response = await cognito.send(new AdminGetUserCommand(params));
+
+        return toAdminUser({ Username: response.Username, Attributes: response.UserAttributes, UserStatus: undefined });
+    } catch (error) {
+        if (error?.name === 'UserNotFoundException') {
+            return null;
+        }
+        throw new Error(`Failed to get user: ${error.stack}`);
+    }
+};
+
+const generateTemporaryPassword = (): string => {
+    const charset = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!$%^&*';
+    const bytes = crypto.randomBytes(24);
+    const password = Array.from(bytes, (byte) => charset[byte % charset.length]).join('');
+
+    // guarantee the password satisfies the pool's complexity policy
+    return `Aa1!${password}`;
+};
+
+export const adminCreateUser = async (email: string, nocs: string): Promise<void> => {
+    logger.info('', {
+        context: 'data.cognito',
+        message: 'creating user',
+    });
+
+    const params: AdminCreateUserCommandInput = {
+        UserPoolId: userPoolId,
+        Username: email,
+        UserAttributes: [
+            { Name: 'custom:noc', Value: nocs },
+            { Name: 'email', Value: email },
+            { Name: 'email_verified', Value: 'true' },
+        ],
+        TemporaryPassword: generateTemporaryPassword(),
+    };
+
+    try {
+        await cognito.send(new AdminCreateUserCommand(params));
+    } catch (error) {
+        throw new Error(`Failed to create user: ${error.stack}`);
+    }
+};
+
+export const adminDeleteUser = async (username: string): Promise<void> => {
+    logger.info('', {
+        context: 'data.cognito',
+        message: 'deleting user',
+    });
+
+    const params: AdminDeleteUserCommandInput = {
+        UserPoolId: userPoolId,
+        Username: username,
+    };
+
+    try {
+        await cognito.send(new AdminDeleteUserCommand(params));
+    } catch (error) {
+        throw new Error(`Failed to delete user: ${error.stack}`);
     }
 };

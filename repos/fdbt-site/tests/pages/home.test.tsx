@@ -4,7 +4,7 @@ import Home, { getServerSideProps } from '../../src/pages/home';
 import { MULTI_MODAL_ATTRIBUTE, OPERATOR_ATTRIBUTE } from '../../src/constants/attributes';
 import * as aurora from '../../src/data/auroradb';
 import { OperatorAttribute } from '../../src/interfaces';
-import { getMockContext } from '../testData/mockData';
+import { buildIdToken, getMockContext } from '../testData/mockData';
 import { getSessionAttribute } from '../../src/utils/sessions';
 
 const multiModalServices = [
@@ -61,30 +61,75 @@ describe('pages', () => {
 
         it('should render correctly', () => {
             const tree = renderToFragment(
-                <Home csrfToken="" showDeleteProductsLink multiOperatorFaresRequiringAttentionCount={0} />,
+                <Home
+                    csrfToken=""
+                    showDeleteProductsLink
+                    multiOperatorFaresRequiringAttentionCount={0}
+                    isAdminUser={false}
+                />,
             );
             expect(tree).toMatchSnapshot();
         });
 
         it('should render correctly for prod environment', () => {
             const tree = renderToFragment(
-                <Home csrfToken="" showDeleteProductsLink={false} multiOperatorFaresRequiringAttentionCount={0} />,
+                <Home
+                    csrfToken=""
+                    showDeleteProductsLink={false}
+                    multiOperatorFaresRequiringAttentionCount={0}
+                    isAdminUser={false}
+                />,
             );
             expect(tree).toMatchSnapshot();
         });
 
         it('should render with a information banner if user has one multi-operator product that require their attention', () => {
             const tree = renderToFragment(
-                <Home csrfToken="" showDeleteProductsLink={false} multiOperatorFaresRequiringAttentionCount={1} />,
+                <Home
+                    csrfToken=""
+                    showDeleteProductsLink={false}
+                    multiOperatorFaresRequiringAttentionCount={1}
+                    isAdminUser={false}
+                />,
             );
             expect(tree).toMatchSnapshot();
         });
 
         it('should render with a information banner if user has more than one multi-operator product that require their attention', () => {
             const tree = renderToFragment(
-                <Home csrfToken="" showDeleteProductsLink={false} multiOperatorFaresRequiringAttentionCount={2} />,
+                <Home
+                    csrfToken=""
+                    showDeleteProductsLink={false}
+                    multiOperatorFaresRequiringAttentionCount={2}
+                    isAdminUser={false}
+                />,
             );
             expect(tree).toMatchSnapshot();
+        });
+
+        it('should not render the admin section when the user is not an admin', () => {
+            const { queryByText } = render(
+                <Home
+                    csrfToken=""
+                    showDeleteProductsLink={false}
+                    multiOperatorFaresRequiringAttentionCount={0}
+                    isAdminUser={false}
+                />,
+            );
+            expect(queryByText('Manage users')).toBeNull();
+        });
+
+        it('should render the admin section when the user is an admin', () => {
+            const { getByText } = render(
+                <Home
+                    csrfToken=""
+                    showDeleteProductsLink={false}
+                    multiOperatorFaresRequiringAttentionCount={0}
+                    isAdminUser
+                />,
+            );
+            expect(getByText('Manage users')).toBeTruthy();
+            expect(getByText('View reporting')).toBeTruthy();
         });
 
         it('should set the multi modal attribute when operator has no bods but tnds services', async () => {
@@ -216,6 +261,29 @@ describe('pages', () => {
 
             expect(getSessionAttribute(ctx.req, OPERATOR_ATTRIBUTE)).toEqual(operatorData);
             expect(getSessionAttribute(ctx.req, MULTI_MODAL_ATTRIBUTE)).toEqual(undefined);
+        });
+
+        it('should return isAdminUser false for a user not in the admin group', async () => {
+            checkForServicesSpy.mockResolvedValueOnce([]);
+            const ctx = getMockContext({ cookies: {}, body: null });
+            getIncompleteMultiOperatorExternalProductsByNocSpy.mockResolvedValueOnce([]);
+
+            const result = await getServerSideProps(ctx);
+
+            expect(result).toEqual(expect.objectContaining({ props: expect.objectContaining({ isAdminUser: false }) }));
+        });
+
+        it('should return isAdminUser true for a user in the admin group', async () => {
+            checkForServicesSpy.mockResolvedValueOnce([]);
+            const ctx = getMockContext({
+                cookies: { idToken: buildIdToken({ 'cognito:groups': ['admin'] }) },
+                body: null,
+            });
+            getIncompleteMultiOperatorExternalProductsByNocSpy.mockResolvedValueOnce([]);
+
+            const result = await getServerSideProps(ctx);
+
+            expect(result).toEqual(expect.objectContaining({ props: expect.objectContaining({ isAdminUser: true }) }));
         });
     });
 });

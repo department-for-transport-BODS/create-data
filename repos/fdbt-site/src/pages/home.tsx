@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import { NextPageContextWithSession } from '../interfaces';
 import { BaseLayout } from '../layout/Layout';
-import { checkIfMultipleOperators, getCsrfToken } from '../utils';
+import { checkIfMultipleOperators, getCsrfToken, isAdmin } from '../utils';
 import { getSessionAttribute, regenerateSession, updateSessionAttribute } from '../utils/sessions';
 import { MULTI_MODAL_ATTRIBUTE, OPERATOR_ATTRIBUTE } from '../constants/attributes';
 import { redirectTo } from '../utils/apiUtils';
@@ -16,12 +16,14 @@ interface HomeProps {
     csrfToken: string;
     showDeleteProductsLink: boolean;
     multiOperatorFaresRequiringAttentionCount: number;
+    isAdminUser: boolean;
 }
 
 const Home = ({
     csrfToken,
     showDeleteProductsLink,
     multiOperatorFaresRequiringAttentionCount,
+    isAdminUser,
 }: HomeProps): ReactElement => (
     <BaseLayout title={title} description={description}>
         {multiOperatorFaresRequiringAttentionCount > 0 && (
@@ -114,6 +116,24 @@ const Home = ({
                         </p>
                     ) : null}
                 </div>
+
+                {isAdminUser && (
+                    <div className="govuk-!-margin-top-7 govuk-!-padding-bottom-7">
+                        <h2 className="govuk-heading-s">Admin</h2>
+                        <p className="govuk-body">Manage users and view reporting for the Create Fares Data service.</p>
+                        <a href="/admin/users" className="govuk-link govuk-!-font-size-19" id="admin-users-link">
+                            Manage users
+                        </a>
+                        <br />
+                        <a
+                            href="/admin/reporting"
+                            className="govuk-link govuk-!-font-size-19"
+                            id="admin-reporting-link"
+                        >
+                            View reporting
+                        </a>
+                    </div>
+                )}
             </div>
 
             <div className="govuk-grid-column-one-third">
@@ -168,6 +188,7 @@ export const getServerSideProps = async (ctx: NextPageContextWithSession): Promi
             csrfToken,
             showDeleteProductsLink,
             multiOperatorFaresRequiringAttentionCount,
+            isAdminUser: isAdmin(ctx),
         },
     };
 };

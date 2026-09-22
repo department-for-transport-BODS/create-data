@@ -252,6 +252,11 @@ export interface ErrorInfo {
     userInput?: string;
 }
 
+export interface AdminUserFormAttribute {
+    errors: ErrorInfo[];
+    success?: string;
+}
+
 export interface Feedback {
     question: string;
     answer: string;
