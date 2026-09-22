@@ -1,6 +1,6 @@
 import express, { Request, Response, Express, NextFunction } from 'express';
 import nextjs from 'next';
-import requireAuth, { setDisableAuthParameters } from './middleware/authentication';
+import requireAuth, { requireAdmin, setDisableAuthParameters } from './middleware/authentication';
 import setupCsrfProtection from './middleware/csrf';
 import setSecurityHeaders from './middleware/security';
 import setupLogging from './middleware/logging';
@@ -132,6 +132,9 @@ void (async (): Promise<void> => {
             res.locals.csrfToken = req.csrfToken();
             return handle(req, res);
         });
+
+        server.use('/admin', requireAuth, requireAdmin);
+        server.use('/api/admin', requireAuth, requireAdmin);
 
         server.get('*', requireAuth, (req: Request, res: Response) => {
             res.locals.csrfToken = req.csrfToken();

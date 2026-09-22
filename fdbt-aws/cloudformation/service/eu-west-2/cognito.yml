@@ -105,6 +105,13 @@ Resources:
           - Name: verified_email
             Priority: 1
 
+  AdminGroup:
+    Type: AWS::Cognito::UserPoolGroup
+    Properties:
+      GroupName: admin
+      UserPoolId: !Ref UserPool
+      Description: Members can access the create-data admin utilities (manage users, resend invites, view reporting)
+
   UserPoolClient:
     Type: AWS::Cognito::UserPoolClient
     Properties:

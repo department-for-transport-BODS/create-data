@@ -3,7 +3,7 @@ import zxcvbn from 'zxcvbn';
 import { parseCookie, serialize } from 'cookie';
 import { IncomingMessage, ServerResponse } from 'http';
 import { decodeJwt as decode } from 'jose';
-import { DISABLE_AUTH_COOKIE, ID_TOKEN_COOKIE, REFRESH_TOKEN_COOKIE } from '../../constants';
+import { ADMIN_GROUP_NAME, DISABLE_AUTH_COOKIE, ID_TOKEN_COOKIE, REFRESH_TOKEN_COOKIE } from '../../constants';
 import {
     CARNET_FARE_TYPE_ATTRIBUTE,
     FARE_TYPE_ATTRIBUTE,
@@ -184,6 +184,9 @@ export const getAttributeFromIdToken = <T extends keyof CognitoIdToken>(
 
 export const getNocFromIdToken = (req: NextApiRequest, res: NextApiResponse): string | null =>
     getAttributeFromIdToken(req, res, 'custom:noc');
+
+export const isAdmin = (req: NextApiRequest, res: NextApiResponse): boolean =>
+    (getAttributeFromIdToken(req, res, 'cognito:groups') ?? []).includes(ADMIN_GROUP_NAME);
 
 export const getEmailFromIdToken = (req: NextApiRequest, res: NextApiResponse): string | null =>
     getAttributeFromIdToken(req, res, 'email');

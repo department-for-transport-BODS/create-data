@@ -14,6 +14,7 @@ import {
     COOKIE_PREFERENCES_COOKIE,
     CSRF_COOKIE,
     EXPRESS_SESSION_COOKIE,
+    ADMIN_GROUP_NAME,
     purchaseMethodsValuesMap,
 } from '../constants';
 import { OPERATOR_ATTRIBUTE } from '../constants/attributes';
@@ -181,6 +182,9 @@ export const getAttributeFromIdToken = <T extends keyof CognitoIdToken>(
 };
 
 export const getNocFromIdToken = (ctx: NextPageContext): string | null => getAttributeFromIdToken(ctx, 'custom:noc');
+
+export const isAdmin = (ctx: NextPageContext): boolean =>
+    (getAttributeFromIdToken(ctx, 'cognito:groups') ?? []).includes(ADMIN_GROUP_NAME);
 
 export const getAndValidateNoc = (ctx: NextPageContextWithSession): string => {
     const idTokenNoc = getNocFromIdToken(ctx);

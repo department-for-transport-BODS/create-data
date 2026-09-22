@@ -321,6 +321,7 @@ export interface CognitoIdToken {
     'custom:schemeOperator': string;
     'custom:schemeRegionCode': string;
     'custom:multiOpEmailEnabled': boolean;
+    'cognito:groups'?: string[];
 }
 
 export type PeriodTicket = PeriodGeoZoneTicket | PeriodMultipleServicesTicket;

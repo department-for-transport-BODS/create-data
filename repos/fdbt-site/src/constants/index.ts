@@ -16,6 +16,10 @@ export const CSRF_COOKIE = '_csrf';
 
 export const EXPRESS_SESSION_COOKIE = 'connect.sid';
 
+// Cognito
+
+export const ADMIN_GROUP_NAME = 'admin';
+
 // Links
 
 export const GOVUK_LINK = 'https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/';

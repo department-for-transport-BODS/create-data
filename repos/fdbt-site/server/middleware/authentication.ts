@@ -7,6 +7,7 @@ import {
     DISABLE_AUTH_COOKIE,
     COOKIE_PREFERENCES_COOKIE,
     COOKIES_POLICY_COOKIE,
+    ADMIN_GROUP_NAME,
     oneYearInSeconds,
 } from '../../src/constants';
 import { OPERATOR_ATTRIBUTE } from '../../src/constants/attributes';
@@ -17,6 +18,7 @@ import {
     setCookieOnResponseObject,
     deleteCookieOnResponseObject,
     parseCookiesFromRequest,
+    redirectTo,
 } from '../../src/utils/apiUtils';
 
 const signOutUser = async (username: string | null, req: Request, res: Response): Promise<void> => {
@@ -197,4 +199,25 @@ export default (req: Request, res: Response, next: NextFunction): void => {
 
             return;
         });
+};
+
+// Must run after requireAuth so the ID token is known to be present and valid.
+export const requireAdmin = (req: Request, res: Response, next: NextFunction): void => {
+    const parsedCookies = parseCookiesFromRequest(req);
+    const idToken = parsedCookies[ID_TOKEN_COOKIE] ?? null;
+
+    const decodedToken = idToken ? (decodeJwt(idToken) as CognitoIdToken) : null;
+    const groups = decodedToken?.['cognito:groups'] ?? [];
+
+    if (!groups.includes(ADMIN_GROUP_NAME)) {
+        logger.warn('', {
+            context: 'server.middleware.authentication',
+            message: 'non-admin user attempted to access an admin route',
+            username: decodedToken?.['cognito:username'] ?? null,
+        });
+        redirectTo(res, '/home');
+        return;
+    }
+
+    next();
 };

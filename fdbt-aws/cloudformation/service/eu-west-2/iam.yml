@@ -233,6 +233,12 @@ Resources:
                   - "cognito-idp:ListUserPoolClients"
                   - "cognito-idp:DescribeUserPoolClient"
                   - "cognito-idp:ListUsers"
+                  - "cognito-idp:AdminCreateUser"
+                  - "cognito-idp:AdminDeleteUser"
+                  - "cognito-idp:AdminAddUserToGroup"
+                  - "cognito-idp:AdminRemoveUserFromGroup"
+                  - "cognito-idp:AdminListGroupsForUser"
+                  - "cognito-idp:ListUsersInGroup"
                 Resource: !Sub arn:aws:cognito-idp:${AWS::Region}:${AWS::AccountId}:userpool/*
               - Effect: Allow
                 Action:
