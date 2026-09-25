@@ -1,7 +1,7 @@
 import { NextApiResponse } from 'next';
 import { decodeJwt } from 'jose';
 import { redirectTo, redirectToError, setCookieOnResponseObject, checkEmailValid } from '../../utils/apiUtils';
-import { ID_TOKEN_COOKIE, REFRESH_TOKEN_COOKIE } from '../../constants';
+import { ADMIN_GROUP_NAME, ID_TOKEN_COOKIE, REFRESH_TOKEN_COOKIE } from '../../constants';
 import { OPERATOR_ATTRIBUTE } from '../../constants/attributes';
 import { ErrorInfo, CognitoIdToken, NextApiRequestWithSession } from '../../interfaces';
 import { getOperatorNameByNocCode } from '../../data/auroradb';
@@ -47,6 +47,7 @@ export default async (req: NextApiRequestWithSession, res: NextApiResponse): Pro
                 const nocCode = decodedIdToken['custom:noc'];
                 const schemeOpName = decodedIdToken['custom:schemeOperator'];
                 const schemeOpRegion = decodedIdToken['custom:schemeRegionCode'];
+                const isAdminUser = (decodedIdToken['cognito:groups'] ?? []).includes(ADMIN_GROUP_NAME);
 
                 if (nocCode && !schemeOpName && !schemeOpRegion) {
                     if (nocCode.split('|').length === 1) {
@@ -59,7 +60,7 @@ export default async (req: NextApiRequestWithSession, res: NextApiResponse): Pro
                         region: schemeOpRegion,
                         nocCode,
                     });
-                } else if (!nocCode || (!schemeOpName && !schemeOpRegion)) {
+                } else if (!isAdminUser) {
                     throw new Error('Could not extract user info from their ID Token.');
                 }
 

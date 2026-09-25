@@ -24,6 +24,23 @@ const mockSchemeOpAuthResponse: AdminInitiateAuthCommandOutput = {
     },
 };
 
+const mockAdminAuthResponse: AdminInitiateAuthCommandOutput = {
+    $metadata: {},
+    AuthenticationResult: {
+        IdToken:
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2duaXRvOmdyb3VwcyI6WyJhZG1pbiJdLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn0.fakesignature',
+        RefreshToken: 'eyJj',
+    },
+};
+
+const mockUserWithoutOperatorAttributesAuthResponse: AdminInitiateAuthCommandOutput = {
+    $metadata: {},
+    AuthenticationResult: {
+        IdToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20ifQ.fakesignature',
+        RefreshToken: 'eyJj',
+    },
+};
+
 describe('login', () => {
     const updateSessionAttributeSpy = jest.spyOn(sessions, 'updateSessionAttribute');
 
@@ -130,6 +147,58 @@ describe('login', () => {
         expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, OPERATOR_ATTRIBUTE, mockOperatorAttribute);
         expect(writeHeadMock).toHaveBeenCalledWith(302, {
             Location: '/home',
+        });
+    });
+
+    it('should redirect when successfully signed in as an admin without operator attributes', async () => {
+        authSignInSpy.mockImplementation(() => Promise.resolve(mockAdminAuthResponse));
+        const { req, res } = getMockRequestAndResponse({
+            cookieValues: {},
+            body: {
+                email: 'admin@example.com',
+                password: 'abcdefghi',
+            },
+            uuid: '',
+            mockWriteHeadFn: writeHeadMock,
+        });
+
+        await login(req, res);
+
+        expect(authSignInSpy).toHaveBeenCalledWith('admin@example.com', 'abcdefghi');
+        expect(updateSessionAttributeSpy).not.toHaveBeenCalledWith(
+            req,
+            OPERATOR_ATTRIBUTE,
+            expect.objectContaining({ errors: expect.any(Array) }),
+        );
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
+            Location: '/home',
+        });
+    });
+
+    it('should reject a non-admin without operator attributes', async () => {
+        authSignInSpy.mockImplementation(() => Promise.resolve(mockUserWithoutOperatorAttributesAuthResponse));
+        const { req, res } = getMockRequestAndResponse({
+            cookieValues: {},
+            body: {
+                email: 'user@example.com',
+                password: 'abcdefghi',
+            },
+            uuid: '',
+            mockWriteHeadFn: writeHeadMock,
+        });
+
+        await login(req, res);
+
+        expect(updateSessionAttributeSpy).toHaveBeenCalledWith(req, OPERATOR_ATTRIBUTE, {
+            errors: [
+                {
+                    id: 'login',
+                    errorMessage: 'The email address and/or password are not correct.',
+                },
+            ],
+        });
+        expect(writeHeadMock).toHaveBeenCalledWith(302, {
+            Location: '/login',
         });
     });
 
