@@ -4,7 +4,6 @@ USER_IDENTIFIER=$3
 USER_ATTRIBUTE=$4
 
 USER_POOL=$(aws cognito-idp list-user-pools --max-results 2 | jq -r '.UserPools[]|select(.Name | startswith("fdbt-user-pool")).Id')
-ADMIN_USER_POOL=$(aws cognito-idp list-user-pools --max-results 2 | jq -r '.UserPools[]|select(.Name | startswith("fdbt-admin-user-pool")).Id')
 
 function get_users_by_noc() {
   NOC=$1
@@ -66,15 +65,6 @@ function update_noc() {
   aws cognito-idp admin-update-user-attributes --user-pool-id $USER_POOL --username $EMAIL --user-attributes Name=custom:noc,Value=$USER_IDENTIFIER --region eu-west-2
 }
 
-function grant_or_revoke_full_admin() {
-  if [ -z $EMAIL ] || [ -z $USER_IDENTIFIER ]; then
-    echo "usage: cognito-manager grant_or_revoke_full_admin <username> <access (0 for revoke, 1 for grant)>"
-    exit 1
-  fi
-
-  aws cognito-idp admin-update-user-attributes --user-pool-id $ADMIN_USER_POOL --username $EMAIL --user-attributes Name=custom:fullAdmin,Value=$USER_IDENTIFIER --region eu-west-2
-}
-
 function update_scheme_operator_name() {
   if [ -z $EMAIL ] || [ -z $USER_IDENTIFIER ]; then
     echo "usage: cognito-manager update-scheme-operator-name <email> <name>"
@@ -127,8 +117,6 @@ elif [[ $COMMAND = 'delete-user' ]]; then
   delete_user
 elif [[ $COMMAND = 'update-noc' ]]; then
   update_noc
-elif [[ $COMMAND = 'grant_or_revoke_full_admin' ]]; then
-  grant_or_revoke_full_admin
 elif [[ $COMMAND = 'update-scheme-operator-name' ]]; then
   update_scheme_operator_name
 elif [[ $COMMAND = 'update-scheme-operator-region-code' ]]; then
