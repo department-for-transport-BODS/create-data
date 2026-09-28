@@ -44,7 +44,13 @@ describe('admin reporting page', () => {
             listUsersSpy.mockResolvedValueOnce([
                 { username: 'a@example.com', email: 'a@example.com', nocs: 'NOC1', status: 'CONFIRMED' },
                 { username: 'test@example.com', email: 'test@example.com', nocs: 'IWBusCo', status: 'CONFIRMED' },
-                { username: 'kpmg@kpmg.com', email: 'kpmg@kpmg.com', nocs: 'NOC2', status: 'CONFIRMED' },
+                { username: 'kainos@kainos.com', email: 'kainos@kainos.com', nocs: 'NOC2', status: 'CONFIRMED' },
+                {
+                    username: 'lookalike@dft.gov.uk.example.com',
+                    email: 'lookalike@dft.gov.uk.example.com',
+                    nocs: 'NOC4',
+                    status: 'CONFIRMED',
+                },
                 {
                     username: 'pending@example.com',
                     email: 'pending@example.com',
@@ -60,8 +66,8 @@ describe('admin reporting page', () => {
 
             expect(result).toEqual({
                 props: {
-                    registeredUserCount: 1,
-                    registeredNocs: ['NOC1'],
+                    registeredUserCount: 2,
+                    registeredNocs: ['NOC1', 'NOC4'],
                     nocsWhoCreatedProducts: ['NOC1'],
                     thirtyDayNetex: ['NOC1'],
                     yearNetex: ['NOC1'],

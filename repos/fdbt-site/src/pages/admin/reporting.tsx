@@ -176,8 +176,8 @@ export const getServerSideProps = async (
         (user) =>
             user.status === 'CONFIRMED' &&
             !isTestUser(user) &&
-            !user.email.toLowerCase().includes('kpmg') &&
-            !user.email.toLowerCase().includes('dft.gov.uk'),
+            !user.email.toLowerCase().endsWith('@kainos.com') &&
+            !user.email.toLowerCase().endsWith('@dft.gov.uk'),
     );
 
     const registeredNocs = Array.from(
