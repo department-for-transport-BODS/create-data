@@ -1,4 +1,16 @@
 import { ReactElement } from 'react';
+import { CSVLink } from 'react-csv';
+import {
+    Bar,
+    BarChart as RechartsBarChart,
+    BarShapeProps,
+    CartesianGrid,
+    Rectangle,
+    ResponsiveContainer,
+    Tooltip,
+    XAxis,
+    YAxis,
+} from 'recharts';
 import { BaseLayout } from '../../layout/Layout';
 import { NextPageContextWithSession } from '../../interfaces';
 import { isAdmin } from '../../utils';
@@ -7,7 +19,6 @@ import { listBucketObjects } from '../../data/s3';
 import { NETEX_BUCKET_NAME, PRODUCTS_DATA_BUCKET_NAME } from '../../constants';
 import { isTestUser } from '../../utils/adminUsers';
 import {
-    buildCsvDownloadHref,
     createGraphData,
     formatGraphDataForCsv,
     getProductCount,
@@ -46,9 +57,9 @@ const NocListDetail = ({
         <div className="govuk-details__text">
             {nocs.length > 0 && (
                 <p className="govuk-body">
-                    <a href={buildCsvDownloadHref(mapIntoArrayOfArrays(nocs))} download={filename}>
+                    <CSVLink filename={filename} data={mapIntoArrayOfArrays(nocs)}>
                         Download as csv
-                    </a>
+                    </CSVLink>
                 </p>
             )}
             {nocs.join(', ')}
@@ -123,30 +134,28 @@ const Reporting = ({
                 <>
                     <h2 className="govuk-heading-m">Created products (not necessarily exported)</h2>
                     <p className="govuk-body">{totalProducts} total products</p>
-                    <table className="govuk-table">
-                        <thead className="govuk-table__head">
-                            <tr className="govuk-table__row">
-                                <th scope="col" className="govuk-table__header">
-                                    Fare type
-                                </th>
-                                <th scope="col" className="govuk-table__header">
-                                    Count
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody className="govuk-table__body">
-                            {graphData.map((data) => (
-                                <tr className="govuk-table__row" key={data.title}>
-                                    <td className="govuk-table__cell">{data.title}</td>
-                                    <td className="govuk-table__cell">{data.value}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    <p className="govuk-body">Hover over bars to see fare type and count</p>
+                    <div aria-label="Created products by fare type" className="admin-reporting-chart" role="img">
+                        <ResponsiveContainer width="100%" height="100%">
+                            <RechartsBarChart data={graphData} margin={{ top: 16, right: 24, left: 8, bottom: 16 }}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="title" />
+                                <YAxis allowDecimals={false} />
+                                <Tooltip />
+                                <Bar
+                                    dataKey="value"
+                                    name="Products"
+                                    shape={(props: BarShapeProps) => (
+                                        <Rectangle {...props} fill={graphData[props.index].color} />
+                                    )}
+                                />
+                            </RechartsBarChart>
+                        </ResponsiveContainer>
+                    </div>
                     <p className="govuk-body">
-                        <a href={buildCsvDownloadHref(formatGraphDataForCsv(graphData))} download="createdProducts.csv">
+                        <CSVLink filename="createdProducts.csv" data={formatGraphDataForCsv(graphData)}>
                             Download as csv
-                        </a>
+                        </CSVLink>
                     </p>
                 </>
             )}

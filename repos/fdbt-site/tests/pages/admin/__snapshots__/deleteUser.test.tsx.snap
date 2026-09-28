@@ -120,17 +120,8 @@ exports[`admin deleteUser page should render correctly 1`] = `
       <h1
         class="govuk-heading-xl"
       >
-        Delete user
+        Delete User
       </h1>
-      <p
-        class="govuk-body"
-      >
-        Are you sure you want to delete the account for 
-        <b>
-          user@example.com
-        </b>
-         (NOC1, NOC2)?
-      </p>
       <form
         action="/api/admin/deleteUser?_csrf="
         method="post"
@@ -140,17 +131,48 @@ exports[`admin deleteUser page should render correctly 1`] = `
           type="hidden"
           value="user@example.com"
         />
-        <input
-          name="email"
-          type="hidden"
-          value="user@example.com"
-        />
+        <div
+          class="govuk-form-group"
+        >
+          <label
+            class="govuk-label"
+            for="email"
+          >
+            User Email
+          </label>
+          <input
+            class="govuk-input"
+            id="email"
+            name="email"
+            readonly=""
+            type="text"
+            value="user@example.com"
+          />
+        </div>
+        <div
+          class="govuk-form-group"
+        >
+          <label
+            class="govuk-label"
+            for="nocs"
+          >
+            User National Operator Code (NOC)
+          </label>
+          <input
+            class="govuk-input"
+            id="nocs"
+            name="nocs"
+            readonly=""
+            type="text"
+            value="NOC1, NOC2"
+          />
+        </div>
         <input
           class="govuk-button govuk-button--warning"
           data-module="govuk-button"
           id="delete-user-button"
           type="submit"
-          value="Delete user"
+          value="Delete"
         />
       </form>
     </main>

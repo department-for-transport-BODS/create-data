@@ -22,7 +22,7 @@ const AddUser = ({ csrfToken, errors, success }: AddUserProps): ReactElement => 
         <a href="/admin/users" className="govuk-back-link">
             Back
         </a>
-        <h1 className="govuk-heading-xl">Add user</h1>
+        <h1 className="govuk-heading-xl">Add User</h1>
         <ErrorSummary errors={errors} />
         {success && (
             <div className="govuk-panel govuk-panel--confirmation">
@@ -35,17 +35,18 @@ const AddUser = ({ csrfToken, errors, success }: AddUserProps): ReactElement => 
             <>
                 <div className={`govuk-form-group ${errors.length > 0 ? 'govuk-form-group--error' : ''}`}>
                     <label className="govuk-label" htmlFor="email">
-                        User email
+                        User Email
                     </label>
                     <FormElementWrapper errors={errors} errorId="email" errorClass="govuk-input--error">
                         <input className="govuk-input" id="email" name="email" type="text" spellCheck="false" />
                     </FormElementWrapper>
 
                     <label className="govuk-label govuk-!-margin-top-4" htmlFor="nocs">
-                        National Operator Code(s) (NOC)
+                        User National Operator Code (NOC)
                     </label>
                     <div className="govuk-hint">
-                        If the user has multiple NOCs, enter a comma-separated list, e.g. &apos;NOC1,NOC2,NOC3&apos;
+                        If the user has multiple NOCs, enter a comma-separated list. For example:
+                        &apos;NOC1,NOC2,NOC3&apos;
                     </div>
                     <FormElementWrapper errors={errors} errorId="nocs" errorClass="govuk-input--error">
                         <input className="govuk-input" id="nocs" name="nocs" type="text" spellCheck="false" />
@@ -53,7 +54,7 @@ const AddUser = ({ csrfToken, errors, success }: AddUserProps): ReactElement => 
                 </div>
                 <input
                     type="submit"
-                    value="Add user"
+                    value="Submit"
                     id="add-user-button"
                     data-module="govuk-button"
                     className="govuk-button"

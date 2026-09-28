@@ -120,7 +120,7 @@ exports[`admin addUser page should render a success message when passed 1`] = `
       <h1
         class="govuk-heading-xl"
       >
-        Add user
+        Add User
       </h1>
       <div
         class="govuk-panel govuk-panel--confirmation"
@@ -145,7 +145,7 @@ exports[`admin addUser page should render a success message when passed 1`] = `
             class="govuk-label"
             for="email"
           >
-            User email
+            User Email
           </label>
           <div
             class=""
@@ -162,12 +162,12 @@ exports[`admin addUser page should render a success message when passed 1`] = `
             class="govuk-label govuk-!-margin-top-4"
             for="nocs"
           >
-            National Operator Code(s) (NOC)
+            User National Operator Code (NOC)
           </label>
           <div
             class="govuk-hint"
           >
-            If the user has multiple NOCs, enter a comma-separated list, e.g. 'NOC1,NOC2,NOC3'
+            If the user has multiple NOCs, enter a comma-separated list. For example: 'NOC1,NOC2,NOC3'
           </div>
           <div
             class=""
@@ -186,7 +186,7 @@ exports[`admin addUser page should render a success message when passed 1`] = `
           data-module="govuk-button"
           id="add-user-button"
           type="submit"
-          value="Add user"
+          value="Submit"
         />
       </form>
     </main>
@@ -524,7 +524,7 @@ exports[`admin addUser page should render correctly 1`] = `
       <h1
         class="govuk-heading-xl"
       >
-        Add user
+        Add User
       </h1>
       <form
         action="/api/admin/addUser?_csrf="
@@ -537,7 +537,7 @@ exports[`admin addUser page should render correctly 1`] = `
             class="govuk-label"
             for="email"
           >
-            User email
+            User Email
           </label>
           <div
             class=""
@@ -554,12 +554,12 @@ exports[`admin addUser page should render correctly 1`] = `
             class="govuk-label govuk-!-margin-top-4"
             for="nocs"
           >
-            National Operator Code(s) (NOC)
+            User National Operator Code (NOC)
           </label>
           <div
             class="govuk-hint"
           >
-            If the user has multiple NOCs, enter a comma-separated list, e.g. 'NOC1,NOC2,NOC3'
+            If the user has multiple NOCs, enter a comma-separated list. For example: 'NOC1,NOC2,NOC3'
           </div>
           <div
             class=""
@@ -578,7 +578,7 @@ exports[`admin addUser page should render correctly 1`] = `
           data-module="govuk-button"
           id="add-user-button"
           type="submit"
-          value="Add user"
+          value="Submit"
         />
       </form>
     </main>
@@ -916,7 +916,7 @@ exports[`admin addUser page should render error messaging when errors are passed
       <h1
         class="govuk-heading-xl"
       >
-        Add user
+        Add User
       </h1>
       <div
         aria-labelledby="error-summary-title"
@@ -958,7 +958,7 @@ exports[`admin addUser page should render error messaging when errors are passed
             class="govuk-label"
             for="email"
           >
-            User email
+            User Email
           </label>
           <div
             class=""
@@ -987,12 +987,12 @@ exports[`admin addUser page should render error messaging when errors are passed
             class="govuk-label govuk-!-margin-top-4"
             for="nocs"
           >
-            National Operator Code(s) (NOC)
+            User National Operator Code (NOC)
           </label>
           <div
             class="govuk-hint"
           >
-            If the user has multiple NOCs, enter a comma-separated list, e.g. 'NOC1,NOC2,NOC3'
+            If the user has multiple NOCs, enter a comma-separated list. For example: 'NOC1,NOC2,NOC3'
           </div>
           <div
             class=""
@@ -1011,7 +1011,7 @@ exports[`admin addUser page should render error messaging when errors are passed
           data-module="govuk-button"
           id="add-user-button"
           type="submit"
-          value="Add user"
+          value="Submit"
         />
       </form>
     </main>

@@ -120,7 +120,7 @@ exports[`admin editUser page should render correctly 1`] = `
       <h1
         class="govuk-heading-xl"
       >
-        Edit user
+        Edit User
       </h1>
       <form
         action="/api/admin/editUser?_csrf="
@@ -138,7 +138,7 @@ exports[`admin editUser page should render correctly 1`] = `
             class="govuk-label"
             for="email"
           >
-            User email
+            User Email
           </label>
           <div
             class="govuk-hint"
@@ -157,12 +157,12 @@ exports[`admin editUser page should render correctly 1`] = `
             class="govuk-label govuk-!-margin-top-4"
             for="nocs"
           >
-            National Operator Code(s) (NOC)
+            User National Operator Code (NOC)
           </label>
           <div
             class="govuk-hint"
           >
-            If the user has multiple NOCs, enter a comma-separated list, e.g. 'NOC1,NOC2,NOC3'
+            If the user has multiple NOCs, enter a comma-separated list. For example: 'NOC1,NOC2,NOC3'
           </div>
           <div
             class=""
@@ -182,7 +182,7 @@ exports[`admin editUser page should render correctly 1`] = `
           data-module="govuk-button"
           id="edit-user-button"
           type="submit"
-          value="Save changes"
+          value="Submit"
         />
       </form>
     </main>

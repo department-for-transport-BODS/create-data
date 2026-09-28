@@ -268,14 +268,25 @@ export interface AdminUser {
     email: string;
     nocs: string;
     status: string | undefined;
+    attributes?: Record<string, string>;
 }
 
-const toAdminUser = (user: UserType): AdminUser => ({
-    username: user.Username ?? '',
-    email: user.Attributes?.find((attr) => attr.Name === 'email')?.Value ?? '',
-    nocs: user.Attributes?.find((attr) => attr.Name === 'custom:noc')?.Value ?? '',
-    status: user.UserStatus,
-});
+const toAdminUser = (user: UserType): AdminUser => {
+    const attributes = (user.Attributes ?? []).reduce<Record<string, string>>((mappedAttributes, attribute) => {
+        if (attribute.Name && attribute.Value !== undefined) {
+            mappedAttributes[attribute.Name] = attribute.Value;
+        }
+        return mappedAttributes;
+    }, {});
+
+    return {
+        username: user.Username ?? '',
+        email: attributes.email ?? '',
+        nocs: attributes['custom:noc'] ?? '',
+        status: user.UserStatus,
+        attributes,
+    };
+};
 
 export const listUsers = async (): Promise<AdminUser[]> => {
     logger.info('', {
@@ -325,7 +336,11 @@ export const getAdminUser = async (username: string): Promise<AdminUser | null> 
     try {
         const response = await cognito.send(new AdminGetUserCommand(params));
 
-        return toAdminUser({ Username: response.Username, Attributes: response.UserAttributes, UserStatus: undefined });
+        return toAdminUser({
+            Username: response.Username,
+            Attributes: response.UserAttributes,
+            UserStatus: response.UserStatus,
+        });
     } catch (error) {
         if (error?.name === 'UserNotFoundException') {
             return null;

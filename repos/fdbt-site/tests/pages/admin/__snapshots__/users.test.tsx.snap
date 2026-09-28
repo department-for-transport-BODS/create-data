@@ -114,7 +114,7 @@ exports[`admin users page should render correctly 1`] = `
       <h1
         class="govuk-heading-xl"
       >
-        Manage users
+        User List
       </h1>
       <a
         class="govuk-button"
@@ -162,12 +162,20 @@ exports[`admin users page should render correctly 1`] = `
             <td
               class="govuk-table__cell"
             >
-              1
+              <b
+                class="admin-user-count--completed"
+              >
+                1
+              </b>
             </td>
             <td
               class="govuk-table__cell"
             >
-              1
+              <b
+                class="admin-user-count--pending"
+              >
+                1
+              </b>
             </td>
             <td
               class="govuk-table__cell"
@@ -196,19 +204,19 @@ exports[`admin users page should render correctly 1`] = `
               class="govuk-table__header"
               scope="col"
             >
-              NOC(s)
+              Actions
+            </th>
+            <th
+              class="govuk-table__header"
+              scope="col"
+            >
+              Attributes
             </th>
             <th
               class="govuk-table__header"
               scope="col"
             >
               Status
-            </th>
-            <th
-              class="govuk-table__header"
-              scope="col"
-            >
-              Actions
             </th>
           </tr>
         </thead>
@@ -226,16 +234,6 @@ exports[`admin users page should render correctly 1`] = `
             <td
               class="govuk-table__cell"
             >
-              NOC1
-            </td>
-            <td
-              class="govuk-table__cell"
-            >
-              Registered
-            </td>
-            <td
-              class="govuk-table__cell"
-            >
               <a
                 href="/admin/editUser?username=confirmed%40example.com"
               >
@@ -248,6 +246,22 @@ exports[`admin users page should render correctly 1`] = `
                 Delete
               </a>
             </td>
+            <td
+              class="govuk-table__cell"
+            >
+              <span>
+                <strong>
+                  NOC
+                </strong>
+                : NOC1
+              </span>
+              <br />
+            </td>
+            <td
+              class="govuk-table__cell"
+            >
+              Registered
+            </td>
           </tr>
           <tr
             class="govuk-table__row"
@@ -256,16 +270,6 @@ exports[`admin users page should render correctly 1`] = `
               class="govuk-table__cell"
             >
               pending@example.com
-            </td>
-            <td
-              class="govuk-table__cell"
-            >
-              NOC2, NOC3
-            </td>
-            <td
-              class="govuk-table__cell"
-            >
-              Awaiting Registration
             </td>
             <td
               class="govuk-table__cell"
@@ -285,8 +289,24 @@ exports[`admin users page should render correctly 1`] = `
               <a
                 href="/admin/resendInvite?username=pending%40example.com"
               >
-                Resend invite
+                Resend
               </a>
+            </td>
+            <td
+              class="govuk-table__cell"
+            >
+              <span>
+                <strong>
+                  NOC
+                </strong>
+                : NOC2, NOC3
+              </span>
+              <br />
+            </td>
+            <td
+              class="govuk-table__cell"
+            >
+              Awaiting Registration
             </td>
           </tr>
         </tbody>

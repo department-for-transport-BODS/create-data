@@ -87,6 +87,3 @@ export const formatGraphDataForCsv = (graphData: GraphData[]): string[][] => [
     ['Faretype', 'Count'],
     ...graphData.map((data) => [data.title, data.value.toString()]),
 ];
-
-export const buildCsvDownloadHref = (rows: string[][]): string =>
-    `data:text/csv;charset=utf-8,${encodeURIComponent(rows.map((row) => row.join(',')).join('\n'))}`;

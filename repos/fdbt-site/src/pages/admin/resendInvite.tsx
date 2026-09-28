@@ -26,7 +26,7 @@ const ResendInvite = ({ csrfToken, errors, success, username, email, nocs }: Res
         <a href="/admin/users" className="govuk-back-link">
             Back
         </a>
-        <h1 className="govuk-heading-xl">Resend invite</h1>
+        <h1 className="govuk-heading-xl">Resend Invite</h1>
         <ErrorSummary errors={errors} />
         {success && (
             <div className="govuk-panel govuk-panel--confirmation">
@@ -35,18 +35,31 @@ const ResendInvite = ({ csrfToken, errors, success, username, email, nocs }: Res
                 </p>
             </div>
         )}
-        <p className="govuk-body">
-            Resend the invite for <b>{email}</b> ({humanFormatNocs(nocs)})? This will generate a new temporary password
-            and email.
-        </p>
         <CsrfForm action="/api/admin/resendInvite" method="post" csrfToken={csrfToken}>
             <>
                 <input type="hidden" name="username" value={username} />
-                <input type="hidden" name="email" value={email} />
-                <input type="hidden" name="nocs" value={nocs} />
+                <div className="govuk-form-group">
+                    <label className="govuk-label" htmlFor="email">
+                        User Email
+                    </label>
+                    <input className="govuk-input" id="email" name="email" type="text" value={email} readOnly />
+                </div>
+                <div className="govuk-form-group">
+                    <label className="govuk-label" htmlFor="nocs">
+                        User National Operator Code (NOC)
+                    </label>
+                    <input
+                        className="govuk-input"
+                        id="nocs"
+                        name="nocs"
+                        type="text"
+                        value={humanFormatNocs(nocs)}
+                        readOnly
+                    />
+                </div>
                 <input
                     type="submit"
-                    value="Resend invite"
+                    value="Resend"
                     id="resend-invite-button"
                     data-module="govuk-button"
                     className="govuk-button"

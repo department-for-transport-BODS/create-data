@@ -27,7 +27,7 @@ const EditUser = ({ csrfToken, errors, success, username, email, nocs }: EditUse
         <a href="/admin/users" className="govuk-back-link">
             Back
         </a>
-        <h1 className="govuk-heading-xl">Edit user</h1>
+        <h1 className="govuk-heading-xl">Edit User</h1>
         <ErrorSummary errors={errors} />
         {success && (
             <div className="govuk-panel govuk-panel--confirmation">
@@ -41,7 +41,7 @@ const EditUser = ({ csrfToken, errors, success, username, email, nocs }: EditUse
                 <input type="hidden" name="username" value={username} />
                 <div className={`govuk-form-group ${errors.length > 0 ? 'govuk-form-group--error' : ''}`}>
                     <label className="govuk-label" htmlFor="email">
-                        User email
+                        User Email
                     </label>
                     <div className="govuk-hint">
                         Email addresses cannot be changed. Delete the existing user and create a new one if needed.
@@ -49,10 +49,11 @@ const EditUser = ({ csrfToken, errors, success, username, email, nocs }: EditUse
                     <input className="govuk-input" id="email" name="email" type="text" value={email} readOnly />
 
                     <label className="govuk-label govuk-!-margin-top-4" htmlFor="nocs">
-                        National Operator Code(s) (NOC)
+                        User National Operator Code (NOC)
                     </label>
                     <div className="govuk-hint">
-                        If the user has multiple NOCs, enter a comma-separated list, e.g. &apos;NOC1,NOC2,NOC3&apos;
+                        If the user has multiple NOCs, enter a comma-separated list. For example:
+                        &apos;NOC1,NOC2,NOC3&apos;
                     </div>
                     <FormElementWrapper errors={errors} errorId="nocs" errorClass="govuk-input--error">
                         <input
@@ -67,7 +68,7 @@ const EditUser = ({ csrfToken, errors, success, username, email, nocs }: EditUse
                 </div>
                 <input
                     type="submit"
-                    value="Save changes"
+                    value="Submit"
                     id="edit-user-button"
                     data-module="govuk-button"
                     className="govuk-button"

@@ -120,17 +120,8 @@ exports[`admin resendInvite page should render correctly 1`] = `
       <h1
         class="govuk-heading-xl"
       >
-        Resend invite
+        Resend Invite
       </h1>
-      <p
-        class="govuk-body"
-      >
-        Resend the invite for 
-        <b>
-          user@example.com
-        </b>
-         (NOC1, NOC2)? This will generate a new temporary password and email.
-      </p>
       <form
         action="/api/admin/resendInvite?_csrf="
         method="post"
@@ -140,22 +131,48 @@ exports[`admin resendInvite page should render correctly 1`] = `
           type="hidden"
           value="user@example.com"
         />
-        <input
-          name="email"
-          type="hidden"
-          value="user@example.com"
-        />
-        <input
-          name="nocs"
-          type="hidden"
-          value="NOC1|NOC2"
-        />
+        <div
+          class="govuk-form-group"
+        >
+          <label
+            class="govuk-label"
+            for="email"
+          >
+            User Email
+          </label>
+          <input
+            class="govuk-input"
+            id="email"
+            name="email"
+            readonly=""
+            type="text"
+            value="user@example.com"
+          />
+        </div>
+        <div
+          class="govuk-form-group"
+        >
+          <label
+            class="govuk-label"
+            for="nocs"
+          >
+            User National Operator Code (NOC)
+          </label>
+          <input
+            class="govuk-input"
+            id="nocs"
+            name="nocs"
+            readonly=""
+            type="text"
+            value="NOC1, NOC2"
+          />
+        </div>
         <input
           class="govuk-button"
           data-module="govuk-button"
           id="resend-invite-button"
           type="submit"
-          value="Resend invite"
+          value="Resend"
         />
       </form>
     </main>

@@ -26,7 +26,7 @@ const DeleteUser = ({ csrfToken, errors, success, username, email, nocs }: Delet
         <a href="/admin/users" className="govuk-back-link">
             Back
         </a>
-        <h1 className="govuk-heading-xl">Delete user</h1>
+        <h1 className="govuk-heading-xl">Delete User</h1>
         <ErrorSummary errors={errors} />
         {success && (
             <div className="govuk-panel govuk-panel--confirmation">
@@ -35,16 +35,31 @@ const DeleteUser = ({ csrfToken, errors, success, username, email, nocs }: Delet
                 </p>
             </div>
         )}
-        <p className="govuk-body">
-            Are you sure you want to delete the account for <b>{email}</b> ({humanFormatNocs(nocs)})?
-        </p>
         <CsrfForm action="/api/admin/deleteUser" method="post" csrfToken={csrfToken}>
             <>
                 <input type="hidden" name="username" value={username} />
-                <input type="hidden" name="email" value={email} />
+                <div className="govuk-form-group">
+                    <label className="govuk-label" htmlFor="email">
+                        User Email
+                    </label>
+                    <input className="govuk-input" id="email" name="email" type="text" value={email} readOnly />
+                </div>
+                <div className="govuk-form-group">
+                    <label className="govuk-label" htmlFor="nocs">
+                        User National Operator Code (NOC)
+                    </label>
+                    <input
+                        className="govuk-input"
+                        id="nocs"
+                        name="nocs"
+                        type="text"
+                        value={humanFormatNocs(nocs)}
+                        readOnly
+                    />
+                </div>
                 <input
                     type="submit"
-                    value="Delete user"
+                    value="Delete"
                     id="delete-user-button"
                     data-module="govuk-button"
                     className="govuk-button govuk-button--warning"

@@ -11,12 +11,19 @@ jest.mock('next/router', () => ({
 const renderToFragment = (component: ReactElement) => render(component).asFragment();
 
 const mockUsers: cognito.AdminUser[] = [
-    { username: 'confirmed@example.com', email: 'confirmed@example.com', nocs: 'NOC1', status: 'CONFIRMED' },
+    {
+        username: 'confirmed@example.com',
+        email: 'confirmed@example.com',
+        nocs: 'NOC1',
+        status: 'CONFIRMED',
+        attributes: { email: 'confirmed@example.com', 'custom:noc': 'NOC1' },
+    },
     {
         username: 'pending@example.com',
         email: 'pending@example.com',
         nocs: 'NOC2|NOC3',
         status: 'FORCE_CHANGE_PASSWORD',
+        attributes: { email: 'pending@example.com', 'custom:noc': 'NOC2|NOC3' },
     },
 ];
 
