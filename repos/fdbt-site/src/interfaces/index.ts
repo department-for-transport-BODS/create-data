@@ -252,6 +252,11 @@ export interface ErrorInfo {
     userInput?: string;
 }
 
+export interface AdminUserFormAttribute {
+    errors: ErrorInfo[];
+    success?: string;
+}
+
 export interface Feedback {
     question: string;
     answer: string;
@@ -321,6 +326,7 @@ export interface CognitoIdToken {
     'custom:schemeOperator': string;
     'custom:schemeRegionCode': string;
     'custom:multiOpEmailEnabled': boolean;
+    'cognito:groups'?: string[];
 }
 
 export type PeriodTicket = PeriodGeoZoneTicket | PeriodMultipleServicesTicket;

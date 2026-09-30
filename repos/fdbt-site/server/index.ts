@@ -1,6 +1,6 @@
 import express, { Request, Response, Express, NextFunction } from 'express';
 import nextjs from 'next';
-import requireAuth, { setDisableAuthParameters } from './middleware/authentication';
+import requireAuth, { requireAdmin, setDisableAuthParameters } from './middleware/authentication';
 import setupCsrfProtection from './middleware/csrf';
 import setSecurityHeaders from './middleware/security';
 import setupLogging from './middleware/logging';
@@ -132,6 +132,17 @@ void (async (): Promise<void> => {
             res.locals.csrfToken = req.csrfToken();
             return handle(req, res);
         });
+
+        const adminRoutesLimiter = rateLimit({
+            windowMs: 15 * 60 * 1000,
+            max: 100,
+            standardHeaders: true,
+            legacyHeaders: false,
+            message: 'Too many requests from this IP, please try again after 15 minutes',
+        });
+
+        server.use('/admin', adminRoutesLimiter, requireAuth, requireAdmin);
+        server.use('/api/admin', adminRoutesLimiter, requireAuth, requireAdmin);
 
         server.get('*', requireAuth, (req: Request, res: Response) => {
             res.locals.csrfToken = req.csrfToken();

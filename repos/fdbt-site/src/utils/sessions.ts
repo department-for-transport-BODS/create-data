@@ -82,6 +82,10 @@ import {
     FLAT_FARE_RETURN_ATTRIBUTE,
     MISSING_STOPS_ATTRIBUTE,
     ACCOUNT_PAGE_ERROR,
+    ADMIN_ADD_USER_ATTRIBUTE,
+    ADMIN_EDIT_USER_ATTRIBUTE,
+    ADMIN_DELETE_USER_ATTRIBUTE,
+    ADMIN_RESEND_INVITE_ATTRIBUTE,
 } from '../constants/attributes';
 import {
     CsvUploadAttributeWithErrors,
@@ -147,6 +151,7 @@ import {
     ExemptedStopsAttribute,
     Cap,
     ServiceWithWarnings,
+    AdminUserFormAttribute,
 } from '../interfaces';
 import { InboundMatchingInfo, MatchingInfo, MatchingWithErrors } from '../interfaces/matchingInterface';
 import {
@@ -251,6 +256,10 @@ export interface SessionAttributeTypes {
     [FLAT_FARE_RETURN_ATTRIBUTE]: boolean;
     [MISSING_STOPS_ATTRIBUTE]: string[];
     [ACCOUNT_PAGE_ERROR]: ErrorInfo[];
+    [ADMIN_ADD_USER_ATTRIBUTE]: AdminUserFormAttribute;
+    [ADMIN_EDIT_USER_ATTRIBUTE]: AdminUserFormAttribute;
+    [ADMIN_DELETE_USER_ATTRIBUTE]: AdminUserFormAttribute;
+    [ADMIN_RESEND_INVITE_ATTRIBUTE]: AdminUserFormAttribute;
 }
 
 export type SessionAttribute<T extends string> = T extends keyof SessionAttributeTypes

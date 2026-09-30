@@ -58,6 +58,27 @@ import {
 
 import { MatchingFareZones } from '../../src/interfaces/matchingInterface';
 import { SessionAttributeTypes } from '../../src/utils/sessions';
+
+// jose's decodeJwt only decodes and does not verify the signature, so this is
+// sufficient to build tokens with arbitrary claims (e.g. cognito:groups) for tests.
+export const buildIdToken = (claims: Record<string, unknown>): string => {
+    const base64url = (input: object): string =>
+        Buffer.from(JSON.stringify(input))
+            .toString('base64')
+            .replace(/\+/g, '-')
+            .replace(/\//g, '_')
+            .replace(/=+$/, '');
+
+    const header = base64url({ typ: 'JWT', alg: 'HS256' });
+    const payload = base64url({
+        'custom:noc': 'TEST',
+        email: 'test@example.com',
+        ...claims,
+    });
+
+    return `${header}.${payload}.fakesignature`;
+};
+
 import { MultiOperatorProductExternal } from '../../src/pages/products/multiOperatorProductsExternal';
 
 interface GetMockContextInput {

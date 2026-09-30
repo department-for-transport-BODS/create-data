@@ -20,8 +20,8 @@ The aim of the tool is to integrate closely with the DfT BODS system where users
 
 - Create Fares Data website
   - Primary entrypoint for users, available on [https://fares-data.dft.gov.uk](https://fares-data.dft.gov.uk)
-- CFD Admin
-  - Site for support users to manage CFD website accounts [https://admin.prod.dft-cfd.com/](https://admin.prod.dft-cfd.com/)
+- CFD admin facilities
+  - Admin-only facilities for support users are available within the Create Fares Data website.
 
 ## Technical Design
 

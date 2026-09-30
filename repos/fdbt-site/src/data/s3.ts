@@ -390,7 +390,7 @@ export const deleteMultipleObjectsFromS3 = async (keys: string[], bucketName: st
     }
 };
 
-const listBucketObjects = async (bucket: string): Promise<_Object[]> => {
+export const listBucketObjects = async (bucket: string): Promise<_Object[]> => {
     const objects: object[] = [];
 
     const getObjectsWithPaginationToken = async (continuationToken: string | undefined) => {

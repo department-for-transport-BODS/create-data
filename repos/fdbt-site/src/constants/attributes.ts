@@ -169,3 +169,11 @@ export const FLAT_FARE_RETURN_ATTRIBUTE = 'fdbt-flat-fare-return-attribute';
 export const MISSING_STOPS_ATTRIBUTE = 'fdbt-missing-stops-attribute';
 
 export const ACCOUNT_PAGE_ERROR = 'fdbt-account-page-error';
+
+export const ADMIN_ADD_USER_ATTRIBUTE = 'fdbt-admin-add-user';
+
+export const ADMIN_EDIT_USER_ATTRIBUTE = 'fdbt-admin-edit-user';
+
+export const ADMIN_DELETE_USER_ATTRIBUTE = 'fdbt-admin-delete-user';
+
+export const ADMIN_RESEND_INVITE_ATTRIBUTE = 'fdbt-admin-resend-invite';
