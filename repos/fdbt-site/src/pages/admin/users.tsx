@@ -3,6 +3,8 @@ import { BaseLayout } from '../../layout/Layout';
 import { AdminUser, listUsers } from '../../data/cognito';
 import { NextPageContextWithSession } from '../../interfaces';
 import { getCsrfToken, isAdmin } from '../../utils';
+import { getSessionAttribute, updateSessionAttribute } from '../../utils/sessions';
+import { ADMIN_DELETE_USER_ATTRIBUTE } from '../../constants/attributes';
 import { getUserStatusLabel, hasTestNoc, isAwaitingRegistration, sortAdminUsersByEmail } from '../../utils/adminUsers';
 
 const title = 'User List - Create Fares Data Service';
@@ -11,9 +13,10 @@ const description = 'Admin page for managing Create Fares Data users';
 interface AdminUsersProps {
     csrfToken: string;
     users: AdminUser[];
+    deletedUser?: string;
 }
 
-const AdminUsers = ({ csrfToken, users }: AdminUsersProps): ReactElement => {
+const AdminUsers = ({ csrfToken, users, deletedUser }: AdminUsersProps): ReactElement => {
     const nonTestUsers = users.filter((user) => !hasTestNoc(user));
     const registeredUsers = nonTestUsers.filter((user) => user.status === 'CONFIRMED');
     const pendingUsers = nonTestUsers.filter((user) => user.status === 'FORCE_CHANGE_PASSWORD');
@@ -21,6 +24,13 @@ const AdminUsers = ({ csrfToken, users }: AdminUsersProps): ReactElement => {
     return (
         <BaseLayout title={title} description={description} showNavigation>
             <h1 className="govuk-heading-xl">User List</h1>
+            {deletedUser && (
+                <div className="govuk-panel govuk-panel--confirmation">
+                    <p className="govuk-panel__body">
+                        Account deleted successfully for <b>{deletedUser}</b>
+                    </p>
+                </div>
+            )}
 
             <a href="/admin/addUser" className="govuk-button" data-module="govuk-button" id="add-user-button">
                 Add user
@@ -129,8 +139,10 @@ export const getServerSideProps = async (
 
     const csrfToken = getCsrfToken(ctx);
     const users = sortAdminUsersByEmail(await listUsers());
+    const deleteUserAttribute = getSessionAttribute(ctx.req, ADMIN_DELETE_USER_ATTRIBUTE);
+    updateSessionAttribute(ctx.req, ADMIN_DELETE_USER_ATTRIBUTE, undefined);
 
-    return { props: { csrfToken, users } };
+    return { props: { csrfToken, users, deletedUser: deleteUserAttribute?.success } };
 };
 
 export default AdminUsers;

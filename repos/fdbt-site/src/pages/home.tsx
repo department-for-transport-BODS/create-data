@@ -26,7 +26,7 @@ const Home = ({
     isAdminUser,
 }: HomeProps): ReactElement => (
     <BaseLayout title={title} description={description}>
-        {multiOperatorFaresRequiringAttentionCount > 0 && (
+        {!isAdminUser && multiOperatorFaresRequiringAttentionCount > 0 && (
             <InformationSummary
                 informationText={`You have ${multiOperatorFaresRequiringAttentionCount} multi-operator fare${
                     multiOperatorFaresRequiringAttentionCount > 1 ? 's ' : ' '
@@ -38,57 +38,67 @@ const Home = ({
         <h1 className="govuk-heading-xl">Create fares data</h1>
         <div className="govuk-grid-row">
             <div className="govuk-grid-column-two-thirds">
-                <div>
-                    <h2 className="govuk-heading-s">Create fares data</h2>
-                    <p className="govuk-body">
-                        For bus operators running commercial bus services in England, and local authorities that need to
-                        create NeTEx data for the services they operate.
-                    </p>
-                    <a href="/fareType" className="govuk-link govuk-!-font-size-19" id="faretype-link">
-                        Create NeTEx data for your fares
-                    </a>
-                </div>
+                {!isAdminUser && (
+                    <>
+                        <div>
+                            <h2 className="govuk-heading-s">Create fares data</h2>
+                            <p className="govuk-body">
+                                For bus operators running commercial bus services in England, and local authorities that
+                                need to create NeTEx data for the services they operate.
+                            </p>
+                            <a href="/fareType" className="govuk-link govuk-!-font-size-19" id="faretype-link">
+                                Create NeTEx data for your fares
+                            </a>
+                        </div>
 
-                <div className="govuk-!-margin-top-7">
-                    <h2 className="govuk-heading-s">Manage fares</h2>
-                    <p className="govuk-body">View and manage all of your products and services in one place.</p>
+                        <div className="govuk-!-margin-top-7">
+                            <h2 className="govuk-heading-s">Manage fares</h2>
+                            <p className="govuk-body">
+                                View and manage all of your products and services in one place.
+                            </p>
 
-                    <a href="/products/services" className="govuk-link govuk-!-font-size-19" id="manage-fares-link">
-                        {'View and manage fares'}
-                    </a>
-                </div>
+                            <a
+                                href="/products/services"
+                                className="govuk-link govuk-!-font-size-19"
+                                id="manage-fares-link"
+                            >
+                                {'View and manage fares'}
+                            </a>
+                        </div>
 
-                <div className="govuk-!-margin-top-7">
-                    <h2 className="govuk-heading-s">
-                        <strong className="govuk-tag new-tag">New</strong>
-                        Multi-operator fares
-                    </h2>
-                    <p className="govuk-body">
-                        This is where operators can collaborate with other operators to define and export multi-operator
-                        products.
-                    </p>
+                        <div className="govuk-!-margin-top-7">
+                            <h2 className="govuk-heading-s">
+                                <strong className="govuk-tag new-tag">New</strong>
+                                Multi-operator fares
+                            </h2>
+                            <p className="govuk-body">
+                                This is where operators can collaborate with other operators to define and export
+                                multi-operator products.
+                            </p>
 
-                    <a
-                        href={'/products/multiOperatorProductsExternal'}
-                        className="govuk-link govuk-!-font-size-19"
-                        id="multi-operator-fares-link"
-                    >
-                        {'View and manage multi-operator fares'}
-                    </a>
-                </div>
+                            <a
+                                href={'/products/multiOperatorProductsExternal'}
+                                className="govuk-link govuk-!-font-size-19"
+                                id="multi-operator-fares-link"
+                            >
+                                {'View and manage multi-operator fares'}
+                            </a>
+                        </div>
 
-                <div className="govuk-!-margin-top-7">
-                    <h2 className="govuk-heading-s">Operator settings</h2>
-                    <p className="govuk-body">
-                        Operator settings is where operators can define and save settings specific to a National
-                        Operator Code (NOC), such as passenger types, time restrictions and more. We recommend
-                        completing this section before creating your fares data.
-                    </p>
+                        <div className="govuk-!-margin-top-7">
+                            <h2 className="govuk-heading-s">Operator settings</h2>
+                            <p className="govuk-body">
+                                Operator settings is where operators can define and save settings specific to a National
+                                Operator Code (NOC), such as passenger types, time restrictions and more. We recommend
+                                completing this section before creating your fares data.
+                            </p>
 
-                    <a href={'/globalSettings'} className="govuk-link govuk-!-font-size-19" id="account-link">
-                        {'Define and manage settings'}
-                    </a>
-                </div>
+                            <a href={'/globalSettings'} className="govuk-link govuk-!-font-size-19" id="account-link">
+                                {'Define and manage settings'}
+                            </a>
+                        </div>
+                    </>
+                )}
 
                 <div className="govuk-!-margin-top-7 govuk-!-padding-bottom-7">
                     <h2 className="govuk-heading-s govuk-!-margin-top-3">Related services</h2>
@@ -104,7 +114,7 @@ const Home = ({
                         <br />
                         The Bus Open Data Service deals with queries relating to the use of Bus Open Data.
                     </p>
-                    {showDeleteProductsLink ? (
+                    {showDeleteProductsLink && !isAdminUser ? (
                         <p>
                             <a
                                 className="govuk-button govuk-button--warning"

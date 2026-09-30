@@ -162,14 +162,8 @@ export const redirectOnFareType = (req: NextApiRequestWithSession, res: NextApiR
 };
 
 export const checkEmailValid = (email: string): boolean => {
-    if (!email || email.length > 254 || email !== email.trim() || email.includes(' ')) {
-        return false;
-    }
-
-    const atIndex = email.indexOf('@');
-    const domain = email.slice(atIndex + 1);
-
-    return atIndex > 0 && atIndex === email.lastIndexOf('@') && domain.includes('.');
+    const emailRegex = new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+    return emailRegex.test(email) && email !== '';
 };
 
 export const getAttributeFromIdToken = <T extends keyof CognitoIdToken>(

@@ -60,7 +60,7 @@ export default async (req: NextApiRequestWithSession, res: NextApiResponse): Pro
                         region: schemeOpRegion,
                         nocCode,
                     });
-                } else if (!isAdminUser) {
+                } else if ((!nocCode || (!schemeOpName && !schemeOpRegion)) && !isAdminUser) {
                     throw new Error('Could not extract user info from their ID Token.');
                 }
 

@@ -120,7 +120,7 @@ describe('pages', () => {
         });
 
         it('should render the admin section when the user is an admin', () => {
-            const { getByText } = render(
+            const { getByText, queryByRole } = render(
                 <Home
                     csrfToken=""
                     showDeleteProductsLink={false}
@@ -130,6 +130,10 @@ describe('pages', () => {
             );
             expect(getByText('Manage users')).toBeTruthy();
             expect(getByText('View reporting')).toBeTruthy();
+            expect(queryByRole('link', { name: 'Create NeTEx data for your fares' })).toBeNull();
+            expect(queryByRole('link', { name: 'View and manage fares' })).toBeNull();
+            expect(queryByRole('link', { name: 'View and manage multi-operator fares' })).toBeNull();
+            expect(queryByRole('link', { name: 'Define and manage settings' })).toBeNull();
         });
 
         it('should set the multi modal attribute when operator has no bods but tnds services', async () => {
