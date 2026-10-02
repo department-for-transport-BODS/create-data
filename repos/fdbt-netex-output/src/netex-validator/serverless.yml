@@ -2,7 +2,7 @@ service: netex-validator
 
 provider:
   name: aws
-  runtime: python3.8
+  runtime: python3.14
   region: eu-west-2
   stage: ${opt:stage, 'test'}
   timeout: 180

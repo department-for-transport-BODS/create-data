@@ -18,7 +18,7 @@ See the mise [docs](https://mise.jdx.dev/getting-started.html) to install it
 
 ## Install/Upgrade Python
 
-It is recommended to use `pyenv` to manage versions of python easily, see [https://github.com/pyenv/pyenv](https://github.com/pyenv/pyenv) for installation instructions, unless otherwise stated Python 3.7 has been used for development of the service.
+It is recommended to use `pyenv` to manage versions of python easily, see [https://github.com/pyenv/pyenv](https://github.com/pyenv/pyenv) for installation instructions, unless otherwise stated Python 3.14 has been used for development of the service.
 
 ## Install Wget
 

@@ -3,7 +3,7 @@ service: reference-data-service-retrievers
 provider:
   name: aws
   region: eu-west-2
-  runtime: python3.10
+  runtime: python3.14
   stage: ${opt:stage, 'test'}
   stackName: ${self:service}-${self:provider.stage}
   lambdaHashingVersion: 20201221

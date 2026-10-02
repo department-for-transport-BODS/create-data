@@ -2,7 +2,7 @@
 awscli = { version = "2", symlink_bins = "true" }
 node   = "24"
 npm    = "12"
-python = "3.8"
+python = "3.14"
 
 [settings]
 python.github_attestations = false
