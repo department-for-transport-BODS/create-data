@@ -2,7 +2,7 @@ service: reference-data-service-uploaders
 
 provider:
     name: aws
-    runtime: python3.10
+    runtime: python3.14
     region: eu-west-2
     stage: ${opt:stage, 'test'}
     lambdaHashingVersion: 20201221

@@ -34,7 +34,7 @@ Resources:
       Handler: custom_email_trigger.handler
       Role:
         Fn::ImportValue: !Sub ${Stage}:CognitoCustomTriggersLambdaRoleArn
-      Runtime: python3.8
+      Runtime: python3.14
 
   CognitoEmailTriggerLogGroup:
     Type: AWS::Logs::LogGroup
