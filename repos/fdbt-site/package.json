@@ -67,6 +67,7 @@
         "nocache": "^4.0.0",
         "nodemailer": "^9.0.3",
         "papaparse": "^5.5.4",
+        "prop-types": "^15.8.1",
         "react": "19.2.7",
         "react-csv": "^2.2.2",
         "react-dom": "19.2.7",
