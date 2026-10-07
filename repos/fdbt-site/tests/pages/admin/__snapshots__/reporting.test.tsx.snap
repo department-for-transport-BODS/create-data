@@ -162,9 +162,7 @@ exports[`admin reporting page should render correctly 1`] = `
                   >
                     <a
                       download="registeredNocs.csv"
-                      href="data:text/csv;charset=utf-8,﻿"NOC1"
-"NOC2""
-                      target="_self"
+                      href="data:text/csv;charset=utf-8,NOC1%0D%0ANOC2"
                     >
                       Download as csv
                     </a>
@@ -205,8 +203,7 @@ exports[`admin reporting page should render correctly 1`] = `
                   >
                     <a
                       download="nocsWhoMadeProducts.csv"
-                      href="data:text/csv;charset=utf-8,﻿"NOC1""
-                      target="_self"
+                      href="data:text/csv;charset=utf-8,NOC1"
                     >
                       Download as csv
                     </a>
@@ -247,8 +244,7 @@ exports[`admin reporting page should render correctly 1`] = `
                   >
                     <a
                       download="thirtyDayNetexNocs.csv"
-                      href="data:text/csv;charset=utf-8,﻿"NOC1""
-                      target="_self"
+                      href="data:text/csv;charset=utf-8,NOC1"
                     >
                       Download as csv
                     </a>
@@ -289,9 +285,7 @@ exports[`admin reporting page should render correctly 1`] = `
                   >
                     <a
                       download="yearNetexNocs.csv"
-                      href="data:text/csv;charset=utf-8,﻿"NOC1"
-"NOC2""
-                      target="_self"
+                      href="data:text/csv;charset=utf-8,NOC1%0D%0ANOC2"
                     >
                       Download as csv
                     </a>
@@ -323,28 +317,139 @@ exports[`admin reporting page should render correctly 1`] = `
       >
         Hover over bars to see fare type and count
       </p>
-      <div
-        aria-label="Created products by fare type"
+      <svg
+        aria-labelledby="product-chart-title product-chart-description"
         class="admin-reporting-chart"
         role="img"
+        viewBox="0 0 800 104"
       >
-        <div
-          class="recharts-responsive-container"
-          style="width: 100%; height: 100%; min-width: 0;"
+        <title
+          id="product-chart-title"
         >
-          <div
-            style="width: 0px; height: 0px; overflow: visible;"
+          Created products by fare type
+        </title>
+        <desc
+          id="product-chart-description"
+        >
+          single: 1
+        </desc>
+        <g>
+          <line
+            class="admin-reporting-chart__grid"
+            x1="190"
+            x2="190"
+            y1="32"
+            y2="80"
           />
-        </div>
-      </div>
+          <text
+            class="admin-reporting-chart__tick"
+            text-anchor="middle"
+            x="190"
+            y="20"
+          >
+            0
+          </text>
+        </g>
+        <g>
+          <line
+            class="admin-reporting-chart__grid"
+            x1="317.5"
+            x2="317.5"
+            y1="32"
+            y2="80"
+          />
+          <text
+            class="admin-reporting-chart__tick"
+            text-anchor="middle"
+            x="317.5"
+            y="20"
+          >
+            1
+          </text>
+        </g>
+        <g>
+          <line
+            class="admin-reporting-chart__grid"
+            x1="445"
+            x2="445"
+            y1="32"
+            y2="80"
+          />
+          <text
+            class="admin-reporting-chart__tick"
+            text-anchor="middle"
+            x="445"
+            y="20"
+          >
+            2
+          </text>
+        </g>
+        <g>
+          <line
+            class="admin-reporting-chart__grid"
+            x1="572.5"
+            x2="572.5"
+            y1="32"
+            y2="80"
+          />
+          <text
+            class="admin-reporting-chart__tick"
+            text-anchor="middle"
+            x="572.5"
+            y="20"
+          >
+            3
+          </text>
+        </g>
+        <g>
+          <line
+            class="admin-reporting-chart__grid"
+            x1="700"
+            x2="700"
+            y1="32"
+            y2="80"
+          />
+          <text
+            class="admin-reporting-chart__tick"
+            text-anchor="middle"
+            x="700"
+            y="20"
+          >
+            4
+          </text>
+        </g>
+        <g>
+          <title>
+            single: 1 products
+          </title>
+          <text
+            text-anchor="end"
+            x="180"
+            y="60"
+          >
+            single
+          </text>
+          <rect
+            fill="#196f3d"
+            height="30"
+            width="127.5"
+            x="190"
+            y="40"
+          />
+          <text
+            x="327.5"
+            y="60"
+          >
+            1
+          </text>
+        </g>
+      </svg>
       <p
         class="govuk-body"
       >
         <a
           download="createdProducts.csv"
-          href="data:text/csv;charset=utf-8,﻿"Faretype","Count"
-"single","1""
-          target="_self"
+          href="data:text/csv;charset=utf-8,Faretype%2CCount%0D%0Asingle%2C1"
         >
           Download as csv
         </a>

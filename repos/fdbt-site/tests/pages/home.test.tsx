@@ -134,6 +134,13 @@ describe('pages', () => {
             expect(queryByRole('link', { name: 'View and manage fares' })).toBeNull();
             expect(queryByRole('link', { name: 'View and manage multi-operator fares' })).toBeNull();
             expect(queryByRole('link', { name: 'Define and manage settings' })).toBeNull();
+
+            const adminHeading = getByText('Admin');
+            const relatedServicesHeading = getByText('Related services');
+            expect(
+                adminHeading.compareDocumentPosition(relatedServicesHeading) & Node.DOCUMENT_POSITION_FOLLOWING,
+            ).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
+            expect(adminHeading.parentElement?.classList.contains('govuk-!-margin-top-7')).toBe(false);
         });
 
         it('should set the multi modal attribute when operator has no bods but tnds services', async () => {
