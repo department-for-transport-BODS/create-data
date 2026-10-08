@@ -128,9 +128,22 @@
 }
 
 .admin-reporting-chart {
+    display: block;
     width: 800px;
     max-width: 100%;
-    height: 400px;
+    height: auto;
+    font-family: inherit;
+    font-size: 16px;
+    fill: #0b0c0c;
+}
+
+.admin-reporting-chart__grid {
+    stroke: #b1b4b6;
+    stroke-dasharray: 3 3;
+}
+
+.admin-reporting-chart__tick {
+    font-size: 14px;
 }
 .selectedOperators-button {
     white-space: nowrap;

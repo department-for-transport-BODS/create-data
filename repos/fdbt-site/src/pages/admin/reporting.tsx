@@ -1,16 +1,5 @@
 import { ReactElement } from 'react';
-import { CSVLink } from 'react-csv';
-import {
-    Bar,
-    BarChart as RechartsBarChart,
-    BarShapeProps,
-    CartesianGrid,
-    Rectangle,
-    ResponsiveContainer,
-    Tooltip,
-    XAxis,
-    YAxis,
-} from 'recharts';
+import Papa from 'papaparse';
 import { BaseLayout } from '../../layout/Layout';
 import { NextPageContextWithSession } from '../../interfaces';
 import { isAdmin } from '../../utils';
@@ -41,6 +30,115 @@ interface ReportingProps {
     graphData: GraphData[];
 }
 
+const PRODUCT_CHART_GEOMETRY = {
+    viewBoxWidth: 800,
+    plotStartX: 190,
+    plotWidth: 510,
+    rowHeight: 48,
+    chartHeightPadding: 56,
+    tickCount: 5,
+    gridTop: 32,
+    gridBottomPadding: 24,
+    tickLabelY: 20,
+    categoryLabelX: 180,
+    rowStartY: 40,
+    rowTextOffsetY: 20,
+    barHeight: 30,
+    valueLabelGap: 10,
+} as const;
+
+const ProductChart = ({ graphData }: { graphData: GraphData[] }): ReactElement => {
+    const tickIntervals = PRODUCT_CHART_GEOMETRY.tickCount - 1;
+    const tickStep = Math.max(
+        1,
+        Math.ceil(Math.max(...graphData.map((category) => category.value), 1) / tickIntervals),
+    );
+    const scaleMaximum = tickStep * tickIntervals;
+    const chartHeight = graphData.length * PRODUCT_CHART_GEOMETRY.rowHeight + PRODUCT_CHART_GEOMETRY.chartHeightPadding;
+
+    return (
+        <svg
+            className="admin-reporting-chart"
+            viewBox={`0 0 ${PRODUCT_CHART_GEOMETRY.viewBoxWidth} ${chartHeight}`}
+            role="img"
+            aria-labelledby="product-chart-title product-chart-description"
+        >
+            <title id="product-chart-title">Created products by fare type</title>
+            <desc id="product-chart-description">
+                {graphData.map((category) => `${category.title}: ${category.value}`).join(', ')}
+            </desc>
+            {Array.from({ length: PRODUCT_CHART_GEOMETRY.tickCount }, (_, index) => {
+                const position =
+                    PRODUCT_CHART_GEOMETRY.plotStartX + (index / tickIntervals) * PRODUCT_CHART_GEOMETRY.plotWidth;
+
+                return (
+                    <g key={index}>
+                        <line
+                            className="admin-reporting-chart__grid"
+                            x1={position}
+                            x2={position}
+                            y1={PRODUCT_CHART_GEOMETRY.gridTop}
+                            y2={chartHeight - PRODUCT_CHART_GEOMETRY.gridBottomPadding}
+                        />
+                        <text
+                            className="admin-reporting-chart__tick"
+                            x={position}
+                            y={PRODUCT_CHART_GEOMETRY.tickLabelY}
+                            textAnchor="middle"
+                        >
+                            {index * tickStep}
+                        </text>
+                    </g>
+                );
+            })}
+            {graphData.map((category, index) => {
+                const position = PRODUCT_CHART_GEOMETRY.rowStartY + index * PRODUCT_CHART_GEOMETRY.rowHeight;
+                const barWidth = (category.value / scaleMaximum) * PRODUCT_CHART_GEOMETRY.plotWidth;
+
+                return (
+                    <g key={category.title}>
+                        <title>{`${category.title}: ${category.value} products`}</title>
+                        <text
+                            x={PRODUCT_CHART_GEOMETRY.categoryLabelX}
+                            y={position + PRODUCT_CHART_GEOMETRY.rowTextOffsetY}
+                            textAnchor="end"
+                        >
+                            {category.title}
+                        </text>
+                        <rect
+                            x={PRODUCT_CHART_GEOMETRY.plotStartX}
+                            y={position}
+                            width={barWidth}
+                            height={PRODUCT_CHART_GEOMETRY.barHeight}
+                            fill={category.color}
+                        />
+                        <text
+                            x={PRODUCT_CHART_GEOMETRY.plotStartX + PRODUCT_CHART_GEOMETRY.valueLabelGap + barWidth}
+                            y={position + PRODUCT_CHART_GEOMETRY.rowTextOffsetY}
+                        >
+                            {category.value}
+                        </text>
+                    </g>
+                );
+            })}
+        </svg>
+    );
+};
+
+const CsvDownloadLink = ({
+    filename,
+    data,
+    children,
+}: {
+    filename: string;
+    data: string[][];
+    children: ReactElement | string;
+}): ReactElement => (
+    <a download={filename} href={`data:text/csv;charset=utf-8,${encodeURIComponent(Papa.unparse(data))}`}>
+        {children}
+    </a>
+);
+
 const NocListDetail = ({
     summary,
     nocs,
@@ -49,23 +147,27 @@ const NocListDetail = ({
     summary: string;
     nocs: string[];
     filename: string;
-}): ReactElement => (
-    <details className="govuk-details">
-        <summary className="govuk-details__summary">
-            <span className="govuk-details__summary-text">{summary}</span>
-        </summary>
-        <div className="govuk-details__text">
-            {nocs.length > 0 && (
+}): ReactElement => {
+    if (nocs.length === 0) {
+        return <span>{summary}</span>;
+    }
+
+    return (
+        <details className="govuk-details">
+            <summary className="govuk-details__summary">
+                <span className="govuk-details__summary-text">{summary}</span>
+            </summary>
+            <div className="govuk-details__text">
                 <p className="govuk-body">
-                    <CSVLink filename={filename} data={mapIntoArrayOfArrays(nocs)}>
+                    <CsvDownloadLink filename={filename} data={mapIntoArrayOfArrays(nocs)}>
                         Download as csv
-                    </CSVLink>
+                    </CsvDownloadLink>
                 </p>
-            )}
-            {nocs.join(', ')}
-        </div>
-    </details>
-);
+                {nocs.join(', ')}
+            </div>
+        </details>
+    );
+};
 
 const Reporting = ({
     registeredUserCount,
@@ -135,27 +237,11 @@ const Reporting = ({
                     <h2 className="govuk-heading-m">Created products (not necessarily exported)</h2>
                     <p className="govuk-body">{totalProducts} total products</p>
                     <p className="govuk-body">Hover over bars to see fare type and count</p>
-                    <div aria-label="Created products by fare type" className="admin-reporting-chart" role="img">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <RechartsBarChart data={graphData} margin={{ top: 16, right: 24, left: 8, bottom: 16 }}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="title" />
-                                <YAxis allowDecimals={false} />
-                                <Tooltip />
-                                <Bar
-                                    dataKey="value"
-                                    name="Products"
-                                    shape={(props: BarShapeProps) => (
-                                        <Rectangle {...props} fill={graphData[props.index].color} />
-                                    )}
-                                />
-                            </RechartsBarChart>
-                        </ResponsiveContainer>
-                    </div>
+                    <ProductChart graphData={graphData} />
                     <p className="govuk-body">
-                        <CSVLink filename="createdProducts.csv" data={formatGraphDataForCsv(graphData)}>
+                        <CsvDownloadLink filename="createdProducts.csv" data={formatGraphDataForCsv(graphData)}>
                             Download as csv
-                        </CSVLink>
+                        </CsvDownloadLink>
                     </p>
                 </>
             )}
