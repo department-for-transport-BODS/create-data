@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react';
 import { ReactElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import Reporting, { getServerSideProps } from '../../../src/pages/admin/reporting';
 import * as cognito from '../../../src/data/cognito';
 import * as s3 from '../../../src/data/s3';
@@ -31,6 +32,61 @@ describe('admin reporting page', () => {
             />,
         );
         expect(tree).toMatchSnapshot();
+    });
+
+    it('should render chart bars on the server without inline styles', () => {
+        const markup = renderToStaticMarkup(
+            <Reporting
+                registeredUserCount={0}
+                registeredNocs={[]}
+                nocsWhoCreatedProducts={[]}
+                thirtyDayNetex={[]}
+                yearNetex={[]}
+                graphData={[
+                    { title: 'single', value: 8, color: '#196f3d' },
+                    { title: 'multiOperatorExt', value: 0, color: '#7d3c98' },
+                ]}
+            />,
+        );
+        const chart = markup.slice(markup.indexOf('<svg'), markup.indexOf('</svg>') + 6);
+
+        expect(chart).toContain('single: 8 products');
+        expect(chart).toContain('multiOperatorExt: 0 products');
+        expect(chart).toContain('width="510"');
+        expect(chart).not.toContain('style=');
+    });
+
+    it('should render downloadable CSV data in the server response', () => {
+        const markup = renderToStaticMarkup(
+            <Reporting
+                registeredUserCount={0}
+                registeredNocs={['NOC1', 'NOC,2']}
+                nocsWhoCreatedProducts={[]}
+                thirtyDayNetex={[]}
+                yearNetex={[]}
+                graphData={[{ title: 'single', value: 1, color: '#196f3d' }]}
+            />,
+        );
+        const csvHref = markup.match(/<a download="registeredNocs\.csv" href="([^"]+)"/);
+
+        expect(csvHref).toBeTruthy();
+        expect(decodeURIComponent(csvHref![1])).toBe('data:text/csv;charset=utf-8,NOC1\r\n"NOC,2"');
+    });
+
+    it('should not render an empty dropdown for NOCs who have created products', () => {
+        const { getByText } = render(
+            <Reporting
+                registeredUserCount={0}
+                registeredNocs={[]}
+                nocsWhoCreatedProducts={[]}
+                thirtyDayNetex={[]}
+                yearNetex={[]}
+                graphData={[]}
+            />,
+        );
+        const productsNocLabel = getByText('NOCs who have created products');
+
+        expect(productsNocLabel.closest('details')).toBeNull();
     });
 
     describe('getServerSideProps', () => {

@@ -100,6 +100,24 @@ const Home = ({
                     </>
                 )}
 
+                {isAdminUser && (
+                    <div>
+                        <h2 className="govuk-heading-s">Admin</h2>
+                        <p className="govuk-body">Manage users and view reporting for the Create Fares Data service.</p>
+                        <a href="/admin/users" className="govuk-link govuk-!-font-size-19" id="admin-users-link">
+                            Manage users
+                        </a>
+                        <br />
+                        <a
+                            href="/admin/reporting"
+                            className="govuk-link govuk-!-font-size-19"
+                            id="admin-reporting-link"
+                        >
+                            View reporting
+                        </a>
+                    </div>
+                )}
+
                 <div className="govuk-!-margin-top-7 govuk-!-padding-bottom-7">
                     <h2 className="govuk-heading-s govuk-!-margin-top-3">Related services</h2>
                     <p className="govuk-body">
@@ -126,24 +144,6 @@ const Home = ({
                         </p>
                     ) : null}
                 </div>
-
-                {isAdminUser && (
-                    <div className="govuk-!-margin-top-7 govuk-!-padding-bottom-7">
-                        <h2 className="govuk-heading-s">Admin</h2>
-                        <p className="govuk-body">Manage users and view reporting for the Create Fares Data service.</p>
-                        <a href="/admin/users" className="govuk-link govuk-!-font-size-19" id="admin-users-link">
-                            Manage users
-                        </a>
-                        <br />
-                        <a
-                            href="/admin/reporting"
-                            className="govuk-link govuk-!-font-size-19"
-                            id="admin-reporting-link"
-                        >
-                            View reporting
-                        </a>
-                    </div>
-                )}
             </div>
 
             <div className="govuk-grid-column-one-third">
