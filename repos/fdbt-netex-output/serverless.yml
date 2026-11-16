@@ -206,7 +206,7 @@ resources:
             MetricName: "SES-emails-sent-${self:provider.stage}"
 
 plugins:
-  - serverless-plugin-typescript
+  - serverless-esbuild
   - serverless-plugin-log-retention
 
 package:
@@ -215,6 +215,9 @@ package:
     - ./src/netex-convertor/period-tickets/periodTicketNetexTemplate.xml
 
 custom:
+  esbuild:
+    external:
+      - xml2json
   sns:
     alertsTopic:
       value: ${self:custom.sns.alertsTopic.${self:provider.stage}, self:custom.sns.alertsTopic.other}
