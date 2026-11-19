@@ -7,8 +7,7 @@ import netexGenerator from './netexGenerator';
 import { Operator } from '../../src/types/index';
 import { getProductType, replaceAll } from './sharedHelpers';
 import { SchemeOperatorTicket } from 'fdbt-types/matchingJsonTypes';
-import { fileNameExistsAlready } from '../data/s3';
-import { v4 as uuidv4 } from 'uuid';
+import { createHash } from 'crypto';
 
 const getLineOrNetworkFare = (productType: string): string => {
     if (productType === 'singleTrip' || productType === 'dayReturnTrip' || productType === 'periodReturnTrip') {
@@ -26,13 +25,12 @@ export const getS3FilePrefix = (s3FileName: string, nocIdentifier: string): stri
     return `${nocIdentifier}/exports/${exportDate}`;
 };
 
-export const generateFileName = (ticket: Ticket): string => {
+export const generateFileName = (ticket: Ticket, sourceKey: string): string => {
     const productType = getProductType(ticket);
     const lineOrNetworkFare = getLineOrNetworkFare(productType);
     const nocOrSchemeName = isSchemeOperatorTicket(ticket) ? getSchemeNocIdentifier(ticket) : ticket.nocCode;
     const productNameWithoutWhiteSpace = replaceAll(ticket.products[0].productName, ' ', '-');
     const productNameWithoutSlashes = replaceAll(productNameWithoutWhiteSpace, '/', '-');
-    const creationDate = new Date(Date.now()).toISOString().split('T')[0];
     const startDate = ticket.ticketPeriod.startDate.split('T')[0];
 
     let pointToPointInsert = '';
@@ -47,28 +45,15 @@ export const generateFileName = (ticket: Ticket): string => {
         }
     }
 
-    const uuid = uuidv4().substring(0, 4);
+    // Use the source file path to generate a stable suffix so retries overwrite the same file.
+    const sourceKeyHash = createHash('sha256')
+        .update(sourceKey)
+        .digest('hex')
+        .substring(0, 8);
 
     return `FX-PI-01_UK_${nocOrSchemeName}_${lineOrNetworkFare}_${
         pointToPointInsert ? pointToPointInsert : ''
-    }${productNameWithoutSlashes}_${creationDate}_${startDate}_${uuid}`;
-};
-
-export const getFinalNetexName = async (fileName: string): Promise<string> => {
-    let placeHolderFileName = fileName;
-    let counter = 1;
-
-    while (true) {
-        const fileNameTaken = await fileNameExistsAlready(`${placeHolderFileName}.xml`);
-        if (fileNameTaken) {
-            placeHolderFileName = `${fileName}_${counter}`;
-            counter++;
-        } else {
-            break;
-        }
-    }
-
-    return placeHolderFileName;
+    }${productNameWithoutSlashes}_${startDate}_${sourceKeyHash}`;
 };
 
 export const buildNocList = (ticket: Ticket): string[] => {
@@ -126,9 +111,8 @@ export const netexConvertorHandler = async (event: S3Event): Promise<void> => {
         if (process.env.NODE_ENV !== 'development') {
             const nocIdentifier = isSchemeOperatorTicket(ticket) ? getSchemeNocIdentifier(ticket) : ticket.nocCode;
             const filePrefix = getS3FilePrefix(s3FileName, nocIdentifier);
-            const fileNameEnding = generateFileName(ticket);
-            const fileNameWithPrefixs = `${filePrefix}/${fileNameEnding}`;
-            fileName = `${await getFinalNetexName(fileNameWithPrefixs)}.xml`;
+            const fileNameEnding = generateFileName(ticket, s3FileName);
+            fileName = `${filePrefix}/${fileNameEnding}.xml`;
         } else {
             fileName = s3FileName.replace('.json', '.xml');
         }

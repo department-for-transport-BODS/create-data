@@ -269,12 +269,6 @@ export const convertDateFormat = (date: string): string => {
 
 export const isReturnTicket = (ticket: Ticket | TicketWithIds): ticket is ReturnTicket => ticket.type === 'return';
 
-export const objectKeyMatchesExportNameExactly = (objectKey: string, exportName: string): boolean => {
-    const parts = objectKey.split('/');
-    const exportNamePart = parts[2];
-    return exportNamePart === exportName;
-};
-
 export const fareTypeIsAllowedToAddACap = (fareType: string): boolean => {
     return !!fareType && ['single', 'return', 'flatFare'].includes(fareType);
 };
