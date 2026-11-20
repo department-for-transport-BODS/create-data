@@ -1,13 +1,12 @@
 import {
     DeleteObjectCommand,
     DeleteObjectsCommand,
-    DeleteObjectsCommandInput,
     GetObjectCommand,
     GetObjectCommandOutput,
     HeadObjectCommand,
     ListObjectsV2Command,
     ListObjectsV2CommandInput,
-    ObjectIdentifier,
+    ListObjectsV2CommandOutput,
     PutObjectCommand,
     PutObjectCommandInput,
     S3Client,
@@ -27,7 +26,6 @@ import {
 import { UserFareStages, UserFareZone } from '../interfaces';
 import logger from '../utils/logger';
 import { triggerZipper } from '../utils/apiUtils/export';
-import { objectKeyMatchesExportNameExactly } from '../utils';
 import { SecondaryOperatorFareInfo, Ticket, TicketWithIds } from '../interfaces/matchingJsonTypes';
 import { ExportMetadata } from '../interfaces/integrationTypes';
 
@@ -372,11 +370,12 @@ export const deleteMultipleObjectsFromS3 = async (keys: string[], bucketName: st
     try {
         logger.info('', {
             context: 'data.s3',
-            message: `Deleting ${keys.join(', ')} in ${bucketName}`,
+            message: `Deleting ${keys.length} object(s) in ${bucketName}`,
         });
 
-        for (let i = 0; i <= keys.length / 1000; i++) {
-            const batchKeys = keys.slice(1000 * i, 1000 * (i + 1));
+        // DeleteObjects accepts between 1 and 1000 keys per request
+        for (let i = 0; i < keys.length; i += 1000) {
+            const batchKeys = keys.slice(i, i + 1000);
             const bucketKeys = batchKeys.map((key) => ({ Key: key }));
 
             const bucketParams = {
@@ -415,22 +414,37 @@ export const listBucketObjects = async (bucket: string): Promise<_Object[]> => {
     return objects;
 };
 
-export const deleteExport = async (exportName: string, bucket: string): Promise<void> => {
-    const allObjectsInBucket = await listBucketObjects(bucket);
-    const objectsInExport = allObjectsInBucket.filter((obj) =>
-        objectKeyMatchesExportNameExactly(obj.Key as string, exportName),
-    );
+const listObjectKeysWithPrefix = async (bucket: string, prefix: string): Promise<string[]> => {
+    const keys: string[] = [];
+    let continuationToken: string | undefined = undefined;
 
-    const deleteParams: DeleteObjectsCommandInput = {
-        Bucket: bucket,
-        Delete: {
-            Objects: objectsInExport.map((obj) => ({
-                Key: obj.Key,
-            })) as ObjectIdentifier[],
-        },
-    };
+    do {
+        const listObjectsResponse: ListObjectsV2CommandOutput = await s3.send(
+            new ListObjectsV2Command({ Bucket: bucket, Prefix: prefix, ContinuationToken: continuationToken }),
+        );
 
-    await s3.send(new DeleteObjectsCommand(deleteParams));
+        listObjectsResponse.Contents?.forEach((obj) => {
+            if (obj.Key) {
+                keys.push(obj.Key);
+            }
+        });
+
+        continuationToken = listObjectsResponse.NextContinuationToken;
+    } while (continuationToken);
+
+    return keys;
+};
+
+export const deleteExport = async (noc: string, exportName: string, bucket: string): Promise<void> => {
+    // Only list this export's objects rather than the whole bucket, which is very slow on large buckets
+    const prefixes = [`${noc}/exports/${exportName}/`, `${noc}/zips/${exportName}/`];
+    const keys = (await Promise.all(prefixes.map((prefix) => listObjectKeysWithPrefix(bucket, prefix)))).flat();
+
+    if (keys.length === 0) {
+        return;
+    }
+
+    await deleteMultipleObjectsFromS3(keys, bucket);
 };
 
 export const getExportMetaData = async (key: string): Promise<ExportMetadata> => {
