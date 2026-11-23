@@ -5,7 +5,6 @@ import {
     buildNocList,
     getS3FilePrefix,
     getSchemeNocIdentifier,
-    getFinalNetexName,
 } from './handler';
 import {
     singleTicket,
@@ -417,17 +416,33 @@ describe('buildNocList', () => {
 });
 
 describe('generateFileName', () => {
-    const mockDate = new Date(Date.now()).toISOString().split('T')[0];
+    const sourceKey = 'MCTR/exports/MCTR_2022_09_30/MCTRd00f5a99_1664555550706.json';
 
     it('returns the formatted file name with no whitespace', () => {
-        const result = generateFileName(singleTicket);
+        const result = generateFileName(singleTicket, sourceKey);
 
         expect(result).toContain(
-            `FX-PI-01_UK_MCTR_LINE-FARE_237_O_Best-Product_${mockDate}_${
-                singleTicket.ticketPeriod.startDate.split('T')[0]
-            }_`,
+            `FX-PI-01_UK_MCTR_LINE-FARE_237_O_Best-Product_${singleTicket.ticketPeriod.startDate.split('T')[0]}_`,
         );
         expect(result).not.toContain(' ');
+    });
+
+    it('returns the same file name when the source file is retried after midnight UTC', () => {
+        const nowSpy = jest
+            .spyOn(Date, 'now')
+            .mockReturnValueOnce(Date.parse('2022-09-30T23:59:59Z'))
+            .mockReturnValueOnce(Date.parse('2022-10-01T00:00:01Z'));
+        try {
+            expect(generateFileName(singleTicket, sourceKey)).toBe(generateFileName(singleTicket, sourceKey));
+        } finally {
+            nowSpy.mockRestore();
+        }
+    });
+
+    it('returns different file names for different source files', () => {
+        expect(generateFileName(singleTicket, sourceKey)).not.toBe(
+            generateFileName(singleTicket, sourceKey.replace('d00f5a99', 'a1b2c3d4')),
+        );
     });
 });
 
@@ -437,34 +452,5 @@ describe('getS3FilePrefix', () => {
         const noc = 'BLAC';
         const result = getS3FilePrefix(s3FileName, noc);
         expect(result).toBe('BLAC/exports/BLAC_2022_09_30');
-    });
-});
-
-describe('checkToSeeIfFileNameExists', () => {
-    it('returns the filename with no changes if it is unique inside the unvalidated bucket', async () => {
-        jest.spyOn(s3, 'fileNameExistsAlready').mockImplementation(() => Promise.resolve(false));
-        const fileName = 'FX-PI-01_UK_MCTR_LINE-FARE_Best-Product_2022-10-18_2010-12-17';
-        const result = await getFinalNetexName(fileName);
-        expect(result).toBe(fileName);
-    });
-
-    it('returns the filename with _1 if there is already one copy', async () => {
-        jest.spyOn(s3, 'fileNameExistsAlready')
-            .mockImplementationOnce(() => Promise.resolve(true))
-            .mockImplementationOnce(() => Promise.resolve(false));
-        const fileName = 'FX-PI-01_UK_MCTR_LINE-FARE_Best-Product_2022-10-18_2010-12-17';
-        const result = await getFinalNetexName(fileName);
-        expect(result).toBe(`${fileName}_1`);
-    });
-
-    it('returns the filename with _3 if there are 3 copies', async () => {
-        jest.spyOn(s3, 'fileNameExistsAlready')
-            .mockImplementationOnce(() => Promise.resolve(true))
-            .mockImplementationOnce(() => Promise.resolve(true))
-            .mockImplementationOnce(() => Promise.resolve(true))
-            .mockImplementationOnce(() => Promise.resolve(false));
-        const fileName = 'FX-PI-01_UK_MCTR_LINE-FARE_Best-Product_2022-10-18_2010-12-17';
-        const result = await getFinalNetexName(fileName);
-        expect(result).toBe(`${fileName}_3`);
     });
 });

@@ -21,9 +21,9 @@ export default async (req: NextApiRequestWithSession, res: NextApiResponse): Pro
             message: `Deleting export for ${exportName}`,
         });
 
-        await deleteExport(exportName, MATCHING_DATA_BUCKET_NAME);
-        await deleteExport(exportName, NETEX_BUCKET_NAME);
-        await deleteExport(exportName, UNVALIDATED_NETEX_BUCKET_NAME);
+        await deleteExport(noc, exportName, MATCHING_DATA_BUCKET_NAME);
+        await deleteExport(noc, exportName, NETEX_BUCKET_NAME);
+        await deleteExport(noc, exportName, UNVALIDATED_NETEX_BUCKET_NAME);
         await deleteFromS3(`${noc}/exports/${exportName}.json`, EXPORT_METADATA_BUCKET_NAME);
 
         redirectTo(res, '/products/exports');

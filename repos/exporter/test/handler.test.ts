@@ -255,3 +255,73 @@ describe('processSecondaryOperatorFareZone', () => {
         expect(getObjectSpy).toBeCalledTimes(3);
     });
 });
+
+describe('handler', () => {
+    /* eslint-disable @typescript-eslint/no-var-requires, @typescript-eslint/no-explicit-any */
+    let handlerModule: typeof import('../lib/handler');
+    let s3Module: typeof import('../lib/s3');
+    let databaseModule: typeof import('../lib/database');
+
+    beforeEach(() => {
+        process.env.PRODUCTS_BUCKET = 'products-bucket';
+        process.env.MATCHING_DATA_BUCKET = 'matching-data-bucket';
+        process.env.EXPORT_METADATA_BUCKET = 'export-metadata-bucket';
+
+        // the handler reads bucket names from env at import time, so load fresh copies after setting them
+        jest.isolateModules(() => {
+            s3Module = require('../lib/s3') as typeof import('../lib/s3');
+            databaseModule = require('../lib/database') as typeof import('../lib/database');
+            handlerModule = require('../lib/handler') as typeof import('../lib/handler');
+        });
+    });
+
+    afterEach(() => {
+        jest.restoreAllMocks();
+    });
+
+    it('writes the export metadata and then throws if some products fail to export', async () => {
+        jest.spyOn(s3Module, 'getS3Object').mockImplementation((key: string) => {
+            if (key === 'BLAC/bad.json') {
+                return Promise.reject(new Error('NoSuchKey'));
+            }
+
+            return Promise.resolve({
+                Body: JSON.stringify({
+                    type: 'flatFare',
+                    passengerType: { id: 1 },
+                    products: [{ productName: 'Flat fare', salesOfferPackages: [] }],
+                }),
+            } as any);
+        });
+        const putS3ObjectSpy = jest.spyOn(s3Module, 'putS3Object').mockResolvedValue({} as any);
+        jest.spyOn(databaseModule, 'getPassengerTypeById').mockResolvedValue({ name: 'Adult' } as any);
+        jest.spyOn(databaseModule, 'getSalesOfferPackagesByNoc').mockResolvedValue([]);
+        jest.spyOn(databaseModule, 'getFareDayEnd').mockResolvedValue(undefined);
+        jest.spyOn(console, 'error').mockImplementation(() => undefined);
+
+        await expect(
+            handlerModule.handler(
+                { noc: 'BLAC', paths: ['BLAC/good.json', 'BLAC/bad.json'], exportPrefix: 'BLAC_2026_11_18' },
+                {} as any,
+                () => undefined,
+            ),
+        ).rejects.toThrow('BLAC - Failed to export 1 of 2 files for export BLAC_2026_11_18');
+
+        expect(putS3ObjectSpy).toHaveBeenCalledWith(
+            'BLAC/exports/BLAC_2026_11_18/good.json',
+            'matching-data-bucket',
+            expect.any(String),
+        );
+        expect(putS3ObjectSpy).not.toHaveBeenCalledWith(
+            'BLAC/exports/BLAC_2026_11_18/bad.json',
+            expect.anything(),
+            expect.anything(),
+        );
+        expect(putS3ObjectSpy).toHaveBeenCalledWith(
+            'BLAC/exports/BLAC_2026_11_18.json',
+            'export-metadata-bucket',
+            expect.stringContaining('"numberOfExpectedNetexFiles":2'),
+        );
+    });
+    /* eslint-enable @typescript-eslint/no-var-requires, @typescript-eslint/no-explicit-any */
+});

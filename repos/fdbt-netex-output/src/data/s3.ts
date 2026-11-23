@@ -29,23 +29,6 @@ export const getFileFromS3 = async (params: S3ObjectParameters): Promise<string>
     return data.Body?.toString('utf-8') ?? '';
 };
 
-export const fileNameExistsAlready = async (fileName: string): Promise<boolean> => {
-    try {
-        const s3BucketName = process.env.UNVALIDATED_NETEX_BUCKET as string;
-
-        const params: S3ObjectParameters = {
-            Bucket: s3BucketName,
-            Key: fileName,
-        };
-
-        const dataAsString: string = await getFileFromS3(params);
-
-        return !!JSON.parse(dataAsString);
-    } catch (err) {
-        return false;
-    }
-};
-
 export const fetchDataFromS3 = async <T>(event: S3Event, isEmailer = false): Promise<T> => {
     try {
         const s3BucketName: string = !isEmailer
